@@ -4,7 +4,7 @@ import { Header } from 'antd/lib/layout/layout';
 const Mainheader = () => {
   return (
     <Header>
-      {/* <Title style={{color:'red'}}level={3}>Ebullientsoft</Title> */}
+      {/* <Title>Ebullientsoft</Title> */}
      
     </Header>
     

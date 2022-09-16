@@ -1,29 +1,36 @@
 import React from 'react'
-import { Layout} from 'antd';
+import { Layout } from 'antd';
 import Mainheader from './Mainheader';
-const {  Footer, Sider, Content } = Layout;
+import MainSider from './MainSider';
+import RouterComponent from './RouterComponent';
+const { Footer, Content} = Layout;
+
 
 
 const Mainlayout = () => {
+  
   return (
     <>
 
 
+
     <Layout style={{height:"100vh" }}>
-      <Sider>Sider</Sider>
+    <Mainheader />
       <Layout>
-       <Mainheader />
-        <Content>Content</Content>
-        <Footer>Footer</Footer>
+      <MainSider/> 
+     <Content>
+<RouterComponent/>
+     </Content>
+   
+        <Footer></Footer>
       </Layout>
     </Layout>
   </>
 );
-
-
-      
-
-  
 }
+
+
+ 
+
 
 export default Mainlayout;

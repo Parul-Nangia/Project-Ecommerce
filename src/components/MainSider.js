@@ -1,26 +1,35 @@
 import React from 'react'
-import Layout from 'antd/lib/layout/layout';
-const {Sider}= Layout
+import { Menu } from 'antd'
+import Sider from 'antd/lib/layout/Sider'
+import {UnorderedListOutlined } from "@ant-design/icons"
+
+
 const MainSider = () => {
-return (
-    
-         <Sider>
-            {/* <Menu>
-                <Menu.Item>
-                    Dashboard
-                </Menu.Item>
-                <SubMenu>
-                    <Menu.ItemGroup key='Request' title='Request'>
-                    <Menu.ItemGroup key='Employee Terms' title='Employee Terms'></Menu.ItemGroup>
-                        
-                    </Menu.ItemGroup>
-                </SubMenu>
+  return (
+    <div style={{ display: "flex" , flexDirections:"row"}}>
+      <Menu 
+     
+      items={[
+        { label: "Home" , key:"/" , icon:<UnorderedListOutlined />},
+        { label: "Dashboard" , key:"/dashboard" , icon:<UnorderedListOutlined />},
+        { label: "Leave" , key:"/leave" , icon:<UnorderedListOutlined />},
+        { label: "Attendance" , key:"/attendance" ,icon:<UnorderedListOutlined />},
+        { label: "Document Workflow" , key:"/documentworkflow",icon: <UnorderedListOutlined />},
+        { label: "Employer" , key:"/emloyer" , icon: <UnorderedListOutlined />},
+        
+      ]}
 
-            </Menu> */}
-            </Sider>
+      ></Menu>
       
-
+    </div>
   )
 }
 
-export default MainSider;
+export default MainSider
+
+
+
+
+
+
+
