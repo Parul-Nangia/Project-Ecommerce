@@ -33,11 +33,10 @@ const Mainlayout = () => {
     }
   </>
 );
-
-
-      
-
-  
 }
+
+
+ 
+
 
 export default Mainlayout;
