@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import {Form,Checkbox,Input,Select, Button} from "antd";
 import React from "react";
 
@@ -108,9 +107,7 @@ function Login() {
               </Form.Item>
   
               <Form.Item wrapperCol={{span:24}}>
-              
-
-              
+              <Button block type="primary" htmlType="submit">Login</Button>
   
               </Form.Item>
                
@@ -137,6 +134,3 @@ function Login() {
   }
 
   export default Login;
-=======
-
->>>>>>> b30bf2c943e79233f1d8b7776217955ae2de8bec
