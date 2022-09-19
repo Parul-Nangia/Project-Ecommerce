@@ -32,11 +32,11 @@ const Mainlayout = () => {
 
       </Layout>
     </Layout>
-    : 
+     
     <Layout>
     
     </Layout>
-    }
+    
   </>
 );
 }
