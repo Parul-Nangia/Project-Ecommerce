@@ -2,20 +2,23 @@ import React from 'react'
 import { Menu } from 'antd'
 import Sider from 'antd/lib/layout/Sider'
 import {UnorderedListOutlined } from "@ant-design/icons"
+  
+ import { useNavigate } from 'react-router-dom'
 
 
 const MainSider = () => {
+  const navigate = useNavigate()
   return (
     <div style={{ display: "flex" , flexDirections:"row"}}>
       <Menu 
-     
-      items={[
-        { label: "Home" , key:"/" , icon:<UnorderedListOutlined />},
-        { label: "Dashboard" , key:"/dashboard" , icon:<UnorderedListOutlined />},
-        { label: "Leave" , key:"/leave" , icon:<UnorderedListOutlined />},
-        { label: "Attendance" , key:"/attendance" ,icon:<UnorderedListOutlined />},
-        { label: "Document Workflow" , key:"/documentworkflow",icon: <UnorderedListOutlined />},
-        { label: "Employer" , key:"/emloyer" , icon: <UnorderedListOutlined />},
+     onClick={({key}) =>{
+      navigate(key);
+     }}
+              items={[
+              { label: "Dashboard" , key:"/" , icon:<UnorderedListOutlined />},
+              { label: "Leave" , key:"/leave" , icon:<UnorderedListOutlined />},
+              { label: "Attendance" , key:"/attendance" ,icon:<UnorderedListOutlined />},
+              { label: "Employer" , key:"/employer" , icon: <UnorderedListOutlined />},
         
       ]}
 
@@ -25,7 +28,7 @@ const MainSider = () => {
   )
 }
 
-export default MainSider
+export default MainSider;
 
 
 
