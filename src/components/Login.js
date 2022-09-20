@@ -1,59 +1,61 @@
 import {Form,Checkbox,Input,Select, Button} from "antd";
-import React from "react"
-
-
-
+import React from "react";
+import {useState} from 'react';
+import axios from 'axios';
 
 
 
 
 
 function Login() {
+  const[user,setUser]=useState('');
+  const[password,setPassword]=useState('');
+  console.log({user,password})
 
-//   const [username,setUsername]=useState("");
-//   const [password,setPassword]=useState("");
-
-//   const history = useHistory();
-//   useEffect(() => {
-//     if (localStorage.getItem('user-info')) {
-//       history.push("/dashboard")
-//     }
-//   }, [])
+  const handleUser = (e) => {
+    setUser(e.target.value)
+  }
 
 
-//   async function login()
-//   {
-//     console.log(username,password)
-//     let item={username,password};
-//     let result = await fetch("http://localhost:3001/user/login",{
-//       method:'POST',
-//       headers:{
-//         "Content-Type":"application/json",
-//         "Accept":"application/json"
-//       },
-//       body:JSON.stringify(item)
+  const handlePassword = (e) => {
+    setPassword(e.target.value)
+  }
 
-//   });
-//   result = await result.json();
-//   localStorage.setItem("user-info",JSON.stringify(result))
-//   history.push("/dashboard")
+  const handleApi = () => {
+    console.log({user,password})
+    axios.post('',{
+      user: user,
+      password: password
+    })
+    .then(result=>{
+      console.log(result.data)
+      alert('success')
 
-//   }
+    })
 
+    .catch(error=>{
+      console.log(error)
+      alert('error')
+    })
+
+
+  }
 
     return (
       <div className="App">
-        <header className="App-header">
-          <Form autoComplete="off" 
-          labelCol={{span:10}} 
+        <header className="LOGIN PAGE">
+          
+          <Form 
+          autoComplete="off" 
+          labelCol={{span:10}}  
           wrapperCol={{span:14}}>
             <Form.Item 
-            name="username" 
-            label="User Name"
+            name="user" 
+            label="User"
             rules={[
               {
                 required: true,
-                message: "Please enter username"
+                message: "Please enter user"
   
                 
                 
@@ -64,7 +66,7 @@ function Login() {
               ]}
               hasFeedback
           >
-              <Input placeholder="Type Username"/>
+              <Input placeholder="Type User" value={user} onChange={handleUser}  />
               </Form.Item>
   
   
@@ -83,7 +85,7 @@ function Login() {
   
               >
   
-              <Input.Password placeholder="Type Your Password"/>
+              <Input.Password placeholder="Type Your Password" value={password} onChange={handlePassword} />
               </Form.Item>
   
   
@@ -106,19 +108,9 @@ function Login() {
               </Form.Item>
   
               <Form.Item wrapperCol={{span:24}}>
-              <Button block type="primary" htmlType="submit">Login</Button>
+              <Button block type="primary" onClick={handleApi} >Login</Button>
   
               </Form.Item>
-               
-  
-  
-  
-  
-            
-  
-  
-  
-  
   
           </Form>
   
