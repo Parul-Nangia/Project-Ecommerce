@@ -1,10 +1,13 @@
 import React from 'react';
-
+import LeaveTable from '../components/LeaveTable';
+import LeaveCards from '../components/LeaveCards';
 
 const Leave = () => {
   return (
     <div>
-      <h1>Employee Leave Calender</h1>
+      <LeaveCards/>
+      <LeaveTable/>
+      
     </div>
   );
 };
