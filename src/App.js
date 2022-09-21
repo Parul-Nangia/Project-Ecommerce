@@ -1,7 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard.jsx';
 import Attendance from './pages/Attendance.jsx';
 import Leave from './pages/Leave.jsx';
@@ -12,15 +12,12 @@ import Login from './pages/Login.js';
 
 
 
-
 const App = () => {
   return (
      
-      <BrowserRouter>   
-        <Sidebar>
+     <Sidebar>
           <Routes>
             <Route path="/"element={<Login/>}/>
-           
             <Route path="/dashboard"element={<Dashboard/>}/>
             <Route path="/attendance"element={<Attendance/>}/>
             <Route path="/employees"element={<Employees/>}/>
@@ -28,7 +25,8 @@ const App = () => {
 
           </Routes>
         </Sidebar>
-      </BrowserRouter>
+     
+     
    
   );
 };

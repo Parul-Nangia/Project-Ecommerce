@@ -1,10 +1,16 @@
 import React from 'react';
+import AttendanceCards from '../components/AttendanceCards';
+import AttendanceTable from '../components/AttendanceTable';
 
 
 const Attendance = () => {
   return (
     <div>
-      <h1>Attendance</h1>
+     <AttendanceCards/>
+     <AttendanceTable/>
+    
+  
+     
     </div>
   );
 };
