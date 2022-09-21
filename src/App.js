@@ -1,16 +1,6 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
-import Dashboard from './pages/Dashboard.jsx';
-import Attendance from './pages/Attendance.jsx';
-import Leave from './pages/Leave.jsx';
-import Employees from './pages/Employees.jsx';
-import Sidebar from './components/Sidebar.jsx';
-import Login from './pages/Login.js';
-
-
-
 
 const App = () => {
   return (
@@ -24,11 +14,8 @@ const App = () => {
             <Route path="/leave"element={<Leave/>}/>
 
           </Routes>
-        </Sidebar>
+     </Sidebar>
+  )
+}
      
-     
-   
-  );
-};
-
-export default App;
+     export default App;
