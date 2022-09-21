@@ -1,6 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import './App.css';
+<<<<<<< HEAD
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard.jsx';
 import Attendance from './pages/Attendance.jsx';
@@ -9,13 +10,19 @@ import Employees from './pages/Employees.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import Login from './pages/Login.js';
 // import Header from './components/Header.js';
+=======
+import Layout from './components/Layout';
+>>>>>>> f5ecd5d66a2960b37bcdb6ac7b14785d92d37e36
 
 
 
 
 
-const App = () => {
+
+
+function App() {
   return (
+<<<<<<< HEAD
      
       <BrowserRouter>   
         
@@ -36,7 +43,13 @@ const App = () => {
         
       </BrowserRouter>
    
+=======
+      <>
+        <Layout />
+      </>
+>>>>>>> f5ecd5d66a2960b37bcdb6ac7b14785d92d37e36
   );
-};
+}
+
 
 export default App;
