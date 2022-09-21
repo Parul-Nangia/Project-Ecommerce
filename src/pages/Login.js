@@ -2,8 +2,8 @@ import {Form,Checkbox,Input,Select, Button} from "antd";
 import React from "react";
 import {useState} from 'react';
 import axios from 'axios';
-
-
+import {Link} from 'react-router-dom';
+import './Login.css'
 
 
 
@@ -23,7 +23,7 @@ function Login() {
 
   const handleApi = () => {
     console.log({user,password})
-    axios.post('',{
+    axios.post('http://localhost:3001/user/login',{
       user: user,
       password: password
     })
@@ -42,13 +42,22 @@ function Login() {
   }
 
     return (
-      <div className="App">
-        <header className="LOGIN PAGE">
+      <body className="back-bg">
+        <div className="Logo">
+          <img src="ebs.png" height="150" weight="150"  >
+           
+
+          </img>
+        </div>
+      
+      <div className="App" >
+        {/* <header className="page"> */}
           
           <Form 
           autoComplete="off" 
+
           labelCol={{span:10}}  
-          wrapperCol={{span:14}}>
+          wrapperCol={{span:15}}>
             <Form.Item 
             name="user" 
             label="User"
@@ -66,13 +75,10 @@ function Login() {
               ]}
               hasFeedback
           >
-              <Input placeholder="Type User" value={user} onChange={handleUser}  />
+              <Input placeholder="User" value={user} onChange={(e) => handleUser(e.target.value)} />
               </Form.Item>
-  
-  
-  
-  
-  
+
+
               <Form.Item
                 name="password"
                 label="Password"
@@ -85,7 +91,7 @@ function Login() {
   
               >
   
-              <Input.Password placeholder="Type Your Password" value={password} onChange={handlePassword} />
+              <Input.Password placeholder="Password" value={password} onChange={(e) => handlePassword(e.target.value)} />
               </Form.Item>
   
   
@@ -96,30 +102,33 @@ function Login() {
               <Select placeholder="Select Your Role">
                 <Select.Option value="hr">HR</Select.Option>
                 <Select.Option value="staff">Staff</Select.Option>
+                <Select.Option value="admin">Admin</Select.Option>
   
               </Select>
               </Form.Item>
   
   
               <Form.Item 
-                name="agreement" 
+                name="Contact Us" 
                 wrapperCol={{span:24}}>
-              <Checkbox>Agree to Our <a href="#">Terms and Conditions Apply.</a></Checkbox>
+              <Checkbox>For Any Query Contact to <a href="#">HR</a></Checkbox>
               </Form.Item>
   
               <Form.Item wrapperCol={{span:24}}>
+              <Link to ='/dashboard'>
               <Button block type="primary" onClick={handleApi} >Login</Button>
+              </Link>
   
               </Form.Item>
   
           </Form>
   
-        </header>
-      
-      
-      
-      
+        {/* </header> */}
+
       </div>
+
+      </body>
+      
       
     );
   }

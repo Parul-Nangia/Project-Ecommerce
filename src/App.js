@@ -8,6 +8,7 @@ import Leave from './pages/Leave.jsx';
 import Employees from './pages/Employees.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import Login from './pages/Login.js';
+// import Header from './components/Header.js';
 
 
 
@@ -17,17 +18,22 @@ const App = () => {
   return (
      
       <BrowserRouter>   
-        <Sidebar>
-          <Routes>
+        
+        <Routes>
+    
             <Route path="/"element={<Login/>}/>
-           
             <Route path="/dashboard"element={<Dashboard/>}/>
             <Route path="/attendance"element={<Attendance/>}/>
             <Route path="/employees"element={<Employees/>}/>
             <Route path="/leave"element={<Leave/>}/>
+           
+          
+        </Routes>
+        
 
-          </Routes>
-        </Sidebar>
+
+       
+        
       </BrowserRouter>
    
   );
