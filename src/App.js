@@ -1,18 +1,15 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import './App.css';
-<<<<<<< HEAD
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Dashboard from './pages/Dashboard.jsx';
-import Attendance from './pages/Attendance.jsx';
-import Leave from './pages/Leave.jsx';
-import Employees from './pages/Employees.jsx';
-import Sidebar from './components/Sidebar.jsx';
-import Login from './pages/Login.js';
+import Dashboard from './components/Dashboard.jsx';
+import Attendance from './components/Attendance.jsx';
+import Leave from './components/Leave.jsx';
+import Employees from './components/Employees.jsx';
+// import Sidebar from './components/Sidebar.jsx';
+import Login from './components/Login.js';
+import Sidebar from './components/Sidebar';
 // import Header from './components/Header.js';
-=======
-import Layout from './components/Layout';
->>>>>>> f5ecd5d66a2960b37bcdb6ac7b14785d92d37e36
 
 
 
@@ -22,9 +19,10 @@ import Layout from './components/Layout';
 
 function App() {
   return (
-<<<<<<< HEAD
      
-      <BrowserRouter>   
+      <BrowserRouter>
+      <Sidebar>
+       
         
         <Routes>
     
@@ -33,9 +31,11 @@ function App() {
             <Route path="/attendance"element={<Attendance/>}/>
             <Route path="/employees"element={<Employees/>}/>
             <Route path="/leave"element={<Leave/>}/>
-           
-          
         </Routes>
+
+      </Sidebar>
+
+      
         
 
 
@@ -43,11 +43,6 @@ function App() {
         
       </BrowserRouter>
    
-=======
-      <>
-        <Layout />
-      </>
->>>>>>> f5ecd5d66a2960b37bcdb6ac7b14785d92d37e36
   );
 }
 

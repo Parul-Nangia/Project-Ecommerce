@@ -8,12 +8,15 @@ import Attendance from '../components/Attendance';
 import Leave from '../components/Leave';
 import Employees from '../components/Employees';
 import Login from '../components/Login';
+import { Header } from 'antd/lib/layout/layout';
+import Header from './components/Header';
 
 
 
 const Layout = () => {
     return <>
         <BrowserRouter>
+        <Header>
             <Sidebar>
                 <Routes>
                     <Route path="/"element={<Login/>}/>
@@ -24,6 +27,7 @@ const Layout = () => {
 
                 </Routes>
             </Sidebar>
+        </Header>
         </BrowserRouter>
     </>;
 };
