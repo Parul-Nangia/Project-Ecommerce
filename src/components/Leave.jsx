@@ -1,14 +1,16 @@
 import React from 'react';
 import Sidebar from './Sidebar';
-
-
+import LeaveTable from '../components/LeaveTable';
+import LeaveCards from '../components/LeaveCards';
 
 const Leave = () => {
   return (
     <>
     <div>
-    <Sidebar />
-      <h1>Employee Leave Calender</h1>
+      <Sidebar />
+      <LeaveCards/>
+      <LeaveTable/>
+      
     </div>
     </>
   );

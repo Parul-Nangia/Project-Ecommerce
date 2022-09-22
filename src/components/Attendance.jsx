@@ -1,13 +1,22 @@
 import React from 'react';
 import Sidebar from './Sidebar';
+import AttendanceCards from '../components/AttendanceCards';
+import AttendanceTable from '../components/AttendanceTable';
+
 
 
 const Attendance = () => {
   return (
     <>
     <div>
-    <Sidebar />
-      <h1>Attendance</h1>
+
+      <Sidebar />
+      
+
+      <AttendanceCards/>
+      <AttendanceTable/>
+    
+  
     </div>
     </>
   );
