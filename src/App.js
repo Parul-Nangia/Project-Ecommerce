@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import './App.css';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Login  from './components/Login.js';
+// import Login  from './components/Login.js';
 import Leave from './components/Leave.jsx';
 import Dashboard from './components/Dashboard.jsx';
 import Attendance from './components/Attendance.jsx';
@@ -18,7 +18,7 @@ function App() {
   return (
       <BrowserRouter>   
         <Routes>
-            <Route path="/"element={<Login/>}/>
+            {/* <Route path="/"element={<Login/>}/> */}
             <Route path="/dashboard"element={<Dashboard/>}/>
             <Route path="/attendance"element={<Attendance/>}/>
             <Route path="/employees"element={<Employees/>}/>
