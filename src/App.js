@@ -25,13 +25,13 @@ function App() {
        
         
         <Routes>
-    
-            <Route path="/"element={<Login/>}/>
+            {/* <Route path="/"element={<Login/>}/> */}
             <Route path="/dashboard"element={<Dashboard/>}/>
             <Route path="/attendance"element={<Attendance/>}/>
             <Route path="/employees"element={<Employees/>}/>
             <Route path="/leave"element={<Leave/>}/>
         </Routes>
+<<<<<<< HEAD
 
       </Sidebar>
 
@@ -41,6 +41,8 @@ function App() {
 
        
         
+=======
+>>>>>>> 5e6e0af9c8002522bb8861b1b40f7ad3c9241493
       </BrowserRouter>
    
   );
