@@ -6,6 +6,7 @@ import AttendanceTable from '../components/AttendanceTable';
 const Attendance = () => {
   return (
     <div>
+      
      <AttendanceCards/>
      <AttendanceTable/>
     
