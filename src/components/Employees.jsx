@@ -70,7 +70,7 @@ const Employees = () => {
 
   return (
     <> 
-    <Sidebar />
+    
       <Box textAlign="center" className={classes.headingColor} p={2} mb={2}>
         <Typography variant="h4" className={classes.headingColor}>EMPLOYEE DATA</Typography>
       </Box>

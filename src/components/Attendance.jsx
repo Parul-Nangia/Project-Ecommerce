@@ -11,7 +11,7 @@ const Attendance = () => {
     <div>
 
 
-      <Sidebar />      
+        
       <AttendanceCards/>
       <AttendanceTable/>
     

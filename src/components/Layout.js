@@ -7,12 +7,13 @@ import Employees from '../components/Employees';
 import Login from '../components/Login';
 import Edit from '../components/Edit';
 import View from '../components/View';
+import Sidebar from '../components/Sidebar';
 
 
 const Layout = () => {
     return <>
         <BrowserRouter>
-            
+            <Sidebar>
                 <Routes>
                     <Route path="/" element={<Login/>}/>
                     <Route path="/dashboard"element={<Dashboard/>}/>
@@ -27,7 +28,7 @@ const Layout = () => {
                     <Route path="employees/edit/:id"element={<Edit/>}/>
 
                 </Routes>
-           
+            </Sidebar>
         </BrowserRouter>
     </>;
 };

@@ -7,7 +7,6 @@ const Leave = () => {
   return (
     <>
     <div>
-      <Sidebar />
       <LeaveCards/>
       <LeaveTable/>
       

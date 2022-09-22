@@ -7,8 +7,7 @@ function AppHeader(){
             <div className="header">
                 <div className="logo"/>
                 <Menu mode="horizontal" defaultSelectedKeys={[2]}>
-                    <Menu.Item key="1">Profile</Menu.Item>
-                    <Menu.Item key="1">About</Menu.Item>
+
                     <Menu.Item key="1">Logout</Menu.Item>
 
                 </Menu>
