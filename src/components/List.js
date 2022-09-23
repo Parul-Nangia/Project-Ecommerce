@@ -22,45 +22,71 @@ const useStyles = makeStyles({
  },
 })
 
+
+//=================================================employee listing (GET API)================================================================================
 const List = () => {
     const classes = useStyles();
-    const [employs,setEmploys] = useState([]);  // Form data will get save in state
-        const fetchData =()=>{
-            fetch("http://localhost:1999/employee")
+    const [employs,setEmploys] = useState([]);
+    
+    const fetchData =()=>{
+        fetch("http://localhost:1999/employee")
+        
+        .then((response)=>{
+            return response.json();
+        }).then((data)=>{
             
-            .then((response)=>{
-                return response.json();
-            }).then((data)=>{
-                
-                let emp = data.employeeData
-                
+            let emp = data.employeeData
+    
+            setEmploys(emp)
+        })
+    
+    }
+    useEffect(()=>{
+        fetchData();
+        
+        
+    
+    },[])
+//=================================================employee listing================================================================================
 
-                setEmploys(emp)
+
+    
+
+
+
+//=================================================employee delete================================================================================   
+    function deleteEmployee(_id)
+    {
+        if(window.confirm("Are you sure you want to to delete",_id))
+        {
+            fetch(`http://localhost:1999/employee/${_id}`,{
+                method:'DELETE',
+                headers:{ 
+                    'Accept':'application/json',
+                    'Content-Type':'application/json'
+            }
             })
-      
+            console.log("Employee Deleted",_id)
         }
-        useEffect(()=>{
-            fetchData();
-      
-        },[])
+    }
+//=================================================employee delete================================================================================
 
 
 
 
 
 
-
- return (
+return (
     
   <>
     <Box textAlign="center" p={2} className={classes.empListColor}>
-        <Typography variant="h5" className={classes.empListColor}>Employee List</Typography>
+        <Typography variant="h5" className={classes.empListColor}>EMPLOYEE LIST</Typography>
     </Box>
     <TableContainer component={Paper}>
         <Table>
             <TableHead>
                 <TableRow style={{ backgroundColor: "#DCDCDC" }}>
-                    <TableCell align="center" className={classes.tableHeadCell}>ID</TableCell>
+                    {/* <TableCell align="center" className={classes.tableHeadCell}>ID</TableCell> */}
                     <TableCell align="center" className={classes.tableHeadCell}>Name</TableCell>
                     <TableCell align="center" className={classes.tableHeadCell}>Email</TableCell>
                     <TableCell align="center" className={classes.tableHeadCell}>Phone</TableCell>
@@ -70,20 +96,20 @@ const List = () => {
             </TableHead>
             <TableBody>
       
-            {employs.map((data,i) => {
+            {employs.map((item,i) => {
                 return(
                     <TableRow key ={i}> 
-                        <TableCell align="center">{i+1}</TableCell>
-                        <TableCell align="center">{data.name}</TableCell>
-                        <TableCell align="center">{data.email}</TableCell>
-                        <TableCell align="center">{data.phone}</TableCell>
-                        <TableCell align="center">{data.gender}</TableCell> 
+                        {/* <TableCell align="center">{item._id}</TableCell> */}
+                        <TableCell align="center">{item.name}</TableCell>
+                        <TableCell align="center">{item.email}</TableCell>
+                        <TableCell align="center">{item.phone}</TableCell>
+                        <TableCell align="center">{item.gender}</TableCell> 
                         <TableCell align="center">
                             <Tooltip title="View">
-                                <IconButton><Link to={"/view/"}><VisibilityIcon color="primary" /></Link></IconButton>
+                                <IconButton><Link to={`/view/${item._id}`}><VisibilityIcon color="primary" /></Link></IconButton>
                             </Tooltip>
                             <Tooltip title="Edit">
-                                <IconButton><Link to={"/edit/"}><EditIcon /></Link></IconButton>
+                                <IconButton><Link to={`/edit/${item._id}`} ><EditIcon /></Link></IconButton>
                             </Tooltip>
                             <Tooltip title="Delete">
                                 <IconButton ><DeleteIcon color="secondary" /></IconButton>
@@ -95,7 +121,7 @@ const List = () => {
                 })
             }
 
-{/* onClick={() => handleDelete(data.id)} */}
+
        
 
             </TableBody>
@@ -108,4 +134,4 @@ const List = () => {
  
 export default List
 
-{/* // {`/view/${employs.id}`} */}
+// onClick={() => selectEmployee(item._id)}

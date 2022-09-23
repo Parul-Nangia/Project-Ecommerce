@@ -1,6 +1,6 @@
 import { Card } from 'antd';
 import React from 'react';
-import Sidebar from './Sidebar';
+
 
 
 let main1 = {
@@ -50,7 +50,7 @@ const Dashboard = () => {
     <>
     
     <div style={{ display : "flex", justifyContent : "space-between"}}>
-    <Sidebar /> 
+   
       <Card style={main1}>LEAVE TAKEN</Card>
       <Card style={main2} >PENDING LEAVES</Card>
       <Card style={main3}>UPCOMING HOLIDAYS</Card>

@@ -1,10 +1,8 @@
-import React from 'react';
+import React  from 'react';
 import { Typography, Box, makeStyles, Grid, TextField, Button } from "@material-ui/core"
-// import { deepPurple, green } from '@material-ui/core/colors';
 import List from "./List";
-// import axios from "axios";
-// import { useState } from "react";
-import Sidebar from './Sidebar';
+import { useState } from "react";
+
 
 
 const useStyles = makeStyles({
@@ -33,34 +31,26 @@ const useStyles = makeStyles({
 
 const Employees = () => {
   const classes = useStyles();
-  // const [name,setName] =useState("");
-  // const [email,setEmail] =useState("");
-  // const [phone,setPhone] =useState("");
-  // const [gender,setGender] =useState("");
-  
-  
-
+  const [name,setName] =useState("");
+  const [email,setEmail] =useState("");
+  const [phone,setPhone] =useState("");
+  const [gender,setGender] =useState("");
 
   
-  async function saveEmployeeData() {
-    const obj = {
-      name:"",
-      email:"",
-      phone:"",
-      gender:""
-    }
-
-
-    const response = await fetch("http://localhost:1999/employee",{
-      method:"POST",
-      body:JSON.stringify(obj),
+  function saveEmployee()
+  {
+    console.warn({name,email,phone,gender});
+    let data = {name,email,phone,gender}
+    fetch("http://localhost:1999/employee",{
+      method:'POST',
       headers:{
-        'Content-Type': 'application/json'
-      }
+        'Accept':'application/json',
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify(data)
+    }).then((Employee)=>{
+      console.warn("result",Employee);
     })
-
-    const res = await response.json()
-    console.log(res);
   }
   
 
@@ -68,34 +58,37 @@ const Employees = () => {
 
 
 
+
+
+
   return (
     <> 
-    <Sidebar />
+    
       <Box textAlign="center" className={classes.headingColor} p={2} mb={2}>
         <Typography variant="h4" className={classes.headingColor}>EMPLOYEE DATA</Typography>
       </Box>
       <Grid container justifyContent="center" spacing={4}>
         <Grid item md={6} xs={12}>
           <Box textAlign="center" p={2} className={classes.addEmpColor} mb={2}>
-            <Typography variant="h5" className={classes.addEmpColor}>Add Employee</Typography>
+            <Typography variant="h5" className={classes.addEmpColor}>NEW EMPLOYEE</Typography>
           </Box>
           <form noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField autoComplete="name"  variant="outlined" required fullWidth    label="Name" />
+                <TextField autoComplete="name"  variant="outlined" required fullWidth value={name} onChange={(e)=>{setName(e.target.value)}} label="Name" />
               </Grid>
               <Grid item xs={12}>
-                <TextField autoComplete="email" variant="outlined" required fullWidth  label="Email Address" />
+                <TextField autoComplete="email" variant="outlined" required fullWidth value={email} onChange={(e)=>{setEmail(e.target.value)}} label="Email Address" />
               </Grid>
               <Grid item xs={12}>
-                <TextField autoComplete="phone" variant="outlined" required fullWidth    label="Phone" />
+                <TextField autoComplete="phone" variant="outlined" required fullWidth  value={phone} onChange={(e)=>{setPhone(e.target.value)}}  label="Phone" />
               </Grid>
               <Grid item xs={12}>
-                <TextField autoComplete="gender" variant="outlined" required fullWidth    label="Gender" />
+                <TextField autoComplete="gender" variant="outlined" required fullWidth  value={gender} onChange={(e)=>{setGender(e.target.value)}} label="Gender" />
               </Grid>
             </Grid>
             <Box m={3}>
-              <Button type="button" variant="contained"  onClick={saveEmployeeData} style={{fontWeight: "bold", marginTop:"10px"}}  >Add</Button>
+              <Button type="button" onClick={saveEmployee} variant="contained" style={{fontWeight: "bold", marginTop:"10px"}}  >Add</Button>
             </Box>
           </form>
         </Grid>
