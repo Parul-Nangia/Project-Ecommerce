@@ -4,7 +4,7 @@ let l1={
   flex:"1",
   height:"300px",
   width:"1200px",
-  margin:"40px",
+  margin:"20px",
 
 }
 
@@ -66,6 +66,7 @@ const columns = [
  return (
     
     <>
+    <h1>Table</h1>
       <Table style={l1}
         dataSource={data}
         columns={columns} >
