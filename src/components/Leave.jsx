@@ -6,7 +6,6 @@ const Leave = () => {
   return (
     <>
     <div>
-      
       <LeaveCards/>
       <LeaveTable/>
       

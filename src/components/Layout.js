@@ -1,6 +1,4 @@
 import React from 'react';
-// import { BrowserRouter } from 'react-router-dom/dist';
-// import Login from './pages/Login.js';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Dashboard from '../components/Dashboard';
 import Attendance from '../components/Attendance';

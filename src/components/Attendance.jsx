@@ -10,6 +10,7 @@ const Attendance = () => {
     <div>
 
      
+        
       <AttendanceCards/>
       <AttendanceTable/>
     

@@ -1,29 +1,19 @@
-// import React from 'react';
-// // import {React Component as About} from '../../svg/information-button'
-// import {ReactComponent as Dashboard} from '../../assests/homelogo.jpg';
-// import { NavLink,Link } from 'react-router-dom';  
-// // import {ReactComponent as Logo} from  './src/assests/loco.jpg';
+import React from 'react';
+import {Menu} from 'antd';
 
-// // import './header.css';
+function AppHeader(){
+    return (
+        <div className="container-fluid">
+            <div className="header">
+                <div className="logo"/>
+                <Menu mode="horizontal" defaultSelectedKeys={[2]}>
 
+                    <Menu.Item key="1">Logout</Menu.Item>
 
-// const Header = () =>{
-//     return (
-//         <nav>
+                </Menu>
+            </div>
+        </div>
+    );
+}
 
-//             <div className='div-header'>
-//                 <div className='div-svg'>
-//                     <Dashboard/>
-//                 </div>
-//                 <div>
-//                     <NavLink to ='/dashboard'><Dashboard className='div-svg'/></NavLink>
-//                     {/* <NavLink to ='/about'><About className='div-svg'/></NavLink> */}
-//                     <button>Logout</button>
-//                 </div>
-//              </div>
-
-//         </nav>
-//     )
-// }
-
-// export default Header
+export default AppHeader;
