@@ -3,6 +3,14 @@ import axios from 'axios';
 import React from 'react';
 import Sidebar from '../components/Sidebar';
 import Navbar from './Navbar';
+import React, { useEffect,useState } from 'react';
+import Charts from './Charts';
+import Header from './Header';
+import Sidebar from './Sidebar';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import './Dashboard.css';
+
 
 
 
@@ -47,25 +55,90 @@ let main3 = {
 
 
 const Dashboard = () => {
-  
 
 
-  
   return (
-   <>
-     
-      <Sidebar>
-     
-    
-        <div style={{ display : "flex", justifyContent : "space-between"}}> 
-          <Card style={main1}>LEAVE TAKEN</Card>
-          <Card style={main2} >PENDING LEAVES</Card>
-          <Card style={main3}>UPCOMING HOLIDAYS</Card>
-        
-        </div>
-        
-      </Sidebar>
+    <>
+
+    <Sidebar>
       
+      <Header />
+    
+    
+          <div style={{ display : "flex", justifyContent : "space-between"}}> 
+            <Card style={main1}>LEAVE TAKEN</Card>
+            <Card style={main2} >PENDING LEAVES</Card>
+            <Card style={main3}>UPCOMING HOLIDAYS</Card>
+          
+          </div>
+          <div className="main_cards">
+            <div className="card">
+              <i className="fa fa-user-o fa-2x text-lightblue"><AccountCircleIcon /></i>
+              <div className="card_inner">
+                <p className="text-primary-p">User</p>
+                <span className="font-bold text-title">567</span>
+
+              </div>
+
+            </div>
+            <div className="card">
+              <i className="fa fa-calendar fa-2x text-red"><CalendarMonthIcon /></i>
+              <div className="card_inner">
+                <p className="text-primary-p">Leaves Allowed</p>
+                <span className="'font-bold text-title">2</span>
+              </div>
+            </div>
+
+            <div className="card">
+              <i className="fa fa-video-camera fa-2x text-yellow"></i>
+              <div className="card_inner">
+                <p className="text-primary-p">hsavhgsvad</p>
+                <span className="font-bold text-title">349</span>
+              </div>
+            </div>
+
+            <div className="card">
+              <i className="fa fa-thumbs-up fa-2x text-green"></i>
+              <div className="card_inner">
+                <p className="text-primary-p">ergdfgdg</p>
+                <span className="font-bold text-title">675</span>
+              </div>
+            </div>
+
+        
+            <div className="charts">
+              <div className="charts_left">
+                <div className="charts_left_title">
+                  <div>
+                    <h1>Daily Reports</h1>
+                  </div>
+                  <i className="fa fa-usd"></i>
+                </div>
+              </div>
+              <Charts />
+            </div>
+            <div className="charts_right_cards">
+              <div className="card1">
+                <h1>income</h1>
+                <p>45600$</p>
+              </div>
+              <div className="card2">
+                <h1>nxvchjsvcjh</h1>
+                <p>hello</p>
+              </div>
+              <div className="card3">
+                <h1>Users</h1>
+                <p>4560</p>
+              </div>
+              <div className="card4">
+                <h1>jhdhjvdh</h1>
+                <p>45</p>
+              </div>
+            </div>
+          </div> 
+
+  </Sidebar> 
+    
     </>
   );
 };
