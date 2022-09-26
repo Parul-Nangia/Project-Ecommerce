@@ -1,173 +1,96 @@
-import React, { useState } from "react";
-import { Form, Input, Button, Checkbox } from "antd";
-import { UserAddOutlined } from "@ant-design/icons";
-import SocialNetworks from "./SocialNetworks";
-import { Typography, message } from "antd";
-import { Row, Col } from "antd";
-import SignUpSuccessModal from "./SignUpSuccessModal";
-import api from "../../api";
-import { get } from "lodash";
+import React from 'react';
+import { Row, Form, Input, Button } from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import {makeStyles} from "@material-ui/core";
+import axios from "axios";
+import {Navigate} from "react-router-dom";
+import { useState } from "react";
 
 
+const useStyles = makeStyles({
+  frmItem: {
+    padding:"10px",
+    width:"50vh"
+       
+  },
+  btnCenter: {
+    padding:"10px",
+    width:"50vh",
+    height:"60px",
+    backgroundColor:"#FF4500",
+    "&:hover": {
+      borderRadius: 4,
+      backgroundColor: "#C0C0C0",
+      color:"black"
+    },
+  },
+     
+  
+  imgg:{
+    width: "40%",
+    margin: "auto",
+    display: "block",
+
+    
+  }
+  
+})
 
 
-<Form
-        name="signup"
-        initialValues={{}}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
-        form={form}
-      >
-        <Title level={2} className="text-center">
-          Create Account
-        </Title>
-        <SocialNetworks />
+const Login = () => {
+  const classes = useStyles();
+  const [username,setUsername] = useState("");
+  const [password,setPassword] = useState("");
+  const [navigate, setNavigate] = useState(false);
 
-        <div className="option-text">or use your email for registration</div>
+  const submit = async e => {
+    console.log("going forward")
+    e.preventDefault();
+    
+    const {data} = await axios.post('http://localhost:1999/user/login', {
+      username,password
+    });
 
-        <Row gutter={{ xs: 8, sm: 16 }}>
-          <Col className="gutter-row" xs={{ span: 24 }} md={{ span: 12 }}>
-            <Form.Item
-              hasFeedback
-              name="firstName"
-              label="First name"
-              labelCol={{ span: 24 }}
-              wrapperCol={{ span: 24 }}
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your first name.",
-                },
-                {
-                  min: 2,
-                  message: "Your first name must be at least 2 characters.",
-                },
-              ]}
-            >
-              <Input placeholder="First name" size="large" />
-            </Form.Item>
-          </Col>
-          <Col className="gutter-row" xs={{ span: 24 }} md={{ span: 12 }}>
-            <Form.Item
-              hasFeedback
-              name="lastName"
-              label="Last name"
-              labelCol={{ span: 24 }}
-              wrapperCol={{ span: 24 }}
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your last name.",
-                },
-                {
-                  min: 2,
-                  message: "Your last name must be at least 2 characters.",
-                },
-              ]}
-            >
-              <Input placeholder="Last name" size="large" />
-            </Form.Item>
-          </Col>
-        </Row>
+    axios.defaults.headers.common['Authorization'] = `Bearer ${data['token']}`;
 
-        <Form.Item
-          name="email"
-          label="Email address"
-          labelCol={{ span: 24 }}
-          wrapperCol={{ span: 24 }}
-          hasFeedback
-          rules={[
-            {
-              required: true,
-              message: "Please input your email.",
-            },
-            {
-              type: "email",
-              message: "Your email is invalid.",
-            },
-          ]}
-        >
-          <Input placeholder="Email" size="large" />
-        </Form.Item>
+    console.log(data);
 
-        <Row gutter={{ xs: 8, sm: 16 }}>
-          <Col className="gutter-row" xs={{ span: 24 }} md={{ span: 12 }}>
-            <Form.Item
-              name="password"
-              label="Password"
-              labelCol={{ span: 24 }}
-              wrapperCol={{ span: 24 }}
-              hasFeedback
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your password.",
-                },
-                { min: 6, message: "Password must be minimum 6 characters." },
-              ]}
-            >
-              <Input.Password placeholder="Password" size="large" />
-            </Form.Item>
-          </Col>
 
-          <Col className="gutter-row" xs={{ span: 24 }} md={{ span: 12 }}>
-            <Form.Item
-              name="confirm"
-              label="Confirm Password"
-              labelCol={{ span: 24 }}
-              wrapperCol={{ span: 24 }}
-              dependencies={["password"]}
-              hasFeedback
-              rules={[
-                {
-                  required: true,
-                  message: "Confirm your password.",
-                },
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    if (!value || getFieldValue("password") === value) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject(
-                      new Error(
-                        "The two passwords that you entered do not match!"
-                      )
-                    );
-                  },
-                }),
-              ]}
-            >
-              <Input.Password placeholder="Confirm password" size="large" />
-            </Form.Item>
-          </Col>
-        </Row>
+    setNavigate(true);
+  }
 
-        <Form.Item>
-          <Form.Item
-            name="agree"
-            valuePropName="checked"
-            noStyle
-            rules={[{ validator: validation }]}
-          >
-            <Checkbox checked={checked} onChange={onCheckboxChange}>
-              I agree to <a href="#">Terms of Use & Privacy policy</a>.
-            </Checkbox>
-          </Form.Item>
-        </Form.Item>
+  if (navigate) {
+    return <Navigate to="/dashboard"/>;
+  }
 
-        <Button
-          type="primary"
-          loading={loading}
-          className="form-submit-btn"
-          htmlType="submit"
-          shape="round"
-          icon={<UserAddOutlined />}
-          size="large"
-        >
-          Sign Up
-        </Button>
-      </Form>
-    </>
-  );
+  return(  
+    
+    
+            <Row  justify="center" style={{ padding:"10%"}}> 
+                      
+              <Form >
+                <img className={classes.imgg} src="ebs.png" />
+
+                <Form.Item rules={[{ required: true, message: 'Please input your Username!' }]} >
+                  <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" className={classes.frmItem} onChange={e => setUsername(e.target.value)}/>
+                </Form.Item> 
+                <a className="login-form-forgot" href="">
+                Forgot password?
+                </a>
+                <Form.Item rules={[{ required: true, message: 'Please input your Password!' }]}>
+                  <Input type="password" prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" className={classes.frmItem} onChange={e => setPassword(e.target.value)}/>
+                </Form.Item> 
+                
+                <Form.Item>
+                  <Button htmlType="submit" onClick={submit} className={classes.btnCenter}>Login</Button><br/>
+                  Don't have an account yet? <a href="">Register</a> 
+                </Form.Item> 
+              </Form>
+            </Row>
+        
+
+  )
+
 }
+
+export default Login

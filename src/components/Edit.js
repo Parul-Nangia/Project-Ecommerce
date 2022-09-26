@@ -2,121 +2,160 @@ import { Typography, Box, makeStyles, Grid, TextField, Button } from "@material-
 import { deepPurple, green } from '@material-ui/core/colors';
 // import { useState, useEffect } from "react";
 import { useNavigate, useParams} from "react-router-dom";
-import { useState, useEffect } from "react";
-// import axios from "axios";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 
 
 const useStyles = makeStyles({
-    headingColor: {
-     backgroundColor: deepPurple[400],
-     color: "white"
-    },
-    addempuColor: {
-     backgroundColor: green[400],
-     color: "white"
-    },
+
+    addEmpColor: {
+      backgroundColor: "#87CEFA",
+      textAlign: "center",
+      marginBottom: "5px",
+      color: "#000000",
+      marginTop: "30px",
+      fontWeight: "bold",
+      marginTop:"80px"
+  
+  
+    }
    
    });
 
 
 
-
 const Edit = () => {
-    const navigate = useNavigate();
-    const classes = useStyles();
-    const { _id } = useParams();
-    const history = useHistory();
-    const [student, setStudent] = useState({
-     stuname: "",
-     email: ""
-    });
+
+ 
+  // const [employs, setEmploys] = useState([])
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [gender, setGender] = useState("");
+  const params  = useParams();
+  const classes = useStyles();
+  const navigate = useNavigate();
+  // const [employ, setEmploy] = useState({
+  //   name: "",
+  //   email: "",
+  //   phone:"",
+  //   gender:""
+  //  });
+
+
+  useEffect(() => {
+    getEmployeeDetails();
+  },[])
+
+
+  const getEmployeeDetails = async () => {
+    let employee = await fetch(`http://localhost:1999/employee/${params._id}`);
+    employee = await employee.json();
+    console.warn(employee)
    
+
+    setName(employee.name)
+    setEmail(employee.email)
+    setPhone(employee.phone)
+    setGender(employee.gender)
+  }
+ 
+
+
+
+  function updateEmployee()
+  {
+    let item={name, email, phone, gender}
+    console.warn("item",item)
+    fetch(`http://localhost:1999/employee/${params._id}`, {
+      method: 'PUT',
+      headers:{
+        'Accept':'application/json',
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify(item)
+    }).then((result) => {
+      result.json().then((resp) => {
+        console.warn(resp)
+        // employeeList()
+      })
+    })
+  }
+
 
  
 
 
 
-    return (
-        <>
-        <Box textAlign="center" p={2} className={classes.headingColor} mb={2}>
-          <Typography variant="h2">React CRUD with API Call</Typography>
-        </Box>
-      
-        <Grid container justifyContent="center" spacing={4}>
-          <Grid item md={6} xs={12}>
-            <Box textAlign="center" p={2} className={classes.addempuColor} mb={2}>
-              <Typography variant="h4">Edit Student</Typography>
-            </Box>
-            <form>
-              <Grid container spacing={2}>
 
-                <Grid item xs={12} sm={6}>
-                  <TextField autoComplete="id"  variant="outlined"  fullWidth autoFocus value={_id} disabled  label="ID"/>
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField   variant="outlined"  required fullWidth value={name}  label="Name" />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField autoComplete="email"  variant="outlined"  required fullWidth  value={email} label="Email" />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField autoComplete="phone"variant="outlined"   required fullWidth  value={phone}  label="Phone"/>
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField autoComplete="gender"  variant="outlined"   required fullWidth value={gender} label="Gender"/>
-                </Grid>
-             
-              </Grid>
-              <Box m={3}>
-                <Button type="button" variant="contained" color="primary" onClick={updateEmployee}> Update </Button>
-              </Box>
-            </form>
-            <Box m={3} textAlign="center">
-              <Button variant="contained" color="primary" onClick={()=>navigate("/dashboard")}>Back to Home</Button>
-            </Box>
-          </Grid>
-         </Grid >
-        </>
-       )
-}
-      
-
-export default Edit
-
-
-
-
-
-
-
-  //   const {_id} = useParams();
-  //   const [employ, setEmploy] = useState([]);
-    
-  //   const [name,setName] = useState("");
-  //   const [email,setEmail] = useState("");
-  //   const [phone,setPhone] = useState("");
-  //   const [gender,setGender] = useState("");
-
-
-  //   useEffect(()=> {
-  //     async function editEmployee(){
-  //     try {
-  //       const employ = await axios.get(`http://localhost:1999/employee/${_id}`)
-  //       setEmploy(employ.data);
-
-  //     } catch (error) {
-  //       console.log("unable to fetch api for editing employee")
-  //     }
-  //   }
-  //   editEmployee();
-  //   }, [_id])
   
+  //  useEffect(() => {
+  //   async function getEmployeeDetails() {
+     
+  //    try {
+  //     const employ = await axios.put(`http://localhost:1999/employee/${_id}`)
+  //     console.log(employ.data);
+  //     setEmploy(employ.data);
+  //    } catch (error) {
+  //     console.log("Something is Wrong");
+  //    }
+  //   }
+  //   getEmployeeDetails();
+  //  }, [_id]);
 
 
-  // function handleChange(e) {
-  //   setName(e.target.value);
-  //   setEmail(e.target.value);
-  //   setPhone(e.target.value);
-  //   setGender(e.target.value);
-  // }
 
+
+  // function onTextFieldChange(e) {
+  //   setEmploy({
+  //    ...employ,
+  //    [e.target.name]: e.target.value
+  //   })
+  //  }
+
+
+  function handleClick() {
+    navigate("/dashboard")
+     }
+
+
+   
+    return (
+     <>
+     
+   
+      <Grid container justifyContent="center" spacing={4}>
+       <Grid item md={6} xs={12}>
+        <Box textAlign="center" p={2} className={classes.addEmpColor} mb={2}>
+         <Typography variant="h4">Update Employee</Typography>
+        </Box>
+        <form>
+         <Grid container spacing={2}>
+          <Grid item xs={12}>
+           <TextField autoComplete="name" variant="outlined" required fullWidth name="name"   onChange={(e) => { setName(e.target.value)}} label="Name" />
+          </Grid>
+          <Grid item xs={12}>
+           <TextField autoComplete="email" variant="outlined" required fullWidth name="email"  onChange={(e) => { setEmail(e.target.value)}} label="Email Address" />
+          </Grid>
+          <Grid item xs={12}>
+           <TextField autoComplete="phone" variant="outlined" required fullWidth name="phone"  onChange={(e) => { setPhone(e.target.value)}} label="Phone" />
+          </Grid>
+          <Grid item xs={12}>
+           <TextField autoComplete="gender" variant="outlined" required fullWidth name="gender"  onChange={(e) => { setGender(e.target.value)}} label="Gender"/>
+          </Grid>
+         </Grid>
+         <Box m={3} textAlign="center">
+          <Button type="button" variant="contained" color="primary"   onClick={updateEmployee}> Update </Button>
+         </Box>
+        </form>
+        <Box m={3} textAlign="center">
+         <Button variant="contained" color="primary" onClick={handleClick}>Back to Home</Button>
+        </Box>
+       </Grid>
+      </Grid >
+     </>
+    )
+   }
+   
+   export default Edit

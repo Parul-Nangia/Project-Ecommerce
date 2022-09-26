@@ -1,5 +1,8 @@
 import { Card } from 'antd';
+import axios from 'axios';
 import React from 'react';
+import Sidebar from '../components/Sidebar';
+import Navbar from './Navbar';
 
 
 
@@ -45,19 +48,26 @@ let main3 = {
 
 const Dashboard = () => {
   
-  return (
 
-    <>
+
   
+  return (
+   <>
+     
+      <Sidebar>
+     
     
-    <div style={{ display : "flex", justifyContent : "space-between"}}> 
-      <Card style={main1}>LEAVE TAKEN</Card>
-      <Card style={main2} >PENDING LEAVES</Card>
-      <Card style={main3}>UPCOMING HOLIDAYS</Card>
-    
-    </div>
+        <div style={{ display : "flex", justifyContent : "space-between"}}> 
+          <Card style={main1}>LEAVE TAKEN</Card>
+          <Card style={main2} >PENDING LEAVES</Card>
+          <Card style={main3}>UPCOMING HOLIDAYS</Card>
+        
+        </div>
+        
+      </Sidebar>
+      
     </>
   );
 };
 
-export default Dashboard;
+export default Dashboard

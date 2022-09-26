@@ -1,15 +1,22 @@
 import React from 'react';
 import LeaveTable from '../components/LeaveTable';
 import LeaveCards from '../components/LeaveCards';
+import Sidebar from './Sidebar';
+
+
 
 const Leave = () => {
   return (
     <>
-    <div>
-      <LeaveCards/>
-      <LeaveTable/>
+      <Sidebar>
       
-    </div>
+          <div>
+            <LeaveCards/>
+            <LeaveTable/>
+            
+          </div>
+        
+      </Sidebar>  
     </>
   );
 };
