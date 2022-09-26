@@ -13,7 +13,7 @@ import Sidebar from '../components/Sidebar';
 const Layout = () => {
     return <>
         <BrowserRouter>
-            <Sidebar>
+            {/* <Sidebar> */}
                 <Routes>
                     <Route path="/" element={<Login/>}/>
                     <Route path="/dashboard"element={<Dashboard/>}/>
@@ -28,7 +28,7 @@ const Layout = () => {
                     <Route path="employees/edit/:id"element={<Edit/>}/>
 
                 </Routes>
-            </Sidebar>
+            {/* </Sidebar> */}
         </BrowserRouter>
     </>;
 };

@@ -1,136 +1,96 @@
-import {Form,Checkbox,Input,Select, Button} from "antd";
-import React from "react";
-import {useState} from 'react';
-import axios from 'axios';
-import {Link} from 'react-router-dom';
-import './Login.css'
+import React from 'react';
+import { Row, Form, Input, Button } from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import {makeStyles} from "@material-ui/core";
+import axios from "axios";
+import {Navigate} from "react-router-dom";
+import { useState } from "react";
 
 
-
-function Login() {
-  const[user,setUser]=useState('');
-  const[password,setPassword]=useState('');
-  console.log({user,password})
-
-  const handleUser = (e) => {
-    setUser(e.target.value)
-  }
-
-
-  const handlePassword = (e) => {
-    setPassword(e.target.value)
-  }
-
-  const handleApi = () => {
-    console.log({user,password})
-    axios.post('http://localhost:1999/user/login',{
-      user: user,
-      password: password
-    })
-    .then(result=>{
-      console.log(result.data)
-      alert('success')
-
-    })
-
-    .catch(error=>{
-      console.log(error)
-      alert('error')
-    })
-
-
-  }
-
-    return (
-      <body className="back-bg">
-        <div className="Logo">
-          <img src="ebs.png" height="150" weight="150"  >
-           
-
-          </img>
-        </div>
-      
-      <div className="App" >
-        {/* <header className="page"> */}
-          
-          <Form 
-          autoComplete="off" 
-
-          labelCol={{span:10}}  
-          wrapperCol={{span:15}}>
-            <Form.Item 
-            name="user" 
-            label="User"
-            rules={[
-              {
-                required: true,
-                message: "Please enter user"
+const useStyles = makeStyles({
+  frmItem: {
+    padding:"10px",
+    width:"50vh"
+       
+  },
+  btnCenter: {
+    padding:"10px",
+    width:"50vh",
+    height:"60px",
+    backgroundColor:"#FF4500",
+    "&:hover": {
+      borderRadius: 4,
+      backgroundColor: "#C0C0C0",
+      color:"black"
+    },
+  },
+     
   
+  imgg:{
+    width: "40%",
+    margin: "auto",
+    display: "block",
+
+    
+  }
+  
+})
+
+
+const Login = () => {
+  const classes = useStyles();
+  const [username,setUsername] = useState("");
+  const [password,setPassword] = useState("");
+  const [navigate, setNavigate] = useState(false);
+
+  const submit = async e => {
+    console.log("going forward")
+    e.preventDefault();
+    
+    const {data} = await axios.post('http://localhost:1999/user/login', {
+      username,password
+    });
+
+    axios.defaults.headers.common['Authorization'] = `Bearer ${data['token']}`;
+
+    console.log(data);
+
+
+    setNavigate(true);
+  }
+
+  if (navigate) {
+    return <Navigate to="/dashboard"/>;
+  }
+
+  return(  
+    
+    
+            <Row  justify="center" style={{ padding:"10%"}}> 
+                      
+              <Form >
+                <img className={classes.imgg} src="ebs.png" />
+
+                <Form.Item rules={[{ required: true, message: 'Please input your Username!' }]} >
+                  <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" className={classes.frmItem} onChange={e => setUsername(e.target.value)}/>
+                </Form.Item> 
+                <a className="login-form-forgot" href="">
+                Forgot password?
+                </a>
+                <Form.Item rules={[{ required: true, message: 'Please input your Password!' }]}>
+                  <Input type="password" prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" className={classes.frmItem} onChange={e => setPassword(e.target.value)}/>
+                </Form.Item> 
                 
-                
-              },
-              {whitespace: true},
-              {min:9},
-  
-              ]}
-              hasFeedback
-          >
-              <Input placeholder="User" value={user} onChange={(e) => handleUser(e.target.value)} />
-              </Form.Item>
+                <Form.Item>
+                  <Button htmlType="submit" onClick={submit} className={classes.btnCenter}>Login</Button><br/>
+                  Don't have an account yet? <a href="">Register</a> 
+                </Form.Item> 
+              </Form>
+            </Row>
+        
 
+  )
 
-              <Form.Item
-                name="password"
-                label="Password"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-                hasFeedback
-  
-              >
-  
-              <Input.Password placeholder="Password" value={password} onChange={(e) => handlePassword(e.target.value)} />
-              </Form.Item>
-  
-  
-  
-              <Form.Item 
-                name="role" 
-                label="Role">
-              <Select placeholder="Select Your Role">
-                <Select.Option value="hr">HR</Select.Option>
-                <Select.Option value="staff">Staff</Select.Option>
-                <Select.Option value="admin">Admin</Select.Option>
-  
-              </Select>
-              </Form.Item>
-  
-  
-              <Form.Item 
-                name="Contact Us" 
-                wrapperCol={{span:24}}>
-              <Checkbox>For Any Query Contact to <a href="#">HR</a></Checkbox>
-              </Form.Item>
-  
-              <Form.Item wrapperCol={{span:24}}>
-              <Link to ='/dashboard'>
-              <Button block type="primary" onClick={handleApi} >Login</Button>
-              </Link>
-  
-              </Form.Item>
-  
-          </Form>
-  
-        {/* </header> */}
+}
 
-      </div>
-
-      </body>
-      
-      
-    );
-  }
-
-  export default Login;
+export default Login
