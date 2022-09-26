@@ -1,9 +1,8 @@
 import { Card } from 'antd';
 import axios from 'axios';
 import React from 'react';
-import Sidebar from '../components/Sidebar';
 import Navbar from './Navbar';
-import React, { useEffect,useState } from 'react';
+import { useEffect,useState } from 'react';
 import Charts from './Charts';
 import Header from './Header';
 import Sidebar from './Sidebar';
@@ -61,7 +60,7 @@ const Dashboard = () => {
     <>
 
     <Sidebar>
-      
+
       <Header />
     
     

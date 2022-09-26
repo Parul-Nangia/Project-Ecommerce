@@ -21,16 +21,18 @@ const useStyles = makeStyles({
 const View = () => {
     const navigate = useNavigate();
     const classes = useStyles();
-    const { id } = useParams();   // useparams return dynamic id
+    const {_id} = useParams();
+    console.log(_id)   
     const [employ, setEmploy] =useState([]);
  
 
     useEffect(()=>{
         async function getOneEmploy(){
             try{
-                const employ = await axios.get(`http://localhost:1999/employee/${id}`)
-                // console.log(employee.data);
-                setEmploy(employ.data)
+                const employ = await axios.get(`http://localhost:1999/employee/${_id}`)
+                console.log(employ.data);
+                // setEmploy(employ.data)
+                // console.log(employ._id)
         
             } catch(error){
                 console.log("Something went Wrong");
@@ -38,7 +40,7 @@ const View = () => {
         }
 
         getOneEmploy();
-     },  [id])
+     },  [_id])
     
     
 
@@ -64,7 +66,7 @@ const View = () => {
            </TableHead>
            <TableBody>
             <TableRow>
-             <TableCell align="center">{employ.id}</TableCell>
+             <TableCell align="center">{employ._id}</TableCell>
              <TableCell align="center">{employ.name}</TableCell>
              <TableCell align="center">{employ.email}</TableCell>
              <TableCell align="center">{employ.phone}</TableCell>

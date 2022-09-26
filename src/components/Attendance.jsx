@@ -12,16 +12,10 @@ const Attendance = () => {
     <>
     <Header/>
       <Sidebar>
-        <div>
-
-
-        
-            
+        <div>           
           <AttendanceCards/>
-          <AttendanceTable/>
-        
-      
-        </div>
+          <AttendanceTable/>     
+      </div>
       </Sidebar>  
     </>
   );
