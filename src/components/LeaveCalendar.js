@@ -20,6 +20,7 @@ const LeaveCalendar = () => {
   return (
     
       <>
+      <h2>Calendar</h2>
       <Alert message={`You selected date: ${selectedValue?.format('YYYY-MM-DD')}`} />
       <Calendar value={value} onSelect={onSelect} onPanelChange={onPanelChange} />
       </>
