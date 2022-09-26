@@ -1,19 +1,47 @@
 import React from 'react';
-import {Menu} from 'antd';
+import Logo from './AttendanceCards';
+import { NavLink } from 'react-router-dom';
+import Dashboard from './Dashboard';
+import {makeStyles} from "@material-ui/core"
 
-function AppHeader(){
-    return (
-        <div className="container-fluid">
-            <div className="header">
-                <div className="logo"/>
-                <Menu mode="horizontal" defaultSelectedKeys={[2]}>
 
-                    <Menu.Item key="1">Logout</Menu.Item>
+const useStyles = makeStyles({
+nl :{ 
+    backgroundColor:"#87CEEB",
+    padding:"13px",
+    marginTop:"-27px",
+   
+    
 
-                </Menu>
-            </div>
-        </div>
-    );
+},
+// n2:{
+//     color:"Black",
+//     fontWeight:"bold",
+//     marginTop:"2px",
+    
+    
+// }
+})
+const Header=()=>{
+    const classes = useStyles();
+    return(
+
+        <nav>
+            <div className="div-header">
+                
+                <div className={classes.nl}>
+                    <NavLink to="/" className={classes.n2}>Logout</NavLink>
+                    
+                </div>
+            </div>    
+            
+
+
+        </nav>
+
+    )
+
 }
 
-export default AppHeader;
+export default Header
+    
