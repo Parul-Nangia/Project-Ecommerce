@@ -1,7 +1,11 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import './App.css';
-import Layout  from './components/Layout';
+import Routing  from './components/Routing';
+
+
+
+
 
 
 
@@ -12,13 +16,19 @@ function App() {
   
 
   return (
+    <>
+    
+      <Routing />
 
-    <Layout/>
+      
+      
+    </>
+  );
+
 
 
    
 
-    );
 
 }
 

@@ -16,20 +16,21 @@ return (
     <>
     <Sidebar>
       <Header/>
-    <div>
-    
-      <LeaveCards/>
-      
-          <Link to="/leaveform"></Link>
-          <br/>
-          <button onClick={()=> navigate('/leaveform')}>Apply Leave</button>
-          <br/>
-          <br/>
-         <button onClick={()=> navigate('/leavecalendar')}>Calendarview</button>
+        <div>
+        
+          <LeaveCards/>
           
-         {views ? <LeaveTable/> : <LeaveCalendar/>}
-      
-    </div>
+              <Link to="/leaveform"></Link>
+              <br/>
+              <button onClick={()=> navigate('/leaveform')}>Apply Leave</button>
+              <br/>
+              <br/>
+            <button onClick={()=> navigate('/leavecalendar')}>Calendarview</button>
+              
+            {views ? <LeaveTable/> : <LeaveCalendar/>}
+          
+        </div>
+
     </Sidebar>
     </>
   );
