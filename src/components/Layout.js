@@ -1,6 +1,4 @@
 import React from 'react';
-// import { BrowserRouter } from 'react-router-dom/dist';
-// import Login from './pages/Login.js';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Dashboard from '../components/Dashboard';
 import Attendance from '../components/Attendance';
@@ -19,7 +17,7 @@ import LeaveCalendar from '../components/LeaveCalendar'
 const Layout = () => {
     return <>
         <BrowserRouter>
-            <Sidebar>
+           
                 <Routes>
                     <Route path="/" element={<Login/>}/>
                     <Route path="/dashboard"element={<Dashboard/>}/>
@@ -39,7 +37,7 @@ const Layout = () => {
                     <Route path="employees/edit/:id"element={<Edit/>}/>
 
                 </Routes>
-            </Sidebar>
+            
            
         </BrowserRouter>
     </>;
