@@ -10,10 +10,10 @@ import View from '../components/View';
 import Sidebar from '../components/Sidebar';
 
 
-const Layout = () => {
+const Routing = () => {
     return <>
         <BrowserRouter>
-            {/* <Sidebar> */}
+           
                 <Routes>
                     <Route path="/" element={<Login/>}/>
                     <Route path="/dashboard"element={<Dashboard/>}/>
@@ -28,9 +28,9 @@ const Layout = () => {
                     <Route path="employees/edit/:id"element={<Edit/>}/>
 
                 </Routes>
-            {/* </Sidebar> */}
+           
         </BrowserRouter>
     </>;
 };
 
-export default Layout;
+export default Routing;
