@@ -8,7 +8,7 @@ let m1 = {
     margin: "20px", 
     textAlign: "center", 
     padding:"10px", 
-    background : "skyblue",
+    background : "#FF4500",
     borderRadius:"20px",
     fontWeight: "bold",
     fontSize: "large"
@@ -20,7 +20,7 @@ let m1 = {
     margin: "20px",
     textAlign: "center", 
     padding:"10px", 
-    background : "skyblue",
+    background : "#FF4500",
     borderRadius:"20px",
     fontWeight: "bold",
     fontSize: "large"
@@ -33,7 +33,7 @@ let m1 = {
     margin: "20px", 
     textAlign: "center", 
     padding:"10px", 
-    backgroundColor : "skyblue",
+    backgroundColor : "#FF4500",
     borderRadius:"20px",
     fontWeight: "bold",
     fontSize: "large"
@@ -46,7 +46,7 @@ let m1 = {
     margin: "20px", 
     textAlign: "center", 
     padding:"10px", 
-    backgroundColor : "skyblue",
+    backgroundColor : "#FF4500",
     borderRadius:"20px",
     fontWeight: "bold",
     fontSize: "large"

@@ -7,14 +7,29 @@ import LeaveCalendar from '../components/LeaveCalendar';
 import Sidebar from '../components/Sidebar';
 
 import Navbar from '../components/Navbar';
+import { makeStyles } from "@material-ui/core";
 
 import { Button } from 'antd';
 
-
+const useStyles = makeStyles({
+  btnCenter: {
+    padding:"10px",
+    width:"50vh",
+    height:"60px",
+    fontWeight:"bold",
+    backgroundColor:"#FF4500",
+    "&:hover": {
+      borderRadius: 4,
+      backgroundColor: "white",
+      color:"black"
+    },
+  },
+  })
 
 
 
 const Leave = (props) => {
+  const classes = useStyles();
   const navigate = useNavigate();
   const views = ["tableview" , "calendarview"];
        
@@ -28,10 +43,10 @@ return (
           
               <Link to="/leaveform"></Link>
               <br/>
-              <Button type='primary' onClick={()=> navigate('/leaveform')}>Apply Leave</Button>
+              <Button className={classes.btnCenter} onClick={()=> navigate('/leaveform')}>Apply Leave</Button>
               <br/>
               <br/>
-            <Button type='primary' onClick={()=> navigate('/leavecalendar')}>Calendarview</Button>
+            <Button className={classes.btnCenter} onClick={()=> navigate('/leavecalendar')}>Calendarview</Button>
               
             {views ? <LeaveTable/> : <LeaveCalendar/>}
           
