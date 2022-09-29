@@ -15,7 +15,7 @@ main{
 }
 .sidebar{
     background: #FF4500;
-    color: #fff;
+    color: black;
     height: 100vh;
     transition: all 0.5s;
     position: fixed; 
@@ -27,9 +27,7 @@ main{
     align-items:center;
     padding:20px 15px;
 }
-.logo{
-    font-size: 30px;
-}
+
 .bars{
     display: flex;
     font-size: 25px;
@@ -44,7 +42,7 @@ main{
 }
 .link:hover{
     background: whitesmoke;
-    color: #000;
+    color: black;
     transition: all 0.5s;
 }
 /* .active{
