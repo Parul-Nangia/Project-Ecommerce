@@ -84,7 +84,6 @@ const Login = () => {
                 
                 <Form.Item>
                   <Button htmlType="submit" onClick={submit} className={classes.btnCenter}>Login</Button><br/>
-                  Don't have an account yet? <a href="">Register</a> 
                 </Form.Item> 
               </Form>
             </Row>
