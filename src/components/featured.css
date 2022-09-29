@@ -12,7 +12,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: grey;
+    color:black;
 
 }
 
@@ -32,8 +32,8 @@
 }
 
 .featuredChart{
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     
 
 }

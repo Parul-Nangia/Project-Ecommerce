@@ -10,6 +10,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link, useNavigate , useParams } from "react-router-dom";
 import axios from "axios";
+import Navbar from './Navbar';
 
 
 
@@ -147,6 +148,7 @@ const Employees = () => {
 
   return (
     <>
+      <Navbar />
       <Sidebar>
 
         <Box textAlign="center" className={classes.headingColor} p={2} mb={2}>

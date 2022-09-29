@@ -5,6 +5,7 @@ import LeaveTable from '../components/LeaveTable';
 import LeaveCalendar from '../components/LeaveCalendar';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
+import Navbar from '../components/Navbar';
 
 
 const Leave = (props) => {
@@ -14,8 +15,8 @@ const Leave = (props) => {
        
 return (
     <>
+    <Navbar />
     <Sidebar>
-      <Header/>
         <div>
         
           <LeaveCards/>

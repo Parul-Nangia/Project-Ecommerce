@@ -50,12 +50,12 @@
     color: red;
 }
 
-.icon{
-    font-size: 18px;
+.Icon{
+    font-size:8px;
     padding: 5px;
     border-radius: 5px;
     align-self: flex-end;
-    background-color: rgba(128,0,128,0.541);
+    background-color: rgba(228, 47, 47, 0.541);
 }
         
 
