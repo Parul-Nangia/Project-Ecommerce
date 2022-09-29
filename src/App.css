@@ -13,11 +13,12 @@ main{
     padding: 20px;
 }
 .sidebar{
-    background: #000;
+    background: #FF4500;
     color: #fff;
     height: 100vh;
     width: 200px;
     transition: all 0.5s;
+    position: fixed;
 }
 .top_section{
     display: flex;
@@ -40,14 +41,14 @@ main{
     transition: all 0.5s;
 }
 .link:hover{
-    background:lightskyblue;
+    background: whitesmoke;
     color: #000;
     transition: all 0.5s;
 }
-.active{
+/* .active{
     background: lightskyblue;
     color: #000;
-}
+} */
 .icon, .link_text{
     font-size: 20px;
 }

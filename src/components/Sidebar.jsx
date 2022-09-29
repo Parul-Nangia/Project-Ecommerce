@@ -1,77 +1,81 @@
-import React from 'react';
-import { useState } from 'react';
-
-
+import React, { useState } from 'react';
 import {
-
-  FaRegChartBar,
-  FaTh,
-  FaThList,
-  FaUserAlt,
-  FaBars
+    FaTh,
+    FaBars,
+    FaUserAlt,
+    FaRegChartBar,
+    FaCommentAlt,
+    FaShoppingBag,
+    FaThList
 }from "react-icons/fa";
 import { NavLink } from 'react-router-dom';
-
-
-
+import { 
+    FcAlarmClock, 
+    FcBusinessman ,
+    FcMenu,
+    FcHome,
+    FcInvite
+} from "react-icons/fc";
 
 const Sidebar = ({children}) => {
-  const[isOpen , setIsOpen] = useState(false);
-  const toggle = () => setIsOpen (!isOpen);
-  const menuItem=[
-    {
+    const[isOpen ,setIsOpen] = useState(false);
+    const toggle = () => setIsOpen (!isOpen);
+    const menuItem=[
+{
 
       path:"/dashboard",
       name:"Dashboard",
-      icon:<FaTh/>
+      icon:<FcHome/>
 
     },
     {
 
       path:"/attendance",
       name:"Attendance",
-      icon:<FaUserAlt/>
+      icon:<FcAlarmClock/>
 
     },
     {
 
       path:"/employees",
       name:"Employees",
-      icon:<FaRegChartBar/>
+      icon:<FcBusinessman/>
 
     },
     {
 
       path:"/leave",
       name:"Leave",
-      icon:<FaThList/>
+      icon:<FcInvite/>
 
     }
 
-  ]
 
-  return (
-    <div className="container">
-      <div style={{ width: isOpen ? "300px" :"50px" }} className="sidebar">
-        <div className="top_section">
-          <h1 style={{ display: isOpen ? "block" :"none" }} className="logo">Logo</h1>
-          <div style={{ marginleft: isOpen ? "50px" :"0px" }} className="bars">
-            <FaBars onClick={toggle}/>
-          </div>
+
+
+
+   ]
+    return (
+        <div className="container">
+           <div style={{width: isOpen ? "200px" : "50px"}} className="sidebar">
+               <div className="top_section">
+                   <h1 style={{display: isOpen ? "block" : "none"}} className="logo">Logo</h1>
+                   <div style={{marginLeft: isOpen ? "50px" : "0px"}} className="bars">
+                       <FcMenu onClick={toggle}/>
+                   </div>
+               </div>
+               {
+                   menuItem.map((item, index)=>(
+                       <NavLink to={item.path} key={index} className="link" activeclassName="active">
+                           <div className="icon">{item.icon}</div>
+                           <div style={{display: isOpen ? "block" : "none"}} className="link_text">{item.name}</div>
+                       </NavLink>
+                   ))
+               }
+           </div>
+           <main>{children}</main>
         </div>
-        {
-          menuItem.map((item, index)=>(
-            <NavLink to={item.path} key={index} className="link" activeclassname="active">
-              <div className="icon">{item.icon}</div>
-              <div style={{ display: isOpen ? "block" :"none" }} className="link_text">{item.name}</div>
-            </NavLink>
-          ))
-        }
-        </div>
-      <main>{children}</main>
-      
-    </div>
-  );
+    );
 };
 
 export default Sidebar;

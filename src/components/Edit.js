@@ -1,9 +1,10 @@
-import { Typography, Box, makeStyles, Grid, TextField, Button } from "@material-ui/core"
+import { Typography, Box, makeStyles, Grid, TextField } from "@material-ui/core"
 import { deepPurple, green } from '@material-ui/core/colors';
 // import { useState, useEffect } from "react";
 import { useNavigate, useParams} from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Button, Checkbox, Form, Input } from 'antd';
 
 
 
@@ -124,7 +125,7 @@ const Edit = () => {
     return (
      <>
      
-   
+{/*     
       <Grid container justifyContent="center" spacing={4}>
        <Grid item md={6} xs={12}>
         <Box textAlign="center" p={2} className={classes.addEmpColor} mb={2}>
@@ -153,7 +154,13 @@ const Edit = () => {
          <Button variant="contained" color="primary" onClick={handleClick}>Back to Home</Button>
         </Box>
        </Grid>
-      </Grid >
+      </Grid > */}
+
+
+
+
+
+
      </>
     )
    }
