@@ -10,10 +10,18 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+
 import Navbar from './Navbar';
 import { Button, Checkbox, Form, Input, Row} from 'antd';
 
 import { LockOutlined, UserOutlined , MailOutlined ,PhoneOutlined ,UserSwitchOutlined, CalendarOutlined ,StarOutlined  } from '@ant-design/icons';
+
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import { padding } from "@mui/system";
+
+
+
 
 
 
@@ -28,7 +36,7 @@ const useStyles = makeStyles({
          
     },
   headingColor: {
-    backgroundColor: "#87CEFA",
+    backgroundColor: "#87CEEB",
     color: "#000000",
     marginBottom: "20px",
     textAlign: "center",
@@ -36,17 +44,18 @@ const useStyles = makeStyles({
 
   },
   addEmpColor: {
-    backgroundColor: "#87CEFA",
+    backgroundColor: "#87CEEB",
     textAlign: "center",
     marginBottom: "5px",
     color: "#000000",
     marginTop: "30px",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    paddingTop: "1px"
 
 
   },
   empListColor: {
-    backgroundColor: "#87CEFA",
+    backgroundColor: "#87CEEB",
     color: "#000000",
     textAlign: "center",
     marginTop: "30px",
@@ -55,10 +64,11 @@ const useStyles = makeStyles({
   tableHeadCell: {
     color: "#000000",
     fontWeight: "bold",
-    fontSize: 16
+    fontSize: 16,
+    
   },
   empListColor: {
-    backgroundColor: "#87CEFA",
+    backgroundColor: "#87CEEB",
     color: "#000000",
     textAlign: "center",
     marginTop: "30px",
@@ -101,10 +111,15 @@ const Employees = () => {
 
 
 
+
+
   //================================================= START employee post (POST API)================================================================================ 
   function saveEmployee() {
     console.warn({ name, email, contact, gender });
     let data = { name, email, contact, gender }
+
+  
+
     fetch("http://localhost:1999/employee", {
       method: 'POST',
       headers: {
@@ -114,8 +129,12 @@ const Employees = () => {
       body: JSON.stringify(data)
     }).then((Employee) => {
       console.warn("result", Employee);
+      window.alert("New Employee added successfully")
+      
     })
+    
   }
+ 
 
   //================================================= END employee post (POST API)================================================================================
 
@@ -171,6 +190,7 @@ const Employees = () => {
 
   return (
     <>
+
       <Navbar />
       <Sidebar>
 
@@ -214,36 +234,6 @@ const Employees = () => {
           </Form>
         </Row>
 
-        {/* <Box textAlign="center" className={classes.headingColor} p={2} mb={2}>
-          <Typography variant="h4" className={classes.headingColor}>EMPLOYEE DATA</Typography>
-          <Typography variant="h5" className={classes.addEmpColor}>Total number of employees : {employs.length}</Typography>
-        </Box>
-        <Grid container justifyContent="center" spacing={4}>
-          <Grid item md={6} xs={12}>
-            <Box textAlign="center" p={2} className={classes.addEmpColor} mb={2}>
-              <Typography variant="h5" className={classes.addEmpColor}>NEW EMPLOYEE</Typography>
-            </Box>
-            <form noValidate>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField autoComplete="name" variant="outlined" required fullWidth value={name} onChange={(e) => { setName(e.target.value) }} label="Name" />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField autoComplete="email" variant="outlined" required fullWidth value={email} onChange={(e) => { setEmail(e.target.value) }} label="Email Address" />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField autoComplete="phone" variant="outlined" required fullWidth value={phone} onChange={(e) => { setPhone(e.target.value) }} label="Phone" />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField autoComplete="gender" variant="outlined" required fullWidth value={gender} onChange={(e) => { setGender(e.target.value) }} label="Gender" />
-                </Grid>
-              </Grid>
-              <Box m={3}>
-                <Button type="button" onClick={saveEmployee} variant="contained" style={{ fontWeight: "bold", marginTop: "10px" }}  >Add</Button>
-              </Box>
-            </form>
-          </Grid>
-        </Grid> */}
 
 
 

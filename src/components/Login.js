@@ -7,6 +7,7 @@ import {Navigate} from "react-router-dom";
 import { useState } from "react";
 
 
+
 const useStyles = makeStyles({
   frmItem: {
     padding:"10px",
@@ -64,8 +65,8 @@ const Login = () => {
   }
 
   return(  
-    
-    
+      
+         
             <Row  justify="center" style={{ padding:"10%"}}> 
                       
               <Form >
@@ -87,6 +88,9 @@ const Login = () => {
                 </Form.Item> 
               </Form>
             </Row>
+          
+
+      
         
 
   )

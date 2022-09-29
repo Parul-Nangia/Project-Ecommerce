@@ -30,19 +30,14 @@ const Edit = () => {
 
  
   // const [employs, setEmploys] = useState([])
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [gender, setGender] = useState("");
-  const params  = useParams();
+  const [name, setName] = React.useState(' ');
+  const [email, setEmail] = React.useState(' ');
+  const [phone, setPhone] = React.useState(' ');
+  const [gender, setGender] = React.useState(' '); 
+  const {_id}  = useParams();
   const classes = useStyles();
   const navigate = useNavigate();
-  // const [employ, setEmploy] = useState({
-  //   name: "",
-  //   email: "",
-  //   phone:"",
-  //   gender:""
-  //  });
+
 
 
   useEffect(() => {
@@ -51,15 +46,14 @@ const Edit = () => {
 
 
   const getEmployeeDetails = async () => {
-    let employee = await fetch(`http://localhost:1999/employee/${params._id}`);
-    employee = await employee.json();
-    console.warn(employee)
-   
-
-    setName(employee.name)
-    setEmail(employee.email)
-    setPhone(employee.phone)
-    setGender(employee.gender)
+    let employ = await fetch(`http://localhost:1999/employee/${_id}`);
+    employ = await employ.json();
+    console.warn(employ)
+ 
+    setName(employ.name)
+    setEmail(employ.email)
+    setPhone(employ.phone)
+    setGender(employ.gender)
   }
  
 
@@ -69,7 +63,7 @@ const Edit = () => {
   {
     let item={name, email, phone, gender}
     console.warn("item",item)
-    fetch(`http://localhost:1999/employee/${params._id}`, {
+    fetch(`http://localhost:1999/employee/${_id}`, {
       method: 'PUT',
       headers:{
         'Accept':'application/json',
@@ -134,16 +128,19 @@ const Edit = () => {
         <form>
          <Grid container spacing={2}>
           <Grid item xs={12}>
-           <TextField autoComplete="name" variant="outlined" required fullWidth name="name"   onChange={(e) => { setName(e.target.value)}} label="Name" />
+           <TextField autoComplete="id" name="id" variant="outlined" required fullWidth id="id" label="Employee ID" autoFocus value={_id} disabled />
           </Grid>
           <Grid item xs={12}>
-           <TextField autoComplete="email" variant="outlined" required fullWidth name="email"  onChange={(e) => { setEmail(e.target.value)}} label="Email Address" />
+           <TextField autoComplete="name" variant="outlined" required fullWidth name={name} onChange={(e) => { setName(e.target.value) }} label="Name" />
           </Grid>
           <Grid item xs={12}>
-           <TextField autoComplete="phone" variant="outlined" required fullWidth name="phone"  onChange={(e) => { setPhone(e.target.value)}} label="Phone" />
+           <TextField autoComplete="email" variant="outlined" required fullWidth name={email} onChange={(e) => { setEmail(e.target.value) }} label="Email Address" />
+          </Grid> 
+          <Grid item xs={12}>
+           <TextField autoComplete="phone" variant="outlined" required fullWidth name={phone} onChange={(e) => { setPhone(e.target.value) }} label="Phone" />
           </Grid>
           <Grid item xs={12}>
-           <TextField autoComplete="gender" variant="outlined" required fullWidth name="gender"  onChange={(e) => { setGender(e.target.value)}} label="Gender"/>
+           <TextField autoComplete="gender" variant="outlined" required fullWidth name={gender} onChange={(e) => { setGender(e.target.value) }} label="Gender"/>
           </Grid>
          </Grid>
          <Box m={3} textAlign="center">

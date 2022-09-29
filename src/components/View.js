@@ -7,23 +7,29 @@ import axios from "axios";
 
 
 const useStyles = makeStyles({
-    empdetailColor: {
-     backgroundColor: orange[400],
-     color: "white"
-    },
-    tableHeadCell: {
-     color: "white",
-     fontWeight: "bold",
-     fontSize: 16
-    },
+    headingColor: {
+        backgroundColor: "#87CEFA",
+        color: "#000000",
+        marginBottom: "20px",
+        marginTop:"40px",
+        textAlign: "center",
+        fontWeight: "bold"
+    
+      },
+      tableHeadCell: {
+        color: "#000000",
+        fontWeight: "bold",
+        fontSize: 16
+      },
    });
 
 const View = () => {
     const navigate = useNavigate();
     const classes = useStyles();
     const {_id} = useParams();
-    console.log(_id)   
+    // console.log(_id)   
     const [employ, setEmploy] =useState([]);
+   
  
 
     useEffect(()=>{
@@ -31,8 +37,8 @@ const View = () => {
             try{
                 const employ = await axios.get(`http://localhost:1999/employee/${_id}`)
                 console.log(employ.data);
-                // setEmploy(employ.data)
-                // console.log(employ._id)
+                setEmploy(employ.data)
+                console.log(employ._id)
         
             } catch(error){
                 console.log("Something went Wrong");
@@ -49,14 +55,14 @@ const View = () => {
 
     return (
         <>
-         <Box textAlign="center" p={2} className={classes.empdetailColor}>
-          <Typography variant="h4">Employee Detail</Typography>
+         <Box textAlign="center" p={2} className={classes.headingColor}>
+          <Typography variant="h3">Employee Detail</Typography>
          </Box>
          <TableContainer component={Paper}>
           <Table>
            <TableHead>
-            <TableRow style={{ backgroundColor: "#616161" }}>
-             <TableCell align="center" className={classes.tableHeadCell}>id</TableCell>
+            <TableRow style={{ backgroundColor: "lightgray" }}>
+             <TableCell align="center" className={classes.tableHeadCell}>Id</TableCell>
              <TableCell align="center" className={classes.tableHeadCell}>Name</TableCell>
              <TableCell align="center" className={classes.tableHeadCell}>Email</TableCell>
              <TableCell align="center" className={classes.tableHeadCell}>Phone</TableCell>
