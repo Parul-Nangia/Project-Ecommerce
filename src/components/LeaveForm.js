@@ -1,16 +1,61 @@
-// import { AntDesignOutlined } from '@ant-design/icons'
+
 import React, { useState } from 'react';
-import {Button,DatePicker, Form, Input, InputNumber, Select,Switch,} from 'antd';
+import axios from 'axios';
+import { Form, Input, Button } from 'antd';
+    // const { Option } = Select;
+
 
 const LeaveForm = () => {
-    const [componentSize, setComponentSize] = useState('default');
-    const onFormLayoutChange = ({ size }) => {
-        setComponentSize(size);
-      };
+  const url = "http://localhost:1999/leave"
 
-  return (
+  const [componentSize, setComponentSize] = useState('default');
 
-    <Form
+  const onFormLayoutChange = ({ size }) => {
+    setComponentSize(size);
+  };
+ 
+
+    const [data, setData] = useState({
+      EmployeeName: "",
+      SupervisorName: "",
+      Department: "",
+      LeaveType: "",
+      LeaveDate: "",
+      ReturnDate: "",
+      TotalHoursRequested: "",
+      TotalDaysRequested: ""
+    })
+    
+    const Submit = (e)=>{
+      console.log("dh")
+      console.log(e,"kjfjf")
+       e.preventDefault();
+       axios.post(url,{
+        EmployeeName:data.EmployeeName,
+        SupervisorName:data.SupervisorName,
+        Department:data.Department,
+        LeaveType:data.LeaveType,
+        Leavedate:data.LeaveDate,
+        Returndate:data.ReturnDate,
+        TotalHoursRequested:parseInt(data.TotalHoursRequested),
+        TotalDaysRequested:parseInt(data.TotalDaysRequested)
+       })
+       .then(res => {
+          console.log(res.data)
+       })
+    }
+    
+     function handle(e) {
+      const newdata={...data}
+      newdata[e.target.id] = e.target.value
+      setData(newdata)
+      console.log(newdata)
+
+     }
+
+    return (
+      <div>
+     <Form
     labelCol={{
       span: 4,
     }}
@@ -24,34 +69,58 @@ const LeaveForm = () => {
     onValuesChange={onFormLayoutChange}
     size={componentSize}
   >
-        
-        
-     <Form.Item label="Reason">
-        <Input />
+  
+
+  
+
+    <Form.Item label="EmployeeName"> 
+      
+      <Input onChange = {(e)=> handle(e)} value= {data.EmployeeName}  id="EmployeeName" />
+    </Form.Item>
+      
+      <Form.Item label="SupervisorName">
+           
+      <Input onChange = {(e)=> handle(e)} value= {data.SupervisorName }  id="SupervisorName"/>
       </Form.Item>
-      <Form.Item label="Leavetype">
-        <Select>
-          <Select.Option value="demo">Annual</Select.Option>
-          <Select.Option value="demo">Medical</Select.Option>
-          <Select.Option value="demo">Casual</Select.Option>
-          <Select.Option value="demo">Other</Select.Option>
-        </Select>
+
+      <Form.Item label="Department" > 
+         
+      <Input onChange = {(e)=> handle(e)}  value= {data.Department} id="Department"/>
       </Form.Item>
+     
+      
+      <Form.Item label="LeaveType" >
+           
+       <Input onChange = {(e)=> handle(e)}  value= {data.LeaveType} id="LeaveType"/>
+       </Form.Item>
     
 
-      <Form.Item label="DatePicker">
-        <DatePicker />
+      <Form.Item label="LeaveDate" > 
+      <Input onChange = {(e)=> handle(e)} value= {data.LeaveDate} id="LeaveDate" type="calendar"/> 
+       
       </Form.Item>
-      <Form.Item label="InputNumber">
-        <InputNumber />
+      <Form.Item label="ReturnDate" >
+      <Input onChange = {(e)=> handle(e)} value= {data.ReturnDate} id="ReturnDate" type="calendar"/>
+        
       </Form.Item>
-      <Form.Item label="PaidLeave" valuePropName="checked">
-        <Switch />
+
+      <Form.Item label="TotalHoursRequested" >
+      <Input onChange = {(e)=> handle(e)} value= {data.TotalHoursRequested} id="TotalHoursRequested" type="number" />
+        
       </Form.Item>
-      <Form.Item label="Button">
-        <Button>Button</Button>
+
+      <Form.Item label="TotalDaysRequested">
+      <Input onChange = {(e)=> handle(e)}  value= {data.TotalDaysRequested}  id="TotalDaysRequested"  type="number"  />
+        
       </Form.Item>
-    </Form>
+    
+     {/* <Button onclick= {(e)=> Submit(data)}> Submit </Button> */}
+     <Button onClick={Submit}>Submit</Button>
+
+     </Form>
+     </div>
+     
   );
-};
-export default LeaveForm;
+}
+      
+      export default LeaveForm;

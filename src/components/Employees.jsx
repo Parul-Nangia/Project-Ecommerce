@@ -114,7 +114,7 @@ const Employees = () => {
       console.log("Employee Deleted", _id)
     }
   }
-  //================================================= END employee delete (GET API)================================================================================
+  //================================================= END employee delete (GET API================================================================================
 
 
 
@@ -140,7 +140,7 @@ const Employees = () => {
     employeeList();
 
   },[])
-  //================================================= END employee listing (GET API)================================================================================
+  
 
 
 
@@ -183,7 +183,7 @@ const Employees = () => {
         </Grid>
 
 
-   
+
 
         <Box textAlign="center" p={2} className={classes.empListColor}>
           <Typography variant="h5" className={classes.empListColor}>EMPLOYEE LIST</Typography>

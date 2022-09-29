@@ -1,78 +1,66 @@
-import React from 'react'
-import { Table } from 'antd'
-let l1={
-  flex:"1",
-  height:"300px",
-  width:"1200px",
-  margin:"20px",
+import React, { useState, useEffect } from "react";
+import { Table } from "antd";
+import axios from "axios";
 
-}
+// let l1={
+//   flex:"1",
+//   height:"300px",
+//   width:"1200px",
+//   margin:"20px",
 
-const LeaveTable = () => {
+// }
 
-  const data= [
+function LeaveTable() {
+  const [dataSource, setDataSource] = useState([]);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    await axios.get("http://localhost:1999/leave").then((res) => {
+      console.log(res, "bhvhv");
+      console.log(setDataSource, "davider");
+      console.log(dataSource, "prince");
+      setDataSource(
+        res.data.map((row) => ({
+          EmployeeName: row.EmployeeName,
+          LeaveType: row.LeaveType,
+          Hours: row.TotalHoursRequested,
+          Days: row.TotalDaysRequested,
+          Id: row.id,
+        }))
+      );
+    });
+  };
+  const columns = [
     {
-    leavetype:'Medical',
-     days:2,
-     Reason:'fever',
-     key:1,
-     Status:'Pending',
-  },
-  {
-    leavetype:'Casual',
-     days:1,
-     Reason:'work',
-     key:2,
-     Status:'Approved',
-  },
-  {
-    leavetype:'Annual',
-     days:5,
-     Reason:'vacation',
-     key:3,
-     Status:'Pending'
-  },
-  {
-    leavetype:'Time off',
-     days:1,
-     Reason:'urgent',
-     key:4,
-     Status:'Pending',
-  },
-]
-const columns = [
-  {
-    title:'Leave Type',
-    dataIndex:'leavetype',
-    key:'key',
-},
-{
-  title:'Days',
-  dataIndex:'days',
-  key:'key',
-},
-{
-  title:'Reason',
-  dataIndex:'Reason',
-  key:'key',
-},
-{
-  title:'Status',
-  dataIndex:'Status',
-  key:'key',
-},
+      title: "Id",
+      dataIndex: "Id",
+    },
+    {
+      title: "EmployeeName",
+      dataIndex: "EmployeeName",
+    },
 
-];
- return (
-    
+    {
+      title: "LeaveType",
+      dataIndex: "LeaveType",
+    },
+    {
+      title: "Hours",
+      dataIndex: "Hours",
+    },
+    {
+      title: "Days",
+      dataIndex: "Days",
+    },
+  ];
+  return (
     <>
-    <h1>Table</h1>
-      <Table style={l1}
-        dataSource={data}
-        columns={columns} >
-      </Table>
+      <Table columns={columns} dataSource={dataSource}></Table>
     </>
-  )
+  );
 }
 
 export default LeaveTable;

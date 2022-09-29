@@ -3,15 +3,20 @@ import { Link, useNavigate } from 'react-router-dom'
 import LeaveCards from '../components/LeaveCards';
 import LeaveTable from '../components/LeaveTable';
 import LeaveCalendar from '../components/LeaveCalendar';
-import Header from '../components/Header';
+
 import Sidebar from '../components/Sidebar';
+
 import Navbar from '../components/Navbar';
+
+import { Button } from 'antd';
+
+
+
 
 
 const Leave = (props) => {
   const navigate = useNavigate();
   const views = ["tableview" , "calendarview"];
-     
        
 return (
     <>
@@ -23,10 +28,10 @@ return (
           
               <Link to="/leaveform"></Link>
               <br/>
-              <button onClick={()=> navigate('/leaveform')}>Apply Leave</button>
+              <Button type='primary' onClick={()=> navigate('/leaveform')}>Apply Leave</Button>
               <br/>
               <br/>
-            <button onClick={()=> navigate('/leavecalendar')}>Calendarview</button>
+            <Button type='primary' onClick={()=> navigate('/leavecalendar')}>Calendarview</Button>
               
             {views ? <LeaveTable/> : <LeaveCalendar/>}
           
