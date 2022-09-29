@@ -181,7 +181,7 @@ const Employees = () => {
         </Grid>
 
 
-        {/* <List/> */}
+   
 
         <Box textAlign="center" p={2} className={classes.empListColor}>
           <Typography variant="h5" className={classes.empListColor}>EMPLOYEE LIST</Typography>
@@ -235,5 +235,3 @@ const Employees = () => {
 }
 
 export default Employees
-
-

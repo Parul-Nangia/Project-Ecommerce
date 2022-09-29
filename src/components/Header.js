@@ -14,13 +14,13 @@ nl :{
     
 
 },
-// n2:{
-//     color:"Black",
-//     fontWeight:"bold",
-//     marginTop:"2px",
+n2:{
+    color:"Black",
+    fontWeight:"bold",
+    marginTop:"2px",
     
     
-// }
+}
 })
 const Header=()=>{
     const classes = useStyles();
