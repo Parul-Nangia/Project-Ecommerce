@@ -3,6 +3,7 @@ import AttendanceCards from '../components/AttendanceCards';
 import AttendanceTable from '../components/AttendanceTable';
 import Sidebar from './Sidebar';
 import Header from '../components/Header';
+import Navbar from '../components/Navbar';
 
 
 
@@ -10,7 +11,7 @@ import Header from '../components/Header';
 const Attendance = () => {
   return (
     <>
-    <Header/>
+      <Navbar />
       <Sidebar>
         <div>           
           <AttendanceCards/>

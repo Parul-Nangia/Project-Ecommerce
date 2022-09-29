@@ -19,10 +19,10 @@ const diff = 5;
   switch(type) {
     case "user":
       data ={
-        title: "Users",
+        title: "USERS",
         isLeave: false,
         link:"See all users",
-        icon:<PersonOutlinedIcon className="icon"/>,
+        icon:<PersonOutlinedIcon className="Icon"/>,
       };
       break;
       case "leave":
@@ -30,7 +30,7 @@ const diff = 5;
         title: "LEAVE",
         isLeave:true,
         link:"View leave",
-        icon:<LocalPharmacyIcon className="icon"/>,
+        icon:<LocalPharmacyIcon className="Icon"/>,
       };
       break;
       case "holiday":
@@ -38,7 +38,7 @@ const diff = 5;
         title: "HOLIDAY",
         isLeave: true,
         link:"See all holidays",
-        icon:<HolidayVillageIcon className="icon"/>,
+        icon:<HolidayVillageIcon className="Icon"/>,
       };
       break;
       case "status":
@@ -46,7 +46,7 @@ const diff = 5;
         title: "STATUS",
         isLeave: true,
         link:"See all status",
-        icon:<RunningWithErrorsIcon className="icon"/>,
+        icon:<RunningWithErrorsIcon className="Icon"/>,
       };
       break;
       default:
