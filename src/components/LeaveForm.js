@@ -73,10 +73,6 @@ const LeaveForm = () => {
           navigate("/dashboard")
            }
       
-
-
-
-
   return (
     <>
  
@@ -119,7 +115,7 @@ const LeaveForm = () => {
   </Form.Item>
   <Form.Item>
     
-    <Button htmlType="submit" onclick= {(e)=> Submit(data)} className={classes.btnCenter}>Submit</Button><br />
+    <Button htmlType="submit" onclick= {(e)=> Submit(data)} className={classes.btnCenter}>Submit</Button><br/>
     <Button onclick={handleClick} className={classes.btnCenter}>Back</Button><br />
   </Form.Item>
 </Form>
@@ -130,6 +126,6 @@ const LeaveForm = () => {
   )
 }
 
-export default LeaveForm
+export default LeaveForm;
 
 
