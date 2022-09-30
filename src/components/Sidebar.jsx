@@ -31,13 +31,13 @@ const Sidebar = ({children}) => {
       icon:<FcAlarmClock/>
 
     },
-    {
+    // {
       
-      path:"/employees",
-      name:"Employees",
-      icon:<FcBusinessman/>
+    //   path:"/employees",
+    //   name:"Employees",
+    //   icon:<FcBusinessman/>
 
-    },
+    // },
     {
 
       path:"/leave",

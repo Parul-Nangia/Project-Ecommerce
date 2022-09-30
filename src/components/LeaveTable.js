@@ -12,8 +12,9 @@ import axios from "axios";
 
 function LeaveTable() {
   const [dataSource, setDataSource] = useState([]);
+  
 
-  useEffect(() => {
+ useEffect(() => {
     getData();
   }, []);
 
@@ -34,10 +35,7 @@ function LeaveTable() {
     });
   };
   const columns = [
-    {
-      title: "Id",
-      dataIndex: "Id",
-    },
+  
     {
       title: "EmployeeName",
       dataIndex: "EmployeeName",
