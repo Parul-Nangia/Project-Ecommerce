@@ -58,18 +58,6 @@ const LeaveCalendar = () => {
     const stringValue = value.format("YYYY-MM-DD");
     const listData = weekLeave.filter(({ LeaveDate }) => LeaveDate === stringValue);
     
-<<<<<<< Updated upstream
-      <>
-      <h2> </h2>
-      <Alert message={`You selected date: ${selectedValue?.format('YYYY-MM-DD')}`} />
-      <Calendar value={value} onSelect={onSelect} onPanelChange={onPanelChange} />
-      </>
-        
-     )
-} 
-
-export default LeaveCalendar;
-=======
     
     return (
       <ul className="events">
@@ -87,4 +75,3 @@ export default LeaveCalendar;
 };
 
 export default LeaveCalendar;
->>>>>>> Stashed changes
