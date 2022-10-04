@@ -1,9 +1,8 @@
-import React  from 'react';
-import { Link, useNavigate } from 'react-router-dom'
+import React ,{useState} from 'react'
 import LeaveCards from '../components/LeaveCards';
 import LeaveTable from '../components/LeaveTable';
 import LeaveCalendar from '../components/LeaveCalendar';
-
+import {Link, useNavigate} from 'react-router-dom'
 import Sidebar from '../components/Sidebar';
 
 import Navbar from '../components/Navbar';
@@ -24,34 +23,43 @@ const useStyles = makeStyles({
       color:"black"
     },
   },
+  contain:{
+   
+    marginTop:"100px",
+    marginLeft:"80px"
+
+
+  }
   })
 
 
 
 const Leave = (props) => {
-  const classes = useStyles();
   const navigate = useNavigate();
-  const views = ["tableview" , "calendarview"];
-       
+  const classes = useStyles();
+  
+  const [view,setView]= useState(false);
+  
 return (
+
     <>
+  
     <Navbar />
     <Sidebar>
-        <div>
+   
+        <div className={classes.contain}>
         
           <LeaveCards/>
-          
-              <Link to="/leaveform"></Link>
+           <Link to="/leaveform"></Link>
               <br/>
               <Button className={classes.btnCenter} onClick={()=> navigate('/leaveform')}>Apply Leave</Button>
-              <br/>
-              <br/>
-            <Button className={classes.btnCenter} onClick={()=> navigate('/leavecalendar')}>Calendarview</Button>
               
-            {views ? <LeaveTable/> : <LeaveCalendar/>}
-          
+            <h1>{view}</h1>
+           <Button onClick={()=> setView(!view)}>LeaveCalendar</Button>
+           <Button onClick={()=> setView(!view)}>LeaveTable</Button>
+           {view ? <LeaveTable/> : <LeaveCalendar/>}
         </div>
-
+             
     </Sidebar>
     </>
   );
