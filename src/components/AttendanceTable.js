@@ -3,8 +3,9 @@ import { Table } from 'antd';
 let a1={
   flex:"1",
   height:"600px",
-  width:"1200px",
+  width:"1000px",
   margin:"40px",
+  marginLeft:"200px"
 
 }
 const AttendanceTable = () => {

@@ -1,6 +1,8 @@
 
 .dashboard{
     display: flex;
+    margin-left: 100px;
+    
 }
 
 
@@ -12,7 +14,7 @@
 
 .widgets, .charts{
     display: flex;
-     padding: 20px;
+    padding: 20px;
     gap: 20px;
     
 

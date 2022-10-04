@@ -53,7 +53,7 @@ const data = [
 const Chart = () =>{
     return(
     <div className='chart'>
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="70%" height="100%">
         <LineChart
           width={500}
           height={300}

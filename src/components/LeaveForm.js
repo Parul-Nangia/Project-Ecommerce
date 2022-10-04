@@ -76,7 +76,7 @@ const LeaveForm = () => {
   return (
     <>
  
-    <Row justify="center" style={{ padding: "10%" }}>
+    <Row justify="center" style={{ padding: "10%" ,marginLeft:"120px"}}>
 
   <Form >
 

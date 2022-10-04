@@ -55,7 +55,7 @@ let m1 = {
 const LeaveCards = () => {
   return (
     
-     <div style={{ display : 'flex', justifyContent: "space-between"}}>
+     <div style={{ display : 'flex', justifyContent: "space-between",marginLeft:"160px",marginTop:"80px"}}>
 
 
         <Card style={m1}> Annual </Card>

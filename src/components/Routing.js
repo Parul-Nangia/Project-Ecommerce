@@ -7,7 +7,6 @@ import Leave from '../components/Leave';
 import Employees from '../components/Employees';
 import Login from '../components/Login';
 import Edit from '../components/Edit';
-
 import View from '../components/View';
 
 import LeaveForm from '../components/LeaveForm';

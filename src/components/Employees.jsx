@@ -1,5 +1,6 @@
 import { makeStyles} from "@material-ui/core";
 import React from 'react';
+<<<<<<< Updated upstream
 // import { Grid, TextField } from "@material-ui/core"
 // import List from "./List";
 import { useState, useEffect } from "react";
@@ -10,6 +11,12 @@ import Sidebar from './Sidebar';
 // import DeleteIcon from '@mui/icons-material/Delete';
 // import { Link, useNavigate, useParams } from "react-router-dom";
 // import axios from "axios";
+=======
+
+import { useState, useEffect } from "react";
+import Sidebar from './Sidebar';
+
+>>>>>>> Stashed changes
 import { Table } from 'antd';
 import Navbar from './Navbar';
 import { Button, Modal, Form, Input, Row} from 'antd';
@@ -123,7 +130,7 @@ const useStyles = makeStyles({
 })
 
 
-//  Form => State=> api => db
+
 
 const Employees = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -150,6 +157,7 @@ const Employees = () => {
   const [gender, setGender] = useState("");
   const [department, setDepartment] = useState("");
 
+<<<<<<< Updated upstream
   
 
 
@@ -188,8 +196,15 @@ const Employees = () => {
 
 
 
+=======
+  
 
+>>>>>>> Stashed changes
 
+  useEffect(() => {
+    employeelist();
+
+<<<<<<< Updated upstream
 
   //=================================================START employee delete (GET API)================================================================================   
   // function deleteEmployee(_id) {
@@ -206,12 +221,36 @@ const Employees = () => {
   // }
   //================================================= END employee delete (GET API================================================================================
 
+=======
+  }, [])
+>>>>>>> Stashed changes
 
 
 
 
 
+<<<<<<< Updated upstream
   //================================================= START employee listing (GET API)================================================================================ 
+=======
+  const employeelist = async () => {
+    await axios.get("http://localhost:1999/employee").then((res) => {
+      console.log(res, "bhvhv");
+      console.log(setDataSource, "hhr");
+      console.log(dataSource, "sb");
+      setDataSource(
+        res.data.map((row) => ({
+          Id:row.id,
+          Name:row.name,
+          Email:row.email,
+          Phone:row.contact,
+          Gender:row.gender,
+        }))
+      );
+    });
+  };
+
+
+>>>>>>> Stashed changes
 
   // const employeeList = async () => {
   //   await axios.get("http://localhost:1999/employee").then((res) => {

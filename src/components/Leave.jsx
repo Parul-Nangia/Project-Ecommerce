@@ -17,6 +17,11 @@ const useStyles = makeStyles({
     height:"60px",
     fontWeight:"bold",
     backgroundColor:"#FF4500",
+    marginLeft:"120px",
+    marginTop:"-200px",
+
+
+
     "&:hover": {
       borderRadius: 4,
       backgroundColor: "white",
@@ -45,9 +50,14 @@ return (
     <>
   
     <Navbar />
+<<<<<<< Updated upstream
     <Sidebar>
    
         <div className={classes.contain}>
+=======
+    <Sidebar />
+        <div>
+>>>>>>> Stashed changes
         
           <LeaveCards/>
            <Link to="/leaveform"></Link>
@@ -59,8 +69,13 @@ return (
            <Button onClick={()=> setView(!view)}>LeaveTable</Button>
            {view ? <LeaveTable/> : <LeaveCalendar/>}
         </div>
+<<<<<<< Updated upstream
              
     </Sidebar>
+=======
+
+  
+>>>>>>> Stashed changes
     </>
   );
 };

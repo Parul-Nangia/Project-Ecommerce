@@ -2,7 +2,7 @@ import React from 'react'
 import { Card } from 'antd';
 
 let a1 = {
-    flex: "1" ,
+    // flex: "1" ,
     height: "100px", 
     margin: "20px", 
     textAlign: "center", 
@@ -10,11 +10,13 @@ let a1 = {
     background : "#FF4500",
     borderRadius:"20px",
     fontWeight: "bold",
-    fontSize: "large"
+    fontSize: "large",
+    display:"flex",
+  
   
   }
   let a2 = {
-    flex: "1" ,
+    // flex: "1" ,
     height: "100px", 
     margin: "20px",
     textAlign: "center", 
@@ -22,12 +24,12 @@ let a1 = {
     background :  "#FF4500",
     borderRadius:"20px",
     fontWeight: "bold",
-    fontSize: "large"
-    
+    fontSize: "large",
+    display:"flex",
   
   }
   let a3 = {
-    flex: "1" ,
+    // flex: "1" ,
     height: "100px", 
     margin: "20px", 
     textAlign: "center", 
@@ -35,13 +37,14 @@ let a1 = {
     backgroundColor :  "#FF4500",
     borderRadius:"20px",
     fontWeight: "bold",
-    fontSize: "large"
+    fontSize: "large",
+    display:"flex",
   
   }
 
 const AttendanceCards = () => {
   return (
-    <div style={{ display : 'flex', justifyContent: "space-between"}}>
+    <div style={{ display : 'flex',justifyContent:"center",}}>
 
 
         <Card style={a1}>Timesheet</Card>

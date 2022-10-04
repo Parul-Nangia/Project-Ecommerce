@@ -16,7 +16,7 @@ function Navbar() {
     <div className='Navbar'>
       <div className='leftSide'>
           <div className="links" id={showLinks ? "hidden":""}>
-          <a href="/dashboard">Home</a>
+          {/* <a href="/dashboard">Home</a> */}
           <a href="">Contact</a>
           <a href="/">LogOut</a>
           </div>
