@@ -1,15 +1,9 @@
 import { makeStyles} from "@material-ui/core";
 import React from 'react';
-// import { Grid, TextField } from "@material-ui/core"
-// import List from "./List";
+
 import { useState, useEffect } from "react";
 import Sidebar from './Sidebar';
-// // import Edit from "./Edit";
-// import VisibilityIcon from '@mui/icons-material/Visibility';
-// import EditIcon from '@mui/icons-material/Edit';
-// import DeleteIcon from '@mui/icons-material/Delete';
-// import { Link, useNavigate, useParams } from "react-router-dom";
-// import axios from "axios";
+
 import { Table } from 'antd';
 import Navbar from './Navbar';
 import { Button, Modal, Form, Input, Row} from 'antd';
@@ -123,7 +117,7 @@ const useStyles = makeStyles({
 })
 
 
-//  Form => State=> api => db
+
 
 const Employees = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -161,64 +155,6 @@ const Employees = () => {
 
 
 
-  // //================================================= START employee post (POST API)================================================================================ 
-  // function saveEmployee() {
-  //   console.warn({ name, email, contact, gender });
-  //   let data = { name, email, contact, gender }
-
-  
-
-  //   fetch("http://localhost:1999/employee", {
-  //     method: 'POST',
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(data)
-  //   }).then((Employee) => {
-  //     console.warn("result", Employee);
-  //     window.alert("New Employee added successfully")
-      
-  //   })
-    
-  // }
- 
-
-  //================================================= END employee post (POST API)================================================================================
-
-
-
-
-
-
-  //=================================================START employee delete (GET API)================================================================================   
-  // function deleteEmployee(_id) {
-  //   if (window.confirm("Are you sure you want to to delete", _id)) {
-  //     fetch(`http://localhost:1999/employee/${_id}`, {
-  //       method: 'DELETE',
-  //       headers: {
-  //         'Accept': 'application/json',
-  //         'Content-Type': 'application/json'
-  //       }
-  //     })
-  //     console.log("Employee Deleted", _id)
-  //   }
-  // }
-  //================================================= END employee delete (GET API================================================================================
-
-
-
-
-
-
-  //================================================= START employee listing (GET API)================================================================================ 
-
-  // const employeeList = async () => {
-  //   await axios.get("http://localhost:1999/employee").then((res) => {
-  //     console.log(res, "bhvhv");
-      
-  //   });
-  // };
 
   const employeelist = async () => {
     await axios.get("http://localhost:1999/employee").then((res) => {
@@ -239,16 +175,6 @@ const Employees = () => {
 
 
 
-  // const employeeList = () => {
-  //   fetch("http://localhost:1999/employee") .then((response) => {
-  //     return response.json();
-  //   }).then((data) => {
-  //     let emp = data.employeeData
-  //     setEmploys(emp)
-  //     console.log("response",emp);
-  //     })
-      
-  //   }
 
   
   
