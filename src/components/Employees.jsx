@@ -5,7 +5,7 @@ import Sidebar from './Sidebar';
 import { Table } from 'antd';
 import Navbar from './Navbar';
 import { Button, Modal, Form, Input, Row} from 'antd';
-import { LockOutlined, UserOutlined , MailOutlined ,PhoneOutlined ,UserSwitchOutlined, CalendarOutlined ,StarOutlined ,EyeOutlined ,EditOutlined,DeleteOutlined} from '@ant-design/icons';
+import { LockOutlined, UserOutlined , MailOutlined ,PhoneOutlined ,UserSwitchOutlined, EyeOutlined ,EditOutlined,DeleteOutlined} from '@ant-design/icons';
 
 
 const useStyles = makeStyles({
@@ -249,9 +249,15 @@ function saveEmployee() {
     <Navbar />
    
 
-    <Sidebar >
-  
-    <Button style ={{float:"right", margin:"50px"}}onClick={showModal}> Add New Employee</Button>
+    <Sidebar>
+    
+
+    <Table 
+    columns={columns}
+    dataSource={state} />
+         
+   
+   <Button style ={{float:"right", margin:"50px"}}onClick={showModal}> Add New Employee</Button>
       <Modal title="Employee Form" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
     
         <Row justify="center" style={{ padding: "10%" }}>
@@ -294,8 +300,6 @@ function saveEmployee() {
       </Modal>
 
      </Sidebar>
-    
-
    
         
      </>
