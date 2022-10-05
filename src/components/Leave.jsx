@@ -50,14 +50,8 @@ return (
     <>
   
     <Navbar />
-<<<<<<< Updated upstream
-    <Sidebar>
-   
-        <div className={classes.contain}>
-=======
     <Sidebar />
         <div>
->>>>>>> Stashed changes
         
           <LeaveCards/>
            <Link to="/leaveform"></Link>
@@ -69,13 +63,8 @@ return (
            <Button onClick={()=> setView(!view)}>LeaveTable</Button>
            {view ? <LeaveTable/> : <LeaveCalendar/>}
         </div>
-<<<<<<< Updated upstream
-             
-    </Sidebar>
-=======
 
   
->>>>>>> Stashed changes
     </>
   );
 };

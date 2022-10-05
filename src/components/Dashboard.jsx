@@ -170,7 +170,7 @@ useEffect(() => {
   return (
     <>
       <Navbar />
-      <Sidebar>
+      <Sidebar />
         <div className="dashboard">
 
           <div className="dashboardContainer">
@@ -205,7 +205,7 @@ useEffect(() => {
             </div>
           </div>
         </div>
-      </Sidebar>
+    
     </>
 
   )
