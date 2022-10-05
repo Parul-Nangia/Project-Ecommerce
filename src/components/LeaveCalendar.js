@@ -10,6 +10,7 @@ import "antd/dist/antd.css";
 const LeaveCalendar = () => {
 
   const [weekLeave, setweekLeave] = useState([]);
+  const [LeaveDate, setLeaveDate] = useState("");
  
 
 
@@ -27,6 +28,7 @@ const LeaveCalendar = () => {
 
 
         setweekLeave(empLeave)
+        setLeaveDate(empLeave.LeaveDate)
         
       
 
@@ -46,14 +48,34 @@ const LeaveCalendar = () => {
 
 
 
-
-
   // YYYY-MM-DDTHH:mm:ss.sssZ
 
   const dateCellRender = (value) => {
 
     const stringValue = value.format("YYYY-MM-DD");
     const listData = weekLeave.filter(({ LeaveDate }) => LeaveDate === stringValue);
+    
+    for (let i = weekLeave.LeaveDate; i < weekLeave.LeaveDate; i++) {
+        function getDatesInRange(startDate, endDate) {
+          const date = (startDate.getTime());
+        
+          const dates = [];
+        
+          while (date <= endDate) {
+            dates.push((date));
+            date.setDate(date.getDate() + 1);
+          }
+        
+          return dates;
+        }
+      
+        const d1 = ('2022-10-01');
+        const d2 = ('2022-12-30');
+        
+      console.log(getDatesInRange(d1, d2));
+    }
+
+
 
     return (
        
@@ -61,6 +83,7 @@ const LeaveCalendar = () => {
         <ul className="events">
 
           {listData.map((item) => (
+
 
          
               <li key={item.EmployeeName}>
