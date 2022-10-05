@@ -249,15 +249,9 @@ function saveEmployee() {
     <Navbar />
    
 
-    <Sidebar>
-    
-
-    <Table 
-    columns={columns}
-    dataSource={state} />
-         
-   
-   <Button style ={{float:"right", margin:"50px"}}onClick={showModal}> Add New Employee</Button>
+    <Sidebar />
+  
+    <Button style ={{float:"right", margin:"50px"}}onClick={showModal}> Add New Employee</Button>
       <Modal title="Employee Form" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
     
         <Row justify="center" style={{ padding: "10%" }}>
@@ -300,6 +294,8 @@ function saveEmployee() {
       </Modal>
 
      </Sidebar>
+    
+
    
         
      </>
