@@ -235,15 +235,7 @@ function saveEmployee() {
      
   ];
 
-
-
-  
-
-
-
-  
-  
-   return (
+    return (
 
     <>
     <Navbar />
@@ -307,4 +299,4 @@ function saveEmployee() {
 }
     
 
- export default Employees;
+export default Employees;

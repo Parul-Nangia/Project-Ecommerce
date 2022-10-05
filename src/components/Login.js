@@ -5,9 +5,6 @@ import {makeStyles} from "@material-ui/core";
 import axios from "axios";
 import {Navigate} from "react-router-dom";
 import { useState } from "react";
-import GoogleLogin from 'react-google-login';
-import { gapi } from 'gapi-script';
-import { useEffect } from 'react';
 import GoogleAuth from './GoogleAuth';
 
 
@@ -50,42 +47,7 @@ const Login = () => {
   const [password,setPassword] = useState("");
   const [navigate, setNavigate] = useState(false);
 
-  // const[loginData,setLoginData]=useState(
-  // localStorage.getItem('loginData')
-  // ? JSON.parse(localStorage.getItem('loginData'))
-  // : null
-
-  // );
-
-
-  // const handleFailure=(result)=>{
-  //   alert(result);
-  // }
-
-  // const handleLogout = () =>{
-  //   localStorage.removeItem('loginData');
-  //   setLoginData(null);
-  // }
-
-  // const handleLogin = async(googleData) =>{
-  //   const res = await fetch ('/api/google-login',{
-  //     method:"POST",
-  //     body: JSON.stringify({
-  //       token:googleData.tokenId,
-  //     }),
-  //     headers:{
-  //       "Content-Type":"application/json",
-  //     },
-  //   });
-
-  //   const data =await res.json();
-  //   setLoginData(data);
-  //   localStorage.setItem('loginData',JSON.stringify(data));
-  // };
-
-
-
-
+ 
   const submit = async e => {
     console.log("going forward")
     e.preventDefault();
@@ -132,7 +94,6 @@ const Login = () => {
                  
               
             </Row>
-            <GoogleAuth />
            
               
              
