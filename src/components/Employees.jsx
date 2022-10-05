@@ -241,7 +241,7 @@ function saveEmployee() {
     <Navbar />
    
 
-    <Sidebar>
+    <Sidebar/>
     
 
     <Table 
@@ -291,7 +291,7 @@ function saveEmployee() {
   
       </Modal>
 
-     </Sidebar>
+   
    
         
      </>
