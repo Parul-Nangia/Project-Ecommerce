@@ -8,14 +8,9 @@ import Employees from '../components/Employees';
 import Login from '../components/Login';
 import Edit from '../components/Edit';
 import View from '../components/View';
-
 import LeaveForm from '../components/LeaveForm';
 import LeaveCalendar from '../components/LeaveCalendar';
 
-
-// import View from '../components/View';
-
-// import Navbar from '../components/Navbar';
 
 
 
@@ -50,6 +45,7 @@ const Routing = () => {
 
                     <Route path="/employees" element={<Employees/>}/> 
                     <Route path="/edit/:_id" element={<Edit/>}/>
+                    
 
                   
                 </Routes>
