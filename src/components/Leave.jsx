@@ -67,7 +67,8 @@ return (
             <h1>{view}</h1>
            <Button onClick={()=> setView(!view)}>LeaveCalendar</Button>
            <Button onClick={()=> setView(!view)}>LeaveTable</Button>
-           {view ? <LeaveTable/> : <LeaveCalendar/>}
+          
+           {view ? <LeaveTable/> :<LeaveCalendar/>  }
         </div>
 <<<<<<< Updated upstream
              

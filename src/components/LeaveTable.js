@@ -21,19 +21,12 @@ function LeaveTable() {
   const getData = async () => {
     await axios.get("http://localhost:1999/leave").then((res) => {
       console.log(res, "bhvhv");
-      console.log(setDataSource, "davider");
-      console.log(dataSource, "prince");
-      setDataSource(
-        res.data.map((row) => ({
-          EmployeeName: row.EmployeeName,
-          LeaveType: row.LeaveType,
-          Hours: row.TotalHoursRequested,
-          Days: row.TotalDaysRequested,
-          Id: row.id,
-        }))
-      );
-    });
-  };
+      let leave = res.leavetable;
+      setDataSource(leave);
+      console.log(dataSource,"jj")
+        }
+  )
+}
   const columns = [
   
     {
