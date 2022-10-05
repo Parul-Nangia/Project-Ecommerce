@@ -249,7 +249,7 @@ function saveEmployee() {
     <Navbar />
    
 
-    <Sidebar />
+    <Sidebar >
   
     <Button style ={{float:"right", margin:"50px"}}onClick={showModal}> Add New Employee</Button>
       <Modal title="Employee Form" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
