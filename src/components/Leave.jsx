@@ -32,9 +32,9 @@ const Leave = (props) => {
 
         <h1>{view}</h1>
         <div>
-          <Button  type="dashed" size={size} onClick={() => setView(!view)}>LeaveCalendar</Button>
+          <Button  type="dashed" size={size} onClick={() => setView(!view)}>Calendar</Button>
 
-          <Button  type="dashed" size={size} onClick={() => setView(!view)}>LeaveTable</Button>
+          <Button  type="dashed" size={size} onClick={() => setView(!view)}>Leave List</Button>
         </div>
         <br />
         {view ? <LeaveTable /> : <LeaveCalendar />}
