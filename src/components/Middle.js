@@ -4,51 +4,61 @@ import Dashboard from '../components/Dashboard';
 import Attendance from '../components/Attendance';
 import Leave from '../components/Leave';
 import Employees from '../components/Employees';
+import Edit from '../components/Edit';
+import View from '../components/View';
+import LeaveForm from '../components/LeaveForm';
+import LeaveCalendar from '../components/LeaveCalendar';
+
 import { Breadcrumb, Layout } from 'antd';
 const { Content } = Layout;
 
 const Middle = () => {
     return (
-        
 
-            <Layout
+
+        <Layout
+            style={{
+                padding: '0 24px 24px',
+                width: '1200px',
+
+            }}
+        >
+            <Breadcrumb
                 style={{
-                    padding: '0 24px 24px',
-                    width: '1200px',
-                    
+                    margin: '16px 0',
                 }}
             >
-                <Breadcrumb
-                    style={{
-                        margin: '16px 0',
-                    }}
-                >
-                    <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
-                    <Breadcrumb.Item>Attendance</Breadcrumb.Item>
-                    <Breadcrumb.Item>Employees</Breadcrumb.Item>
-                    <Breadcrumb.Item>Leave</Breadcrumb.Item>
+                <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
+                <Breadcrumb.Item>Attendance</Breadcrumb.Item>
+                <Breadcrumb.Item>Employees</Breadcrumb.Item>
+                <Breadcrumb.Item>Leave</Breadcrumb.Item>
 
-                </Breadcrumb>
-                <Content
-                    className="site-layout-background"
-                    style={{
-                        padding: 24,
-                        margin: 0,
-                        minHeight: 280,
-                    }}
-                >
-                    <Routes>
+            </Breadcrumb>
+            <Content
+                className="site-layout-background"
+                style={{
+                    padding: 24,
+                    margin: 0,
+                    minHeight: 280,
+                }}
+            >
+                <Routes>
 
-                        <Route path="/dashboard" element={<Dashboard />} />
-                        <Route path="/attendance" element={<Attendance />} />
-                        <Route path="/leave" element={<Leave />} />
-                        <Route path="/employees" element={<Employees />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/attendance" element={<Attendance />} />
+                    <Route path="/leave" element={<Leave />} />
+                    <Route path="/employees" element={<Employees />} />
 
-                    </Routes>
-                </Content>
-            </Layout>
+                    <Route path="/edit/:_id" element={<Edit />} />
+                    <Route path="/view/:_id" element={<View />} />
+                    <Route path="/leaveform" element={<LeaveForm />} />
+                    <Route path="/leavecalendar" element={<LeaveCalendar />} />
 
-     
+                </Routes>
+            </Content>
+        </Layout>
+
+
     )
 };
 

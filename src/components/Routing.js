@@ -37,21 +37,9 @@ const Routing = () => {
                 {/* <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/attendance" element={<Attendance />} />
                 <Route path="/leave" element={<Leave />} />
-                <Route path="/employees" element={<Employees />} /> */}
-
-                {/*                 
-                <Route path="/edit/:_id" element={<Edit />} />
-
-                <Route path="/view/:_id" element={<View />} />
+                <Route path="/employees" element={<Employees />} />  */}
 
 
-
-                <Route path="/leaveform" element={<LeaveForm />} />
-                <Route path="/leavecalendar" element={<LeaveCalendar />} />
-
-
-                <Route path="/employees" element={<Employees />} />
-                <Route path="/edit/:_id" element={<Edit />} />  */}
 
             </Routes>
 

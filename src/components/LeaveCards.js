@@ -1,70 +1,38 @@
 import React from 'react'
-import { Card } from 'antd';
+import { Card, Col, Row } from 'antd';
 
 
-let m1 = {
-    flex: "1" ,
-    height: "100px", 
-    margin: "20px", 
-    textAlign: "center", 
-    padding:"10px", 
-    background : "#FF4500",
-    borderRadius:"20px",
-    fontWeight: "bold",
-    fontSize: "large"
-  
-  }
-  let m2 = {
-    flex: "1" ,
-    height: "100px", 
-    margin: "20px",
-    textAlign: "center", 
-    padding:"10px", 
-    background : "#FF4500",
-    borderRadius:"20px",
-    fontWeight: "bold",
-    fontSize: "large"
-    
-  
-  }
-  let m3 = {
-    flex: "1" ,
-    height: "100px", 
-    margin: "20px", 
-    textAlign: "center", 
-    padding:"10px", 
-    backgroundColor : "#FF4500",
-    borderRadius:"20px",
-    fontWeight: "bold",
-    fontSize: "large"
-  
-  }
 
-  let m4 = {
-    flex: "1" ,
-    height: "100px", 
-    margin: "20px", 
-    textAlign: "center", 
-    padding:"10px", 
-    backgroundColor : "#FF4500",
-    borderRadius:"20px",
-    fontWeight: "bold",
-    fontSize: "large"
-  
-  }
 const LeaveCards = () => {
+
   return (
-    
-     <div style={{ display : 'flex', justifyContent: "space-between",marginLeft:"160px",marginTop:"80px"}}>
+    <>
+      <div className="site-card-wrapper">
+        <Row gutter={16}>
+          <Col span={6} className='dashboardcards'>
+            <Card title="Annual" bordered={false}>
+              Content
+            </Card>
+          </Col>
+          <Col span={6} className='dashboardcards'>
+            <Card title="Medical" bordered={false}>
+              Content
+            </Card>
+          </Col>
+          <Col span={6} className='dashboardcards'>
+            <Card title="Casual" bordered={false}>
+              Content
+            </Card>
+          </Col>
+          <Col span={6} className='dashboardcards'>
+            <Card title="Others" bordered={false}>
+              Content
+            </Card>
+          </Col>
+        </Row>
+      </div>
+    </>
 
-
-        <Card style={m1}> Annual </Card>
-        <Card style={m2}>Medical</Card>
-        <Card style={m3}>Casual</Card>
-        <Card style={m4}>Other </Card>
-    
-        </div>
-    
   )
 }
 
