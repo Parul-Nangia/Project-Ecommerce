@@ -5,7 +5,6 @@ import Chart from './Chart';
 // import './widget.css'
 import Featured from "./Featured"
 // import Sidebar from '../components/Sidebar'
-import './chart.css'
 import DashboardCards from '../components/DashboardCards';
 import Top from '../components/Top';
 import Sidebar from '../components/Sidebar';

@@ -28,10 +28,10 @@ const Middle = () => {
                     margin: '16px 0',
                 }}
             >
-                <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
-                <Breadcrumb.Item>Attendance</Breadcrumb.Item>
-                <Breadcrumb.Item>Employees</Breadcrumb.Item>
-                <Breadcrumb.Item>Leave</Breadcrumb.Item>
+                <Breadcrumb.Item><a href="/dashboard">Dashboard</a></Breadcrumb.Item>
+                <Breadcrumb.Item><a href="/attendance">Attendance</a></Breadcrumb.Item>
+                <Breadcrumb.Item><a href="/employees">Employees</a></Breadcrumb.Item>
+                <Breadcrumb.Item><a href="/leave">Leave</a></Breadcrumb.Item>
 
             </Breadcrumb>
             <Content
