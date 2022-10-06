@@ -11,10 +11,11 @@ const Attendance = () => {
   return (
     <>
 
-        <div>           
+        
           <AttendanceCards/>
+          <br />
           <AttendanceTable/>     
-      </div>
+     
     
     </>
   );
