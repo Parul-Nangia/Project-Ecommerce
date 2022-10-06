@@ -1,9 +1,9 @@
 import { makeStyles} from "@material-ui/core";
 import React from 'react';
 import { useState, useEffect } from "react";
-import Sidebar from './Sidebar';
+// import Sidebar from './Sidebar';
 import { Table } from 'antd';
-import Navbar from './Navbar';
+// import Navbar from './Navbar';
 import { Button, Modal, Form, Input, Row} from 'antd';
 import { LockOutlined, UserOutlined , MailOutlined ,PhoneOutlined ,UserSwitchOutlined, EyeOutlined ,EditOutlined,DeleteOutlined} from '@ant-design/icons';
 
@@ -122,8 +122,6 @@ function saveEmployee() {
     console.warn({ name, email, contact, gender });
     let data = { name, email, contact, gender }
 
-  
-  
 
     fetch("http://localhost:1999/employee", {
       method: 'POST',
@@ -238,10 +236,7 @@ function saveEmployee() {
     return (
 
     <>
-    <Navbar />
-   
-
-    <Sidebar>
+  
     
 
     <Table 
@@ -291,7 +286,6 @@ function saveEmployee() {
   
       </Modal>
 
-     </Sidebar>
    
         
      </>

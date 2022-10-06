@@ -3,9 +3,9 @@ import LeaveCards from '../components/LeaveCards';
 import LeaveTable from '../components/LeaveTable';
 import LeaveCalendar from '../components/LeaveCalendar';
 import {Link, useNavigate} from 'react-router-dom'
-import Sidebar from '../components/Sidebar';
+// import Sidebar from '../components/Sidebar';
 
-import Navbar from '../components/Navbar';
+// import Navbar from '../components/Navbar';
 import { makeStyles } from "@material-ui/core";
 
 import { Button } from 'antd';
@@ -50,8 +50,7 @@ return (
 
     <>
   
-    <Navbar />
-    <Sidebar />
+  
         <div>
         
           <LeaveCards/>

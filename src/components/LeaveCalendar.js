@@ -29,9 +29,6 @@ const LeaveCalendar = () => {
 
         setweekLeave(empLeave)
         setLeaveDate(empLeave.LeaveDate)
-        
-      
-
 
       })
 
@@ -55,12 +52,12 @@ const LeaveCalendar = () => {
     const stringValue = value.format("YYYY-MM-DD");
     const listData = weekLeave.filter(({ LeaveDate }) => LeaveDate === stringValue);
     
-    for (let i = weekLeave.LeaveDate; i < weekLeave.LeaveDate; i++) {
+    for (let i = LeaveDate; i < LeaveDate; i++) {
         function getDatesInRange(startDate, endDate) {
           const date = (startDate.getTime());
         
           const dates = [];
-        
+         
           while (date <= endDate) {
             dates.push((date));
             date.setDate(date.getDate() + 1);

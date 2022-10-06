@@ -5,6 +5,33 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 
 const Googlelogin = () => {
+    const [state, setState] = useState([]);
+    const [google_Id, setGoogleId] = useState("");
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+   
+
+
+    function SignInWithGoogle() {
+        console.warn({google_Id, name, email});
+        let data = {google_Id, name, email}
+    
+    
+        fetch("http://localhost:1999/with/googleSignup", {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        }).then((Guser) => {
+          console.warn("result", Guser);
+          window.alert("SignUp with Google Success")
+          
+        })
+        
+      }
+     
     
     const clientId = '317246931927-jcahmmoa74nit40ciubn481gkv9dnqpn.apps.googleusercontent.com';
     const[showLoginButton,setShowLoginButton]=useState(true);
@@ -47,7 +74,8 @@ const Googlelogin = () => {
 
        <div>
             {showLoginButton ?
-            <GoogleLogin
+            <GoogleLogin 
+                onClick = {SignInWithGoogle}
                 clientId={clientId}
                 buttonText="Sign in with Google"
                 onSuccess={onLoginSuccess}
