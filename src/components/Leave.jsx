@@ -13,7 +13,7 @@ import { Button } from 'antd';
 
 const Leave = (props) => {
   const navigate = useNavigate();
-  const [size, setSize] = useState('small');
+  const [size, setSize] = useState('default');
 
   const [view, setView] = useState(false);
 
@@ -27,16 +27,16 @@ const Leave = (props) => {
         <LeaveCards />
         <Link to="/leaveform"></Link>
         <br />
-        <Button type="primary" size={size} onClick={() => navigate('/leaveform')}>Apply Leave</Button>
+        <Button style={{ background: "MediumSeaGreen"}} type="primary" size={size} onClick={() => navigate('/leaveform')}>Apply Leave</Button>
 
 
         <h1>{view}</h1>
         <div>
-          <Button type="primary" size={size} onClick={() => setView(!view)}>LeaveCalendar</Button>
- 
-          <Button type="primary" size={size} onClick={() => setView(!view)}>LeaveTable</Button>
-        </div>
+          <Button  type="dashed" size={size} onClick={() => setView(!view)}>LeaveCalendar</Button>
 
+          <Button  type="dashed" size={size} onClick={() => setView(!view)}>LeaveTable</Button>
+        </div>
+        <br />
         {view ? <LeaveTable /> : <LeaveCalendar />}
       </div>
 
