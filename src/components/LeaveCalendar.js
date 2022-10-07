@@ -1,4 +1,4 @@
-<import { Calendar, Badge} from 'antd';
+import { Calendar, Badge } from 'antd';
 // import moment from 'moment';
 import React, { useState, useEffect } from 'react';
 import "antd/dist/antd.css";

@@ -1,72 +1,46 @@
-import React ,{useState} from 'react'
+import React, { useState } from 'react'
 import LeaveCards from '../components/LeaveCards';
 import LeaveTable from '../components/LeaveTable';
 import LeaveCalendar from '../components/LeaveCalendar';
-import {Link, useNavigate} from 'react-router-dom'
-import Sidebar from '../components/Sidebar';
-
-import Navbar from '../components/Navbar';
-import { makeStyles } from "@material-ui/core";
-
+import { Link, useNavigate } from 'react-router-dom'
+// import Sidebar from '../components/Sidebar';
+// import Navbar from '../components/Navbar';
 import { Button } from 'antd';
 
-const useStyles = makeStyles({
-  btnCenter: {
-    padding:"10px",
-    width:"50vh",
-    height:"60px",
-    fontWeight:"bold",
-    backgroundColor:"#FF4500",
-    marginLeft:"120px",
-    marginTop:"-200px",
 
-
-
-    "&:hover": {
-      borderRadius: 4,
-      backgroundColor: "white",
-      color:"black"
-    },
-  },
-  contain:{
-
-   
-    marginTop:"100px",
-    marginLeft:"80px"
-
-
-  }
-  })
 
 
 
 const Leave = (props) => {
   const navigate = useNavigate();
-  const classes = useStyles();
-  
-  const [view,setView]= useState(false);
-  
-return (
+  const [size, setSize] = useState('default');
+
+  const [view, setView] = useState(false);
+
+  return (
 
     <>
-  
-    <Navbar />
-    <Sidebar />
-        <div>
-        
-          <LeaveCards/>
-           <Link to="/leaveform"></Link>
-              <br/>
-              <Button className={classes.btnCenter} onClick={()=> navigate('/leaveform')}>Apply Leave</Button>
-              
-            <h1>{view}</h1>
-           <Button onClick={()=> setView(!view)}>LeaveCalendar</Button>
-           <Button onClick={()=> setView(!view)}>LeaveTable</Button>
-          
-           {view ? <LeaveTable/> :<LeaveCalendar/>  }
-        </div>
 
-  
+
+      <div>
+
+        <LeaveCards />
+        <Link to="/leaveform"></Link>
+        <br />
+        <Button style={{ background: "MediumSeaGreen"}} type="primary" size={size} onClick={() => navigate('/leaveform')}>Apply Leave</Button>
+
+
+        <h1>{view}</h1>
+        <div>
+          <Button  type="dashed" size={size} onClick={() => setView(!view)}>Calendar</Button>
+
+          <Button  type="dashed" size={size} onClick={() => setView(!view)}>Leave List</Button>
+        </div>
+        <br />
+        {view ? <LeaveTable /> : <LeaveCalendar />}
+      </div>
+
+
     </>
   );
 };
