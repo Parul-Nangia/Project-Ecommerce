@@ -24,7 +24,7 @@ const Dashboard = () => {
   return (
 
     <>
-    
+
       <DashboardCards />
 
     </>
