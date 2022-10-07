@@ -108,10 +108,8 @@ const Employees = () => {
       okText: "Yes",
       okType: "danger",
       onOk: () => {
-        // setState(pre=>{
-        deleteEmployee(record._id)
-      //   return pre.filter((employee)=> employee.id !== record.id);
-      // })
+     deleteEmployee(record._id)
+      
 
       }
     })
@@ -177,43 +175,61 @@ function saveEmployee() {
  
  // //================================================= END employee post (POST API)
 
- const resetEditing = () => {
-  setIsEditing(false);
-  setEditingEmployee(null);
-};
+
 
 
 
   
 // //================================================= START employee put (PUT API)
 
+const editEmployee = async (_id) => {
+   console.log("hdghja")
+   console.log(_id)
 
 
- function editEmployee(_id) {
-  console.warn({ name, email, contact, gender });
-  let data = { name, email, contact, gender }
+   const name = editingEmployee.Name
+   const email = editingEmployee.Email
+   const gender = editingEmployee.Gender
+   const contact = editingEmployee.Contact
+   await axios.put(`http://localhost:1999/employee/${_id}`, { name, email,gender,contact })
+     .then(
+       res => {
 
+       }
+     )
+   setIsEditing(false);
+ };
 
-
-
-  fetch(`http://localhost:1999/employee/${_id}`, {
-    method: 'PUT',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  }).then((Employee) => {
-    console.warn("result", Employee);
-    setState((pre)=>{
-      return[...pre,editEmployee]
-    })
+//  function editEmployee(_id) {
+//   console.warn({ name, email, contact, gender });
+//   let data = { name, email, contact, gender }
+//   fetch(`http://localhost:1999/employee/${_id}`, {
+//     method: 'PUT',
+//     headers: {
+//       'Accept': 'application/json',
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(data)
+//   }).then((Employee) => {
+//     console.warn("result", Employee);
+//     // setState((pre)=>{
+//     //   return[...pre,editEmployee]
+//     // })
     
-  })
-  setIsEditing(true)
-  setEditingEmployee(..._id)
-}
+//   })
+//   setIsEditing(false);
+// }
 
+
+const onEditEmployee = (record) =>{
+  setIsEditing(true);
+  setEditingEmployee({...record});
+}
+const resetEditing = () => {
+  setIsEditing(false);
+  setEditingEmployee(null);
+
+};
 // //================================================= END employee put (PUT API)
 
 
@@ -294,7 +310,7 @@ function saveEmployee() {
             <>
               
               <Button onClick={() => {viewEmployee(record) }}><EyeOutlined/></Button>
-              <Button onClick={() => {editEmployee(record)}}><EditOutlined/></Button>
+              <Button onClick={() => {onEditEmployee(record)}}><EditOutlined/></Button>
               <Button onClick={() => {ondeleteEmployee(record)}}><DeleteOutlined/></Button>
               
              
@@ -323,22 +339,32 @@ function saveEmployee() {
         resetEditing();
       }}
       
-      onOk={()=> {
-    
-        setState((pre) =>{
-          return pre.map((employee)=>{
-            if(employee.id=== editingEmployee.id){
+      onOk=
+      {() => {
+        setState((pre) => {
+          console.log(pre, "s")
+          console.log(editingEmployee, "kk")
+          editEmployee(editingEmployee._id);
+          return pre.map((employee) => {
+            console.log(employee, "gdh")
+            if (employee._id=== editingEmployee._id) {
               return editingEmployee;
-             } else{
-                return employee;
-              }
-            })
-          })
-      
-          resetEditing ();
-      }
-    }
 
+            } else {
+              return employee;
+            }
+          });
+        }
+        );
+        setIsEditing(false);
+
+      }
+      }
+
+      
+      
+      
+      
     >
       <Input value={editingEmployee?.name} onChange={(e)=>{setEditingEmployee(pre=>{
         return{...pre,name:e.target.value}})
