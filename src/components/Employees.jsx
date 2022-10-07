@@ -80,6 +80,7 @@ const Employees = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
+  // const [showData, setShowData] = useState(false);
   const classes = useStyles();
   const [state, setState] = useState([]);
   const [view, setView] = useState([]);
@@ -136,6 +137,10 @@ const Employees = () => {
     window.location.reload(false);
 
   }
+
+
+
+  // ----------------------------------------axios delete method (delete api)
   // const deleteData = async (_id)=> {
   //   await axios.delete(`http://localhost:1999/employee/${_id}`)
   //     .then((res) => {
@@ -181,7 +186,7 @@ const Employees = () => {
 
 
   // //================================================= START employee put (PUT API)
-
+// ----------------------------------------axios method (PUT api)
   const editEmployee = async (_id) => {
     console.log("hdghja")
     console.log(_id)
@@ -195,7 +200,7 @@ const Employees = () => {
    const email = editingEmployee.email
    const gender = editingEmployee.gender
    const contact = editingEmployee.contact
-   await axios.put(`http://localhost:1999/${_id}`, { name, email,gender,contact })
+   await axios.put(`http://localhost:1999/Employee/${_id}`, { name, email,gender,contact })
      .then(
        res => {
 
@@ -204,8 +209,9 @@ const Employees = () => {
         }
       )
     setIsEditing(false);
+   
   };
-
+// ----------------------------------------fetch method (PUT api)
   //  function editEmployee(_id) {
   //   console.warn({ name, email, contact, gender });
   //   let data = { name, email, contact, gender }
@@ -225,7 +231,9 @@ const Employees = () => {
   //   })
   //   setIsEditing(false);
   // }
+// const viewEmployee =()=>{
 
+// }
 
   const onEditEmployee = (record) => {
     setIsEditing(true);
@@ -394,7 +402,9 @@ const Employees = () => {
           })
         }} />
       </Modal>
+     {/* <Modal>
 
+    </Modal> */}
 
       <Button style={{ float: "right", margin: "50px" }} onClick={showModal}> Add New Employee</Button>
       <Modal title="Employee Form" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
