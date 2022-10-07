@@ -2,6 +2,7 @@ import { DownOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Space } from 'antd';
 import React,  { useState} from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
+import {LoginOutlined,SettingTwoTone,InfoCircleTwoTone} from '@ant-design/icons';
 
 const Drop = () => {
   const navigate=useNavigate();
@@ -14,7 +15,7 @@ const Drop = () => {
   };
 
   const menu = (
-    <Menu
+    <Menu style={{marginLeft:"1000px"}}
       onClick={({key})=>{
         if (key==="demo"){
 
@@ -27,17 +28,21 @@ const Drop = () => {
         {
           label:'Settings',
           key:'/setting',
+          icon: <SettingTwoTone />,
         },
 
         {
           label:'Help',
           key:'/help',
+          icon: <InfoCircleTwoTone />,
         },
        
         {
           label: 'Sign Out',
           key: '/',
+          icon: <LoginOutlined />,
         },
+
        
         
       ]}
@@ -50,8 +55,8 @@ const Drop = () => {
   return (
     <Dropdown overlay={menu} onOpenChange={handleOpenChange} open={open}>
       <a onClick={(e) => e.preventDefault()}>
-        <Space style={{fontSize:"20px",width:"40px"}}>
-          Profile
+        <Space style={{color:"black",marginLeft:"1000px"}}>
+          Sudhir Dadwal
           <DownOutlined />
         </Space>
       </a>
