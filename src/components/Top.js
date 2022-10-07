@@ -1,11 +1,17 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, Tooltip } from 'antd';
+import { Button, Tooltip,message } from 'antd';
 import React, { useState } from 'react';
 import { Layout } from 'antd';
+import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import 'antd/dist/antd.css';
 import { useNavigate } from 'react-router-dom';
+import Drop from './Drop.js';
+
+
 const { Header } = Layout;
+
+
 
 
 
@@ -18,7 +24,35 @@ const Top = () => {
         navigate("/")
     }
 
+    const handleMenuClick = (e) => {
+        message.info('Click on menu item.');
+        console.log('click', e);
+      };
 
+    const menu=(
+
+        <Menu
+        onClick={handleMenuClick}
+        items={[
+        {
+            label: '1st menu item',
+            key: '1',
+            icon: <UserOutlined />,
+        },
+        {
+            label: '2nd menu item',
+            key: '2',
+            icon: <UserOutlined />,
+        },
+        {
+            label: '3rd menu item',
+            key: '3',
+            icon: <UserOutlined />,
+        },
+        ]}
+        />
+        
+    );
 
 
     return (
@@ -30,19 +64,16 @@ const Top = () => {
                         <Menu mode="horizontal" className="Headermenu">
                             <Menu.Item key="1">Ebullient Soft</Menu.Item>
                             <div className='tool' style={{marginTop:"5px",marginLeft:"900px"}}>
-                              <Tooltip title="search">
-                              <Button icon={<SearchOutlined />}>Search</Button> 
-                              </Tooltip>
-                               <Button type="primary" onClick={logOut}>
+                                <Drop>
+                                <Button type="primary" onClick={logOut}>
                                 Logout
                                 </Button>
-                            </div>
-                    
-
+                                </Drop>
                           
-                                
+                        
+                               
+                            </div>
                         </Menu>
-                         
                     </Header>
                 </Layout>
             </div>
