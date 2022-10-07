@@ -134,6 +134,7 @@ const Employees = () => {
       })
       
       console.log("Employee Deleted", _id)
+      window.location.reload(false);
     
   }
   // const deleteData = async (_id)=> {
