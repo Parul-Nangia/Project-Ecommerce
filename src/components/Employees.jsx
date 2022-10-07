@@ -6,7 +6,7 @@ import { Table } from 'antd';
 // import Navbar from './Navbar';
 import { Button, Modal, Form, Input, Row } from 'antd';
 import { LockOutlined, UserOutlined, MailOutlined, PhoneOutlined, UserSwitchOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-
+import axios from 'axios';
 
 const useStyles = makeStyles({
 
@@ -101,16 +101,14 @@ const Employees = () => {
     setIsModalOpen(false);
   };
 
-  const ondeleteEmployee = (_id) => {
+  const ondeleteEmployee = (record) => {
     Modal.confirm({
       title: "Are you Sure, you want to delete this employee record?",
       okText: "Yes",
       okType: "danger",
       onOk: () => {
-        // setState(pre=>{
-        deleteEmployee(_id)
-        //   return pre.filter((employee)=> employee.id !== _id.id);
-        // })
+        deleteEmployee(record._id)
+
 
       }
     })
@@ -135,8 +133,24 @@ const Employees = () => {
     })
 
     console.log("Employee Deleted", _id)
+    window.location.reload(false);
 
   }
+  // const deleteData = async (_id)=> {
+  //   await axios.delete(`http://localhost:1999/employee/${_id}`)
+  //     .then((res) => {
+  //       console.log(_id, "resif")
+  //       setState(
+  //         res.data.map(row => ({
+  //           id: row.id
+  //         }))
+  //       );
+  //     }
+  //     );
+  // };
+
+
+
 
   // //================================================= START employee post (POST API)
   function saveEmployee() {
@@ -161,43 +175,64 @@ const Employees = () => {
 
   // //================================================= END employee post (POST API)
 
-  const resetEditing = () => {
-    setIsEditing(false);
-    setEditingEmployee(null);
-  };
+
 
 
 
 
   // //================================================= START employee put (PUT API)
 
+  const editEmployee = async (_id) => {
+    console.log("hdghja")
+    console.log(_id)
 
 
-  function editEmployee(_id) {
-    console.warn({ name, email, contact, gender });
-    let data = { name, email, contact, gender }
+    const name = editingEmployee.name
+    console.log(name, "jgj")
+    console.log(editingEmployee, "editing Employee")
+    console.log(editingEmployee.name, "editingEmpoyee.name")
+    const email = editingEmployee.email
+    const gender = editingEmployee.gender
+    const contact = editingEmployee.contact
+    await axios.put(`http://localhost:1999/${_id}`, { name, email, gender, contact })
+      .then(
+        res => {
+
+        }
+      )
+    setIsEditing(false);
+  };
+
+  //  function editEmployee(_id) {
+  //   console.warn({ name, email, contact, gender });
+  //   let data = { name, email, contact, gender }
+  //   fetch(`http://localhost:1999/employee/${_id}`, {
+  //     method: 'PUT',
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(data)
+  //   }).then((Employee) => {
+  //     console.warn("result", Employee);
+  //     // setState((pre)=>{
+  //     //   return[...pre,editEmployee]
+  //     // })
+
+  //   })
+  //   setIsEditing(false);
+  // }
 
 
-
-
-    fetch(`http://localhost:1999/employee/${_id}`, {
-      method: 'PUT',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }).then((Employee) => {
-      console.warn("result", Employee);
-      setState((pre) => {
-        return [...pre, editEmployee]
-      })
-
-    })
-    setIsEditing(true)
-    setEditingEmployee(..._id)
+  const onEditEmployee = (record) => {
+    setIsEditing(true);
+    setEditingEmployee({ ...record });
   }
+  const resetEditing = () => {
+    setIsEditing(false);
+    setEditingEmployee(null);
 
+  };
   // //================================================= END employee put (PUT API)
 
 
@@ -274,13 +309,13 @@ const Employees = () => {
 
     {
       title: "Actions",
-      render: (_id) => {
+      render: (record) => {
         return (
           <>
 
-            <Button onClick={() => { viewEmployee(_id) }}><EyeOutlined /></Button>
-            <Button onClick={() => { editEmployee(_id) }}><EditOutlined /></Button>
-            <Button onClick={() => { ondeleteEmployee(_id) }}><DeleteOutlined /></Button>
+            <Button onClick={() => { viewEmployee(record) }}><EyeOutlined /></Button>
+            <Button onClick={() => { onEditEmployee(record) }}><EditOutlined /></Button>
+            <Button onClick={() => { ondeleteEmployee(record) }}><DeleteOutlined /></Button>
 
 
           </>
@@ -308,21 +343,31 @@ const Employees = () => {
           resetEditing();
         }}
 
-        onOk={() => {
-
+        onOk=
+        {() => {
           setState((pre) => {
+            console.log(pre, "s")
+            console.log(editingEmployee, "kk")
+            editEmployee(editingEmployee._id);
             return pre.map((employee) => {
-              if (employee.id === editingEmployee.id) {
+              console.log(employee, "gdh")
+              if (employee._id === editingEmployee._id) {
                 return editingEmployee;
+
               } else {
                 return employee;
               }
-            })
-          })
+            });
+          }
+          );
+          setIsEditing(false);
 
-          resetEditing();
         }
         }
+
+
+
+
 
       >
         <Input value={editingEmployee?.name} onChange={(e) => {

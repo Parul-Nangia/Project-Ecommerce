@@ -41,7 +41,7 @@ const useStyles = makeStyles({
 
 const Login = () => {
   const classes = useStyles();
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [navigate, setNavigate] = useState(false);
 
@@ -50,7 +50,7 @@ const Login = () => {
     e.preventDefault();
 
     const { data } = await axios.post('http://localhost:1999/user/login', {
-      username, password
+      name, password
     });
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${data['token']}`;
@@ -74,7 +74,7 @@ const Login = () => {
         <img className={classes.imgg} src="ebs.png" />
 
         <Form.Item rules={[{ required: true, message: 'Please input your Username!' }]} >
-          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" className={classes.frmItem} onChange={e => setUsername(e.target.value)} />
+          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" className={classes.frmItem} onChange={e => setName(e.target.value)} />
         </Form.Item>
         <a className="login-form-forgot" href="">
           Forgot password?
