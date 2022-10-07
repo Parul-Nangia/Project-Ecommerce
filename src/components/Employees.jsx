@@ -78,8 +78,11 @@ btnCenter: {
 
 const Employees = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditing, setIsEditing]=useState(false);
+  const [editingEmployee, setEditingEmployee]=useState(null);
   const classes = useStyles();
   const [state, setState] = useState([]);
+  const [view,setView] = useState([]);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -98,23 +101,42 @@ const Employees = () => {
     setIsModalOpen(false);
   };
  
- 
+  const ondeleteEmployee =(_id) => 
+  {
+    Modal.confirm({
+      title: "Are you Sure, you want to delete this employee record?",
+      okText: "Yes",
+      okType: "danger",
+      onOk: () => {
+        // setState(pre=>{
+        deleteEmployee(_id)
+      //   return pre.filter((employee)=> employee.id !== _id.id);
+      // })
+
+      }
+    })
+  };
+
+
+
+
+
   
 //================================================= START employee delete (GET API==================================================
   
   function deleteEmployee(_id) {
-    if (window.confirm("Are you sure you want to to delete", _id)) {
+   
       fetch(`http://localhost:1999/employee/${_id}`, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         }
+        
       })
       
-    
       console.log("Employee Deleted", _id)
-    }
+    
   }
 
  // //================================================= START employee post (POST API)
@@ -131,7 +153,7 @@ function saveEmployee() {
       },
       body: JSON.stringify(data)
     }).then((Employee) => {
-      console.warn("result", Employee);
+      console.log("result", Employee);
       window.alert("New Employee added successfully")
       
     })
@@ -139,6 +161,14 @@ function saveEmployee() {
   }
  
  // //================================================= END employee post (POST API)
+
+ const resetEditing = () => {
+  setIsEditing(false);
+  setEditingEmployee(null);
+};
+
+
+
   
 // //================================================= START employee put (PUT API)
 
@@ -160,10 +190,13 @@ function saveEmployee() {
     body: JSON.stringify(data)
   }).then((Employee) => {
     console.warn("result", Employee);
-    window.alert("New Employee added successfully")
+    setState((pre)=>{
+      return[...pre,editEmployee]
+    })
     
   })
-  
+  setIsEditing(true)
+  setEditingEmployee(..._id)
 }
 
 // //================================================= END employee put (PUT API)
@@ -191,7 +224,28 @@ function saveEmployee() {
       
         // //================================================= END employee GET (GET API)
 
+
+        // //=================================================START View employee GET (GET API)
+        useEffect((_id) => {
+            viewEmployee(_id);
         
+          }, [])
+        
+            const viewEmployee=(_id)=> {
+              fetch (`http://localhost:1999/employee/${_id}`).then((response) => {
+                return response.json();
+              }).then((data) => {
+                let ab = data.viewData
+                setView(ab);
+              
+                console.log("response",ab);
+                
+                })
+                
+              }
+              console.log(view,"qq")
+         // //=================================================END  View employee GET (GET API)
+
 
 
      const columns = [
@@ -223,9 +277,12 @@ function saveEmployee() {
         render:(_id) => {
           return (
             <>
-              <EyeOutlined  onClick= {()=>{employeelist(_id)}}/>
-              <EditOutlined onClick= {()=>{editEmployee(_id)}}/>
-              <DeleteOutlined onClick= {()=>{deleteEmployee(_id)}}/>
+              
+              <Button onClick={() => {viewEmployee(_id) }}><EyeOutlined /></Button>
+              <Button onClick={() => {editEmployee(_id)}}><EditOutlined /></Button>
+              <Button onClick={() => {ondeleteEmployee(_id)}}><DeleteOutlined /></Button>
+              
+             
             </>
           );
           }
@@ -242,6 +299,45 @@ function saveEmployee() {
     <Table 
     columns={columns}
     dataSource={state} />
+    
+    <Modal
+      title="Edit Employee"
+      visible={isEditing}
+      onText="Save"
+      onCancel={() => {
+        resetEditing();
+      }}
+      
+      onOk={()=> {
+    
+        setState((pre) =>{
+          return pre.map((employee)=>{
+            if(employee.id=== editingEmployee.id){
+              return editingEmployee;
+             } else{
+                return employee;
+              }
+            })
+          })
+      
+          resetEditing ();
+      }
+    }
+
+    >
+      <Input value={editingEmployee?.name} onChange={(e)=>{setEditingEmployee(pre=>{
+        return{...pre,name:e.target.value}})
+      }}/>
+      <Input value={editingEmployee?.email} onChange={(e)=>{setEditingEmployee(pre=>{
+        return{...pre,email:e.target.value}})
+      }}/>
+      <Input value={editingEmployee?.contact}  onChange={(e)=>{setEditingEmployee(pre=>{
+        return{...pre,contact:e.target.value}})
+      }}/>
+      <Input value={editingEmployee?.gender}  onChange={(e)=>{setEditingEmployee(pre=>{
+        return{...pre,gender:e.target.value}})
+      }}/>
+    </Modal>
          
    
    <Button style ={{float:"right", margin:"50px"}}onClick={showModal}> Add New Employee</Button>
@@ -258,7 +354,7 @@ function saveEmployee() {
           </Form.Item>
 
           <Form.Item rules={[{ required: true }]} >
-            <Input prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" className={classes.frmItem}  onChange={(e) => { setPassword(e.target.value) }}/>
+            <Input type="password" prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" className={classes.frmItem}  onChange={(e) => { setPassword(e.target.value) }}/>
           </Form.Item>
 
           <Form.Item rules={[{ required: true}]} >
@@ -266,11 +362,11 @@ function saveEmployee() {
           </Form.Item>
 
           <Form.Item rules={[{ required: true }]}>
-            <Input type="password" prefix={<PhoneOutlined  className="site-form-item-icon" />} placeholder="Contact" className={classes.frmItem} onChange={(e) => { setContact(e.target.value) }}/>
+            <Input type="number" prefix={<PhoneOutlined  className="site-form-item-icon" />} placeholder="Contact" className={classes.frmItem} onChange={(e) => { setContact(e.target.value) }}/>
           </Form.Item>
 
           <Form.Item rules={[{ required: true }]}>
-            <Input type="password" prefix={<UserSwitchOutlined  className="site-form-item-icon" />} placeholder="Gender" className={classes.frmItem} onChange={(e) => { setGender(e.target.value) }}/>
+            <Input prefix={<UserSwitchOutlined  className="site-form-item-icon" />} placeholder="Gender" className={classes.frmItem} onChange={(e) => { setGender(e.target.value) }}/>
           </Form.Item>
 
 
@@ -279,6 +375,8 @@ function saveEmployee() {
 
           <Form.Item>
             <Button htmlType="submit" className={classes.btnCenter} onClick={saveEmployee}>Add</Button><br />
+            
+
          
           </Form.Item>
         </Form>
