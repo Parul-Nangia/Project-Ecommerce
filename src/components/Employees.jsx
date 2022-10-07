@@ -188,11 +188,14 @@ const editEmployee = async (_id) => {
    console.log(_id)
 
 
-   const name = editingEmployee.Name
-   const email = editingEmployee.Email
-   const gender = editingEmployee.Gender
-   const contact = editingEmployee.Contact
-   await axios.put(`http://localhost:1999/employee/${_id}`, { name, email,gender,contact })
+   const name = editingEmployee.name
+   console.log(name,"jgj")
+   console.log(editingEmployee,"editing Employee")
+   console.log(editingEmployee.name,"editingEmpoyee.name")
+   const email = editingEmployee.email
+   const gender = editingEmployee.gender
+   const contact = editingEmployee.contact
+   await axios.put(`http://localhost:1999/${_id}`, { name, email,gender,contact })
      .then(
        res => {
 
