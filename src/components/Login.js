@@ -36,8 +36,6 @@ const useStyles = makeStyles({
 
   }
 
-
-
 })
 
 
@@ -46,7 +44,6 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [navigate, setNavigate] = useState(false);
-
 
   const submit = async e => {
     console.log("going forward")
@@ -70,35 +67,30 @@ const Login = () => {
 
   return (
 
-    <>
-      <Row justify="center" style={{ padding: "10%" }}>
 
-        <Form >
-          <img className={classes.imgg} src="ebs.png" />
+    <Row justify="center" style={{ padding: "10%" }}>
 
-          <Form.Item rules={[{ required: true, message: 'Please input your Username!' }]} >
-            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" className={classes.frmItem} onChange={e => setUsername(e.target.value)} />
-          </Form.Item>
-          <a className="login-form-forgot" href="">
-            Forgot password?
-          </a>
-          <Form.Item rules={[{ required: true, message: 'Please input your Password!' }]}>
-            <Input type="password" prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" className={classes.frmItem} onChange={e => setPassword(e.target.value)} />
-          </Form.Item>
+      <Form >
+        <img className={classes.imgg} src="ebs.png" />
 
-          <Form.Item>
-            <Button htmlType="submit" onClick={submit} className={classes.btnCenter}>Login</Button><br />
-          </Form.Item>
-          <GoogleAuth />
-        </Form>
+        <Form.Item rules={[{ required: true, message: 'Please input your Username!' }]} >
+          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" className={classes.frmItem} onChange={e => setUsername(e.target.value)} />
+        </Form.Item>
+        <a className="login-form-forgot" href="">
+          Forgot password?
+        </a>
+        <Form.Item rules={[{ required: true, message: 'Please input your Password!' }]}>
+          <Input type="password" prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" className={classes.frmItem} onChange={e => setPassword(e.target.value)} />
+        </Form.Item>
 
+        <Form.Item>
+          <Button htmlType="submit" onClick={submit} className={classes.btnCenter}>Login</Button><br />
+        </Form.Item>
+        <GoogleAuth />
+      </Form>
 
-      </Row>
+    </Row>
 
-
-
-
-    </>
 
 
 
