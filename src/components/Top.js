@@ -64,14 +64,12 @@ const Top = () => {
                         <Menu mode="horizontal" className="Headermenu">
                             <Menu.Item key="1">Ebullient Soft</Menu.Item>
                             <div className='tool' style={{marginTop:"5px",marginLeft:"900px"}}>
-                                <Drop>
-                                <Button type="primary" onClick={logOut}>
-                                Logout
-                                </Button>
-                                </Drop>
+                                <Drop />
                           
                         
-                               
+                               {/* <Button type="primary" onClick={logOut}>
+                                Logout
+                                </Button> */}
                             </div>
                         </Menu>
                     </Header>
