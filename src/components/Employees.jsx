@@ -6,7 +6,7 @@ import { Table } from 'antd';
 // import Navbar from './Navbar';
 import { Button, Modal, Form, Input, Row} from 'antd';
 import { LockOutlined, UserOutlined , MailOutlined ,PhoneOutlined ,UserSwitchOutlined, EyeOutlined ,EditOutlined,DeleteOutlined} from '@ant-design/icons';
-
+import axios from 'axios';
 
 const useStyles = makeStyles({
 
@@ -101,7 +101,7 @@ const Employees = () => {
     setIsModalOpen(false);
   };
  
-  const ondeleteEmployee =(_id) => 
+  const ondeleteEmployee = (record) => 
   {
     Modal.confirm({
       title: "Are you Sure, you want to delete this employee record?",
@@ -109,8 +109,8 @@ const Employees = () => {
       okType: "danger",
       onOk: () => {
         // setState(pre=>{
-        deleteEmployee(_id)
-      //   return pre.filter((employee)=> employee.id !== _id.id);
+        deleteEmployee(record._id)
+      //   return pre.filter((employee)=> employee.id !== record.id);
       // })
 
       }
@@ -138,6 +138,21 @@ const Employees = () => {
       console.log("Employee Deleted", _id)
     
   }
+  // const deleteData = async (_id)=> {
+  //   await axios.delete(`http://localhost:1999/employee/${_id}`)
+  //     .then((res) => {
+  //       console.log(_id, "resif")
+  //       setState(
+  //         res.data.map(row => ({
+  //           id: row.id
+  //         }))
+  //       );
+  //     }
+  //     );
+  // };
+
+
+
 
  // //================================================= START employee post (POST API)
 function saveEmployee() {
@@ -274,13 +289,13 @@ function saveEmployee() {
   
       {
         title: "Actions",
-        render:(_id) => {
+        render:(record) => {
           return (
             <>
               
-              <Button onClick={() => {viewEmployee(_id) }}><EyeOutlined /></Button>
-              <Button onClick={() => {editEmployee(_id)}}><EditOutlined /></Button>
-              <Button onClick={() => {ondeleteEmployee(_id)}}><DeleteOutlined /></Button>
+              <Button onClick={() => {viewEmployee(record) }}><EyeOutlined/></Button>
+              <Button onClick={() => {editEmployee(record)}}><EditOutlined/></Button>
+              <Button onClick={() => {ondeleteEmployee(record)}}><DeleteOutlined/></Button>
               
              
             </>
