@@ -3,45 +3,62 @@ import { GoogleLogin,GoogleLogout } from 'react-google-login';
 import { gapi } from 'gapi-script';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import axios from 'axios';
 
 const Googlelogin = () => {
-    const [state, setState] = useState([]);
-    const [google_Id, setGoogleId] = useState("");
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
+    // const [state, setState] = useState([]);
+    // const [google_Id, setGoogleId] = useState("");
+    // const [name, setName] = useState("");
+    // const [email, setEmail] = useState("");
    
 
 
-    function SignInWithGoogle() {
-        console.warn({google_Id, name, email});
-        let data = {google_Id, name, email}
+    // function SignInWithGoogle() {
+    //     console.warn({google_Id, name, email});
+    //     let data = {google_Id, name, email}
     
     
-        fetch("http://localhost:1999/with/googleSignup", {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        }).then((Guser) => {
-          console.warn("result", Guser);
-          window.alert("SignUp with Google Success")
+    //     fetch("http://localhost:1999/with/googleSignup", {
+    //       method: 'POST',
+    //       headers: {
+    //         'Accept': 'application/json',
+    //         'Content-Type': 'application/json'
+    //       },
+    //       body: JSON.stringify(data)
+    //     }).then((Guser) => {
+    //       console.warn("result", Guser);
+    //       window.alert("SignUp with Google Success")
           
-        })
+    //     })
         
-      }
+    //   }
      
     
-    const clientId = '317246931927-jcahmmoa74nit40ciubn481gkv9dnqpn.apps.googleusercontent.com';
+    const clientId = process.env.REACT_GOOGLE_CLIENT_ID;
     const[showLoginButton,setShowLoginButton]=useState(true);
     const [showLogoutButton ,setShowLogoutButton]=useState(false);
     
-    const onLoginSuccess = (res)=>{
-        console.log("Login Success",res.profileObj);
-        setShowLoginButton(false);
-        setShowLogoutButton(true);
-    }
+    // const onLoginSuccess = (res)=>{
+    //     console.log("Login Success",res.profileObj);
+    //     setShowLoginButton(false);
+    //     setShowLogoutButton(true);
+    // }
+
+    const onLoginSuccess = (res) => {
+      axios.post(`${process.env.REACT_APP_BASIC_URL}/googleSignup`, {
+          "google_Id": res.profileObj.googleId,
+          "name": res.profileObj.givenName,
+          "email": res.profileObj.email
+      }).then((res) => {
+          console.log(res, "ghkjh")
+      })
+
+      console.log(res, "jgfjkgjkdkjgh")
+      console.log("Login Success", res.profileObj);
+      setShowLoginButton(false);
+      setShowLogoutButton(true);
+      // localStorage.setItem('access_token1', JSON.stringify(res.accessToken))
+  }
 
     const onFailureSuccess =(res) =>{
         console.log("Login Failed:",res);
@@ -75,7 +92,7 @@ const Googlelogin = () => {
        <div>
             {showLoginButton ?
             <GoogleLogin 
-                onClick = {SignInWithGoogle}
+                // onClick = {SignInWithGoogle}
                 clientId={clientId}
                 buttonText="Sign in with Google"
                 onSuccess={onLoginSuccess}

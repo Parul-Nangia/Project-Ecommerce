@@ -1,13 +1,26 @@
+import { SearchOutlined } from '@ant-design/icons';
+import { Button, Tooltip } from 'antd';
 import React, { useState } from 'react';
 import { Layout } from 'antd';
 import { Menu } from 'antd';
 import 'antd/dist/antd.css';
+import { useNavigate } from 'react-router-dom';
 const { Header } = Layout;
 
 
 
-
 const Top = () => {
+    let user = JSON.parse(localStorage.getItem('user-info'))
+    const navigate= useNavigate();
+    function logOut()
+    {
+        localStorage.clear()
+        navigate("/")
+    }
+
+
+
+
     return (
         <>
             <div>
@@ -15,8 +28,21 @@ const Top = () => {
                     <Header className="header" style={{backgroundColor:"#d22d2d"}}>
                         <div className="logo" />
                         <Menu mode="horizontal" className="Headermenu">
-                            <Menu.Item key="1">Home</Menu.Item>    
+                            <Menu.Item key="1">Ebullient Soft</Menu.Item>
+                            <div className='tool' style={{marginTop:"5px",marginLeft:"900px"}}>
+                              <Tooltip title="search">
+                              <Button icon={<SearchOutlined />}>Search</Button> 
+                              </Tooltip>
+                               <Button type="primary" onClick={logOut}>
+                                Logout
+                                </Button>
+                            </div>
+                    
+
+                          
+                                
                         </Menu>
+                         
                     </Header>
                 </Layout>
             </div>
