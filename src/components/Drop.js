@@ -5,6 +5,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import {LoginOutlined,SettingTwoTone,InfoCircleTwoTone} from '@ant-design/icons';
 
 const Drop = () => {
+  
   const navigate=useNavigate();
   const [open, setOpen] = useState(false);
 
@@ -15,7 +16,7 @@ const Drop = () => {
   };
 
   const menu = (
-    <Menu style={{float:"right",marginTop:"-25px"}}
+    <Menu style={{marginTop:"-25px"}}
       onClick={({key})=>{
         if (key==="demo"){
 

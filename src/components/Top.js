@@ -11,10 +11,6 @@ import Drop from './Drop.js';
 
 const { Header } = Layout;
 
-
-
-
-
 const Top = () => {
     let user = JSON.parse(localStorage.getItem('user-info'))
     const navigate= useNavigate();
