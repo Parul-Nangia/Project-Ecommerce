@@ -63,7 +63,7 @@ const Top = () => {
                         <div className="logo" />
                         <Menu mode="horizontal" className="Headermenu">
                             <Menu.Item key="1">Ebullient Soft</Menu.Item>
-                            <div className='tool' style={{display:"flex",marginTop:"2px"}}>
+                            <div className='tool' style={{display:"flex",marginTop:"2px",float:"right",marginLeft:"80%"}}>
                                 <Drop />
                           
                         

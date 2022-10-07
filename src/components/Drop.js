@@ -15,7 +15,7 @@ const Drop = () => {
   };
 
   const menu = (
-    <Menu style={{marginLeft:"1000px"}}
+    <Menu style={{float:"right",marginTop:"-25px"}}
       onClick={({key})=>{
         if (key==="demo"){
 
@@ -55,7 +55,7 @@ const Drop = () => {
   return (
     <Dropdown overlay={menu} onOpenChange={handleOpenChange} open={open}>
       <a onClick={(e) => e.preventDefault()}>
-        <Space style={{color:"black",marginLeft:"1000px"}}>
+        <Space style={{color:"black",float:"right"}}>
           Sudhir Dadwal
           <DownOutlined />
         </Space>
