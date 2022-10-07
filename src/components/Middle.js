@@ -8,6 +8,7 @@ import Edit from '../components/Edit';
 import View from '../components/View';
 import LeaveForm from '../components/LeaveForm';
 import LeaveCalendar from '../components/LeaveCalendar';
+import EmployeesData from '../components/EmployeesData';
 
 import { Breadcrumb, Layout } from 'antd';
 const { Content } = Layout;
@@ -48,6 +49,7 @@ const Middle = () => {
                     <Route path="/attendance" element={<Attendance />} />
                     <Route path="/leave" element={<Leave />} />
                     <Route path="/employees" element={<Employees />} />
+                    <Route path="/employeesdata" element={<EmployeesData />} />
 
                     <Route path="/edit/:_id" element={<Edit />} />
                     <Route path="/view/:_id" element={<View />} />
