@@ -3,7 +3,7 @@ import { Table } from 'antd'
 import { useState } from 'react'
 import Top from '../components/Top';
 import Sidebar from '../components/Sidebar';
-import Breadcrumbs from '../components/Breadcrumbs';
+import Middle from '../components/Middle';
 import { Layout } from 'antd';
 const { Content } = Layout;
 
@@ -34,7 +34,7 @@ const EmployeesData = () => {
                 <Sidebar />
 
                 <Layout style={{ padding: '0 24px 24px', }} >
-                    <Breadcrumbs />
+                    <Middle />
                     <Content className="site-layout-background" style={{ padding: 24, margin: 0, minHeight: 280, }} >
 
 

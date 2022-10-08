@@ -2,7 +2,7 @@ import React from 'react';
 import { Breadcrumb } from 'antd';
 
 
-const Breadcrumbs = () => {
+const Middle = () => {
     return (
 
 
@@ -26,5 +26,5 @@ const Breadcrumbs = () => {
 
 
 
-export default Breadcrumbs;
+export default Middle;
 

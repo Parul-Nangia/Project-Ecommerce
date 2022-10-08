@@ -1,8 +1,4 @@
 import React from 'react';
-// import Top from '../components/Top';
-// import Sidebar from '../components/Sidebar';
-// import Middle from '../components/Middle';
-
 import { Route, Routes} from 'react-router-dom';
 import Login from '../components/Login';
 import Dashboard from '../components/Dashboard';
