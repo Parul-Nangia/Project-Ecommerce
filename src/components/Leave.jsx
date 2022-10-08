@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Button } from 'antd';
 import Top from '../components/Top';
 import Sidebar from '../components/Sidebar';
-import Middle from '../components/Middle';
+import Breadcrumbs from './Breadcrumbs';
 import { Layout } from 'antd';
 const { Content } = Layout;
 
@@ -28,7 +28,7 @@ const Leave = (props) => {
           <Sidebar />
 
           <Layout style={{ padding: '0 24px 24px', }} >
-            <Middle />
+            <Breadcrumbs />
             <Content className="site-layout-background" style={{ padding: 24, margin: 0, minHeight: 280, }} >
 
               <div>

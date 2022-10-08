@@ -3,7 +3,7 @@ import React from 'react';
 import DashboardCards from '../components/DashboardCards';
 import Top from '../components/Top';
 import Sidebar from '../components/Sidebar';
-import Middle from '../components/Middle';
+import Breadcrumbs from './Breadcrumbs';
 import { Layout } from 'antd';
 const { Content } = Layout;
 
@@ -22,7 +22,7 @@ const Dashboard = () => {
           <Sidebar />
 
           <Layout style={{ padding: '0 24px 24px', }} >
-            <Middle />    
+            <Breadcrumbs />    
             <Content className="site-layout-background" style={{ padding: 24, margin: 0, minHeight: 280, }} >
 
               <DashboardCards />
