@@ -26,18 +26,8 @@ const Dashboard = () => {
   return (
 
     <>
-      <div>
-        <Top />
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <Sidebar>
-            
-              <DashboardCards />
-            
-          </Sidebar>
-        </div>
-      </div>
 
-
+      <DashboardCards />
 
     </>
 

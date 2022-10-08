@@ -29,13 +29,24 @@ const Sidebar = () => {
                             navigate(key)
                         }
                     }}
+                    mode="inline"
                     items={[
                         { label: "DASHBOARD", key: "/dashboard", icon: <HomeOutlined /> },
                         { label: "ATTENDANCE", key: "/attendance", icon: <DashboardOutlined /> },
-                        { label: "EMPLOYEES", key: "/employees", icon: <UserOutlined /> },
+                        {
+                            label: "EMPLOYEES", key: "/employees", icon: <UserOutlined />,
+                            children: [
+                                {
+                                    label: "EMPLOYEES ", key: "/employees", icon: <UserOutlined />,
+                                },
+                                {
+                                    label: "EMPLOYEES DATA", key: "/employeesdata", icon: <UserOutlined />,
+                                }]
+                        },
                         { label: "LEAVE", key: "/leave", icon: <PaperClipOutlined /> },
 
                     ]}
+
                 />
             </Sider>
             <Middle />

@@ -11,7 +11,7 @@ const LeaveCalendar = () => {
 
   const [weekLeave, setweekLeave] = useState([]);
   const [LeaveDate, setLeaveDate] = useState("");
- 
+
 
 
 
@@ -51,57 +51,53 @@ const LeaveCalendar = () => {
 
     const stringValue = value.format("YYYY-MM-DD");
     const listData = weekLeave.filter(({ LeaveDate }) => LeaveDate === stringValue);
-    
+
     for (let i = LeaveDate; i < LeaveDate; i++) {
-        function getDatesInRange(startDate, endDate) {
-          const date = (startDate.getTime());
-        
-          const dates = [];
-         
-          while (date <= endDate) {
-            dates.push((date));
-            date.setDate(date.getDate() + 1);
-          }
-        
-          return dates;
+      function getDatesInRange(startDate, endDate) {
+        const date = (startDate.getTime());
+
+        const dates = [];
+
+        while (date <= endDate) {
+          dates.push((date));
+          date.setDate(date.getDate() + 1);
         }
-      
-        const d1 = ('2022-10-01');
-        const d2 = ('2022-12-30');
-        
+
+        return dates;
+      }
+
+      const d1 = ('2022-10-01');
+      const d2 = ('2022-12-30');
+
       console.log(getDatesInRange(d1, d2));
     }
 
 
 
     return (
-       
+
       <>
         <ul className="events">
 
           {listData.map((item) => (
 
 
-         
-              <li key={item.EmployeeName}>
-                
-                <Badge status={"success"} text={item.EmployeeName} />
-              </li>
-         
+
+            <li key={item.EmployeeName}>
+
+              <Badge status={"success"} text={item.EmployeeName} />
+            </li>
+
           ))}
-            </ul>
+        </ul>
 
 
 
       </>
-        );
+    );
   };
 
-        return <Calendar dateCellRender={dateCellRender} />;
+  return <Calendar dateCellRender={dateCellRender} />;
 };
-
-
-
-
 
 export default LeaveCalendar;
