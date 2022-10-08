@@ -7,6 +7,12 @@ import { Table } from 'antd';
 import { Button, Modal, Form, Input, Row } from 'antd';
 import { LockOutlined, UserOutlined, MailOutlined, PhoneOutlined, UserSwitchOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import axios from 'axios';
+import Top from '../components/Top';
+import Sidebar from '../components/Sidebar';
+import Middle from '../components/Middle';
+import { Layout } from 'antd';
+const { Content } = Layout;
+
 
 const useStyles = makeStyles({
 
@@ -186,32 +192,32 @@ const Employees = () => {
 
 
   // //================================================= START employee put (PUT API)
-// ----------------------------------------axios method (PUT api)
+  // ----------------------------------------axios method (PUT api)
   const editEmployee = async (_id) => {
     console.log("hdghja")
     console.log(_id)
 
 
 
-   const name = editingEmployee.name
-   console.log(name,"jgj")
-   console.log(editingEmployee,"editing Employee")
-   console.log(editingEmployee.name,"editingEmpoyee.name")
-   const email = editingEmployee.email
-   const gender = editingEmployee.gender
-   const contact = editingEmployee.contact
-   await axios.put(`http://localhost:1999/Employee/${_id}`, { name, email,gender,contact })
-     .then(
-       res => {
+    const name = editingEmployee.name
+    console.log(name, "jgj")
+    console.log(editingEmployee, "editing Employee")
+    console.log(editingEmployee.name, "editingEmpoyee.name")
+    const email = editingEmployee.email
+    const gender = editingEmployee.gender
+    const contact = editingEmployee.contact
+    await axios.put(`http://localhost:1999/Employee/${_id}`, { name, email, gender, contact })
+      .then(
+        res => {
 
-    
+
 
         }
       )
     setIsEditing(false);
-   
+
   };
-// ----------------------------------------fetch method (PUT api)
+  // ----------------------------------------fetch method (PUT api)
   //  function editEmployee(_id) {
   //   console.warn({ name, email, contact, gender });
   //   let data = { name, email, contact, gender }
@@ -231,9 +237,9 @@ const Employees = () => {
   //   })
   //   setIsEditing(false);
   // }
-// const viewEmployee =()=>{
+  // const viewEmployee =()=>{
 
-// }
+  // }
 
   const onEditEmployee = (record) => {
     setIsEditing(true);
@@ -340,115 +346,121 @@ const Employees = () => {
 
     <>
 
+      <Layout>
+        <Top />
+        <Layout>
+          <Sidebar />
 
+          <Layout style={{ padding: '0 24px 24px', }} >
+            <Middle />
+            <Content className="site-layout-background" style={{ padding: 24, margin: 0, minHeight: 280, }} >
 
-      <Table
-        columns={columns}
-        dataSource={state} />
+              <Table
+                columns={columns}
+                dataSource={state} />
 
-      <Modal
-        title="Edit Employee"
-        visible={isEditing}
-        onText="Save"
-        onCancel={() => {
-          resetEditing();
-        }}
+              <Modal
+                title="Edit Employee"
+                visible={isEditing}
+                onText="Save"
+                onCancel={() => {
+                  resetEditing();
+                }}
 
-        onOk=
-        {() => {
-          setState((pre) => {
-            console.log(pre, "s")
-            console.log(editingEmployee, "kk")
-            editEmployee(editingEmployee._id);
-            return pre.map((employee) => {
-              console.log(employee, "gdh")
-              if (employee._id === editingEmployee._id) {
-                return editingEmployee;
+                onOk=
+                {() => {
+                  setState((pre) => {
+                    console.log(pre, "s")
+                    console.log(editingEmployee, "kk")
+                    editEmployee(editingEmployee._id);
+                    return pre.map((employee) => {
+                      console.log(employee, "gdh")
+                      if (employee._id === editingEmployee._id) {
+                        return editingEmployee;
 
-              } else {
-                return employee;
-              }
-            });
-          }
-          );
-          setIsEditing(false);
+                      } else {
+                        return employee;
+                      }
+                    });
+                  }
+                  );
+                  setIsEditing(false);
 
-        }
-        }
+                }
+                }
 
-
-
-
-
-      >
-        <Input value={editingEmployee?.name} onChange={(e) => {
-          setEditingEmployee(pre => {
-            return { ...pre, name: e.target.value }
-          })
-        }} />
-        <Input value={editingEmployee?.email} onChange={(e) => {
-          setEditingEmployee(pre => {
-            return { ...pre, email: e.target.value }
-          })
-        }} />
-        <Input value={editingEmployee?.contact} onChange={(e) => {
-          setEditingEmployee(pre => {
-            return { ...pre, contact: e.target.value }
-          })
-        }} />
-        <Input value={editingEmployee?.gender} onChange={(e) => {
-          setEditingEmployee(pre => {
-            return { ...pre, gender: e.target.value }
-          })
-        }} />
-      </Modal>
-     {/* <Modal>
+              >
+                <Input value={editingEmployee?.name} onChange={(e) => {
+                  setEditingEmployee(pre => {
+                    return { ...pre, name: e.target.value }
+                  })
+                }} />
+                <Input value={editingEmployee?.email} onChange={(e) => {
+                  setEditingEmployee(pre => {
+                    return { ...pre, email: e.target.value }
+                  })
+                }} />
+                <Input value={editingEmployee?.contact} onChange={(e) => {
+                  setEditingEmployee(pre => {
+                    return { ...pre, contact: e.target.value }
+                  })
+                }} />
+                <Input value={editingEmployee?.gender} onChange={(e) => {
+                  setEditingEmployee(pre => {
+                    return { ...pre, gender: e.target.value }
+                  })
+                }} />
+              </Modal>
+              {/* <Modal>
 
     </Modal> */}
 
-      <Button style={{ float: "right", margin: "50px" }} onClick={showModal}> Add New Employee</Button>
-      <Modal title="Employee Form" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+              <Button style={{ float: "right", margin: "50px" }} onClick={showModal}> Add New Employee</Button>
+              <Modal title="Employee Form" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
 
-        <Row justify="center" style={{ padding: "10%" }}>
-
-
-          <Form >
+                <Row justify="center" style={{ padding: "10%" }}>
 
 
-            <Form.Item rules={[{ required: true }]} >
-              <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Employee name" className={classes.frmItem} onChange={(e) => { setName(e.target.value) }} />
-            </Form.Item>
-
-            <Form.Item rules={[{ required: true }]} >
-              <Input type="password" prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" className={classes.frmItem} onChange={(e) => { setPassword(e.target.value) }} />
-            </Form.Item>
-
-            <Form.Item rules={[{ required: true }]} >
-              <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email Address" className={classes.frmItem} onChange={(e) => { setEmail(e.target.value) }} />
-            </Form.Item>
-
-            <Form.Item rules={[{ required: true }]}>
-              <Input type="number" prefix={<PhoneOutlined className="site-form-item-icon" />} placeholder="Contact" className={classes.frmItem} onChange={(e) => { setContact(e.target.value) }} />
-            </Form.Item>
-
-            <Form.Item rules={[{ required: true }]}>
-              <Input prefix={<UserSwitchOutlined className="site-form-item-icon" />} placeholder="Gender" className={classes.frmItem} onChange={(e) => { setGender(e.target.value) }} />
-            </Form.Item>
+                  <Form >
 
 
+                    <Form.Item rules={[{ required: true }]} >
+                      <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Employee name" className={classes.frmItem} onChange={(e) => { setName(e.target.value) }} />
+                    </Form.Item>
+
+                    <Form.Item rules={[{ required: true }]} >
+                      <Input type="password" prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" className={classes.frmItem} onChange={(e) => { setPassword(e.target.value) }} />
+                    </Form.Item>
+
+                    <Form.Item rules={[{ required: true }]} >
+                      <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email Address" className={classes.frmItem} onChange={(e) => { setEmail(e.target.value) }} />
+                    </Form.Item>
+
+                    <Form.Item rules={[{ required: true }]}>
+                      <Input type="number" prefix={<PhoneOutlined className="site-form-item-icon" />} placeholder="Contact" className={classes.frmItem} onChange={(e) => { setContact(e.target.value) }} />
+                    </Form.Item>
+
+                    <Form.Item rules={[{ required: true }]}>
+                      <Input prefix={<UserSwitchOutlined className="site-form-item-icon" />} placeholder="Gender" className={classes.frmItem} onChange={(e) => { setGender(e.target.value) }} />
+                    </Form.Item>
+
+                    <Form.Item>
+                      <Button htmlType="submit" className={classes.btnCenter} onClick={saveEmployee}>Add</Button><br />
+                    </Form.Item>
+
+                  </Form>
+                </Row>
+
+              </Modal>
+
+            </Content>
+          </Layout>
+        </Layout>
+      </Layout>
 
 
 
-            <Form.Item>
-              <Button htmlType="submit" className={classes.btnCenter} onClick={saveEmployee}>Add</Button><br />
 
-
-
-            </Form.Item>
-          </Form>
-        </Row>
-
-      </Modal>
 
 
 

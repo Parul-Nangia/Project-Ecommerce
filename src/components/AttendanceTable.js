@@ -1,5 +1,12 @@
 import React from 'react';
 import { Table } from 'antd';
+import Top from '../components/Top';
+import Sidebar from '../components/Sidebar';
+import Middle from '../components/Middle';
+import { Layout } from 'antd';
+const { Content } = Layout;
+
+
 
 const AttendanceTable = () => {
 
@@ -37,13 +44,14 @@ const AttendanceTable = () => {
   ];
 
   return (
-    <div>
-      <Table
 
-        columns={columns} >
-      </Table>
 
-    </div>
+            <Table
+
+              columns={columns} >
+            </Table>
+
+
   )
 }
 

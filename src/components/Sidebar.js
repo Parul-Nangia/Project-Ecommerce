@@ -18,7 +18,7 @@ const Sidebar = () => {
     const navigate = useNavigate();
     return (
 
-        <Layout>
+        // <Layout>
             <Sider width={200} className="site-layout-background">
                 <Menu className='Sidemenubar'
                     onClick={({ key }) => {
@@ -49,8 +49,8 @@ const Sidebar = () => {
 
                 />
             </Sider>
-            <Middle />
-        </Layout>
+            
+        // </Layout>
 
     )
 };

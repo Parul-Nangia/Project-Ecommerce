@@ -3,10 +3,12 @@ import LeaveCards from '../components/LeaveCards';
 import LeaveTable from '../components/LeaveTable';
 import LeaveCalendar from '../components/LeaveCalendar';
 import { Link, useNavigate } from 'react-router-dom'
-// import Sidebar from '../components/Sidebar';
-// import Navbar from '../components/Navbar';
 import { Button } from 'antd';
-
+import Top from '../components/Top';
+import Sidebar from '../components/Sidebar';
+import Middle from '../components/Middle';
+import { Layout } from 'antd';
+const { Content } = Layout;
 
 
 
@@ -20,25 +22,38 @@ const Leave = (props) => {
   return (
 
     <>
+      <Layout>
+        <Top />
+        <Layout>
+          <Sidebar />
+
+          <Layout style={{ padding: '0 24px 24px', }} >
+            <Middle />
+            <Content className="site-layout-background" style={{ padding: 24, margin: 0, minHeight: 280, }} >
+
+              <div>
+
+                <LeaveCards />
+                <Link to="/leaveform"></Link>
+                <br />
+                <Button style={{ background: "MediumSeaGreen" }} type="primary" size={size} onClick={() => navigate('/leaveform')}>Apply Leave</Button>
 
 
-      <div>
+                <h1>{view}</h1>
+                <div>
+                  <Button type="dashed" size={size} onClick={() => setView(!view)}>Calendar</Button>
 
-        <LeaveCards />
-        <Link to="/leaveform"></Link>
-        <br />
-        <Button style={{ background: "MediumSeaGreen"}} type="primary" size={size} onClick={() => navigate('/leaveform')}>Apply Leave</Button>
+                  <Button type="dashed" size={size} onClick={() => setView(!view)}>Leave List</Button>
+                </div>
+                <br />
+                {view ? <LeaveTable /> : <LeaveCalendar />}
+              </div>
 
+            </Content>
+          </Layout>
+        </Layout>
+      </Layout>
 
-        <h1>{view}</h1>
-        <div>
-          <Button  type="dashed" size={size} onClick={() => setView(!view)}>Calendar</Button>
-
-          <Button  type="dashed" size={size} onClick={() => setView(!view)}>Leave List</Button>
-        </div>
-        <br />
-        {view ? <LeaveTable /> : <LeaveCalendar />}
-      </div>
 
 
     </>
