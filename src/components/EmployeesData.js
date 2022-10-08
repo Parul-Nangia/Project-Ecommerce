@@ -3,7 +3,7 @@ import { Table } from 'antd'
 import { useState } from 'react'
 import Top from '../components/Top';
 import Sidebar from '../components/Sidebar';
-import Breadcrumbs from '../components/Middle';
+import Breadcrumbs from '../components/Breadcrumbs';
 import { Layout } from 'antd';
 const { Content } = Layout;
 
