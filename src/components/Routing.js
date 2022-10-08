@@ -7,6 +7,7 @@ import Dashboard from '../components/Dashboard';
 import Attendance from '../components/Attendance';
 import Leave from '../components/Leave';
 import Employees from '../components/Employees';
+
 // import Edit from '../components/Edit';
 // import View from '../components/View';
 // import LeaveForm from '../components/LeaveForm';
@@ -24,25 +25,25 @@ const Routing = () => {
 
     return (
         <>
-            <div>
+            {/* <div>
                 <Top />
                 <div style={{ display: "flex", flexDirection: "row" }}>
                     <Sidebar />
                 </div>
-            </div>
+            </div> */}
 
 
-            <Routes>
-                <Route path="/" element={<Login />} />
-                {/* <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/attendance" element={<Attendance />} />
-                <Route path="/leave" element={<Leave />} />
-                <Route path="/employees" element={<Employees />} />  */}
+          
+                <Routes>
+                    <Route path="/" element={<Login />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/attendance" element={<Attendance />} />
+                    <Route path="/leave" element={<Leave />} />
+                    <Route path="/employees" element={<Employees />} />
 
+                </Routes>
 
-
-            </Routes>
-
+   
 
 
 
