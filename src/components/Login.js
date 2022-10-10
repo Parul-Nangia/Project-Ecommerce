@@ -86,6 +86,7 @@ const Login = () => {
           <Button htmlType="submit" onClick={submit} className={classes.btnCenter}>Login</Button><br />
         </Form.Item>
         <GoogleAuth />
+        
       </Form>
 
     </Row>

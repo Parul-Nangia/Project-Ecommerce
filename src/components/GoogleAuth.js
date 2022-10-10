@@ -8,8 +8,11 @@ import axios from 'axios';
 
 const Googlelogin = () => {
 
+
+
     const responseGoogle = (response) => {
         console.log(response);
+       
         axios({
             method: "POST",
             url: "http://localhost:1999/user/googlelogin",
@@ -17,6 +20,8 @@ const Googlelogin = () => {
         }).then(response => {
             console.log("Google Login Success", response);
         })
+
+        // localStorage.getItem('name','email','google_Id');
     }
 
     return (
@@ -212,9 +217,8 @@ const Googlelogin = () => {
         //                 onLogoutSuccess={onSignoutSuccess}
         //                 >
         //                 </GoogleLogout>:null}
-        //         </div>
-    )
-
-}
+    )    
+    
+    }
 
 export default Googlelogin
