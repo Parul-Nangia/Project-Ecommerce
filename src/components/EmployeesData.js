@@ -1,6 +1,14 @@
 import React from 'react'
 import { Table } from 'antd'
 import { useState } from 'react'
+import Top from '../components/Top';
+import Sidebar from '../components/Sidebar';
+import Middle from '../components/Middle';
+import { Layout } from 'antd';
+const { Content } = Layout;
+
+
+
 const EmployeesData = () => {
     const [dataSource, setDataSource] = useState([])
     const columns = [
@@ -19,12 +27,28 @@ const EmployeesData = () => {
 
     ];
     return (
-        <div>
-            <Table
-                columns={columns}
-                dataSource={dataSource}>
-            </Table>
-        </div>
+
+        <Layout>
+            <Top />
+            <Layout>
+                <Sidebar />
+
+                <Layout style={{ padding: '0 24px 24px', }} >
+                    <Middle />
+                    <Content className="site-layout-background" style={{ padding: 24, margin: 0, minHeight: 280, }} >
+
+
+                        <Table
+                            columns={columns}
+                            dataSource={dataSource}>
+                        </Table>
+
+                    </Content>
+                </Layout>
+            </Layout>
+        </Layout>
+
+
     )
 }
 

@@ -77,9 +77,7 @@ const Login = () => {
         <Form.Item rules={[{ required: true, message: 'Please input your Username!' }]} >
           <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" className={classes.frmItem} onChange={e => setName(e.target.value)} />
         </Form.Item>
-        <a className="login-form-forgot" href="">
-          Forgot password?
-        </a>
+       
         <Form.Item rules={[{ required: true, message: 'Please input your Password!' }]}>
           <Input type="password" prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" className={classes.frmItem} onChange={e => setPassword(e.target.value)} />
         </Form.Item>

@@ -1,19 +1,11 @@
 
 import React from 'react';
-import Chart from './Chart';
-// import Widget from './Widget'
-// import './widget.css'
-import Featured from "./Featured"
-// import Sidebar from '../components/Sidebar'
 import DashboardCards from '../components/DashboardCards';
 import Top from '../components/Top';
 import Sidebar from '../components/Sidebar';
-
-
-
-
-
-
+import Middle from './Middle';
+import { Layout } from 'antd';
+const { Content } = Layout;
 
 
 
@@ -24,8 +16,22 @@ const Dashboard = () => {
   return (
 
     <>
+      <Layout>
+        <Top />
+        <Layout>
+          <Sidebar />
 
-      <DashboardCards />
+          <Layout style={{ padding: '0 24px 24px', }} >
+            <Middle />    
+            <Content className="site-layout-background" style={{ padding: 24, margin: 0, minHeight: 280, }} >
+
+              <DashboardCards />
+
+            </Content>
+          </Layout>
+        </Layout>
+      </Layout>
+
 
     </>
 

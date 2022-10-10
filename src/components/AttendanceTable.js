@@ -1,6 +1,9 @@
 import React from 'react';
 import { Table } from 'antd';
 
+
+
+
 const AttendanceTable = () => {
 
   const columns = [
@@ -37,13 +40,14 @@ const AttendanceTable = () => {
   ];
 
   return (
-    <div>
-      <Table
 
-        columns={columns} >
-      </Table>
 
-    </div>
+            <Table
+
+              columns={columns} >
+            </Table>
+
+
   )
 }
 

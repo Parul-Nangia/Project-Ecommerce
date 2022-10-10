@@ -1,7 +1,5 @@
 import { DashboardOutlined, HomeOutlined, PaperClipOutlined, UserOutlined } from '@ant-design/icons';
 import React from 'react';
-import Middle from '../components/Middle';
-
 import { useNavigate } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 const { Sider } = Layout;
@@ -18,7 +16,7 @@ const Sidebar = () => {
     const navigate = useNavigate();
     return (
 
-        <Layout>
+        // <Layout>
             <Sider width={200} className="site-layout-background">
                 <Menu className='Sidemenubar'
                     onClick={({ key }) => {
@@ -49,8 +47,8 @@ const Sidebar = () => {
 
                 />
             </Sider>
-            <Middle />
-        </Layout>
+            
+        // </Layout>
 
     )
 };
