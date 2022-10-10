@@ -59,6 +59,7 @@ const Login = () => {
 
 
     setNavigate(true);
+    localStorage.setItem('access_token1', JSON.stringify(data.token))
   }
 
   if (navigate) {
