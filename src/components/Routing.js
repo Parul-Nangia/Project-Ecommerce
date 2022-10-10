@@ -10,7 +10,7 @@ import View from '../components/View';
 import LeaveForm from '../components/LeaveForm';
 import LeaveCalendar from '../components/LeaveCalendar';
 import EmployeesData from '../components/EmployeesData';
-
+import Profile from '../components/Profile';
 
 
 const Routing = () => {
@@ -30,6 +30,7 @@ const Routing = () => {
                 <Route path="/view/:_id" element={<View />} />
                 <Route path="/leaveform" element={<LeaveForm />} />
                 <Route path="/leavecalendar" element={<LeaveCalendar />} />
+                <Route path="/profile/:_id" element={<Profile/>} />
             </Routes>
 
 

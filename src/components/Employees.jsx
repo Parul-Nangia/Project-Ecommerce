@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 // import Sidebar from './Sidebar';
 import { Table } from 'antd';
 // import Navbar from './Navbar';
-import { Button, Modal, Form, Input, Row } from 'antd';
+import { Button, Modal, Form, Input, Row  } from 'antd';
 import { LockOutlined, UserOutlined, MailOutlined, PhoneOutlined, UserSwitchOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import Top from '../components/Top';
 import Sidebar from '../components/Sidebar';
 import Middle from '../components/Middle';
 import { Layout } from 'antd';
+import {useNavigate} from "react-router-dom"
 const { Content } = Layout;
 
 
@@ -83,9 +84,15 @@ const useStyles = makeStyles({
 
 
 const Employees = () => {
+  // const [ignored, forceUpdate] = useReducer(x=>x+1, 0);
+  
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
+  // const [isEdit, setIsEdit] = useState(false);
+  // const [viewingEmployee, setViewingEmployee] = useState(null);
+  
   // const [showData, setShowData] = useState(false);
   const classes = useStyles();
   const [state, setState] = useState([]);
@@ -96,6 +103,15 @@ const Employees = () => {
   const [contact, setContact] = useState("");
   const [gender, setGender] = useState("");
   const[role,setRole] = useState("")
+  const navigate = useNavigate()
+  const profile = (record) =>{
+    console.log(record,"jbfhjbfhjb")
+    navigate("/profile/:_id")
+  }
+
+
+
+
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -108,6 +124,10 @@ const Employees = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+
+
+
 
   const ondeleteEmployee = (record) => {
     Modal.confirm({
@@ -141,6 +161,7 @@ const Employees = () => {
     })
 
     console.log("Employee Deleted", _id)
+    // forceUpdate();
     window.location.reload(false);
 
   }
@@ -294,10 +315,27 @@ const Employees = () => {
       console.log("response", ab);
 
     })
-
+    // setIsEdit(false)
   }
   console.log(view, "qq")
   // //=================================================END  View employee GET (GET API)
+  const onViewEmployee = (record) => {
+    viewEmployee = (record._id)
+
+  }
+
+
+  // const onViewEmployee = (record) => {
+  //   setIsEdit(true);
+  //   setViewingEmployee({ ...record });
+  // }
+  // const resetEdit = () => {
+  //   setIsEdit(false);
+  //   setViewingEmployee(null);
+
+  // };
+
+
 
 
 
@@ -331,7 +369,7 @@ const Employees = () => {
         return (
           <>
 
-            <Button onClick={() => { viewEmployee(record) }}><EyeOutlined /></Button>
+            <Button onClick= {()=>{profile(record)}}><EyeOutlined /></Button>
             <Button onClick={() => { onEditEmployee(record) }}><EditOutlined /></Button>
             <Button onClick={() => { ondeleteEmployee(record) }}><DeleteOutlined /></Button>
 
@@ -361,7 +399,7 @@ const Employees = () => {
                 dataSource={state} />
 
               <Modal
-                title="Edit Employee"
+                title=" Edit Profile"
                 visible={isEditing}
                 onText="Save"
                 onCancel={() => {
@@ -376,8 +414,8 @@ const Employees = () => {
                     editEmployee(editingEmployee._id);
                     return pre.map((employee) => {
                       console.log(employee, "gdh")
-                      if (employee._id === editingEmployee._id) {
-                        return editingEmployee;
+                      if (employee._id ===  editingEmployee._id) {
+                        return editEmployee;
 
                       } else {
                         return employee;
@@ -412,8 +450,55 @@ const Employees = () => {
                   })
                 }} />
               </Modal>
-              {/* <Modal>
+            
+              
+              {/* <Modal
+                title="Profile"
+                visible={isEdit}
+                
+                onCancel={() => {
+                  resetEdit();
+                }}
 
+                onOk=
+                {() => {
+                  setState((pre) => {
+                    console.log(pre, "s")
+                    console.log(viewingEmployee, "hh")
+                    viewEmployee(viewingEmployee._id);
+                    return pre.map((employee) => {
+                      console.log(employee, "abc")
+                      if (employee._id ===  viewingEmployee._id) {
+                        return viewEmployee;
+
+                      } else {
+                        return employee;
+                      }
+                    });
+                  }
+                  );
+                    setIsEdit(false);
+
+                
+              }
+              }
+
+            >
+           Name: {viewingEmployee?.name}
+            <br/>
+            <br/>
+           Email: {viewingEmployee?.email}
+            <br/>
+            <br/>
+            Contact :{viewingEmployee?.contact}
+            <br/>
+            <br/>
+            Gender :{viewingEmployee?.gender}
+            <br/>
+            <br/>
+        
+
+      
     </Modal> */}
 
               <Button style={{ float: "right", margin: "50px" }} onClick={showModal}> Add New Employee</Button>
