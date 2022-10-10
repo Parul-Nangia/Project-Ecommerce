@@ -10,7 +10,7 @@ import axios from "axios";
 
 // }
 
-function LeaveTable() {
+const LeaveTable = () => {
   const [dataSource, setDataSource] = useState([]);
   
 
@@ -30,13 +30,28 @@ function LeaveTable() {
   const columns = [
   
     {
-      title: "EmployeeName",
+      title: "Employee Name",
       dataIndex: "EmployeeName",
     },
-
     {
-      title: "LeaveType",
+      title: "Supervisor Name",
+      dataIndex: "SupervisorName",
+    },
+    {
+      title: "Department",
+      dataIndex: "Department",
+    },
+    {
+      title: "Reason",
       dataIndex: "LeaveType",
+    },
+    {
+      title: "From",
+      dataIndex: "LeaveDate",
+    },
+    {
+      title: "To",
+      dataIndex: "ReturnDate",
     },
     {
       title: "Hours",
@@ -46,6 +61,11 @@ function LeaveTable() {
       title: "Days",
       dataIndex: "Days",
     },
+    {
+      title: "Status",
+      dataIndex: "ApprovalStatus",
+    },
+    
   ];
   return (
     <>

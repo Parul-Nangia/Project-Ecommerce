@@ -147,12 +147,12 @@ const DashboardCards = () => {
             </Card>
           </Col>
           <Col span={6} className='dashboardcards'>
-            <Card title="Weekly On Leave" bordered={false}>
+            <Card title="Leave Data(Week)" bordered={false}>
               {weekLeave.length}
             </Card>
           </Col>
           <Col span={6} className='dashboardcards'>
-            <Card title="Monthly On Leave" bordered={false}>
+            <Card title="Leave Data(Month) " bordered={false}>
               {monthLeave.length}
             </Card>
           </Col>
