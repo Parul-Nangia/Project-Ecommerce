@@ -12,6 +12,8 @@ import Sidebar from '../components/Sidebar';
 import Middle from '../components/Middle';
 import { Layout } from 'antd';
 import {useNavigate} from "react-router-dom"
+import { Navigate } from "react-router-dom";
+// import { navigate } from "react-router-dom";
 const { Content } = Layout;
 
 
@@ -335,7 +337,9 @@ const Employees = () => {
 
   // };
 
-
+const documentation =()=>{
+   navigate("/documentation")
+}
 
 
 
@@ -368,7 +372,8 @@ const Employees = () => {
       render: (record) => {
         return (
           <>
-
+            
+            <Button onClick={documentation}><EditOutlined /></Button>
             <Button onClick= {()=>{profile(record)}}><EyeOutlined /></Button>
             <Button onClick={() => { onEditEmployee(record) }}><EditOutlined /></Button>
             <Button onClick={() => { ondeleteEmployee(record) }}><DeleteOutlined /></Button>

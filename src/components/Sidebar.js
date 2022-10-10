@@ -1,67 +1,56 @@
-import { DashboardOutlined, HomeOutlined, PaperClipOutlined, UserOutlined } from '@ant-design/icons';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Layout, Menu } from 'antd';
+import {
+  DashboardOutlined,
+  HomeOutlined,
+  PaperClipOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Layout, Menu } from "antd";
 const { Sider } = Layout;
 
-
-
-
-
-
-
-
-
 const Sidebar = () => {
-    const navigate = useNavigate();
-    return (
+  const navigate = useNavigate();
+  return (
+    // <Layout>
+    <Sider width={200} className="site-layout-background">
+      <Menu
+        className="Sidemenubar"
+        onClick={({ key }) => {
+          if (key === "dashboard") {
+            // TODO ,may be logout
+          } else {
+            navigate(key);
+          }
+        }}
+        mode="inline"
+        items={[
+          { label: "DASHBOARD", key: "/dashboard", icon: <HomeOutlined /> },
+          {
+            label: "ATTENDANCE",
+            key: "/attendance",
+            icon: <DashboardOutlined />,
+          },
+          {
+            label: "EMPLOYEES",
+            key: "/employees",
+            icon: <UserOutlined />,
+            children: [
+              {
+                label: "EMPLOYEES ",
+                key: "/employees",
+                icon: <UserOutlined />,
+              },
+            ],
+          },
+          { label: "LEAVE", key: "/leave", icon: <PaperClipOutlined /> },
+        ]}
+      />
+    </Sider>
 
-        // <Layout>
-            <Sider width={200} className="site-layout-background">
-                <Menu className='Sidemenubar'
-                    onClick={({ key }) => {
-                        if (key === "dashboard") {
-                            // TODO ,may be logout
-
-                        } else {
-                            navigate(key)
-                        }
-                    }}
-                    mode="inline"
-                    items={[
-                        { label: "DASHBOARD", key: "/dashboard", icon: <HomeOutlined /> },
-                        { label: "ATTENDANCE", key: "/attendance", icon: <DashboardOutlined /> },
-                        {
-                            label: "EMPLOYEES", key: "/employees", icon: <UserOutlined />,
-                            children: [
-                                {
-                                    label: "EMPLOYEES ", key: "/employees", icon: <UserOutlined />,
-                                },
-                                {
-                                    label: "EMPLOYEES DATA", key: "/employeesdata", icon: <UserOutlined />,
-                                }]
-                        },
-                        { label: "LEAVE", key: "/leave", icon: <PaperClipOutlined /> },
-
-                    ]}
-
-                />
-            </Sider>
-            
-        // </Layout>
-
-    )
+    // </Layout>
+  );
 };
-
-
-
-
-
-
-
-
-
-
 
 // <Layout
 //                 style={{
@@ -91,9 +80,6 @@ const Sidebar = () => {
 //                 </Content>
 //             </Layout>
 
-
-
-
 // <Sider width={200} className="site-layout-background">
 //     <Menu className='Sidemenubar'
 //         onClick={({ key }) => {
@@ -114,13 +100,9 @@ const Sidebar = () => {
 
 // </Sider>
 
-
-
 //         <div>
 //             <SideMenu />
 //         </div>
-
-
 
 //     );
 
@@ -149,7 +131,4 @@ const Sidebar = () => {
 
 //             </div>
 
-
-
-
-export default Sidebar
+export default Sidebar;
