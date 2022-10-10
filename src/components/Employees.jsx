@@ -95,6 +95,7 @@ const Employees = () => {
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
   const [gender, setGender] = useState("");
+  const[role,setRole] = useState("")
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -165,11 +166,11 @@ const Employees = () => {
 
   // //================================================= START employee post (POST API)
   function saveEmployee() {
-    console.warn({ name, email, contact, gender });
-    let data = { name, email, contact, gender }
+    console.warn({ name,password ,email, contact, gender,role });
+    let data = { name,password ,email, contact, gender,role }
 
 
-    fetch("http://localhost:1999/employee", {
+    fetch("http://localhost:1999/employee/signup", {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -443,9 +444,12 @@ const Employees = () => {
                     <Form.Item rules={[{ required: true }]}>
                       <Input prefix={<UserSwitchOutlined className="site-form-item-icon" />} placeholder="Gender" className={classes.frmItem} onChange={(e) => { setGender(e.target.value) }} />
                     </Form.Item>
+                    <Form.Item rules={[{ required: true }]}>
+                      <Input prefix={<UserSwitchOutlined className="site-form-item-icon" />} placeholder="Role" className={classes.frmItem} onChange={(e) => { setRole(e.target.value) }} />
+                    </Form.Item>
 
                     <Form.Item>
-                      <Button htmlType="submit" className={classes.btnCenter} onClick={saveEmployee}>Add</Button><br />
+                      <Button htmlType="submit" className={classes.btnCenter} onClick={() => {saveEmployee() }}>Add</Button><br />
                     </Form.Item>
 
                   </Form>
