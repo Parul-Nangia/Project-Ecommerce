@@ -85,18 +85,16 @@ const useStyles = makeStyles({
 
 
 
-const Employees = () => {
+const Employees = ({dataSource}) => {
   // const [ignored, forceUpdate] = useReducer(x=>x+1, 0);
   
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
-  // const [isEdit, setIsEdit] = useState(false);
-  // const [viewingEmployee, setViewingEmployee] = useState(null);
   
-  // const [showData, setShowData] = useState(false);
-  const classes = useStyles();
+  
+   const classes = useStyles();
   const [state, setState] = useState([]);
   const [view, setView] = useState([]);
   const [name, setName] = useState("");
@@ -310,32 +308,24 @@ const Employees = () => {
     fetch(`http://localhost:1999/employee/${_id}`).then((response) => {
       return response.json();
     }).then((data) => {
-      let ab = data.viewData
+      let ab = data.viewData;
       setView(ab)
-        ;
+        
 
       console.log("response", ab);
 
     })
-    // setIsEdit(false)
+    
   }
   console.log(view, "qq")
   // //=================================================END  View employee GET (GET API)
-  const onViewEmployee = (record) => {
-    viewEmployee = (record._id)
-
-  }
-
-
   // const onViewEmployee = (record) => {
-  //   setIsEdit(true);
-  //   setViewingEmployee({ ...record });
-  // }
-  // const resetEdit = () => {
-  //   setIsEdit(false);
-  //   setViewingEmployee(null);
+  //   viewEmployee = (record._id)
 
-  // };
+  // }
+
+
+  
 
 const documentation =()=>{
    navigate("/documentation")
@@ -457,54 +447,7 @@ const documentation =()=>{
               </Modal>
             
               
-              {/* <Modal
-                title="Profile"
-                visible={isEdit}
-                
-                onCancel={() => {
-                  resetEdit();
-                }}
-
-                onOk=
-                {() => {
-                  setState((pre) => {
-                    console.log(pre, "s")
-                    console.log(viewingEmployee, "hh")
-                    viewEmployee(viewingEmployee._id);
-                    return pre.map((employee) => {
-                      console.log(employee, "abc")
-                      if (employee._id ===  viewingEmployee._id) {
-                        return viewEmployee;
-
-                      } else {
-                        return employee;
-                      }
-                    });
-                  }
-                  );
-                    setIsEdit(false);
-
-                
-              }
-              }
-
-            >
-           Name: {viewingEmployee?.name}
-            <br/>
-            <br/>
-           Email: {viewingEmployee?.email}
-            <br/>
-            <br/>
-            Contact :{viewingEmployee?.contact}
-            <br/>
-            <br/>
-            Gender :{viewingEmployee?.gender}
-            <br/>
-            <br/>
-        
-
-      
-    </Modal> */}
+              
 
               <Button style={{ float: "right", margin: "50px" }} onClick={showModal}> Add New Employee</Button>
               <Modal title="Employee Form" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
