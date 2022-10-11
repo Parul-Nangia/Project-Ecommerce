@@ -8,6 +8,8 @@ import axios from 'axios';
 
 const Guser = () => {
 
+
+
     const responseGoogle = (response) => {
         console.log("res", response);
         // axios({
@@ -17,6 +19,19 @@ const Guser = () => {
         // }).then(response => {
         //     console.log("Google Login Success", response);
         // })
+
+        console.log(response);
+
+        axios({
+            method: "POST",
+            url: "http://localhost:1999/user/googlelogin",
+            data: { tokenId: response.tokenId }
+        }).then(response => {
+            console.log("Google Login Success", response);
+        })
+
+        // localStorage.getItem('name','email','google_Id');
+
     }
 
 
@@ -214,7 +229,6 @@ const Guser = () => {
         //                 onLogoutSuccess={onSignoutSuccess}
         //                 >
         //                 </GoogleLogout>:null}
-        //         </div>
     )
 
 }
