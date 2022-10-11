@@ -10,24 +10,21 @@ const Guser = () => {
 
 
 
-    const responseGoogle = (response) => {
-        console.log("res", response);
-        // axios({
-        //     method: "POST",
-        //     url: "http://localhost:1999/user/googlelogin",
-        //     data: { tokenId: response.tokenId }
-        // }).then(response => {
-        //     console.log("Google Login Success", response);
-        // })
+    const responseGoogle = ({profileObj}) => {
 
-        console.log(response);
-
+        console.log("res", profileObj);
         axios({
             method: "POST",
             url: "http://localhost:1999/user/googlelogin",
-            data: { tokenId: response.tokenId }
-        }).then(response => {
-            console.log("Google Login Success", response);
+            data: { 
+                googleId: profileObj.googleId,
+                email: profileObj.email,
+                name: profileObj.name
+             }
+        }).then(res => {
+            console.log("Google Login Success", res.data);
+        }).catch(err => {
+            console.log("err",err );
         })
 
         // localStorage.getItem('name','email','google_Id');
