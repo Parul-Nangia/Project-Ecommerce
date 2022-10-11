@@ -6,12 +6,13 @@ import { Table } from 'antd';
 // import Navbar from './Navbar';
 import { Button, Modal, Form, Input, Row  } from 'antd';
 import { LockOutlined, UserOutlined, MailOutlined, PhoneOutlined, UserSwitchOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import Profile from '../components/Profile'
 import axios from 'axios';
 import Top from '../components/Top';
 import Sidebar from '../components/Sidebar';
 import Middle from '../components/Middle';
 import { Layout } from 'antd';
-import {useNavigate} from "react-router-dom"
+import {useNavigate,Link, Switch, Route,Routes} from "react-router-dom"
 import { Navigate } from "react-router-dom";
 // import { navigate } from "react-router-dom";
 const { Content } = Layout;
@@ -88,7 +89,7 @@ const useStyles = makeStyles({
 const Employees = ({dataSource}) => {
   // const [ignored, forceUpdate] = useReducer(x=>x+1, 0);
   
-  
+  // const [profile, setProfile] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
@@ -96,15 +97,18 @@ const Employees = ({dataSource}) => {
   
    const classes = useStyles();
   const [state, setState] = useState([]);
-  const [view, setView] = useState([]);
+  // const [view, setView] = useState([]);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
   const [gender, setGender] = useState("");
   const[role,setRole] = useState("")
+
   const navigate = useNavigate()
   const profile = (record) =>{
+    const num = record._id
+    console.log(num,"jbfhjbfhjb")
     console.log(record,"jbfhjbfhjb")
     navigate("/profile/:_id")
   }
@@ -147,7 +151,7 @@ const Employees = ({dataSource}) => {
 
 
 
-  //================================================= START employee delete (GET API==================================================
+  //================================================= START employee delete ( API==================================================
 
   function deleteEmployee(_id) {
 
@@ -224,11 +228,12 @@ const Employees = ({dataSource}) => {
     const name = editingEmployee.name
     console.log(name, "jgj")
     console.log(editingEmployee, "editing Employee")
-    console.log(editingEmployee.name, "editingEmpoyee.name")
+    console.log(editingEmployee.name, "editingEmployee.name")
     const email = editingEmployee.email
     const gender = editingEmployee.gender
     const contact = editingEmployee.contact
-    await axios.put(`http://localhost:1999/Employee/${_id}`, { name, email, gender, contact })
+    const role = editingEmployee.role
+    await axios.put(`http://localhost:1999/Employee/${_id}`, { name, email, gender, contact, role })
       .then(
         res => {
 
@@ -299,25 +304,25 @@ const Employees = ({dataSource}) => {
 
 
   // //=================================================START View employee GET (GET API)
-  useEffect((_id) => {
-    viewEmployee(_id);
+  // useEffect((_id) => {
+  //   viewEmployee(_id);
 
-  }, [])
+  // }, [])
 
-  const viewEmployee = (_id) => {
-    fetch(`http://localhost:1999/employee/${_id}`).then((response) => {
-      return response.json();
-    }).then((data) => {
-      let ab = data.viewData;
-      setView(ab)
+  // const viewEmployee = (_id) => {
+  //   fetch(`http://localhost:1999/employee/${_id}`).then((response) => {
+  //     return response.json();
+  //   }).then((data) => {
+  //     let ab = data.viewData;
+  //     setView(ab)
         
 
-      console.log("response", ab);
+  //     console.log("response", ab);
 
-    })
+  //   })
     
-  }
-  console.log(view, "qq")
+  // }
+  // console.log(view, "qq")
   // //=================================================END  View employee GET (GET API)
   // const onViewEmployee = (record) => {
   //   viewEmployee = (record._id)
@@ -326,7 +331,7 @@ const Employees = ({dataSource}) => {
 
 
   
-
+// const navigate=useNavigate()
 const documentation =()=>{
    navigate("/documentation")
 }
@@ -335,10 +340,7 @@ const documentation =()=>{
 
   const columns = [
 
-    {
-      title: "Id",
-      dataIndex: "_id",
-    },
+    
     {
       title: "Name",
       dataIndex: "name",
@@ -355,7 +357,10 @@ const documentation =()=>{
       title: "Gender",
       dataIndex: "gender",
     },
-
+    {
+      title: "Role",
+      dataIndex: "role",
+    },
 
     {
       title: "Actions",
@@ -364,9 +369,19 @@ const documentation =()=>{
           <>
             
             <Button onClick={documentation}><EditOutlined /></Button>
-            <Button onClick= {()=>{profile(record)}}><EyeOutlined /></Button>
-            <Button onClick={() => { onEditEmployee(record) }}><EditOutlined /></Button>
-            <Button onClick={() => { ondeleteEmployee(record) }}><DeleteOutlined /></Button>
+            {/* <Button onClick={() => setProfile(!profile)}><EyeOutlined /></Button> 
+            */}
+             {/* <Button onClick={( )=>navigate("/profile/:_id")}><EyeOutlined /></Button>
+             {console.log(Navigate,'dljflsfls')} */}
+{/* 
+             <Button type="button" onClick={handleClick}>
+      Go home
+    </Button> */}
+                  {/* <Button path="/employees/view/profile/:_id" component={Profile}/> */}
+            
+            <Button onClick={()=>{profile(record)}}><EyeOutlined /></Button>
+            <Button onClick={() => {onEditEmployee(record) }}><EditOutlined /></Button>
+            <Button onClick={() => {ondeleteEmployee(record) }}><DeleteOutlined /></Button>
 
 
           </>
@@ -392,6 +407,9 @@ const documentation =()=>{
               <Table
                 columns={columns}
                 dataSource={state} />
+               
+                
+                 
 
               <Modal
                 title=" Edit Profile"
@@ -444,6 +462,12 @@ const documentation =()=>{
                     return { ...pre, gender: e.target.value }
                   })
                 }} />
+                <Input value={editingEmployee?.role} onChange={(e) => {
+                  setEditingEmployee(pre => {
+                    return { ...pre, role: e.target.value }
+                  })
+                }} />
+
               </Modal>
             
               
