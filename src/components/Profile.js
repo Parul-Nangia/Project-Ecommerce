@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from "react";
-// import { Col, Row } from "antd";
+ import { Col, Row } from "antd";
 import Top from "../components/Top";
 import Sidebar from "../components/Sidebar";
 import Middle from "../components/Middle";
 import { Layout } from "antd";
 import axios from "axios";
 const { Content } = Layout;
+
+const DescriptionItem = ({ title, content }: DescriptionItemProps) => (
+  <div className="site-description-item-profile-wrapper">
+    <p className="site-description-item-profile-p-label">{title}:</p>
+    {content}
+  </div>
+);
+
+
 
 const Profile = ({ dataSource }) => {
   // const [view, setView] = useState([]);
@@ -46,6 +55,18 @@ const Profile = ({ dataSource }) => {
               className="site-layout-background"
               style={{ padding: 24, margin: 0, minHeight: 280 }}
             >
+            <Row>
+          <Col span={12}>
+            <DescriptionItem title="Name"  />
+          </Col>
+          <Col span={12}>
+            <DescriptionItem title="Email" />
+          </Col>
+        </Row>
+
+
+
+            
               {viewingEmployee?.name}
               {viewingEmployee?.email}
               {viewingEmployee?.contact}
