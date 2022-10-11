@@ -37,7 +37,7 @@ const Sidebar = () => {
             icon: <UserOutlined />,
             children: [
               {
-                label: "EMPLOYEES ",
+                label: "EMPLOYEES DATA ",
                 key: "/employees",
                 icon: <UserOutlined />,
               },

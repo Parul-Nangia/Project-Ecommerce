@@ -9,9 +9,8 @@ import Edit from "../components/Edit";
 import View from "../components/View";
 import LeaveForm from "../components/LeaveForm";
 import LeaveCalendar from "../components/LeaveCalendar";
-import Profile from "../components/Profile";
 import Documentation from "../components/Documentation";
-
+import Profile from "../components/Profile";
 const Routing = () => {
   return (
     <>
@@ -21,11 +20,15 @@ const Routing = () => {
         <Route path="/attendance" element={<Attendance />} />
         <Route path="/leave" element={<Leave />} />
         <Route path="/employees" element={<Employees />} />
+        {/* <Route path="view/:_id" element={<View />} /> */}
         <Route path="/edit/:_id" element={<Edit />} />
         <Route path="/view/:_id" element={<View />} />
         <Route path="/leaveform" element={<LeaveForm />} />
+
         <Route path="/leavecalendar" element={<LeaveCalendar />} />
+        {/* <Route path="/profile" element={<Profile />} /> */}
         <Route path="/profile/:_id" element={<Profile />} />
+
         <Route path="/documentation" element={<Documentation />} />
       </Routes>
     </>
