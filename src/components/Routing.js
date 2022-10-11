@@ -30,7 +30,7 @@ const Routing = () => {
 
         <Route path="/leavecalendar" element={<LeaveCalendar />} />
         {/* <Route path="/profile" element={<Profile />} /> */}
-        <Route path="/profile/:_id" element={<Profile />} />
+        <Route path="/profile/:id" element={<Profile />} />
 
         <Route path="/documentation" element={<Documentation />} />
       </Routes>
