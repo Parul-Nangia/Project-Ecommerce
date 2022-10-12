@@ -4,23 +4,23 @@ import { Table } from "antd";
 const AttendanceTable = () => {
   const columns = [
     {
-      title: "#",
-      dataIndex: "#",
-    },
-    {
-      title: "Employee Name",
-      dataIndex: "employee name",
+      title: "Employee Id",
+      dataIndex: "emp_id",
     },
     {
       title: "Date",
       dataIndex: "date",
     },
     {
-      title: "Check In",
-      dataIndex: "punch in",
+      title: "CheckIn Date",
+      dataIndex: "CheckIn date",
     },
     {
-      title: "Check Out",
+      title: "CheckOut Date",
+      dataIndex: "in",
+    },
+    {
+      title: "Resume",
       dataIndex: "punch out",
     },
     {
