@@ -1,54 +1,39 @@
-import React from 'react';
-import { Table } from 'antd';
-
-
-
+import React from "react";
+import { Table } from "antd";
 
 const AttendanceTable = () => {
-
   const columns = [
     {
-      title: '#',
-      dataIndex: '#',
-
+      title: "Employee Id",
+      dataIndex: "emp_id",
     },
     {
-      title: 'Date',
-      dataIndex: 'date',
-
+      title: "Date",
+      dataIndex: "date",
     },
     {
-      title: 'Punch In',
-      dataIndex: 'punch in',
-
+      title: "CheckIn Date",
+      dataIndex: "CheckIn date",
     },
     {
-      title: 'Punch Out',
-      dataIndex: 'punch out',
-
+      title: "CheckOut Date",
+      dataIndex: "in",
     },
     {
-      title: 'Production',
-      dataIndex: 'production',
-
+      title: "Resume",
+      dataIndex: "punch out",
     },
     {
-      title: 'Break',
-      dataIndex: 'break',
-
+      title: "Break",
+      dataIndex: "break",
+    },
+    {
+      title: "Production",
+      dataIndex: "production",
     },
   ];
 
-  return (
+  return <Table columns={columns}></Table>;
+};
 
-
-            <Table
-
-              columns={columns} >
-            </Table>
-
-
-  )
-}
-
-export default AttendanceTable
+export default AttendanceTable;
