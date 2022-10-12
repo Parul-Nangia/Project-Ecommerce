@@ -32,7 +32,7 @@ const Routing = () => {
         {/* <Route path="/profile" element={<Profile />} /> */}
         <Route path="/profile/:id" element={<Profile />} />
 
-        <Route path="/documentation" element={<Documentation />} />
+        <Route path="/documentation/:id" element={<Documentation />} />
       </Routes>
     </>
   );

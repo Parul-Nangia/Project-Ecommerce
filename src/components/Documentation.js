@@ -1,17 +1,16 @@
 import React from "react";
 import { Table } from "antd";
 import { useState } from "react";
-import { CloudDownloadOutlined } from "@ant-design/icons";
-import { Button } from "antd";
-import { Modal, Input, Form, Select } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { Modal, Input, Form, Select,Button } from "antd";
+import { UploadOutlined,CloudDownloadOutlined  } from "@ant-design/icons";
+import { useParams } from "react-router-dom"
 import { message, Upload } from "antd";
 import Top from "../components/Top";
 import Sidebar from "../components/Sidebar";
 import Middle from "../components/Middle";
 import { Layout } from "antd";
+import axios from "axios";
 const { Content } = Layout;
-
 const { Option } = Select;
 // import Sidebar from "./Sidebar";
 // import Top from "./Top";
@@ -46,6 +45,11 @@ const Documentation = () => {
   ]);
   const [documentname, setDocumentName] = useState([]);
   const [documenttype, setDocumentType] = useState();
+  const [documentfile,setDocumentFile]=useState([" "])
+  const params = useParams();
+  // console.log(params.id, "Params Id")
+  const [id] = useState(params.id);
+  // console.log(id, "Id User");
   const columns = [
     {
       title: "No.",
@@ -72,15 +76,31 @@ const Documentation = () => {
       },
     },
   ];
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
+                                                                  
+  const handleInputChange =(e)=>{
+      //  console.log(e.target.files[0])
+      //  setDocumentFile(e.target.files)
+console.log("hello")
+console.log(e.file,"hfjdgdhjfghdfkjghkjh")
+
+  }
+  
 
   const handleOk = () => {
     console.log("fkjdghfdkj");
     console.log(documentname, "Documentname");
     console.log(documenttype, "Documenttype");
+    const formData = new FormData()
+    formData.append("documentfile",documentfile)
+    axios.post(" ",formData).then((res)=>{
+
+    })
     setIsModalOpen(false);
+  };
+
+
+  const showModal = () => {
+    setIsModalOpen(true);
   };
 
   const handleCancel = () => {
@@ -154,12 +174,27 @@ const Documentation = () => {
                       <Option value="Certificate">Certificate</Option>
                     </Select>
                   </Form.Item>
-                  <Upload
-                    action={"http://localhost:3000"}
-                    accept=".png,.jpeg,.doc,.pdf"
+                  <Form.Item>
+                  <Upload.Dragger
+                  // onChange={(e)=> handleInputChange("file", e.target.files[0])}
+                  onChange={handleInputChange}
+                  multiple
+                  // listType="picture"
+                  // action={"http://localhost:3000"}
+                  showUploadList={{showRemoveIcon:false}}
+                  accept=".apng,.avif,.gif,.jpg,.jpeg,.jfif,.pjpeg,.pjp,.png,.svg,.webp"
+                  beforeUpload={() => false}
+                  // beforeUpload={(file)=>{
+                  //   console.log({file});
+                  //   setDocumentFile(file)
+                  //   console.log(setDocumentFile,"setDocumentfile")
+                  //   console.log(documentfile,"documentfile")
+                  //   return false;
+                  // }}
                   >
                     <Button icon={<UploadOutlined />}>Upload</Button>
-                  </Upload>
+                  </Upload.Dragger>
+                  </Form.Item>
                   {/* <Upload
             {...props}
             // accept=".png,.doc,.jpeg,.pdf"
