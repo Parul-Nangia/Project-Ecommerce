@@ -106,11 +106,8 @@ const Employees = ({dataSource}) => {
   const[role,setRole] = useState("")
 
   const navigate = useNavigate()
-  const profile = (record) =>{
-    const num = record._id
-    console.log(num,"jbfhjbfhjb")
-    console.log(record,"jbfhjbfhjb")
-    navigate("/profile/:_id")
+  const profile = (user_id) =>{
+    navigate("/profile/"+user_id)
   }
 
 
@@ -365,6 +362,7 @@ const documentation =()=>{
     {
       title: "Actions",
       render: (record) => {
+        console.log(record, "record id")
         return (
           <>
             
@@ -379,7 +377,7 @@ const documentation =()=>{
     </Button> */}
                   {/* <Button path="/employees/view/profile/:_id" component={Profile}/> */}
             
-            <Button onClick={()=>{profile(record)}}><EyeOutlined /></Button>
+            <Button onClick={()=>{profile(record._id)}}><EyeOutlined /></Button>
             <Button onClick={() => {onEditEmployee(record) }}><EditOutlined /></Button>
             <Button onClick={() => {ondeleteEmployee(record) }}><DeleteOutlined /></Button>
 
