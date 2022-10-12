@@ -366,18 +366,9 @@ const documentation =(user_id)=>{
         return (
           <>
             
-            {/* <Button onClick={documentation}><EditOutlined /></Button> */}
+
+          
             <Button onClick={()=>{documentation(record._id)}}><FileAddOutlined /></Button>
-            {/* <Button onClick={() => setProfile(!profile)}><EyeOutlined /></Button> 
-            */}
-             {/* <Button onClick={( )=>navigate("/profile/:_id")}><EyeOutlined /></Button>
-             {console.log(Navigate,'dljflsfls')} */}
-{/* 
-             <Button type="button" onClick={handleClick}>
-      Go home
-    </Button> */}
-                  {/* <Button path="/employees/view/profile/:_id" component={Profile}/> */}
-            
             <Button onClick={()=>{profile(record._id)}}><EyeOutlined /></Button>
             <Button onClick={() => {onEditEmployee(record) }}><EditOutlined /></Button>
             <Button onClick={() => {ondeleteEmployee(record) }}><DeleteOutlined /></Button>
