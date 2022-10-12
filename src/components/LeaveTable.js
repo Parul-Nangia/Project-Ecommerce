@@ -2,13 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Table } from "antd";
 import axios from "axios";
 
-// let l1={
-//   flex:"1",
-//   height:"300px",
-//   width:"1200px",
-//   margin:"20px",
 
-// }
 
 const LeaveTable = () => {
   const [dataSource, setDataSource] = useState([]);
@@ -20,8 +14,7 @@ const LeaveTable = () => {
   const getData = async () => {
     await axios.get("http://localhost:1999/leave").then((res) => {
       console.log(res, "bhvhv");
-      // let leave = data.leaveData;
-      setDataSource(res?.data?.leaveData);
+     setDataSource(res?.data?.leaveData);
       console.log(dataSource,"jj")
         }
   )
