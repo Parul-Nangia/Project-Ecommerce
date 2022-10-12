@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dialog } from 'antd';
 import { InputText } from 'antd';
-import profile from './profile';
+import profile from './UserProfile';
 import { useState } from 'react';
 
 const Profile=()=>{
@@ -9,7 +9,7 @@ const Profile=()=>{
     const [imagecrop,setimagecrop]=useState(false);
     const[src,setsrc]=useState(false);
     const[profile,setProfile]=useState([]);
-    const[pview,segpview]=useState(false)
+    const[pview,setpview]=useState(false)
 
     const profileFinal=profile.map((item)=>item.pview);
 
