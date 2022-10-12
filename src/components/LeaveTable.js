@@ -13,7 +13,6 @@ import axios from "axios";
 const LeaveTable = () => {
   const [dataSource, setDataSource] = useState([]);
   
-
  useEffect(() => {
     getData();
   }, []);
@@ -21,13 +20,13 @@ const LeaveTable = () => {
   const getData = async () => {
     await axios.get("http://localhost:1999/leave").then((res) => {
       console.log(res, "bhvhv");
-      let leave = res.leavetable;
-      setDataSource(leave);
+      // let leave = data.leaveData;
+      setDataSource(res?.data?.leaveData);
       console.log(dataSource,"jj")
         }
   )
-}
-  const columns = [
+      }
+   const columns = [
   
     {
       title: "Employee Name",
@@ -67,11 +66,12 @@ const LeaveTable = () => {
     },
     
   ];
-  return (
+        return (
     <>
-      <Table columns={columns} dataSource={dataSource}></Table>
+      <Table columns={columns} 
+       dataSource={dataSource}/>
     </>
   );
-}
+        }
 
 export default LeaveTable;
