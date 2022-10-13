@@ -103,6 +103,7 @@ const LeaveForm = () => {
           <Form.Item>
 
             <Button type="primary" size={size} onClick={applyLeave} >Submit</Button><br />
+            <br/>
             <Button type="primary" size={size} onClick={handleClick} >Back</Button><br />
           </Form.Item>
         </Form>

@@ -14,8 +14,7 @@ const Profile = () => {
   console.log(params.id, "params")
   const [id] = useState(params.id);
   console.log(id, "iduser");
-  // const [view, setView] = useState([]);
-  // console.log(id, "dataSource");
+ 
   const [viewingEmployee, setViewingEmployee] = useState(null);
 
   useEffect(() => {
@@ -27,14 +26,7 @@ const Profile = () => {
     console.log("hdghja");
     console.log(id);
 
-    // const name = viewingEmployee.name;
-    // console.log(name, "abc");
-    // console.log(viewingEmployee, "viewing Employee");
-    // console.log(viewingEmployee.name, "viewingEmployee.name");
-    // const email = viewingEmployee.email;
-    // const gender = viewingEmployee.gender;
-    // const contact = viewingEmployee.contact;
-    // const role = viewingEmployee.role;
+   
     await axios.get(`http://localhost:1999/employee/${id}`)
       .then((res) => {
         console.log(res, "api response")
