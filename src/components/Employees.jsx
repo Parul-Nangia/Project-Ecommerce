@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { Table } from 'antd';
 // import Navbar from './Navbar';
 import { Button, Modal, Form, Input, Row  } from 'antd';
-import { LockOutlined, UserOutlined, MailOutlined, PhoneOutlined, UserSwitchOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { FileAddOutlined, LockOutlined, UserOutlined, MailOutlined, PhoneOutlined, UserSwitchOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import Profile from '../components/Profile'
 import axios from 'axios';
 import Top from '../components/Top';
@@ -329,8 +329,8 @@ const Employees = ({dataSource}) => {
 
   
 // const navigate=useNavigate()
-const documentation =()=>{
-   navigate("/documentation")
+const documentation =(user_id)=>{
+   navigate("/documentation/"+user_id)
 }
 
 
@@ -366,7 +366,9 @@ const documentation =()=>{
         return (
           <>
             
-            <Button onClick={documentation}><EditOutlined /></Button>
+
+          
+            <Button onClick={()=>{documentation(record._id)}}><FileAddOutlined /></Button>
             <Button onClick={()=>{profile(record._id)}}><EyeOutlined /></Button>
             <Button onClick={() => {onEditEmployee(record) }}><EditOutlined /></Button>
             <Button onClick={() => {ondeleteEmployee(record) }}><DeleteOutlined /></Button>
