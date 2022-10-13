@@ -18,6 +18,7 @@ const LeaveTable = () => {
     getData();
   }, []);
 
+  
   const getData = async () => {
     await axios.get("http://localhost:1999/leave").then((res) => {
       console.log(res, "bhvhv");
@@ -27,6 +28,8 @@ const LeaveTable = () => {
         }
   )
 }
+
+
   const columns = [
   
     {
@@ -67,6 +70,8 @@ const LeaveTable = () => {
     },
     
   ];
+
+
   return (
     <>
       <Table columns={columns} dataSource={dataSource}></Table>
