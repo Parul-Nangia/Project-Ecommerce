@@ -27,10 +27,7 @@ const AttendanceTable = () => {
       title: "Break",
       dataIndex:"Break",
     },
-    {
-      title: "Resume",
-      dataIndex: "Resume",
-    },
+    
   ];
 
   return <Table columns={columns}></Table>;
