@@ -17,19 +17,19 @@ const AttendanceTable = () => {
     },
     {
       title: "CheckOut Date",
-      dataIndex: "in",
+      dataIndex: "CheckOut date",
     },
     {
       title: "Resume",
-      dataIndex: "punch out",
+      dataIndex: "Resume",
     },
     {
       title: "Break",
-      dataIndex: "break",
+      dataIndex:"Break",
     },
     {
-      title: "Production",
-      dataIndex: "production",
+      title: "Resume",
+      dataIndex: "Resume",
     },
   ];
 
