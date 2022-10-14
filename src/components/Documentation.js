@@ -1,8 +1,8 @@
 import React from "react";
 import { Table } from "antd";
 import { useState } from "react";
-import { Modal, Input, Form, Select,Button } from "antd";
-import { UploadOutlined,CloudDownloadOutlined  } from "@ant-design/icons";
+import { Modal, Input, Form, Select, Button } from "antd";
+import { UploadOutlined, CloudDownloadOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom"
 import { message, Upload } from "antd";
 import Top from "../components/Top";
@@ -45,7 +45,7 @@ const Documentation = () => {
   ]);
   const [documentname, setDocumentName] = useState([]);
   const [documenttype, setDocumentType] = useState();
-  const [documentfile,setDocumentFile]=useState(null)
+  const [documentfile, setDocumentFile] = useState(null)
   const params = useParams();
   // console.log(params.id, "Params Id")
   const [id] = useState(params.id);
@@ -76,27 +76,27 @@ const Documentation = () => {
       },
     },
   ];
-                                                                  
-  const handleInputChange =(e)=>{
-      //  console.log(e.target.files[0])
-      //  setDocumentFile(e.target.files)
-console.log("hello")
-console.log(e.file,"hfjdgdhjfghdfkjghkjh")
-console.log(e,"hfjdgdhjfghdfkjghkjh")
-console.log(e.fileList[0],"rtyryutewruiryiry")
-setDocumentFile(e.file)
+
+  const handleInputChange = (e) => {
+    //  console.log(e.target.files[0])
+    //  setDocumentFile(e.target.files)
+    console.log("hello")
+    console.log(e.file, "hfjdgdhjfghdfkjghkjh")
+    console.log(e, "hfjdgdhjfghdfkjghkjh")
+    console.log(e.fileList[0], "rtyryutewruiryiry")
+    setDocumentFile(e.file)
   }
-  
+
 
   const handleOk = () => {
     console.log("fkjdghfdkj");
     console.log(documentname, "Documentname");
     console.log(documenttype, "Documenttype");
-    console.log(documentfile,"DocumentFile")
+    console.log(documentfile, "DocumentFile")
     const formData = new FormData()
-    console.log(formData,"jhgrt")
-    formData.append("documentfile",documentfile)
-    console.log(formData,"poiu")
+    console.log(formData, "jhgrt")
+    formData.append("documentfile", documentfile)
+    console.log(formData, "poiu")
     // axios.post(" ",formData).then((res)=>{
 
     // })
@@ -120,88 +120,78 @@ setDocumentFile(e.file)
       {/* <Top />
       <Sidebar /> */}
       {/* <Button style={{ float: "right" }} onClick={handleShow}>Add New</Button> */}
-      <Layout>
-        <Top />
-        <Layout>
-          <Sidebar />
 
-          <Layout style={{ padding: "0 24px 24px" }}>
-            <Middle />
-            <Content
-              className="site-layout-background"
-              style={{ padding: 24, margin: 0, minHeight: 280 }}
+      <Button
+        style={{ float: "right" }}
+        type="primary"
+        onClick={showModal}
+      >
+        Add New
+      </Button>
+      <Modal
+        title="Add Document"
+        open={isModalOpen}
+        onOk={handleOk}
+        okText="Upload Document"
+        onCancel={handleCancel}
+      >
+        <Form
+          name="basic"
+          initialValues={{
+            remember: true,
+          }}
+          style={{ margin: 20 }}
+          autoComplete="off"
+        >
+          <Form.Item label="Document Name">
+            <Input
+              value={documentname}
+              onChange={(e) => {
+                // updateDocumentName();
+                setDocumentName(() => {
+                  console.log("Document Name  " + e.target.value);
+                  return e.target.value;
+                });
+              }}
+            ></Input>
+          </Form.Item>
+          <Form.Item label="Document Type">
+            <Select
+              // labelInValue
+              defaultValue={{
+                value: "Select",
+                // label: 'Select Class Name',
+              }}
+              onChange={selecthere}
+            // style={{ width: 180 }}
             >
-              <Button
-                style={{ float: "right" }}
-                type="primary"
-                onClick={showModal}
-              >
-                Add New
-              </Button>
-              <Modal
-                title="Add Document"
-                open={isModalOpen}
-                onOk={handleOk}
-                okText="Upload Document"
-                onCancel={handleCancel}
-              >
-                <Form
-                  name="basic"
-                  initialValues={{
-                    remember: true,
-                  }}
-                  style={{ margin: 20 }}
-                  autoComplete="off"
-                >
-                  <Form.Item label="Document Name">
-                    <Input
-                      value={documentname}
-                      onChange={(e) => {
-                        // updateDocumentName();
-                        setDocumentName(() => {
-                          console.log("Document Name  " + e.target.value);
-                          return e.target.value;
-                        });
-                      }}
-                    ></Input>
-                  </Form.Item>
-                  <Form.Item label="Document Type">
-                    <Select
-                      // labelInValue
-                      defaultValue={{
-                        value: "Select",
-                        // label: 'Select Class Name',
-                      }}
-                      onChange={selecthere}
-                      // style={{ width: 180 }}
-                    >
-                      <Option value="Education">Education</Option>
-                      <Option value="Experience">Experience</Option>
-                      <Option value="Certificate">Certificate</Option>
-                    </Select>
-                  </Form.Item>
-                  <Form.Item>
-                  <Upload.Dragger
-                  // onChange={(e)=> handleInputChange("file", e.target.files[0])}
-                  onChange={handleInputChange}
-                  // multiple
-                  // listType="picture"
-                  // action={"http://localhost:3000"}
-                  showUploadList={{showRemoveIcon:false}}
-                  accept=".apng,.avif,.gif,.jpg,.jpeg,.jfif,.pjpeg,.pjp,.png,.svg,.webp"
-                  beforeUpload={() => false}
-                  // beforeUpload={(file)=>{
-                  //   console.log({file});
-                  //   setDocumentFile(file)
-                  //   console.log(setDocumentFile,"setDocumentfile")
-                  //   console.log(documentfile,"documentfile")
-                  //   return false;
-                  // }}
-                  >
-                    <Button icon={<UploadOutlined />}>Upload</Button>
-                  </Upload.Dragger>
-                  </Form.Item>
-                  {/* <Upload
+              <Option value="Education">Education</Option>
+              <Option value="Experience">Experience</Option>
+              <Option value="Certificate">Certificate</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item>
+            <Upload.Dragger
+              // onChange={(e)=> handleInputChange("file", e.target.files[0])}
+              onChange={handleInputChange}
+              // multiple
+              // listType="picture"
+              // action={"http://localhost:3000"}
+              showUploadList={{ showRemoveIcon: false }}
+              accept=".apng,.avif,.gif,.jpg,.jpeg,.jfif,.pjpeg,.pjp,.png,.svg,.webp"
+              beforeUpload={() => false}
+            // beforeUpload={(file)=>{
+            //   console.log({file});
+            //   setDocumentFile(file)
+            //   console.log(setDocumentFile,"setDocumentfile")
+            //   console.log(documentfile,"documentfile")
+            //   return false;
+            // }}
+            >
+              <Button icon={<UploadOutlined />}>Upload</Button>
+            </Upload.Dragger>
+          </Form.Item>
+          {/* <Upload
             {...props}
             // accept=".png,.doc,.jpeg,.pdf"
             onChange={(response) => {
@@ -219,13 +209,10 @@ setDocumentFile(e.file)
           >
             <Button icon={<UploadOutlined />}>Click to Upload</Button>
           </Upload> */}
-                </Form>
-              </Modal>
-              <Table columns={columns} dataSource={dataSource}></Table>
-            </Content>
-          </Layout>
-        </Layout>
-      </Layout>
+        </Form>
+      </Modal>
+      <Table columns={columns} dataSource={dataSource}></Table>
+
     </>
   );
 };

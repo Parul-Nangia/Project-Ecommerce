@@ -11,7 +11,7 @@ const App = () => {
 
   const [isLogin, setIsLogin] = useState(false);
   useEffect(() => {
-    setIsLogin(false);
+    setIsLogin(true);
 
   }, [])
   return (

@@ -37,7 +37,7 @@ const SiteLayout = (isLogin) => {
                         </Router >
                     </Layout >
 
-                    : <Login />}
+                    : <LoginNew />}
         </>
     )
 }

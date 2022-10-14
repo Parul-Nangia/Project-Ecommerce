@@ -385,14 +385,6 @@ const documentation =(user_id)=>{
 
     <>
 
-      <Layout>
-        <Top />
-        <Layout>
-          <Sidebar />
-
-          <Layout style={{ padding: '0 24px 24px', }} >
-            <Middle />
-            <Content className="site-layout-background" style={{ padding: 24, margin: 0, minHeight: 280, }} >
 
               <Table
                 columns={columns}
@@ -504,10 +496,6 @@ const documentation =(user_id)=>{
 
               </Modal>
 
-            </Content>
-          </Layout>
-        </Layout>
-      </Layout>
 
 
 
