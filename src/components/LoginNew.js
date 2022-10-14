@@ -130,7 +130,3 @@ const LoginNew = () => {
     )
 }
 export default LoginNew;
-
-
-
-      

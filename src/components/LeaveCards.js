@@ -10,17 +10,17 @@ const LeaveCards = () => {
       <div className="site-card-wrapper">
         <Row gutter={16}>
           <Col span={6} className='dashboardcards'>
-            <Card title="Annual" bordered={false}>
+            <Card title="Pending Priviliege Leaves" bordered={false}>
               Content
             </Card>
           </Col>
           <Col span={6} className='dashboardcards'>
-            <Card title="Medical" bordered={false}>
+            <Card title="Pending Sick Leaves" bordered={false}>
               Content
             </Card>
           </Col>
           <Col span={6} className='dashboardcards'>
-            <Card title="Casual" bordered={false}>
+            <Card title="Pending Casual Leaves" bordered={false}>
               Content
             </Card>
           </Col>
