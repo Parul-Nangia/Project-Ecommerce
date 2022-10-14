@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Login from "../components/Login";
+import LoginNew from "../components/LoginNew";
 import Dashboard from "../components/Dashboard";
 import Attendance from "../components/Attendance";
 import Leave from "../components/Leave";
@@ -15,7 +15,7 @@ const Routing = () => {
   return (
     <>
       <Routes>
-        <Route exact path="/" element={<Dashboard />} />
+        <Route exact path="/" element={<Dashboard/>} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/attendance" element={<Attendance />} />
         <Route path="/leave" element={<Leave />} />

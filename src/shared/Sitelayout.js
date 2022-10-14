@@ -1,4 +1,4 @@
-import { Login } from "@mui/icons-material";
+
 import { Layout } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import React from "react";
@@ -37,7 +37,7 @@ const SiteLayout = (isLogin) => {
                         </Router >
                     </Layout >
 
-                    : <Login />}
+                    : <LoginNew />}
         </>
     )
 }

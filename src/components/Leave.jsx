@@ -4,11 +4,9 @@ import LeaveTable from '../components/LeaveTable';
 import LeaveCalendar from '../components/LeaveCalendar';
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from 'antd';
-import Top from '../components/Top';
-import Sidebar from '../components/Sidebar';
-import Middle from '../components/Middle';
-import { Layout } from 'antd';
-const { Content } = Layout;
+
+
+
 
 
 
@@ -22,15 +20,7 @@ const Leave = (props) => {
   return (
 
     <>
-      <Layout>
-        <Top />
-        <Layout>
-          <Sidebar />
-
-          <Layout style={{ padding: '0 24px 24px', }} >
-            <Middle />
-            <Content className="site-layout-background" style={{ padding: 24, margin: 0, minHeight: 280, }} >
-
+      
               <div>
 
                 <LeaveCards />
@@ -49,10 +39,7 @@ const Leave = (props) => {
                 {view ? <LeaveTable /> : <LeaveCalendar />}
               </div>
 
-            </Content>
-          </Layout>
-        </Layout>
-      </Layout>
+           
 
 
 

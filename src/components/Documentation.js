@@ -117,20 +117,7 @@ setDocumentFile(e.file)
   };
   return (
     <>
-      {/* <Top />
-      <Sidebar /> */}
-      {/* <Button style={{ float: "right" }} onClick={handleShow}>Add New</Button> */}
-      <Layout>
-        <Top />
-        <Layout>
-          <Sidebar />
-
-          <Layout style={{ padding: "0 24px 24px" }}>
-            <Middle />
-            <Content
-              className="site-layout-background"
-              style={{ padding: 24, margin: 0, minHeight: 280 }}
-            >
+     
               <Button
                 style={{ float: "right" }}
                 type="primary"
@@ -222,10 +209,7 @@ setDocumentFile(e.file)
                 </Form>
               </Modal>
               <Table columns={columns} dataSource={dataSource}></Table>
-            </Content>
-          </Layout>
-        </Layout>
-      </Layout>
+           
     </>
   );
 };
