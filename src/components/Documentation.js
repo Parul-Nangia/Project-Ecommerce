@@ -45,7 +45,7 @@ const Documentation = () => {
   ]);
   const [documentname, setDocumentName] = useState([]);
   const [documenttype, setDocumentType] = useState();
-  const [documentfile, setDocumentFile] = useState(null)
+  const [documentfile, setDocumentFile] = useState("")
   const params = useParams();
   // console.log(params.id, "Params Id")
   const [id] = useState(params.id);
@@ -84,22 +84,24 @@ const Documentation = () => {
     console.log(e.file, "hfjdgdhjfghdfkjghkjh")
     console.log(e, "hfjdgdhjfghdfkjghkjh")
     console.log(e.fileList[0], "rtyryutewruiryiry")
-    setDocumentFile(e.file)
+    setDocumentFile(e.fileList[0])
   }
-
 
   const handleOk = () => {
     console.log("fkjdghfdkj");
     console.log(documentname, "Documentname");
     console.log(documenttype, "Documenttype");
     console.log(documentfile, "DocumentFile")
-    const formData = new FormData()
-    console.log(formData, "jhgrt")
-    formData.append("documentfile", documentfile)
-    console.log(formData, "poiu")
-    // axios.post(" ",formData).then((res)=>{
-
-    // })
+    // const formData = new FormData()
+    // console.log(formData, "jhgrt")
+    // formData.append("documentfile", documentfile)
+    // console.log(formData, "poiu")
+    axios.post("https://v2.convertapi.com/upload",{ documentfile}).then(res=>{ // fake api
+          console.log(res)
+        })
+        .catch(error=>{
+          console.log(error)
+        })
     setIsModalOpen(false);
   };
 
@@ -178,7 +180,7 @@ const Documentation = () => {
               // listType="picture"
               // action={"http://localhost:3000"}
               showUploadList={{ showRemoveIcon: false }}
-              accept=".apng,.avif,.gif,.jpg,.jpeg,.jfif,.pjpeg,.pjp,.png,.svg,.webp"
+              // accept=".apng,.avif,.gif,.jpg,.jpeg,.jfif,.pjpeg,.pjp,.png,.svg,.webp"
               beforeUpload={() => false}
             // beforeUpload={(file)=>{
             //   console.log({file});
