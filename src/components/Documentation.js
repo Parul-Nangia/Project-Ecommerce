@@ -45,7 +45,7 @@ const Documentation = () => {
   ]);
   const [documentname, setDocumentName] = useState([]);
   const [documenttype, setDocumentType] = useState();
-  const [documentfile,setDocumentFile]=useState([" "])
+  const [documentfile,setDocumentFile]=useState(null)
   const params = useParams();
   // console.log(params.id, "Params Id")
   const [id] = useState(params.id);
@@ -82,7 +82,9 @@ const Documentation = () => {
       //  setDocumentFile(e.target.files)
 console.log("hello")
 console.log(e.file,"hfjdgdhjfghdfkjghkjh")
-
+console.log(e,"hfjdgdhjfghdfkjghkjh")
+console.log(e.fileList[0],"rtyryutewruiryiry")
+setDocumentFile(e.file)
   }
   
 
@@ -90,11 +92,14 @@ console.log(e.file,"hfjdgdhjfghdfkjghkjh")
     console.log("fkjdghfdkj");
     console.log(documentname, "Documentname");
     console.log(documenttype, "Documenttype");
+    console.log(documentfile,"DocumentFile")
     const formData = new FormData()
+    console.log(formData,"jhgrt")
     formData.append("documentfile",documentfile)
-    axios.post(" ",formData).then((res)=>{
+    console.log(formData,"poiu")
+    // axios.post(" ",formData).then((res)=>{
 
-    })
+    // })
     setIsModalOpen(false);
   };
 
@@ -152,6 +157,7 @@ console.log(e.file,"hfjdgdhjfghdfkjghkjh")
                     <Input
                       value={documentname}
                       onChange={(e) => {
+                        // updateDocumentName();
                         setDocumentName(() => {
                           console.log("Document Name  " + e.target.value);
                           return e.target.value;
@@ -178,7 +184,7 @@ console.log(e.file,"hfjdgdhjfghdfkjghkjh")
                   <Upload.Dragger
                   // onChange={(e)=> handleInputChange("file", e.target.files[0])}
                   onChange={handleInputChange}
-                  multiple
+                  // multiple
                   // listType="picture"
                   // action={"http://localhost:3000"}
                   showUploadList={{showRemoveIcon:false}}

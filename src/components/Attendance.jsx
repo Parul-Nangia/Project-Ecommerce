@@ -1,7 +1,7 @@
 import React from 'react';
 import AttendanceCards from '../components/AttendanceCards';
 import AttendanceTable from '../components/AttendanceTable';
-import Timer from '../components/Timer';
+import Clock from '../components/Clock';
 import Top from '../components/Top';
 import Sidebar from '../components/Sidebar';
 import Middle from '../components/Middle';
@@ -27,7 +27,7 @@ const Attendance = () => {
 
               <AttendanceCards />
               <br />
-              <Timer/>
+              <Clock />
               <br/>
               <AttendanceTable />
              
