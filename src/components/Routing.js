@@ -15,19 +15,19 @@ const Routing = () => {
   return (
     <>
       <Routes>
-        <Route exact path="/" element={<Login />} />
+        <Route exact path="/" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/attendance" element={<Attendance />} />
         <Route path="/leave" element={<Leave />} />
         <Route path="/employees" element={<Employees />}>
-          
+
         </Route>
         <Route path="/edit/:_id" element={<Edit />} />
         <Route path="/view/:_id" element={<View />} />
         <Route path="/leaveform" element={<LeaveForm />} />
 
         <Route path="/leavecalendar" element={<LeaveCalendar />} />
-        
+
         <Route path="/profile/:id" element={<Profile />} />
 
         <Route path="/documentation/:id" element={<Documentation />} />

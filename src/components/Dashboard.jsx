@@ -16,22 +16,8 @@ const Dashboard = () => {
   return (
 
     <>
-      <Layout>
-        <Top />
-        <Layout>
-          <Sidebar />
-
-          <Layout style={{ padding: '0 24px 24px', }} >
-            <Middle />    
-            <Content className="site-layout-background" style={{ padding: 24, margin: 0, minHeight: 280, }} >
-
+ 
               <DashboardCards />
-
-            </Content>
-          </Layout>
-        </Layout>
-      </Layout>
-
 
     </>
 

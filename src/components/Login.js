@@ -96,7 +96,7 @@ const Login = () => {
           </Button>
           <br />
         </Form.Item>
-        <GoogleAuth />
+        {/* <GoogleAuth /> */}
       </Form>
     </Row>
   );
