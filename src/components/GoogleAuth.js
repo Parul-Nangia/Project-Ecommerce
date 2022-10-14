@@ -3,35 +3,46 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { gapi } from 'gapi-script';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import  axios  from 'axios';
+import axios from 'axios';
 
 
 const Googlelogin = () => {
-   
-    const responseGoogle = (response) => {
-      console.log(response);
-      axios({
-        method: "POST",
-        url: "http://localhost:1999/user/googlelogin",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        data: {tokenId: response.tokenId},
-      }).then((response) => {
-        console.log("Google Login Success", response);
-      });
-    };
+
+
+  const responseSuccessGoogle = (response) => {
+    console.log(response);
+    axios({
+      method: "POST",
+      url: "http://localhost:1999/user/googlelogin",
+      data: { profileObj: response.profileObj },
+
+    }).then(response => {
+      console.log("Google Login Success", response);
+    });
+  };
+
+ 
+
+
+
+
+
+
+  const responseErrorGoogle = (response) => {
+
+  };
+
+
 
   return (
 
-  <GoogleLogin
-    clientId="782778790753-11hlt4rsr491dbmdaej4udve468rldgr.apps.googleusercontent.com"
-    buttonText="Login with Google"
-    onSuccess={responseGoogle}
-    onFailure={responseGoogle}
-    cookiePolicy={'single_host_origin'}
-  />
+    <GoogleLogin
+      clientId="782778790753-11hlt4rsr491dbmdaej4udve468rldgr.apps.googleusercontent.com"
+      buttonText="Login with Google"
+      onSuccess={responseSuccessGoogle}
+      onFailure={responseErrorGoogle}
+      cookiePolicy={'single_host_origin'}
+    />
 
 
 
