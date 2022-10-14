@@ -1,6 +1,5 @@
 import React ,{useState} from 'react';
 import { Button, Checkbox, Form, Input,Row,Col } from 'antd';
-// import { Row, Form, Input, Button } from "antd";
 import {  UserOutlined, LockOutlined } from "@ant-design/icons";
 import axios from 'axios';
 import { Navigate } from "react-router-dom";
@@ -48,15 +47,11 @@ const LoginNew = () => {
 
     return (
         <>
-
-      <Row>
-      <Col span={6} offset={6}>
-        col-6 col-offset-6
-      </Col>
-      <Col span={6} offset={6}>
-        col-6 col-offset-6
-      </Col>
-      </Row>
+    <Row>
+      <Col span={10} offset={6}>
+        
+      
+      
      <Form
       name="basic"
       labelCol={{
@@ -123,11 +118,13 @@ const LoginNew = () => {
           span: 16,
         }}
       >
-        <Button type="primary" htmlType="submit" onClick={submit}>
+        <Button type="primary" onClick={submit}>
           Login
         </Button>
       </Form.Item>
     </Form>
+    </Col>
+    </Row>
   
     </>
     )
