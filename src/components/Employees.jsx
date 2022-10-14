@@ -1,21 +1,14 @@
 import { makeStyles } from "@material-ui/core";
 import React from 'react';
 import { useState, useEffect } from "react";
-// import Sidebar from './Sidebar';
 import { Table } from 'antd';
-// import Navbar from './Navbar';
 import { Button, Modal, Form, Input, Row  } from 'antd';
 import { FileAddOutlined, LockOutlined, UserOutlined, MailOutlined, PhoneOutlined, UserSwitchOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import Profile from '../components/Profile'
 import axios from 'axios';
-import Top from '../components/Top';
-import Sidebar from '../components/Sidebar';
-import Middle from '../components/Middle';
-import { Layout } from 'antd';
-import {useNavigate,Link, Switch, Route,Routes} from "react-router-dom"
-import { Navigate } from "react-router-dom";
-// import { navigate } from "react-router-dom";
-const { Content } = Layout;
+import {useNavigate} from "react-router-dom"
+
+
+
 
 
 const useStyles = makeStyles({
@@ -312,6 +305,7 @@ const Employees = ({dataSource}) => {
   //   }).then((data) => {
   //     let ab = data.viewData;
   //     setView(ab)
+
         
 
   //     console.log("response", ab);
@@ -385,6 +379,7 @@ const documentation =(user_id)=>{
 
     <>
 
+     
 
               <Table
                 columns={columns}
@@ -496,7 +491,7 @@ const documentation =(user_id)=>{
 
               </Modal>
 
-
+           
 
 
 
@@ -509,4 +504,4 @@ const documentation =(user_id)=>{
 }
 
 
-export default Employees;
+export default Employees; 

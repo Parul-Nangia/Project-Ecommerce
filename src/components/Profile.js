@@ -38,17 +38,7 @@ const Profile = () => {
   
   return (
     <>
-      <Layout>
-        <Top />
-        <Layout>
-          <Sidebar />
-
-          <Layout style={{ padding: "0 24px 24px" }}>
-            <Middle />
-            <Content
-              className="site-layout-background"
-              style={{ padding: 24, margin: 0, minHeight: 280 }}
-            >
+     
               <Card title="General Information" bordered={false} style={{ width: 300 }}>
                 <p>Name: {viewingEmployee?.name}</p>
                 <p>Email: {viewingEmployee?.email}</p>
@@ -56,10 +46,8 @@ const Profile = () => {
                 <p>Gender:  {viewingEmployee?.gender}</p>
                 <p>Role:  {viewingEmployee?.role}</p>
               </Card>
-            </Content>
-          </Layout>
-        </Layout>
-      </Layout>
+           
+    
     </>
   );
 };
