@@ -52,7 +52,10 @@ const LoginNew = () => {
         
       
       
-     <Form
+     <Form  style={{
+      justifyContent: "center", display: "grid", margin: "200px",
+      padding: "10px"
+    }}
       name="basic"
       labelCol={{
         span: 8,
