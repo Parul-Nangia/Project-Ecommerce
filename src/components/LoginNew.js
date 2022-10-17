@@ -1,51 +1,51 @@
 import { Button, Form, Input, Row } from 'antd';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import axios from 'axios'
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import GoogleAuth from "./GoogleAuth";
 
 
 
-  const LoginNew = () => {
-
-    const [name, setName] = useState("");
-    const [password, setPassword] = useState("");
-    const [navigate, setNavigate] = useState(false);
-  
-    const submit = async (e) => {
-      console.log("going forward");
-      e.preventDefault();
-  
-      const { data } = await axios.post("http://localhost:1999/user/login", {
-        name,
-        password,
-      });
-  
-      axios.defaults.headers.common["Authorization"] = `Bearer ${data["token"]}`;
-  
-      console.log(data);
-  
-      setNavigate(true);
-      localStorage.setItem("access_token1", JSON.stringify(data.token));
-    };
-  
-    if (navigate) {
-      return <Navigate to="/dashboard" />;
-    }
+const LoginNew = () => {
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
 
 
+  const submit = async (e) => {
+    console.log("going forward");
+    e.preventDefault();
 
-    // const onFinish = (values) => {
-    //     console.log('Success:', values);
-    // };
-    // const onFinishFailed = (errorInfo) => {
-    //     console.log('Failed:', errorInfo);
-    // };
-    return (
-        <Row justify="center" style={{ padding: "10%" }}>
+    const { data } = await axios.post("http://localhost:1999/user/login", {
+      name,
+      password,
+    });
+
+    axios.defaults.headers.common["Authorization"] = `Bearer ${data["token"]}`;
+
+    console.log(data);
+
+    localStorage.setItem("access_token1", JSON.stringify(data.token));
+    navigate("/dashboard");
+  };
+
+  // if (navigate) {
+  //   return <Navigate to="/dashboard" />;
+  // }
+
+
+
+  // const onFinish = (values) => {
+  //     console.log('Success:', values);
+  // };
+  // const onFinishFailed = (errorInfo) => {
+  //     console.log('Failed:', errorInfo);
+  // };
+  return (
+    <Row justify="center" style={{ padding: "10%" }}>
       <Form>
-       
+
 
         <Form.Item
           rules={[{ required: true, message: "Please input your Username!" }]}
@@ -53,7 +53,7 @@ import GoogleAuth from "./GoogleAuth";
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
             placeholder="Username"
-             
+
             onChange={(e) => setName(e.target.value)}
           />
         </Form.Item>
@@ -65,7 +65,7 @@ import GoogleAuth from "./GoogleAuth";
             type="password"
             prefix={<LockOutlined className="site-form-item-icon" />}
             placeholder="Password"
-            
+
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Item>
@@ -74,7 +74,7 @@ import GoogleAuth from "./GoogleAuth";
           <Button
             htmlType="submit"
             onClick={submit}
-            
+
           >
             Login
           </Button>

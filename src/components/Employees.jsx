@@ -88,7 +88,7 @@ const Employees = ({dataSource}) => {
   const [editingEmployee, setEditingEmployee] = useState(null);
   
   
-   const classes = useStyles();
+  const classes = useStyles();
   const [state, setState] = useState([]);
   // const [view, setView] = useState([]);
   const [name, setName] = useState("");
@@ -96,7 +96,7 @@ const Employees = ({dataSource}) => {
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
   const [gender, setGender] = useState("");
-  const[role,setRole] = useState("")
+  const [role,setRole] = useState("")
 
   const navigate = useNavigate()
   const profile = (user_id) =>{
@@ -378,8 +378,7 @@ const documentation =(user_id)=>{
   return (
 
     <>
-
-     
+       
 
               <Table
                 columns={columns}
