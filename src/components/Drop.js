@@ -13,7 +13,7 @@ const Drop = () => {
 
   useEffect(()=>{
     (async ()=>{
-      const{data}=await axios.get("http://localhost:1999/user/login");
+      const{data}=await axios.get("http://localhost:1999/user/:_id");
 
       setname(data.name);
     })();
