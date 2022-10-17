@@ -14,12 +14,13 @@ const SiteLayout = (isLogin) => {
     console.log(isLogin, "isLogin")
     return (
         <>
-            {console.log(isLogin, "isLogin login")}
-            {
-                isLogin.isLogin ?
+            <Router>
+                {console.log(isLogin, "isLogin login")}
+                {
+                    isLogin.isLogin ?
 
-                    <Layout>
-                        <Router>
+                        <Layout>
+
                             <Top />
 
                             <Layout>
@@ -34,10 +35,11 @@ const SiteLayout = (isLogin) => {
                                     </Content>
                                 </Layout>
                             </Layout>
-                        </Router >
-                    </Layout >
 
-                    : <LoginNew />}
+                        </Layout >
+
+                        : <LoginNew />}
+            </Router >
         </>
     )
 }
