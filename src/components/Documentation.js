@@ -5,12 +5,12 @@ import { Modal, Input, Form, Select, Button } from "antd";
 import { UploadOutlined, CloudDownloadOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom"
 import { message, Upload } from "antd";
-import Top from "../components/Top";
-import Sidebar from "../components/Sidebar";
-import Middle from "../components/Middle";
-import { Layout } from "antd";
+// import Top from "../components/Top";
+// import Sidebar from "../components/Sidebar";
+// import Middle from "../components/Middle";
+// import { Layout } from "antd";
 import axios from "axios";
-const { Content } = Layout;
+// const { Content } = Layout;
 const { Option } = Select;
 // import Sidebar from "./Sidebar";
 // import Top from "./Top";
@@ -94,9 +94,9 @@ const Documentation = () => {
     console.log(documentfile, "DocumentFile")
     // const formData = new FormData()
     // console.log(formData, "jhgrt")
-    // formData.append("documentfile", documentfile)
+    // formData.append("documentfile", documentfile)  //http://localhost:1999/api/image
     // console.log(formData, "poiu")
-    axios.post("https://v2.convertapi.com/upload",{ documentfile}).then(res=>{ // fake api
+    axios.post("http://localhost:1999/add ",{ documentfile}).then(res=>{ // fake api
           console.log(res)
         })
         .catch(error=>{

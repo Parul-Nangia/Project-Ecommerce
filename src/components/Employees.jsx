@@ -378,8 +378,7 @@ const documentation =(user_id)=>{
   return (
 
     <>
-
-     
+       
 
               <Table
                 columns={columns}
