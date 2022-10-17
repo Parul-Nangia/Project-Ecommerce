@@ -11,6 +11,8 @@ const App = () => {
 
   const [isLogin, setIsLogin] = useState(false);
   useEffect(() => {
+
+
     setIsLogin(true);
 
   }, [])
@@ -22,4 +24,3 @@ const App = () => {
   )
 }
 export default App;
-
