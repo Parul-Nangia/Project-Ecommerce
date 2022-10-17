@@ -1,9 +1,29 @@
-import React ,{useState}from "react";
+import React, { useState, useEffect } from "react";
 import { Table } from "antd";
 
 
+
 const AttendanceTable = () => {
- 
+  // const [attendancedata, setAttendanceData] = useState([]);
+
+  // useEffect(() => {
+  //   employeetime();
+  // }, []);
+
+  // const employeetime = (emp_id) => {
+  //   fetch(`http://localhost:1999/attendance/emp_id`)
+  //     .then((response) => {
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       let emptime = data.attendanceRecord;
+  //       setAttendanceData(emptime);
+  //       console.log("response", emptime);
+       
+  //     });
+  // };
+  // console.log(attendancedata, "hh")
+
 
 
   const columns = [
@@ -13,15 +33,15 @@ const AttendanceTable = () => {
     },
     {
       title: "Date",
-      dataIndex: "date",
+      dataIndex: "Date",
     },
     {
-      title: "CheckIn Date",
-      dataIndex: "CheckIn date",
+      title: "CheckIn Time",
+      dataIndex: "CheckIn ",
     },
     {
-      title: "CheckOut Date",
-      dataIndex: "CheckOut date",
+      title: "CheckOut Time",
+      dataIndex: "CheckOut ",
     },
     {
       title: "Resume",
@@ -29,12 +49,17 @@ const AttendanceTable = () => {
     },
     {
       title: "Break",
-      dataIndex:"Break",
+      dataIndex: "Break",
     },
-    
   ];
 
-  return <Table columns={columns}></Table>;
+  return(
+    <>
+
+     <Table columns={columns}  />
+
+     </>
+  )
 };
 
 export default AttendanceTable;

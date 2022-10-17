@@ -1,40 +1,18 @@
 import React, { useState, useEffect } from "react";
  import { Button } from "antd";
  import axios from 'axios'
+//  import jwt from 'jwt-decode'
 
 
 const Clock = () => {
  
-  // let time = new Date().toLocaleDateString();
-  // const[ctime,setCtime] = useState(time)
-
-  // const UpdateTime = () => {
-  //   time=new Date().toLocaleTimeString();
-  //   setCtime(time);
-  // }
-  // setInterval(UpdateTime,1000);
-
 
   const [date, setDate] = useState(new Date());
   const [login,setLogin]=useState(null)
   
   
   
-
-
-
-
-  
-  // const [emp_id,setEmp_id]=useState("")
-  // const[ndate,setNdate]=useState("")
-  // const [checkin,setCheckin]=useState("")
-  // const [checkout,setCheckout]=useState("")
-  // const[resume,setResume]=useState("")
-  // const [break,setBreak]=useState("")
-
-
-
-  const refreshClock = ()=> {
+ const refreshClock = ()=> {
     setDate(new Date());
   }
   useEffect(() => {
@@ -43,21 +21,48 @@ const Clock = () => {
       clearInterval(timerId);
     };
   }, []);
-  const employeecheckin  = async (_id) => {
-    console.log(_id)
+
+  // useEffect(() => {
+  //   employeetime();
+  // }, []);
+
+  // const employeetime = (emp_id) => {
+  //   fetch(`http://localhost:1999/attendance/emp_id`)
+  //     .then((response) => {
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       let emptime = data.attendanceRecord;
+  //       setLogin(emptime);
+  //       console.log("response", emptime);
+       
+  //     });
+  // };
+  // console.log(login, "hh")
 
 
 
-    const emp_id = setLogin.emp_id
-    console.log(emp_id, "jgj")
-    console.log(setLogin, "login")
-    
-    const Date =setLogin.Date
-    const CheckIn =setLogin.CheckIn
-    const CheckOut = setLogin.CheckOut
-    const Break = setLogin.Break
-    const Resume = setLogin.Resume
-    await axios.post(`http://localhost:1999/attendance/${_id}`, { emp_id, Date, CheckIn, CheckOut, Break, Resume  })
+
+
+
+
+  const employeecheckin  = async (emp_id) => {
+    // var token = response.headers.authorization;
+    // token = token.replace('Bearer','');
+    // var decoded = jwt.decode(token);
+    //   console.log(decoded);
+    // console.log(emp_id)
+  
+    // console.log(emp_id, "jgj")
+  
+
+    const Date = "new Date()"
+    const CheckIn ="getTime()"
+    const CheckOut = ""
+    const Break =""
+    const Resume = ""
+
+    await axios.post(`http://localhost:1999/attendance/${emp_id}`, {  Date, CheckIn, CheckOut, Break, Resume  })
       .then(
         res => {
 
@@ -68,16 +73,7 @@ const Clock = () => {
       }
 
 
-// const Resume =()=>{
-  
-
-// }
-const Checkout =()=>{
-  
-
-}
-
-    return (
+       return (
     <>
       
       <div>
@@ -93,9 +89,12 @@ const Checkout =()=>{
 
       <div>
 
+    
+
        <Button onClick={() => {employeecheckin()}}>Checkin</Button>
-       {/* <Button onClick={() => {Resume()}}>Resume</Button> */}
-       <Button onClick={() => {Checkout()}}>Checkout</Button>
+       <Button onClick={() => { }}>Break</Button>
+       <Button onClick={() => { }}>Resume</Button> 
+      <Button onClick={() => { }}>Checkout</Button>
 
        
       </div> 
