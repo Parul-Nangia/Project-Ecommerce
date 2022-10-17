@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
  import { Button } from "antd";
  import axios from 'axios'
-//  import jwt from 'jwt-decode'
+
 
 
 const Clock = () => {
@@ -47,14 +47,7 @@ const Clock = () => {
 
 
   const employeecheckin  = async (emp_id) => {
-    // var token = response.headers.authorization;
-    // token = token.replace('Bearer','');
-    // var decoded = jwt.decode(token);
-    //   console.log(decoded);
-    // console.log(emp_id)
-  
-    // console.log(emp_id, "jgj")
-  
+   
 
     const Date = "new Date()"
     const CheckIn ="getTime()"
