@@ -2,16 +2,16 @@ import { Button, Form, Input, Row } from 'antd';
 import React, {useState} from 'react';
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import axios from 'axios'
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import GoogleAuth from "./GoogleAuth";
 
-
+  
 
   const LoginNew = () => {
-
+    const navigate = useNavigate();
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
-    const [navigate, setNavigate] = useState(false);
+    
   
     const submit = async (e) => {
       console.log("going forward");
@@ -26,13 +26,13 @@ import GoogleAuth from "./GoogleAuth";
   
       console.log(data);
   
-      setNavigate(true);
       localStorage.setItem("access_token1", JSON.stringify(data.token));
+      navigate("/dashboard");
     };
   
-    if (navigate) {
-      return <Navigate to="/dashboard" />;
-    }
+    // if (navigate) {
+    //   return <Navigate to="/dashboard" />;
+    // }
 
 
 

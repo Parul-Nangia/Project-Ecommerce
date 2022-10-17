@@ -2,18 +2,27 @@ import React from 'react'
 import { Card, Col, Row } from 'antd';
 
 
+
+
 const AttendanceCards = () => {
+
+
+
+
+
+
+
   return (
     <>
       <div className="site-card-wrapper">
         <Row gutter={16}>
           <Col span={6} className='dashboardcards'>
-            <Card title="Annual" bordered={false}>
+            <Card title="Priviliege" bordered={false}>
               Content
             </Card>
           </Col>
           <Col span={6} className='dashboardcards'>
-            <Card title="Medical" bordered={false}>
+            <Card title="Sick" bordered={false}>
               Content
             </Card>
           </Col>
@@ -23,7 +32,7 @@ const AttendanceCards = () => {
             </Card>
           </Col>
           <Col span={6} className='dashboardcards'>
-            <Card title="Others" bordered={false}>
+            <Card title="Holiday" bordered={false}>
               Content
             </Card>
           </Col>

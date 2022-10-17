@@ -96,7 +96,7 @@ const Employees = ({dataSource}) => {
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
   const [gender, setGender] = useState("");
-  const[role,setRole] = useState("")
+  const [role,setRole] = useState("")
 
   const navigate = useNavigate()
   const profile = (user_id) =>{
