@@ -1,26 +1,38 @@
 import { DownOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { LoginOutlined, SettingTwoTone, InfoCircleTwoTone } from '@ant-design/icons';
 import axios from 'axios';
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom";
+import jwt from 'jwt-decode';
 
 
 const Drop = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [state, setState] = useState([]);
+  const [state, setState] = useState("");
+
+  
 
 
-
+  
 
   useEffect(() => {
     userData();
 
   }, [])
 
+
+
+
+
   const userData = (_id) => {
+    let token = token;
+    var decoded = jwt.decode(token);
+    console.log(decoded);
+
+    console.log()
     fetch(`http://localhost:1999/user/${_id}`).then((response) => {
       return response.json();
     }).then((data) => {
@@ -49,7 +61,8 @@ const Drop = () => {
         if (key === "demo") {
 
         } else {
-          navigate(key);
+          navigate(key)
+;
         }
       }}
       items={[
@@ -85,7 +98,7 @@ const Drop = () => {
     <Dropdown overlay={menu} onOpenChange={handleOpenChange} open={open}>
       <a onClick={(e) => e.preventDefault()}>
         <Space style={{ color: "black", float: "right" }}>
-          <h3>Hii {state}</h3>
+          <h3>Hii{}</h3>
           <DownOutlined />
         </Space>
       </a>
