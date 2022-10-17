@@ -16,8 +16,7 @@ const Attendance = () => {
 
               <AttendanceCards />
               <br />
-              <Clock />
-              <br/>
+             
               <AttendanceTable />
              
              
