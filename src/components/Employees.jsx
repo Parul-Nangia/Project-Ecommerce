@@ -145,7 +145,7 @@ const Employees = ({dataSource}) => {
 
   function deleteEmployee(_id) {
 
-    fetch(`http://localhost:1999/employee/${_id}`, {
+    fetch(`http://localhost:1999/user/${_id}`, {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',
@@ -185,7 +185,7 @@ const Employees = ({dataSource}) => {
     let data = { name,password ,email, contact, gender,role }
 
 
-    fetch("http://localhost:1999/employee/signup", {
+    fetch("http://localhost:1999/user/signup", {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -216,14 +216,13 @@ const Employees = ({dataSource}) => {
 
 
     const name = editingEmployee.name
-    console.log(name, "jgj")
-    console.log(editingEmployee, "editing Employee")
+    console.log( "editing Employee",editingEmployee)
     console.log(editingEmployee.name, "editingEmployee.name")
     const email = editingEmployee.email
     const gender = editingEmployee.gender
     const contact = editingEmployee.contact
     const role = editingEmployee.role
-    await axios.put(`http://localhost:1999/Employee/${_id}`, { name, email, gender, contact, role })
+    await axios.put(`http://localhost:1999/user/${_id}`, { name, email, gender, contact, role })
       .then(
         res => {
 
@@ -277,10 +276,10 @@ const Employees = ({dataSource}) => {
   }, [])
 
   const employeelist = () => {
-    fetch("http://localhost:1999/employee").then((response) => {
+    fetch("http://localhost:1999/user").then((response) => {
       return response.json();
     }).then((data) => {
-      let emp = data.employeeData
+      let emp = data.userData
       setState(emp);
 
       console.log("response", emp);

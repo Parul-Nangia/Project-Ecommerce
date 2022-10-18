@@ -27,7 +27,9 @@ const LoginNew = () => {
     console.log(data);
 
     localStorage.setItem("access_token1", JSON.stringify(data.token));
+    window.location.reload();
     navigate("/dashboard");
+
   };
 
   // if (navigate) {

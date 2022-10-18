@@ -1,11 +1,9 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import './App.css';
-
-
 import SiteLayout from './shared/Sitelayout';
 import { useState, useEffect } from 'react';
-import LoginNew from './components/LoginNew';
+
 
 
 const App = () => {
