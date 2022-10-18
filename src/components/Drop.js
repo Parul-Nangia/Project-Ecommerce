@@ -66,7 +66,6 @@ const Drop = () => {
 
         } else {
           navigate(key)
-
             ;
         }
       }}
