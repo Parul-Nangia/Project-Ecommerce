@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "antd";
 import axios from "axios";
-// import jwt from "jwt-decode";
 import jwt_decode from 'jwt-decode'
 
 
@@ -31,8 +30,7 @@ const Clock = () => {
     console.log("Decoded token ", decoded);
     setLogin(decoded)
    
-    // console.log(emp_id);
-    // const emp_id=""
+    
     const Date = "";
     const CheckIn = "";
     const CheckOut = "";
