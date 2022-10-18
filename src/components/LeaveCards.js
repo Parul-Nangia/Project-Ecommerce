@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Col, Row } from 'antd';
 import { useState, useEffect } from "react";
-
+import jwt_decode from 'jwt-decode';
 
 
 
@@ -11,10 +11,16 @@ const LeaveCards = () => {
 
 
 
-
   //============================================================== Start Priviliege Leave====================================================================================
- 
+
   const EmployeePriviliegeLeave = () => {
+    const token = localStorage.getItem("access_token1");
+    console.log("Employee Priviliege Token from Local Storage", token)
+    // let token = token;
+    var decoded = jwt_decode(token);
+    console.log("Employee Priviliege Decoded token data", decoded);
+    // setName(decoded)
+
     fetch("http://localhost:1999/leave/priviliege/:emp_id")
 
       .then((response) => {
