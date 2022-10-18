@@ -1,97 +1,92 @@
 import React, { useState, useEffect } from "react";
- import { Button } from "antd";
- import axios from 'axios'
-
+import { Button } from "antd";
+import axios from "axios";
+import jwt_decode from 'jwt-decode'
 
 
 const Clock = () => {
- 
-
   const [date, setDate] = useState(new Date());
-  const [login,setLogin]=useState(null)
-  
-  
-  
- const refreshClock = ()=> {
+  const [login, setLogin] = useState([])
+
+  const refreshClock = () => {
     setDate(new Date());
-  }
+  };
   useEffect(() => {
     const timerId = setInterval(refreshClock, 1000);
-    return function cleanup () {
+    return function cleanup() {
       clearInterval(timerId);
     };
   }, []);
 
-  // useEffect(() => {
-  //   employeetime();
-  // }, []);
+  useEffect(() => {
+    employeecheckin();
+  }, []);
 
-  // const employeetime = (emp_id) => {
-  //   fetch(`http://localhost:1999/attendance/emp_id`)
-  //     .then((response) => {
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       let emptime = data.attendanceRecord;
-  //       setLogin(emptime);
-  //       console.log("response", emptime);
-       
-  //     });
-  // };
-  // console.log(login, "hh")
+  const employeecheckin = async (emp_id) => {
 
-
-
-
-
-
-
-  const employeecheckin  = async (emp_id) => {
+    const token = localStorage.getItem("access_token1");
+    console.log("token from local storage:", token)
+    var decoded = jwt_decode(token);
+    console.log("Decoded token ", decoded);
+    setLogin(decoded)
    
+    
+    const Date = "";
+    const CheckIn = "";
+    const CheckOut = "";
+    const Break = "";
+    const Resume = "";
 
-    const Date = "new Date()"
-    const CheckIn ="getTime()"
-    const CheckOut = ""
-    const Break =""
-    const Resume = ""
+    await axios.get(`http://localhost:1999/attendance/emp_id`).then((res) => {
+      setLogin(res?.data?.attendanceRecord);
+       console.log(login, "login");
+    });
 
-    await axios.post(`http://localhost:1999/attendance/${emp_id}`, {  Date, CheckIn, CheckOut, Break, Resume  })
-      .then(
-        res => {
+    await axios
+      .post(`http://localhost:1999/attendance/${emp_id}`, {
+        Date,
+        CheckIn,
+        CheckOut,
+        Break,
+        Resume,
+      })
+      .then((res) => {
+        console.log(emp_id, "jgj");
 
+       
+      });
+  };
 
-
-        }
-      )
-      }
-
-
-       return (
+  return (
     <>
-      
       <div>
-      <span>
-      {date.toLocaleDateString()}
-      <br/>
-      {date.toLocaleTimeString()}
-      </span>
+        <span>
+          {date.toLocaleDateString()}
+          <br />
+          {date.toLocaleTimeString()}
+        </span>
       </div>
 
-        
-      
+
+      {login?.emp_id}
+      {login?.Date}
+      {login?.CheckIn}
+      {login?.CheckOut}
+      {login?.Break}
+      {login?.Resume}
 
       <div>
-
-    
-
-       <Button onClick={() => {employeecheckin()}}>Checkin</Button>
-       <Button onClick={() => { }}>Break</Button>
-       <Button onClick={() => { }}>Resume</Button> 
-      <Button onClick={() => { }}>Checkout</Button>
-
-       
-      </div> 
-      
+        <Button
+          onClick={(emp_id) => {
+            employeecheckin(emp_id);
+          }}
+        >
+          Checkin
+        </Button>
+        <Button onClick={() => {}}>Break</Button>
+        <Button onClick={() => {}}>Resume</Button>
+        <Button onClick={() => {}}>Checkout</Button>
+      </div>
     </>
   );
 };
