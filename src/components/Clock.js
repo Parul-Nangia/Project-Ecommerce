@@ -3,9 +3,11 @@ import { Button } from "antd";
 import axios from "axios";
 // import jwt from "jwt-decode";
 import jwt_decode from 'jwt-decode'
+
+
 const Clock = () => {
   const [date, setDate] = useState(new Date());
-  const [login, setLogin] = useState(null);
+  const [login, setLogin] = useState([])
 
   const refreshClock = () => {
     setDate(new Date());
@@ -22,10 +24,12 @@ const Clock = () => {
   }, []);
 
   const employeecheckin = async (emp_id) => {
+
     const token = localStorage.getItem("access_token1");
+    console.log("token from local storage:", token)
     var decoded = jwt_decode(token);
     console.log("Decoded token ", decoded);
-    console.log(decoded)
+    setLogin(decoded)
    
     // console.log(emp_id);
     // const emp_id=""
