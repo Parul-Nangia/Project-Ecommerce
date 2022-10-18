@@ -80,6 +80,7 @@ const Documentation = () => {
   const handleInputChange = (e) => {
     //  console.log(e.target.files[0])
     //  setDocumentFile(e.target.files)
+    console.log(e.file.originFileObj,"0987")
     console.log("hello")
     console.log(e, "hfjdgdhjfghdfkjghkjh")
     console.log(e.file, "hfjdgdhjfghdfkjghkjh")
@@ -97,11 +98,11 @@ const Documentation = () => {
     console.log(documentfile, "DocumentFile")
     const emp_id= id
     console.log(emp_id,"jkhj")
-    // const formData = new FormData()
+    // const formData = new FormData()                  //https://v2.convertapi.com/upload
     // console.log(formData, "jhgrt")
     // formData.append("documentfile", documentfile)  //http://localhost:1999/document/add
     // console.log(formData, "poiu")
-    axios.post("https://v2.convertapi.com/upload",{ documentfile}).then(res=>{ // fake api
+    axios.post("http://localhost:1999/document/add",{ documentfile}).then(res=>{ // fake api
           console.log(res)
         })
         .catch(error=>{
