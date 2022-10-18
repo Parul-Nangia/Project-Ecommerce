@@ -20,6 +20,10 @@ const Leave = (props) => {
     <>
     
                 <LeaveCards />
+                {/* <br/>
+                <LeaveTable />
+                <br/>
+                <LeaveCalendar /> */}
                 
 
     </>
