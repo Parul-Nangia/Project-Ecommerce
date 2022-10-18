@@ -1,22 +1,24 @@
 import { DownOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { LoginOutlined, SettingTwoTone, InfoCircleTwoTone } from '@ant-design/icons';
 import axios from 'axios';
 import { useParams } from "react-router-dom";
-import jwt from 'jwt-decode';
-
+import jwt_decode from 'jwt-decode';
+// import { useSelector, useDispatch } from 'react-redux';
 
 const Drop = () => {
+
+
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [state, setState] = useState("");
-
-  
+  const [name, setName] = useState("");
 
 
-  
+
+
+
 
   useEffect(() => {
     userData();
@@ -26,22 +28,24 @@ const Drop = () => {
 
 
 
-
   const userData = (_id) => {
-    let token = token;
-    var decoded = jwt.decode(token);
-    console.log(decoded);
+    const token = localStorage.getItem("access_token1");
+    console.log("token from local storage:", token)
+    // let token = token;
+    var decoded = jwt_decode(token);
+    console.log("Decoded token data",decoded);
+    setName(decoded)
 
-    console.log()
-    fetch(`http://localhost:1999/user/${_id}`).then((response) => {
-      return response.json();
-    }).then((data) => {
-      let user = data.userData
-      setState(user);
 
-      console.log("response", user);
+    // fetch(`http://localhost:1999/user/${_id}`).then((response) => {
+    //   return response.json();
+    // }).then((data) => {
+    //   let user = data.userData
+    //   setState(user);
 
-    })
+    //   console.log("user Api response data", user);
+
+    // })
 
   }
 
@@ -62,7 +66,8 @@ const Drop = () => {
 
         } else {
           navigate(key)
-;
+
+            ;
         }
       }}
       items={[
@@ -98,7 +103,7 @@ const Drop = () => {
     <Dropdown overlay={menu} onOpenChange={handleOpenChange} open={open}>
       <a onClick={(e) => e.preventDefault()}>
         <Space style={{ color: "black", float: "right" }}>
-          <h3>Hii{}</h3>
+          <h3>Hii {name.name }</h3>
           <DownOutlined />
         </Space>
       </a>

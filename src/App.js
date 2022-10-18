@@ -27,7 +27,7 @@ const App = () => {
 
   return (
     <>
-      <SiteLayout isLogin={isLogin} />
+      <SiteLayout  isLogin={isLogin}/>
 
     </>
   )
