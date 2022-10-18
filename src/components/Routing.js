@@ -11,6 +11,7 @@ import LeaveForm from "../components/LeaveForm";
 import LeaveCalendar from "../components/LeaveCalendar";
 import Documentation from "../components/Documentation";
 import Profile from "../components/Profile";
+
 const Routing = () => {
   return (
     <>
@@ -19,7 +20,9 @@ const Routing = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/attendance" element={<Attendance />} />
         <Route path="/leave" element={<Leave />} />
+        
         <Route path="/employees" element={<Employees />}>
+        
 
         </Route>
         <Route path="/edit/:_id" element={<Edit />} />

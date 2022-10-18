@@ -1,7 +1,7 @@
 import { DownOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link} from 'react-router-dom';
 import { LoginOutlined, SettingTwoTone, InfoCircleTwoTone } from '@ant-design/icons';
 import axios from 'axios';
 import { useParams } from "react-router-dom";
@@ -16,7 +16,13 @@ const Drop = () => {
   const [name, setName] = useState("");
 
 
-
+  const logout=(e)=>{
+    e.preventDefault();
+    console.log('Logout');
+    localStorage.clear();
+    sessionStorage.clear()
+    navigate('/');
+  }
 
 
 
@@ -85,9 +91,15 @@ const Drop = () => {
         },
 
         {
-          label: 'Sign Out',
-          key: '/',
-          icon: <LoginOutlined />,
+          label:
+          <nav className="sb-topnav">
+          <LoginOutlined />
+
+          <Link className="drop-down" to="#"
+          onClick={logout}> Logout</Link>
+
+         
+          </nav>,
         },
 
 
@@ -103,8 +115,9 @@ const Drop = () => {
     <Dropdown overlay={menu} onOpenChange={handleOpenChange} open={open}>
       <a onClick={(e) => e.preventDefault()}>
         <Space style={{ color: "black", float: "right" }}>
-          <h3>Hii {name.name }</h3>
+          <h3>Hii {name.name}</h3>
           <DownOutlined />
+          
         </Space>
       </a>
     </Dropdown>
