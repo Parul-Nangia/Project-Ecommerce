@@ -16,13 +16,13 @@ const DashboardCards = () => {
 
   //============================================================== Start Total Employees====================================================================================
   const employeeList = () => {
-    fetch("http://localhost:1999/employee")
+    fetch("http://localhost:1999/user")
 
       .then((response) => {
         return response.json();
       }).then((data) => {
 
-        let emp = data.employeeData
+        let emp = data.userData
 
 
         setEmploys(emp)
