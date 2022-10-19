@@ -36,20 +36,27 @@ const Clock = () => {
       .then((res) => {
         setAttendance(res?.data?.attendanceData);
         console.log("Logged In Employee Attendance", attendance);
+        // console.log("attendance checkin", attendance[0].CheckIn);
+        console.log("attendance empid", attendance[0].emp_id);
+        // console.log("date", Date())
+        // console.log("okkkkkkk",attendance[0].decoded._id)
       });
 
-    if (attendance.CheckIn ===  Date.now()) {
-      console.log("check attendance", attendance.CheckIn);
+    if (attendance[0].emp_id == decoded._id) {
+
 
       alert("You have already checked in");
-    }
-     else {
+    } 
+    
+    else {
       const CheckIn = new Date();
       console.log("I am here Clock Date", CheckIn);
       const CheckOut = "";
       const Break = "";
       const Resume = "";
       const emp_id = decoded._id;
+
+
 
       await axios
         .post(`http://localhost:1999/attendance/${decoded._id}`, {
