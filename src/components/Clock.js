@@ -5,8 +5,8 @@ import jwt_decode from "jwt-decode";
 
 const Clock = () => {
   const [date, setDate] = useState(new Date());
-  // const [checkin,setCheckin]= useState(false)
-  const [login, setLogin] = useState([]);
+
+  const [attendance, setAttendance] = useState([]);
 
   const refreshClock = () => {
     setDate(new Date());
@@ -19,45 +19,51 @@ const Clock = () => {
   }, []);
 
   useEffect(() => {
-   
     employeecheckin();
   }, []);
 
-  const employeecheckin = async (emp_id) => {
+  const employeecheckin = async () => {
     const token = localStorage.getItem("access_token1");
-    console.log("token from local storage:", token)
+    console.log("token from local storage:", token);
     var decoded = jwt_decode(token);
-    console.log("Decoded token data",decoded);
-    setLogin(decoded)
+    console.log("Decoded token data", decoded);
 
-    
+    await axios
+      .get(
+        `http://localhost:1999/attendance/${decoded._id}`,
+        console.log("hello EmpID here", decoded._id)
+      )
+      .then((res) => {
+        setAttendance(res?.data?.attendanceData);
+        console.log("Logged In Employee Attendance", attendance);
+      });
+
+    if (attendance.CheckIn ===  Date.now()) {
+      console.log("check attendance", attendance.CheckIn);
+
+      alert("You have already checked in");
+    }
+     else {
       const CheckIn = new Date();
       console.log("I am here Clock Date", CheckIn);
       const CheckOut = "";
       const Break = "";
       const Resume = "";
+      const emp_id = decoded._id;
 
-
-
-    await axios
-      .get(`http://localhost:1999/attendance/${emp_id}`)
-      .then((res) => {
-        setLogin(res?.data?.attendanceRecord);
-        console.log(login, "login");
-      });
-
-     await axios
-      .post(`http://localhost:1999/attendance/${emp_id}`, {
-        CheckIn,
-        CheckOut,
-        Break,
-        Resume,
-      })
-      .then((res) => {
-        console.log(emp_id, "jgj");
-      })
+      await axios
+        .post(`http://localhost:1999/attendance/${decoded._id}`, {
+          emp_id,
+          CheckIn,
+          CheckOut,
+          Break,
+          Resume,
+        })
+        .then((res) => {
+          console.log("attendance response", res);
+        });
     }
-
+  };
   // const employeebreak = async (emp_id) => {
   //   const Break = "";
 
@@ -74,17 +80,16 @@ const Clock = () => {
         </span>
       </div>
 
-      {login?.emp_id}
-      {login?.Date}
-      {login?.CheckIn}
-      {login?.CheckOut}
-      {login?.Break}
-      {login?.Resume}
+      {attendance?.emp_id}
+      {attendance?.CheckIn}
+      {attendance?.CheckOut}
+      {attendance?.Break}
+      {attendance?.Resume}
 
       <div>
         <Button
-          onClick={(emp_id) => {
-            employeecheckin(emp_id);
+          onClick={() => {
+            employeecheckin();
           }}
         >
           Checkin
