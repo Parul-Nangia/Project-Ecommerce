@@ -45,7 +45,7 @@ const Documentation = () => {
   ]);
   const [documentname, setDocumentName] = useState([]);
   const [documenttype, setDocumentType] = useState();
-  const [documentfile, setDocumentFile] = useState("")
+  const [documentfile, setDocumentFile] = useState()
   const params = useParams();
   // console.log(params.id, "Params Id")
   const [id] = useState(params.id);
@@ -76,33 +76,37 @@ const Documentation = () => {
       },
     },
   ];
+  // const formData = new FormData() 
+  // console.log(formData, "jhgrt")
+  // formData.append("documentfile", documentfile) 
 
-  const handleInputChange = (e) => {
+  const handleInputChange = e=> {
     //  console.log(e.target.files[0])
     //  setDocumentFile(e.target.files)
-    console.log(e.file.originFileObj,"0987")
+    // console.log(e.file[0])
+    // console.log(e.file.originFileObj,"0987")
+    // console.log(e.file.originFileObj,"7890");
     console.log("hello")
-    console.log(e, "hfjdgdhjfghdfkjghkjh")
-    console.log(e.file, "hfjdgdhjfghdfkjghkjh")
-    console.log(e.fileList, "hfjdgdhjfghdfkjghkjh")
-    console.log(e.fileList[0], "rtyryutewruiryiry")
+    console.log(e, "1")
+    console.log(e.file, "12")
+    console.log(e.fileList, "123")
+    console.log(e.fileList[0], "1234")
     // console.log(e.file[0],"E.FILE[0]")
-    setDocumentFile(e.fileList[0])
+    setDocumentFile(e.file)
     // setDocumentFile(e.files[0])
   }
-  
   const handleOk = () => {
-    console.log("fkjdghfdkj");
-    console.log(documentname, "Documentname");
-    console.log(documenttype, "Documenttype");
-    console.log(documentfile, "DocumentFile")
-    const emp_id= id
-    console.log(emp_id,"jkhj")
-    // const formData = new FormData()                  //https://v2.convertapi.com/upload
-    // console.log(formData, "jhgrt")
-    // formData.append("documentfile", documentfile)  //http://localhost:1999/document/add
-    // console.log(formData, "poiu")
-    axios.post("http://localhost:1999/document/add",{ documentfile}).then(res=>{ // fake api
+    // console.log("fkjdghfdkj");
+  //   // console.log(documentname, "Documentname");
+  //   // console.log(documenttype, "Documenttype");
+  //   // console.log(documentfile, "DocumentFile")
+  //   const emp_id= id
+  //   console.log(emp_id,"jkhj")
+    const formData = new FormData()                  //https://v2.convertapi.com/upload
+  //   // console.log(formData, "jhgrt")
+    formData.append("documentfile", documentfile)  //http://localhost:1999/document/add
+  //   console.log(formData, "poiu")
+    axios.post("http://localhost:1999/document/add",formData).then(res=>{ // fake api
           console.log(res)
         })
         .catch(error=>{
@@ -186,8 +190,8 @@ const Documentation = () => {
               // listType="picture"
               // action={"http://localhost:3000"}
               showUploadList={{ showRemoveIcon: false }}
-              // accept=".apng,.avif,.gif,.jpg,.jpeg,.jfif,.pjpeg,.pjp,.png,.svg,.webp"
               beforeUpload={() => false}
+              // accept=".apng,.avif,.gif,.jpg,.jpeg,.jfif,.pjpeg,.pjp,.png,.svg,.webp
             // beforeUpload={(file)=>{
             //   console.log({file});
             //   setDocumentFile(file)

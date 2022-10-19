@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 
 const Clock = () => {
   const [date, setDate] = useState(new Date());
+  // const [checkin,setCheckin]= useState(false)
   const [login, setLogin] = useState([]);
 
   const refreshClock = () => {
@@ -18,21 +19,25 @@ const Clock = () => {
   }, []);
 
   useEffect(() => {
+   
     employeecheckin();
   }, []);
 
   const employeecheckin = async (emp_id) => {
     const token = localStorage.getItem("access_token1");
-    console.log("token from local storage:", token);
+    console.log("token from local storage:", token)
     var decoded = jwt_decode(token);
-    console.log("Decoded token ", decoded);
-    setLogin(decoded);
+    console.log("Decoded token data",decoded);
+    setLogin(decoded)
 
-    const CheckIn = new Date();
-    console.log("I am here Clock Date", CheckIn);
-    const CheckOut = "";
-    const Break = "";
-    const Resume = "";
+    
+      const CheckIn = new Date();
+      console.log("I am here Clock Date", CheckIn);
+      const CheckOut = "";
+      const Break = "";
+      const Resume = "";
+
+
 
     await axios
       .get(`http://localhost:1999/attendance/${emp_id}`)
@@ -41,10 +46,7 @@ const Clock = () => {
         console.log(login, "login");
       });
 
-
-      
-
-    await axios
+     await axios
       .post(`http://localhost:1999/attendance/${emp_id}`, {
         CheckIn,
         CheckOut,
@@ -53,14 +55,14 @@ const Clock = () => {
       })
       .then((res) => {
         console.log(emp_id, "jgj");
-      });
-  };
+      })
+    }
 
-  const employeebreak = async (emp_id) => {
-    const Break = "";
+  // const employeebreak = async (emp_id) => {
+  //   const Break = "";
 
-    await axios.put("", { Break }).then((res) => {});
-  };
+  //   await axios.put("", { Break }).then((res) => {});
+  // };
 
   return (
     <>
@@ -87,13 +89,7 @@ const Clock = () => {
         >
           Checkin
         </Button>
-        <Button
-          onClick={(emp_id) => {
-            employeebreak(emp_id);
-          }}
-        >
-          Break
-        </Button>
+        <Button onClick={() => {}}>Break</Button>
         <Button onClick={() => {}}>Resume</Button>
         <Button onClick={() => {}}>Checkout</Button>
       </div>
