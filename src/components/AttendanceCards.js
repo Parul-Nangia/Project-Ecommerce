@@ -6,12 +6,6 @@ import { Card, Col, Row } from 'antd';
 
 const AttendanceCards = () => {
 
-
-
-
-
-
-
   return (
     <>
       <div className="site-card-wrapper">
