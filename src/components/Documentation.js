@@ -5,35 +5,8 @@ import { Modal, Input, Form, Select, Button } from "antd";
 import { UploadOutlined, CloudDownloadOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom"
 import { message, Upload } from "antd";
-// import Top from "../components/Top";
-// import Sidebar from "../components/Sidebar";
-// import Middle from "../components/Middle";
-// import { Layout } from "antd";
 import axios from "axios";
-// const { Content } = Layout;
 const { Option } = Select;
-// import Sidebar from "./Sidebar";
-// import Top from "./Top";
-// const props = {
-//   name: "file",
-//   action: "http://localhost:3000/",
-//   headers: {
-//     authorization: "authorization-text",
-//   },
-
-//   onChange(info) {
-//     if (info.file.status !== "uploading") {
-//       console.log(info.file, info.fileList);
-//     }
-
-//     if (info.file.status === "done") {
-//       message.success(`${info.file.name} file uploaded successfully`);
-//     } else if (info.file.status === "error") {
-//       message.error(`${info.file.name} file upload failed.`);
-//     }
-//   },
-// };
-
 const Documentation = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dataSource, setDataSource] = useState([
@@ -57,7 +30,7 @@ const Documentation = () => {
     },
     {
       title: "Document Name",
-      dataIndex: "documentname",
+      dataIndex: "documentName",
     },
     {
       title: "Type",
@@ -81,11 +54,6 @@ const Documentation = () => {
   // formData.append("documentfile", documentfile) 
 
   const handleInputChange = e=> {
-    //  console.log(e.target.files[0])
-    //  setDocumentFile(e.target.files)
-    // console.log(e.file[0])
-    // console.log(e.file.originFileObj,"0987")
-    // console.log(e.file.originFileObj,"7890");
     console.log("hello")
     console.log(e, "1")
     console.log(e.file, "12")
@@ -95,18 +63,22 @@ const Documentation = () => {
     setDocumentFile(e.file)
     // setDocumentFile(e.files[0])
   }
-  const handleOk = () => {
+  const handleOk = (id) => {
     // console.log("fkjdghfdkj");
-  //   // console.log(documentname, "Documentname");
-  //   // console.log(documenttype, "Documenttype");
-  //   // console.log(documentfile, "DocumentFile")
-  //   const emp_id= id
-  //   console.log(emp_id,"jkhj")
+    console.log(documentname, "Documentname");
+    console.log(documenttype, "Documenttype");
+    const emp_id= id
+    console.log(emp_id,"jkhj")
     const formData = new FormData()                  //https://v2.convertapi.com/upload
-  //   // console.log(formData, "jhgrt")
+    const image=formData
     formData.append("documentfile", documentfile)  //http://localhost:1999/document/add
-  //   console.log(formData, "poiu")
-    axios.post("http://localhost:1999/document/add",formData).then(res=>{ // fake api
+ 
+    axios.post("http://localhost:1999/document/add",formData,
+    {emp_id:emp_id,
+    documentname:documentname,
+    documenttype:documenttype,}
+    )
+    .then(res=>{ // fake api
           console.log(res)
         })
         .catch(error=>{
@@ -115,13 +87,13 @@ const Documentation = () => {
     setIsModalOpen(false);
   };
 
-
   const showModal = () => {
     setIsModalOpen(true);
   };
-
+                           
   const handleCancel = () => {
     setIsModalOpen(false);
+
   };
   const selecthere = (value) => {
     setDocumentType(value);
@@ -155,7 +127,10 @@ const Documentation = () => {
           style={{ margin: 20 }}
           autoComplete="off"
         >
-          <Form.Item label="Document Name">
+          <Form.Item label="Document Name"
+           rules={[
+            { type: "text",},
+          ]}>
             <Input
               value={documentname}
               onChange={(e) => {
@@ -187,7 +162,7 @@ const Documentation = () => {
               // onChange={(e)=> handleInputChange("file", e.target.files[0])}
               onChange={handleInputChange}
               // multiple
-              // listType="picture"
+              // type="image"
               // action={"http://localhost:3000"}
               showUploadList={{ showRemoveIcon: false }}
               beforeUpload={() => false}
