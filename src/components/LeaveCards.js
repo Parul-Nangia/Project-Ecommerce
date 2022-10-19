@@ -36,7 +36,7 @@ const LeaveCards = () => {
       .then((response) => {
         console.log("hello emp_id here", decoded._id)
         return response.json();
-      }).then((data) => {
+      }).then((data) => { 
 
         let emppriviliegeLeave = data
         console.log(" helllo there data", data)      // error in fetching data from api
