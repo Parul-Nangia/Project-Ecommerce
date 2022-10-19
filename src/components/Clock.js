@@ -28,7 +28,7 @@ const Clock = () => {
     console.log("token from local storage:", token)
     var decoded = jwt_decode(token);
     console.log("Decoded token data",decoded);
-    setLogin(decoded)
+  
 
     
       const CheckIn = new Date();
