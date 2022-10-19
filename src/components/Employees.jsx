@@ -6,6 +6,8 @@ import { Button, Modal, Form, Input, Row  } from 'antd';
 import { FileAddOutlined, LockOutlined, UserOutlined, MailOutlined, PhoneOutlined, UserSwitchOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom"
+import jwt_decode from 'jwt-decode';
+import Error from '../components/Error';
 
 
 
@@ -91,7 +93,7 @@ const Employees = ({dataSource}) => {
   const classes = useStyles();
   const [state, setState] = useState([]);
   // const [view, setView] = useState([]);
-  const [name, setName] = useState("");
+  
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
@@ -99,6 +101,44 @@ const Employees = ({dataSource}) => {
   const [role,setRole] = useState("")
 
   const navigate = useNavigate()
+
+
+  const[name,setName]=useState("");
+  
+  useEffect(() => {
+    userData();
+
+  }, [])
+
+  
+
+  
+  const userData = ()=> {
+    const token = localStorage.getItem("access_token1");
+    console.log("token from local storage:", token)
+    // let token = token;
+    var decoded = jwt_decode(token);
+    console.log("Decoded token data",decoded);
+    setName(decoded)
+  }
+
+  if (name.role === "admin"){
+    console.log("my role is " ,name.role)
+    return (
+
+    <Employees />
+  )
+  }
+  if(name.role==="employee"){
+    return(
+      <Error />
+    )
+  
+  }
+  else{
+   
+    
+  }
   const profile = (user_id) =>{
     navigate("/profile/"+user_id)
   }
@@ -270,10 +310,10 @@ const Employees = ({dataSource}) => {
 
 
   // //================================================= START employee GET (GET API)
-  useEffect(() => {
-    employeelist();
+  // useEffect(() => {
+  //   employeelist();
 
-  }, [])
+  // }, [])
 
   const employeelist = () => {
     fetch("http://localhost:1999/user").then((response) => {
