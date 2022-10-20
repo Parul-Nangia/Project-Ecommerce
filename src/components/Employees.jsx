@@ -99,11 +99,8 @@ const Employees = ({dataSource}) => {
   const [contact, setContact] = useState("");
   const [gender, setGender] = useState("");
   const [role,setRole] = useState("")
-
   const navigate = useNavigate()
-
-
-  // const[name,setName]=useState("");
+  const[name,setName]=useState("");
   
   // useEffect(() => {
   //   userData();
