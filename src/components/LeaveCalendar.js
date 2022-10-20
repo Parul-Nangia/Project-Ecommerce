@@ -10,9 +10,10 @@ import "antd/dist/antd.css";
 const LeaveCalendar = () => {
 
   const [calendarLeaveData, setCalendarLeaveData] = useState([]);
-  console.log("Hi Calendar Leave Data here", calendarLeaveData[0].LeaveDate)
-  
- 
+  console.log(" check LeaveDate here", calendarLeaveData.LeaveDate)
+
+
+
 
 
 
@@ -29,8 +30,8 @@ const LeaveCalendar = () => {
         console.log("Employee Leave Data", empLeave)
 
         setCalendarLeaveData(empLeave)
-      
-      
+
+
       })
 
   }
@@ -41,17 +42,40 @@ const LeaveCalendar = () => {
 
 
 
+
+
+
+
+
   // YYYY-MM-DDTHH:mm:ss.sssZ
 
   const dateCellRender = (value) => {
 
     const stringValue = value.format("YYYY-MM-DD");
     const listData = calendarLeaveData.filter(({ LeaveDate }) => LeaveDate === stringValue);
-    // let a = ""
-    // for(var i = calendarLeaveData[0].LeaveDate; i < calendarLeaveData[0].ReturnDate ; i ++) {
-    // a += calendarLeaveData[i]
+  
+    const start = calendarLeaveData.LeaveDate;
+    console.log("hello calendar start date here", start)
+    const end = calendarLeaveData.ReturnDate;
+    console.log("hello calendar end date here", end)
+    var datelist = ""
+    for (let i = "2022-10-01" ; i <= "2022-10-30" ; i++) {
+      datelist += [i]
+      console.log("Date List Here",datelist)
+    }
+
+    // let loop = start;
+    // while (loop <= end) {
+    //   console.log(loop);
+    //   let newDate = loop.setDate(loop.getDate() + 1);
+    //   loop = new Date(newDate);
     // }
-    // console.log("A here", a)
+
+
+
+
+
+
 
     // for (let i = LeaveDate; i < LeaveDate; i++) {
     //   function getDatesInRange(startDate, endDate) {
