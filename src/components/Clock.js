@@ -170,12 +170,6 @@ const employeeresume = async () => {
   console.log("employee resume",res)
 });
 } 
-
-
-
-
-
-
   return (
     <>
       <div>
