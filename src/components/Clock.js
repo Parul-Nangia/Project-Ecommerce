@@ -4,40 +4,41 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 
 const Clock = () => {
-  // const [date, setDate] = useState(new Date());
-  const[seconds,setSeconds] = useState(0)
-  const[minutes,setMinutes] = useState(0)
+  const [date, setDate] = useState(new Date());
+  // const[seconds,setSeconds] = useState(0)
+  // const[minutes,setMinutes] = useState(0)
 
   const [attendance, setAttendance] = useState([]);
 
 
-var timer;
-useEffect(() => {
-
-  timer= setInterval(()=>{
-
-    setSeconds(seconds+1);
-
-    if(seconds===59){
-      setMinutes(minutes+1);
-      setSeconds(0);
-    }
-
-  },1000)
-
-return () => clearInterval(timer);
-});
+// var timer;
+// useEffect(() => {
 
 
-  // const refreshClock = () => {
-  //   setDate(new Date());
-  // };
-  // useEffect(() => {
-  //   const timerId = setInterval(refreshClock, 1000);
-  //   return function cleanup() {
-  //     clearInterval(timerId);
-  //   };
-  // }, []);
+//   timer= setInterval(()=>{
+
+//     setSeconds(seconds+1);
+
+//     if(seconds===59){
+//       setMinutes(minutes+1);
+//       setSeconds(0);
+//     }
+
+//   },1000)
+
+// return () => clearInterval(timer);
+// });
+
+
+  const refreshClock = () => {
+    setDate(new Date());
+  };
+  useEffect(() => {
+    const timerId = setInterval(refreshClock, 1000);
+    return function cleanup() {
+      clearInterval(timerId);
+    };
+  }, []);
 
   useEffect(() => {
     employeecheckin();
@@ -57,10 +58,10 @@ return () => clearInterval(timer);
       .then((res) => {
         setAttendance(res?.data?.attendanceData);
         console.log("Logged In Employee Attendance", attendance);
-        // console.log("attendance checkin", attendance[0].CheckIn);
+       
         console.log("attendance empid", attendance[0].emp_id);
-        // console.log("date", Date())
-        // console.log("okkkkkkk",attendance[0].decoded._id)
+        
+       
       });
 
     if (attendance[0].emp_id == decoded._id) {
@@ -87,43 +88,119 @@ return () => clearInterval(timer);
         });
     }
   };
-  // const employeebreak = async (emp_id) => {
-  //   const Break = "";
+  
 
-  //   await axios.put("", { Break }).then((res) => {});
-  // };
+  const employeecheckout = async () => {
+    const token = localStorage.getItem("access_token1");
+    console.log("token from local storage:", token);
+    var decoded = jwt_decode(token);
+    console.log("Decoded token data", decoded);
+
+    
+
+
+
+    const CheckIn = "";
+    const CheckOut = new Date();
+    const Break = "";
+    const Resume = "";
+   
+    await axios.put(`http://localhost:1999/attendance/${decoded._id}`, { 
+    CheckIn,
+    CheckOut,
+    Break,
+    Resume, 
+  })
+  .then((res) => {
+    console.log("id",decoded._id)
+
+    console.log("employee check out",res)
+  });
+   
+
+  };
+
+  const employeebreak = async () => {
+    const token = localStorage.getItem("access_token1");
+    console.log("token from local storage:", token);
+    var decoded = jwt_decode(token);
+    console.log("Decoded token data", decoded);
+    
+
+    
+    const CheckIn = "";
+    const CheckOut = "";
+    const Break = new Date();
+    const Resume = "";
+   
+    await axios.put(`http://localhost:1999/attendance/${decoded._id}`, {
+    CheckIn,
+    CheckOut,
+    Break,
+    Resume, 
+  })
+  .then((res) => {
+    console.log("id",decoded._id)
+
+    console.log("employee break",res)
+  });
+} 
+
+const employeeresume = async () => {
+  const token = localStorage.getItem("access_token1");
+  console.log("token from local storage:", token);
+  var decoded = jwt_decode(token);
+  console.log("Decoded token data", decoded);
+
+  
+  const CheckIn = "";
+  const CheckOut = "";
+  const Break ="";
+  const Resume = new Date();
+ 
+  await axios.put(`http://localhost:1999/attendance/${decoded._id}`, {
+  CheckIn,
+  CheckOut,
+  Break,
+  Resume, 
+})
+.then((res) => {
+  console.log("id",decoded._id)
+
+  console.log("employee resume",res)
+});
+} 
+
+
+
+
+
 
   return (
     <>
-      {/* <div>
+      <div>
         <span>
           {date.toLocaleDateString()}
           <br />
           {date.toLocaleTimeString()}
         </span>
-      </div> */}
+      </div>
 
       {attendance?.emp_id}
       {attendance?.CheckIn}
       {attendance?.CheckOut}
       {attendance?.Break}
       {attendance?.Resume}
-      <div>
+      {/* <div>
         <h1>Timer</h1>
-        <h1>{minutes}:{seconds}</h1>
-      </div>
+        <h1>{minutes<10? "0"+minutes:minutes}:{seconds<10? "0"+seconds: seconds}</h1>
+      </div> */}
 
       <div>
-        <Button 
-          onClick={() => {
-            employeecheckin();
-          }}
-        >
-          Checkin
-        </Button>
-        <Button onClick={() => {}}>Break</Button>
-        <Button onClick={() => {}}>Resume</Button>
-        <Button onClick={() => {}}>Checkout</Button>
+        <Button onClick={() => {employeecheckin()}}>Checkin</Button>
+        <Button onClick={() => {employeebreak()}}>Break</Button>
+        <Button onClick={() => {employeeresume()}}>Resume</Button>
+        <Button onClick={() => {employeecheckout()}}>Checkout</Button>
       </div>
     </>
   );
