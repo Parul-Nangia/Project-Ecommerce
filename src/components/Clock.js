@@ -44,7 +44,8 @@ const Clock = () => {
 
     if (attendance[0].emp_id == decoded._id) {
       alert("You have already checked in");
-    } else {
+    } 
+    else {
       const CheckIn = new Date();
       console.log("I am here Clock Date", CheckIn);
       const CheckOut = "";
