@@ -14,8 +14,10 @@ import Error from '../components/Error';
 const Leave = (props) => {
 
 
+  const navigate = useNavigate();
+ 
   const[view,setView]=useState(false)
-  const[name,setName]=useState("");
+  // const[name,setName]=useState("");
   
   // useEffect(() => {
   //   userData();
@@ -26,35 +28,35 @@ const Leave = (props) => {
 
   
   // const userData = ()=> {
-  //   const token = localStorage.getItem("access_token1");
-  //   console.log("token from local storage:", token)
-  //   // let token = token;
-  //   var decoded = jwt_decode(token);
-  //   console.log("Decoded token data",decoded);
-  //   setName(decoded)
-  // }
+//     const token = localStorage.getItem("access_token1");
+//     console.log("token from local storage:", token)
+//     // let token = token;
+//     var decoded = jwt_decode(token);
+//     console.log("Decoded token data",decoded);
+//     setName(decoded)
+//   }
 
-  // if (name.role === "admin"){
-  //   console.log("my role is " ,name.role)
-  //   return (
+//   if (name.role === "admin"){
+//     console.log("my role is " ,name.role)
+//     return (
 
-  //   <LeaveCards />
-  // )
-  // }
-  // if(name.role==="employee"){
-  //   return(
-  //     <Error />
-  //   )
+//     <LeaveCards />
+//   )
+//   }
+//   if(name.role==="employee"){
+//     return(
+//       <Error />
+//     )
   
-  // }
-  // else{
+//   }
+//   else{
    
     
-  // }
-//   const navigate = useNavigate();
-//   const [size, setSize] = useState('default');
+//   }
+// //   const navigate = useNavigate();
+// //   const [size, setSize] = useState('default');
 
-//   const [view, setView] = useState(false);
+// //   const [view, setView] = useState(false);
 
 
 
@@ -62,15 +64,25 @@ const Leave = (props) => {
 
     <>
     
-                <LeaveCards />
-                <br/>
-                <LeaveTable />
-                <br/>
-                <LeaveCalendar />
+                
+           <Link to="/leaveform"></Link>
+              <br/>
+              <Button  onClick={()=> navigate('/leaveform')}>Apply Leave</Button>
+              
+            <h1>{view}</h1>
+           <Button onClick={()=> setView(!view)}>LeaveCalendar</Button>
+           <Button onClick={()=> setView(!view)}>LeaveTable</Button>
+          
+           {view ? <LeaveTable/> :<LeaveCalendar/>  }
+
+                
                 
 
     </>
   );
 };
+      
+
+
 
 export default Leave;
