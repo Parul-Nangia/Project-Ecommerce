@@ -4,19 +4,40 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 
 const Clock = () => {
-  const [date, setDate] = useState(new Date());
+  // const [date, setDate] = useState(new Date());
+  const[seconds,setSeconds] = useState(0)
+  const[minutes,setMinutes] = useState(0)
 
   const [attendance, setAttendance] = useState([]);
 
-  const refreshClock = () => {
-    setDate(new Date());
-  };
-  useEffect(() => {
-    const timerId = setInterval(refreshClock, 1000);
-    return function cleanup() {
-      clearInterval(timerId);
-    };
-  }, []);
+
+var timer;
+useEffect(() => {
+
+  timer= setInterval(()=>{
+
+    setSeconds(seconds+1);
+
+    if(seconds===59){
+      setMinutes(minutes+1);
+      setSeconds(0);
+    }
+
+  },1000)
+
+return () => clearInterval(timer);
+});
+
+
+  // const refreshClock = () => {
+  //   setDate(new Date());
+  // };
+  // useEffect(() => {
+  //   const timerId = setInterval(refreshClock, 1000);
+  //   return function cleanup() {
+  //     clearInterval(timerId);
+  //   };
+  // }, []);
 
   useEffect(() => {
     employeecheckin();
@@ -74,22 +95,26 @@ const Clock = () => {
 
   return (
     <>
-      <div>
+      {/* <div>
         <span>
           {date.toLocaleDateString()}
           <br />
           {date.toLocaleTimeString()}
         </span>
-      </div>
+      </div> */}
 
       {attendance?.emp_id}
       {attendance?.CheckIn}
       {attendance?.CheckOut}
       {attendance?.Break}
       {attendance?.Resume}
+      <div>
+        <h1>Timer</h1>
+        <h1>{minutes}:{seconds}</h1>
+      </div>
 
       <div>
-        <Button
+        <Button 
           onClick={() => {
             employeecheckin();
           }}
