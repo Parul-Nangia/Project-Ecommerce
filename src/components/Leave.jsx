@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from 'react'
+import React, { useEffect, useState } from 'react'
 import LeaveCards from '../components/LeaveCards';
 import LeaveTable from '../components/LeaveTable';
 import LeaveCalendar from '../components/LeaveCalendar';
@@ -12,8 +12,9 @@ import Error from '../components/Error';
 
 
 const Leave = (props) => {
-   const[name,setName]=useState("");
-
+  const [name, setName] = useState("");
+  const[view,setView]=useState(false)
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -22,61 +23,59 @@ const Leave = (props) => {
   }, [])
 
 
-  const userData = ()=> {
+  const userData = () => {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token)
     // let token = token;
     var decoded = jwt_decode(token);
-    console.log("Decoded token data",decoded);
+    console.log("Decoded token data", decoded);
     setName(decoded)
   }
 
-  if (name.role === "admin"){
-    console.log("my role is " ,name.role)
+  if (name.role === "admin") {
+    console.log("my role is ", name.role)
     return (
-      <> 
-      <LeaveCards />
-      <br/>
-      <LeaveTable />
-      <br/>
-      <LeaveCalendar />
-   
-    
-    </>
-  )
-  }
-  if(name.role==="employee"){
-    return(
       <>
-      <LeaveCards />
-      
-      
-     
+
+        <Link to="/leaveform"></Link>
+        <br />
+        <Button onClick={() => navigate('/leaveform')}>Apply Leave</Button>
+
+        <h1>{view}</h1>
+        <Button onClick={() => setView(!view)}>Calendarview</Button>
+        <Button onClick={() => setView(!view)}>Tableview</Button>
+
+        {view ? <LeaveTable /> : <LeaveCalendar />}
+
       </>
     )
-  
   }
-  
+  if (name.role === "employee") {
+    return (
+      <>
+        <LeaveCards />
 
- 
-//   const navigate = useNavigate();
-//   const [size, setSize] = useState('default');
 
-//   const [view, setView] = useState(false);
 
-  return (
+      </>
+    )
 
-    <>
-    
-                <LeaveCards />
-                <br/>
-                <LeaveTable />
-                <br/>
-                <LeaveCalendar />
-                
+  }
 
-    </>
-  );
+
+
+  //   const navigate = useNavigate();
+  //   const [size, setSize] = useState('default');
+
+
+
+
+
+
+
 };
+
+
+
 
 export default Leave;

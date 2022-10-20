@@ -9,8 +9,10 @@ import "antd/dist/antd.css";
 
 const LeaveCalendar = () => {
 
-  const [weekLeave, setweekLeave] = useState([]);
-  const [LeaveDate, setLeaveDate] = useState("");
+  const [calendarLeaveData, setCalendarLeaveData] = useState([]);
+  console.log("Hi Calendar Leave Data here", calendarLeaveData[0].LeaveDate)
+  
+ 
 
 
 
@@ -26,10 +28,9 @@ const LeaveCalendar = () => {
 
         console.log("Employee Leave Data", empLeave)
 
-
-        setweekLeave(empLeave)
-        setLeaveDate(empLeave.LeaveDate)
-
+        setCalendarLeaveData(empLeave)
+      
+      
       })
 
   }
@@ -40,37 +41,37 @@ const LeaveCalendar = () => {
 
 
 
-
-
-
-
-
   // YYYY-MM-DDTHH:mm:ss.sssZ
 
   const dateCellRender = (value) => {
 
     const stringValue = value.format("YYYY-MM-DD");
-    const listData = weekLeave.filter(({ LeaveDate }) => LeaveDate === stringValue);
+    const listData = calendarLeaveData.filter(({ LeaveDate }) => LeaveDate === stringValue);
+    // let a = ""
+    // for(var i = calendarLeaveData[0].LeaveDate; i < calendarLeaveData[0].ReturnDate ; i ++) {
+    // a += calendarLeaveData[i]
+    // }
+    // console.log("A here", a)
 
-    for (let i = LeaveDate; i < LeaveDate; i++) {
-      function getDatesInRange(startDate, endDate) {
-        const date = (startDate.getTime());
+    // for (let i = LeaveDate; i < LeaveDate; i++) {
+    //   function getDatesInRange(startDate, endDate) {
+    //     const date = (startDate.getTime());
 
-        const dates = [];
+    //     const dates = [];
 
-        while (date <= endDate) {
-          dates.push((date));
-          date.setDate(date.getDate() + 1);
-        }
+    //     while (date <= endDate) {
+    //       dates.push((date));
+    //       date.setDate(date.getDate() + 1);
+    //     }
 
-        return dates;
-      }
+    //     return dates;
+    //   }
 
-      const d1 = ('2022-10-01');
-      const d2 = ('2022-12-30');
+    //   const d1 = ('2022-10-01');
+    //   const d2 = ('2022-12-30');
 
-      console.log(getDatesInRange(d1, d2));
-    }
+    //   console.log(getDatesInRange(d1, d2));
+    // }
 
 
 
