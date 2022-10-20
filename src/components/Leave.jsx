@@ -64,11 +64,9 @@ const Leave = (props) => {
     
                 <LeaveCards />
                 <br/>
-                <Button onClick={() => {}}>Calendarview</Button>
-                <Button onClick={() => {}}>Tableview</Button>
-
-                view? <LeaveCalendar/>:<LeaveTable />
-                
+                <LeaveTable />
+                <br/>
+                <LeaveCalendar />
                 
 
     </>
