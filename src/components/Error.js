@@ -1,11 +1,9 @@
 import React from 'react';
 
-
-function ErrorPage (){
+function ErrorPage(){
     return(
-        <h1>This page is only Access By Admin..</h1>
+        <h1>Only Admin Can Access This Page...</h1>
     )
-
 }
 
 export default ErrorPage;

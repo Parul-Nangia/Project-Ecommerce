@@ -10,7 +10,7 @@ import "antd/dist/antd.css";
 const LeaveCalendar = () => {
 
   const [calendarLeaveData, setCalendarLeaveData] = useState([]);
-  console.log("Hi Calendar Leave Data here", calendarLeaveData[0].LeaveDate)
+  // console.log("Hi Calendar Leave Data here", calendarLeaveData[0].LeaveDate)
   
  
 

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "antd";
 import axios from "axios";
+import jwt_decode from 'jwt-decode';
+import Error from '../components/Error';
 
 
 
@@ -9,6 +11,7 @@ import axios from "axios";
 const LeaveTable = () => {
   const [dataSource, setDataSource] = useState([]);
  
+  const[name,setName]=useState("");
   
  useEffect(() => {
     getData();

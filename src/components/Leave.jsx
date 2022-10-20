@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState } from 'react'
 import LeaveCards from '../components/LeaveCards';
 import LeaveTable from '../components/LeaveTable';
 import LeaveCalendar from '../components/LeaveCalendar';
@@ -12,69 +12,72 @@ import Error from '../components/Error';
 
 
 const Leave = (props) => {
-  const [name, setName] = useState("");
-  const[view,setView]=useState(false)
+
+
   const navigate = useNavigate();
-
-
+  const[view,setView]=useState(false)
+  const[name,setName]=useState("");
+  
   useEffect(() => {
     userData();
 
   }, [])
 
+  
 
-  const userData = () => {
+  
+  const userData = ()=> {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token)
     // let token = token;
     var decoded = jwt_decode(token);
-    console.log("Decoded token data", decoded);
+    console.log("Decoded token data",decoded);
     setName(decoded)
   }
 
-  if (name.role === "admin") {
-    console.log("my role is ", name.role)
+  if (name.role === "admin"){
+    console.log("my role is " ,name.role)
     return (
-      <>
 
-        <Link to="/leaveform"></Link>
-        <br />
-        <Button onClick={() => navigate('/leaveform')}>Apply Leave</Button>
-
-        <h1>{view}</h1>
-        <Button onClick={() => setView(!view)}>Calendarview</Button>
-        <Button onClick={() => setView(!view)}>Tableview</Button>
-
-        {view ? <LeaveTable /> : <LeaveCalendar />}
-
-      </>
-    )
+    <LeaveCards />
+  )
   }
-  if (name.role === "employee") {
-    return (
-      <>
-        <LeaveCards />
-
-
-
-      </>
+  if(name.role==="employee"){
+    return(
+      <LeaveCards />
     )
-
+  
+  }
+  else{
+   
+    
   }
 
 
 
-  //   const navigate = useNavigate();
-  //   const [size, setSize] = useState('default');
 
+  return (
 
+    <>
+    
+                
+           <Link to="/leaveform"></Link>
+              <br/>
+              <Button  onClick={()=> navigate('/leaveform')}>Apply Leave</Button>
+              
+            <h1>{view}</h1>
+           <Button onClick={()=> setView(!view)}>Calendarview</Button>
+           <Button onClick={()=> setView(!view)}>Tableview</Button>
+          
+           {view ? <LeaveTable/> :<LeaveCalendar/>  }
 
+                
+                
 
-
-
-
+    </>
+  );
 };
-
+      
 
 
 

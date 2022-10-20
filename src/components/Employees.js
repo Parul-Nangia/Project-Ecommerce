@@ -7,7 +7,7 @@ import { FileAddOutlined, LockOutlined, UserOutlined, MailOutlined, PhoneOutline
 import axios from 'axios';
 import {useNavigate} from "react-router-dom"
 import jwt_decode from 'jwt-decode';
-import Error from '../components/Error';
+
 
 
 
