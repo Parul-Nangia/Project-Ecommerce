@@ -307,10 +307,10 @@ const Employees = ({dataSource}) => {
 
 
   // //================================================= START employee GET (GET API)
-  // useEffect(() => {
-  //   employeelist();
+  useEffect(() => {
+    employeelist();
 
-  // }, [])
+  }, [])
 
   const employeelist = () => {
     fetch("http://localhost:1999/user").then((response) => {

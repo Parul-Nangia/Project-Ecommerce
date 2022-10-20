@@ -69,14 +69,14 @@ const Documentation = () => {
     console.log(documenttype, "Documenttype");
     const emp_id= id
     console.log(emp_id,"jkhj")
-    const formData = new FormData()                  //https://v2.convertapi.com/upload
+    const formData = new FormData()                  //https://v2.convertapi.com/upload   //fake API
     const image=formData
-    formData.append("documentfile", documentfile)  //http://localhost:1999/document/add
+    formData.append("image", documentfile)  //http://localhost:1999/document/add
  
-    axios.post("http://localhost:1999/document/add",formData,
-    {emp_id:emp_id,
+    axios.post("http://localhost:1999/document/add",image,
+   { emp_id:emp_id,
     documentname:documentname,
-    documenttype:documenttype,}
+    documenttype:documenttype}
     )
     .then(res=>{ // fake api
           console.log(res)
@@ -120,6 +120,8 @@ const Documentation = () => {
         onCancel={handleCancel}
       >
         <Form
+        labelCol={{span:10}}
+        wrapperCol={{span:14}}
           name="basic"
           initialValues={{
             remember: true,
@@ -159,6 +161,8 @@ const Documentation = () => {
           </Form.Item>
           <Form.Item>
             <Upload.Dragger
+            name="image"
+               type="file"
               // onChange={(e)=> handleInputChange("file", e.target.files[0])}
               onChange={handleInputChange}
               // multiple
@@ -166,12 +170,10 @@ const Documentation = () => {
               // action={"http://localhost:3000"}
               showUploadList={{ showRemoveIcon: false }}
               beforeUpload={() => false}
+              accept=".png,.doc,.jpeg,.pdf,.jpg"
               // accept=".apng,.avif,.gif,.jpg,.jpeg,.jfif,.pjpeg,.pjp,.png,.svg,.webp
             // beforeUpload={(file)=>{
-            //   console.log({file});
-            //   setDocumentFile(file)
-            //   console.log(setDocumentFile,"setDocumentfile")
-            //   console.log(documentfile,"documentfile")
+           
             //   return false;
             // }}
             >
