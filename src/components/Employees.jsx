@@ -103,42 +103,42 @@ const Employees = ({dataSource}) => {
   const navigate = useNavigate()
 
 
-  const[name,setName]=useState("");
+  // const[name,setName]=useState("");
   
-  useEffect(() => {
-    userData();
+  // useEffect(() => {
+  //   userData();
 
-  }, [])
-
-  
+  // }, [])
 
   
-  const userData = ()=> {
-    const token = localStorage.getItem("access_token1");
-    console.log("token from local storage:", token)
-    // let token = token;
-    var decoded = jwt_decode(token);
-    console.log("Decoded token data",decoded);
-    setName(decoded)
-  }
 
-  if (name.role === "admin"){
-    console.log("my role is " ,name.role)
-    return (
-
-    <Employees />
-  )
-  }
-  if(name.role==="employee"){
-    return(
-      <Error />
-    )
   
-  }
-  else{
+  // const userData = ()=> {
+  //   const token = localStorage.getItem("access_token1");
+  //   console.log("token from local storage:", token)
+  //   // let token = token;
+  //   var decoded = jwt_decode(token);
+  //   console.log("Decoded token data",decoded);
+  //   setName(decoded)
+  // }
+
+  // if (name.role === "admin"){
+  //   console.log("my role is " ,name.role)
+  //   return (
+
+  //   <Employees />
+  // )
+  // }
+  // if(name.role==="employee"){
+  //   return(
+  //     <Error />
+  //   )
+  
+  // }
+  // else{
    
     
-  }
+  // }
   const profile = (user_id) =>{
     navigate("/profile/"+user_id)
   }

@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from 'react'
+import React, { useState ,useEffect} from 'react'
 import LeaveCards from '../components/LeaveCards';
 import LeaveTable from '../components/LeaveTable';
 import LeaveCalendar from '../components/LeaveCalendar';
@@ -12,19 +12,16 @@ import Error from '../components/Error';
 
 
 const Leave = (props) => {
-
-
-  
   const[name,setName]=useState("");
-  
+
+
+
   useEffect(() => {
     userData();
 
   }, [])
 
-  
 
-  
   const userData = ()=> {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token)
@@ -37,8 +34,11 @@ const Leave = (props) => {
   if (name.role === "admin"){
     console.log("my role is " ,name.role)
     return (
+      <>
 
-    <LeaveCards />
+    <LeaveTable />
+    {/* <LeaveCards /> */}
+    </>
   )
   }
   if(name.role==="employee"){
@@ -51,12 +51,11 @@ const Leave = (props) => {
    
     
   }
+
 //   const navigate = useNavigate();
 //   const [size, setSize] = useState('default');
 
 //   const [view, setView] = useState(false);
-
-
 
   return (
 
