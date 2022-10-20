@@ -400,8 +400,8 @@ const documentation =(user_id)=>{
           
             <Button onClick={()=>{documentation(record._id)}}><FileAddOutlined /></Button>
             <Button onClick={()=>{profile(record._id)}}><EyeOutlined /></Button>
-            <Button onClick={() => {onEditEmployee(record) }}><EditOutlined /></Button>
-            <Button onClick={() => {ondeleteEmployee(record) }}><DeleteOutlined /></Button>
+            <Button onClick={() =>{onEditEmployee(record) }}><EditOutlined /></Button>
+            <Button onClick={() =>{ondeleteEmployee(record) }}><DeleteOutlined /></Button>
 
 
           </>

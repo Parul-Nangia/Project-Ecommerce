@@ -15,7 +15,6 @@ const Leave = (props) => {
 
 
   const navigate = useNavigate();
- 
   const[view,setView]=useState(false)
   // const[name,setName]=useState("");
   
@@ -70,8 +69,8 @@ const Leave = (props) => {
               <Button  onClick={()=> navigate('/leaveform')}>Apply Leave</Button>
               
             <h1>{view}</h1>
-           <Button onClick={()=> setView(!view)}>LeaveCalendar</Button>
-           <Button onClick={()=> setView(!view)}>LeaveTable</Button>
+           <Button onClick={()=> setView(!view)}>Calendarview</Button>
+           <Button onClick={()=> setView(!view)}>Tableview</Button>
           
            {view ? <LeaveTable/> :<LeaveCalendar/>  }
 
