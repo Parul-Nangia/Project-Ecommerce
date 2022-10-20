@@ -15,42 +15,42 @@ const Leave = (props) => {
 
 
   const[view,setView]=useState(false)
-  // const[name,setName]=useState("");
+  const[name,setName]=useState("");
   
-  // useEffect(() => {
-  //   userData();
+  useEffect(() => {
+    userData();
 
-  // }, [])
-
-  
+  }, [])
 
   
-  // const userData = ()=> {
-  //   const token = localStorage.getItem("access_token1");
-  //   console.log("token from local storage:", token)
-  //   // let token = token;
-  //   var decoded = jwt_decode(token);
-  //   console.log("Decoded token data",decoded);
-  //   setName(decoded)
-  // }
 
-  // if (name.role === "admin"){
-  //   console.log("my role is " ,name.role)
-  //   return (
-
-  //   <LeaveCards />
-  // )
-  // }
-  // if(name.role==="employee"){
-  //   return(
-  //     <Error />
-  //   )
   
-  // }
-  // else{
+  const userData = ()=> {
+    const token = localStorage.getItem("access_token1");
+    console.log("token from local storage:", token)
+    // let token = token;
+    var decoded = jwt_decode(token);
+    console.log("Decoded token data",decoded);
+    setName(decoded)
+  }
+
+  if (name.role === "admin"){
+    console.log("my role is " ,name.role)
+    return (
+
+    <LeaveCards />
+  )
+  }
+  if(name.role==="employee"){
+    return(
+      <Error />
+    )
+  
+  }
+  else{
    
     
-  // }
+  }
 //   const navigate = useNavigate();
 //   const [size, setSize] = useState('default');
 
@@ -64,7 +64,7 @@ const Leave = (props) => {
     
                 <LeaveCards />
                 <br/>
-                <Button setView={LeaveCalendar}>Calendarview</Button>
+                <Button onClick={() => {}}>Calendarview</Button>
                 <Button onClick={() => {}}>Tableview</Button>
 
                 view? <LeaveCalendar/>:<LeaveTable />
