@@ -81,13 +81,15 @@ const useStyles = makeStyles({
 
 
 
-const Employees = ({dataSource}) => {
+
+const Employees = ({dataSource})=> {
   // const [ignored, forceUpdate] = useReducer(x=>x+1, 0);
   
   // const [profile, setProfile] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
+ 
   
   
   const classes = useStyles();
@@ -99,46 +101,48 @@ const Employees = ({dataSource}) => {
   const [contact, setContact] = useState("");
   const [gender, setGender] = useState("");
   const [role,setRole] = useState("")
-
   const navigate = useNavigate()
+  const[name,setName]=useState("");
 
 
-  // const[name,setName]=useState("");
+  useEffect(() => {
+    userData();
   
-  // useEffect(() => {
-  //   userData();
+  }, [])
 
-  // }, [])
 
+  useEffect(() => {
+    employeelist();
+
+  }, [])
+
+ 
   
-
   
-  // const userData = ()=> {
-  //   const token = localStorage.getItem("access_token1");
-  //   console.log("token from local storage:", token)
-  //   // let token = token;
-  //   var decoded = jwt_decode(token);
-  //   console.log("Decoded token data",decoded);
-  //   setName(decoded)
-  // }
-
-  // if (name.role === "admin"){
-  //   console.log("my role is " ,name.role)
-  //   return (
-
-  //   <Employees />
-  // )
-  // }
+  
+  const userData = ()=> {
+    const token = localStorage.getItem("access_token1");
+    console.log("token from local storage:", token)
+    // let token = token;
+    var decoded = jwt_decode(token);
+    console.log("Decoded token data",decoded);
+    setName(decoded)
+  }
+  
+  
+  
+   
+  
+  
   // if(name.role==="employee"){
   //   return(
   //     <Error />
   //   )
   
   // }
-  // else{
-   
-    
-  // }
+ 
+  
+ 
   const profile = (user_id) =>{
     navigate("/profile/"+user_id)
   }
@@ -310,10 +314,8 @@ const Employees = ({dataSource}) => {
 
 
   // //================================================= START employee GET (GET API)
-  // useEffect(() => {
-  //   employeelist();
-
-  // }, [])
+  
+  
 
   const employeelist = () => {
     fetch("http://localhost:1999/user").then((response) => {
@@ -413,6 +415,15 @@ const documentation =(user_id)=>{
     }
 
   ];
+
+
+
+  
+  if (name.role === "admin"){
+    console.log("my role is " ,name.role)
+  
+  
+ 
 
   return (
 
@@ -538,8 +549,11 @@ const documentation =(user_id)=>{
 
 
     </>
+  
   );
+
 }
 
+}
 
 export default Employees; 

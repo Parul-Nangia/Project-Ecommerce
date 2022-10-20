@@ -12,7 +12,7 @@ import Error from '../components/Error';
 
 
 const Leave = (props) => {
-  const[name,setName]=useState("");
+   const[name,setName]=useState("");
 
 
 
@@ -34,24 +34,31 @@ const Leave = (props) => {
   if (name.role === "admin"){
     console.log("my role is " ,name.role)
     return (
-      <>
-
-    <LeaveTable />
-    {/* <LeaveCards /> */}
+      <> 
+      <LeaveCards />
+      <br/>
+      <LeaveTable />
+      <br/>
+      <LeaveCalendar />
+   
+    
     </>
   )
   }
   if(name.role==="employee"){
     return(
-      <Error />
+      <>
+      <LeaveCards />
+      
+      
+     
+      </>
     )
   
   }
-  else{
-   
-    
-  }
+  
 
+ 
 //   const navigate = useNavigate();
 //   const [size, setSize] = useState('default');
 
@@ -62,10 +69,10 @@ const Leave = (props) => {
     <>
     
                 <LeaveCards />
-                {/* <br/>
+                <br/>
                 <LeaveTable />
                 <br/>
-                <LeaveCalendar /> */}
+                <LeaveCalendar />
                 
 
     </>

@@ -6,6 +6,7 @@ import { LoginOutlined, SettingTwoTone, InfoCircleTwoTone } from '@ant-design/ic
 import axios from 'axios';
 import { useParams } from "react-router-dom";
 import jwt_decode from 'jwt-decode';
+import LoginNew from './LoginNew';
 // import { useSelector, useDispatch } from 'react-redux';
 
 const Drop = () => {
@@ -21,7 +22,7 @@ const Drop = () => {
     console.log('Logout');
     localStorage.clear();
     sessionStorage.clear()
-    navigate('/');
+    navigate('/LoginNew');
   }
 
 
@@ -94,7 +95,7 @@ const Drop = () => {
           <nav className="sb-topnav">
           <LoginOutlined />
 
-          <Link className="drop-down" to="#"
+          <Link className="drop-down"
           onClick={logout}> Logout</Link>
 
          
