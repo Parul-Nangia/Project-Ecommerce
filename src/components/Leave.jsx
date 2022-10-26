@@ -45,11 +45,11 @@ const Leave = (props) => {
            <LeaveCards />  
            <Link to="/leaveform"></Link>
               <br/>
-              <Button  onClick={()=> navigate('/leaveform')}>Apply Leave</Button>
+              <Button  style={{backgroundColor:"Coral",color:"white",fontWeight:"bold"}} onClick={()=> navigate('/leaveform')}>Apply Leave</Button>
               
             <h1>{view}</h1>
-           <Button onClick={()=> setView(!view)}>Calendarview</Button>
-           <Button onClick={()=> setView(!view)}>Tableview</Button>
+           <Button style={{backgroundColor:"DarkSlateGray",color:"white",fontWeight:"bold"}} onClick={()=> setView(!view)}>Calendar View</Button>
+           <Button style={{backgroundColor:"CornflowerBlue",color:"white",fontWeight:"bold"}} onClick={()=> setView(!view)}>Table iew</Button>
           
            {view ? <LeaveTable/> :<LeaveCalendar/>  }
 

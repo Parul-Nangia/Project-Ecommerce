@@ -113,8 +113,8 @@ const Drop = () => {
   return (
     <Dropdown overlay={menu} onOpenChange={handleOpenChange} open={open}>
       <a onClick={(e) => e.preventDefault()}>
-        <Space style={{ color: "black", float: "right" }}>
-          <h3>Hii {name.name}</h3>
+        <Space style={{ color: "White", float: "right" }}>
+          <h3 style={{color:"white",fontStyle:"italic"}}>Hii {name.name}</h3>
           <DownOutlined />
           
         </Space>

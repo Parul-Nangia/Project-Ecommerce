@@ -49,10 +49,10 @@ const LoginNew = () => {
     <>
     
     
-    <Row justify="center" style={{ padding: "10%" , marginTop:"30px" }}>
+    <Row justify="center" style={{ padding: "10%" , marginTop:"20px" }}>
     
       <Form>
-      <img className="logo" src="ebs.png" />
+      <img className="logoimg" src="ebs.png" />
 
 
         <Form.Item
