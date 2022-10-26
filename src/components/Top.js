@@ -58,7 +58,7 @@ const Top = () => {
                     <Header className="header" style={{ backgroundColor: "#d22d2d" }}>
                         <div className="logo" />
                         <Menu mode="horizontal" className="Headermenu">
-                            <Menu.Item key="1">Ebullient Soft</Menu.Item>
+                            <Menu.Item key="1" style={{color:"White",fontStyle:"italic"}}>Ebullient Soft</Menu.Item>
                             <div className='tool' style={{ display: "flex", marginTop: "2px", float: "right", marginLeft: "80%" }}>
                                 <Drop />
 

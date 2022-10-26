@@ -3,10 +3,9 @@ import { Dropdown, Menu, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate ,Link} from 'react-router-dom';
 import { LoginOutlined, SettingTwoTone, InfoCircleTwoTone } from '@ant-design/icons';
-import axios from 'axios';
-import { useParams } from "react-router-dom";
+
 import jwt_decode from 'jwt-decode';
-import LoginNew from './LoginNew';
+
 // import { useSelector, useDispatch } from 'react-redux';
 
 const Drop = () => {
@@ -114,8 +113,8 @@ const Drop = () => {
   return (
     <Dropdown overlay={menu} onOpenChange={handleOpenChange} open={open}>
       <a onClick={(e) => e.preventDefault()}>
-        <Space style={{ color: "black", float: "right" }}>
-          <h3>Hii {name.name}</h3>
+        <Space style={{ color: "White", float: "right" }}>
+          <h3 style={{color:"white",fontStyle:"italic"}}>Hii {name.name}</h3>
           <DownOutlined />
           
         </Space>
