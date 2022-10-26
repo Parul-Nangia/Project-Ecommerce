@@ -1,0 +1,21 @@
+@import '~antd/dist/antd.css';
+
+.center-btn{
+    
+    margin-left: 65px;
+    color: black;
+    background-color: rgb(236, 89, 20);
+
+}
+
+.GoogleAuthen{
+    margin-left: 15px;
+    
+}
+
+.logo{
+    width: 40%;
+    margin: auto;
+    display: block;
+    margin-bottom: 20px;
+  }

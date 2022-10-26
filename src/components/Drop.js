@@ -3,10 +3,9 @@ import { Dropdown, Menu, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate ,Link} from 'react-router-dom';
 import { LoginOutlined, SettingTwoTone, InfoCircleTwoTone } from '@ant-design/icons';
-import axios from 'axios';
-import { useParams } from "react-router-dom";
+
 import jwt_decode from 'jwt-decode';
-import LoginNew from './LoginNew';
+
 // import { useSelector, useDispatch } from 'react-redux';
 
 const Drop = () => {

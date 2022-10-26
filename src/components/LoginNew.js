@@ -4,6 +4,7 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import GoogleAuth from "./GoogleAuth";
+import "./LoginNew.css"; 
 
 
 
@@ -45,8 +46,13 @@ const LoginNew = () => {
   //     console.log('Failed:', errorInfo);
   // };
   return (
-    <Row justify="center" style={{ padding: "10%" }}>
+    <>
+    
+    
+    <Row justify="center" style={{ padding: "10%" , marginTop:"30px" }}>
+    
       <Form>
+      <img className="logo" src="ebs.png" />
 
 
         <Form.Item
@@ -62,6 +68,7 @@ const LoginNew = () => {
 
         <Form.Item
           rules={[{ required: true, message: "Please input your Password!" }]}
+          
         >
           <Input
             type="password"
@@ -76,15 +83,20 @@ const LoginNew = () => {
           <Button
             htmlType="submit"
             onClick={submit}
+            className="center-btn"
 
           >
             Login
           </Button>
           <br />
         </Form.Item>
+
+        <div className='GoogleAuthen'>
         <GoogleAuth />
+        </div>
       </Form>
     </Row>
+    </>
   );
 };
 
