@@ -9,7 +9,7 @@ const Clock = () => {
   // const[minutes,setMinutes] = useState(0)
 
   const [attendance, setAttendance] = useState([]);
-  const[show,setShow]=useState(false)
+  const[show,setShow]=useState(true)
  
 
   // var timer;
