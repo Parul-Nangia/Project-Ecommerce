@@ -3,14 +3,11 @@ import { Table } from "antd";
 import { useState } from "react";
 import { Modal, Input, Form, Select, Button } from "antd";
 import { UploadOutlined, CloudDownloadOutlined } from "@ant-design/icons";
-import { useParams } from "react-router-dom"
-import { message, Upload } from "antd";
+import { Upload } from "antd";
 import axios from "axios";
-import jwt_decode from 'jwt-decode';
+import jwt_decode from "jwt-decode";
 
 const { Option } = Select;
-
-
 
 const Documentation = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -59,9 +56,9 @@ const Documentation = () => {
       },
     },
   ];
-  // const formData = new FormData() 
+  // const formData = new FormData()
   // console.log(formData, "jhgrt")
-  // formData.append("documentfile", documentfile) 
+  // formData.append("documentfile", documentfile)
 
 
   const handleInputChange = e => {
@@ -75,7 +72,7 @@ const Documentation = () => {
 
   const handleOk = () => {
     const token = localStorage.getItem("access_token1");
-    console.log("token from local storage:", token)
+    console.log("token from local storage:", token);
     var decoded = jwt_decode(token);
     console.log("Decoded token data", decoded);
     console.log("Employee ID", decoded._id)
@@ -98,8 +95,11 @@ const Documentation = () => {
 
 
 
-    axios.post(`http://localhost:1999/document/add/${decoded._id}`, formData
-      // {
+    axios
+      .post(
+        `http://localhost:1999/document/add/${decoded._id}`,
+        formData
+        // {
 
       //   emp_id,
       //   documentname,
@@ -113,6 +113,9 @@ const Documentation = () => {
       .catch(error => {
         console.log(error)
       })
+      .catch((error) => {
+        console.log(error);
+      });
     setIsModalOpen(false);
   };
 
@@ -122,29 +125,15 @@ const Documentation = () => {
 
   const handleCancel = () => {
     setIsModalOpen(false);
-
   };
   const selecthere = (value) => {
     setDocumentType(value);
     console.log("document type", value);
   };
 
-
-
-
-
-
-
   return (
     <>
-
-
-
-      <Button
-        style={{ float: "right" }}
-        type="primary"
-        onClick={showModal}
-      >
+      <Button style={{ float: "right" }} type="primary" onClick={showModal}>
         Add New
       </Button>
       <Modal
@@ -164,10 +153,7 @@ const Documentation = () => {
           style={{ margin: 20 }}
           autoComplete="off"
         >
-          <Form.Item label="Document Name"
-            rules={[
-              { type: "text", },
-            ]}>
+          <Form.Item label="Document Name" rules={[{ type: "text" }]}>
             <Input
               value={documentname}
               onChange={(e) => {
@@ -183,7 +169,6 @@ const Documentation = () => {
             <Select
               defaultValue={{
                 value: "Select",
-
               }}
               onChange={selecthere}
             >
@@ -210,7 +195,6 @@ const Documentation = () => {
         </Form>
       </Modal>
       <Table columns={columns} dataSource={dataSource}></Table>
-
     </>
   );
 };
