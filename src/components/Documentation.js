@@ -27,7 +27,7 @@ const Documentation = () => {
   const [documentfile, setDocumentFile] = useState("");
   const [empID, setEmpID] = useState("");
 
-  
+
 
 
 
@@ -63,13 +63,13 @@ const Documentation = () => {
   // console.log(formData, "jhgrt")
   // formData.append("documentfile", documentfile) 
 
-  
+
   const handleInputChange = e => {
-    console.log("I am in file function")
-    setDocumentFile(e.file)
+    console.log("I am in file function", e.file.name)
+    setDocumentFile(e.file.name)
     // console.log("File function e value", e)
     // console.log(e.file)
-    console.log("Document File", documentfile)
+
   }
 
 
@@ -80,18 +80,23 @@ const Documentation = () => {
     console.log("Decoded token data", decoded);
     console.log("Employee ID", decoded._id)
     setEmpID(decoded._id)
-    const emp_id = decoded._id 
-   
+    const emp_id = decoded._id
+
 
 
     console.log("Document Name", documentname);
     console.log("Document Type", documenttype);
-    // console.log("Document File", documentfile)
+    console.log("Document File", documentfile)
     const formData = new FormData()
     // const image = formData
     formData.append("image", documentfile)
-    
-    
+    formData.append("documentname", documentname)
+    formData.append("documenttype", documenttype)
+    formData.append("emp_id", emp_id)
+
+
+
+
 
     axios.post(`http://localhost:1999/document/add/${decoded._id}`, formData
       // {
@@ -99,9 +104,9 @@ const Documentation = () => {
       //   emp_id,
       //   documentname,
       //   documenttype
-        
+
       // }
-      )
+    )
       .then(res => {
         console.log("Document Response", res)
       })
