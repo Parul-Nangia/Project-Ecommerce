@@ -60,7 +60,7 @@ const Clock = () => {
         console.log("attendance empid", attendance[0].emp_id);
       });
 
-    if (attendance[0].emp_id == decoded._id) {
+    if (attendance[0].emp_id === decoded._id) {
       alert("You have already checked in");
     } else {
       const CheckIn = new Date();
@@ -178,7 +178,7 @@ const Clock = () => {
         <h1>{minutes<10? "0"+minutes:minutes}:{seconds<10? "0"+seconds: seconds}</h1>
       </div> */}
 
-      <div>
+      <div style={{ display: "flex", marginLeft: "70%" }}>
         <Button
           style={{
             color: "white",
