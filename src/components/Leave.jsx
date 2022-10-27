@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Button } from 'antd';
 import jwt_decode from 'jwt-decode';
 import Error from '../components/Error';
+import LeaveForm from '../components/LeaveForm';
 
 
 
@@ -39,12 +40,33 @@ const Leave = (props) => {
     console.log("my role is " ,name.role)
     return (
 
-    <LeaveCards />
+      <>
+    
+           <LeaveCards />  
+           <Link to="/leaveform"></Link>
+              <br/>
+              <Button  style={{backgroundColor:"Coral",color:"white",fontWeight:"bold"}} onClick={()=> navigate('/leaveform')}>Apply Leave</Button>
+              
+            <h1>{view}</h1>
+           <Button style={{backgroundColor:"DarkSlateGray",color:"white",fontWeight:"bold"}} onClick={()=> setView(!view)}>Calendar View</Button>
+           <Button style={{backgroundColor:"CornflowerBlue",color:"white",fontWeight:"bold"}} onClick={()=> setView(!view)}>Table iew</Button>
+          
+           {view ? <LeaveTable/> :<LeaveCalendar/>  }
+
+                
+                
+
+    </>
+
+    
   )
   }
   if(name.role==="employee"){
     return(
+      <>
       <LeaveCards />
+      <LeaveForm />
+      </>
     )
   
   }
@@ -60,7 +82,7 @@ const Leave = (props) => {
 
     <>
     
-                
+           <LeaveCards />  
            <Link to="/leaveform"></Link>
               <br/>
               <Button  onClick={()=> navigate('/leaveform')}>Apply Leave</Button>
