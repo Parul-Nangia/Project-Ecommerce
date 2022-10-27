@@ -97,10 +97,6 @@ const Clock = () => {
     var decoded = jwt_decode(token);
     console.log("Decoded token data", decoded);
 
-    
-
-
-
     const CheckIn = "";
     const CheckOut = new Date();
     const Break = "";
@@ -191,17 +187,10 @@ const employeeresume = async () => {
         <h1>Timer</h1>
         <h1>{minutes<10? "0"+minutes:minutes}:{seconds<10? "0"+seconds: seconds}</h1>
       </div> */}
-
+      {/* <Button disabled={disable} onClick={() => {employeebreak()}}>Break</Button> */}
+       
       <div>
-
-        <Button onClick={() => {employeecheckin()}}>Checkin</Button>
-        <Button onClick={() => {employeebreak()}}>Break</Button>
-        {/* <Button disabled={disable} onClick={() => {employeebreak()}}>Break</Button> */}
-        <Button onClick={() => {employeeresume()}}>Resume</Button>
-        <Button onClick={() => {employeecheckout()}}>Checkout</Button>
-      </div>
-      <div>
-        <Button style={{color:"white" , backgroundColor:"Green",fontWeight:"Bold"}} onClick={() => {employeecheckin()}}>Checkin</Button>
+        <Button style={{color:"white" ,backgroundColor:"Green",fontWeight:"Bold"}} onClick={() => {employeecheckin()}}>Checkin</Button>
         <Button style={{color:"white" ,backgroundColor:"Tomato",fontWeight:"Bold"}} onClick={() => {employeebreak()}}>Break</Button>
         <Button style={{color:"white" ,backgroundColor:"Red",fontWeight:"Bold"}} onClick={() => {employeeresume()}}>Resume</Button>
         <Button style={{color:"white" ,backgroundColor:"Orange",fontWeight:"Bold"}} onClick={() => {employeecheckout()}}>Checkout</Button>
