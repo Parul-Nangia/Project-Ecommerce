@@ -21,6 +21,7 @@ const Drop = () => {
     console.log('Logout');
     localStorage.clear();
     sessionStorage.clear()
+    window.location.reload();
     navigate('/LoginNew');
   }
 

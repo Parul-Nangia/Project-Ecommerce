@@ -42,11 +42,6 @@ const Leave = (props) => {
 
       <>
 
-        <LeaveCards />
-        <Link to="/leaveform"></Link>
-        <br />
-        <Button style={{ backgroundColor: "Coral", color: "white", fontWeight: "bold" }} onClick={() => navigate('/leaveform')}>Apply Leave</Button>
-
         <h1>{view}</h1>
         <Button style={{ backgroundColor: "DarkSlateGray", color: "white", fontWeight: "bold" }} onClick={() => setView(!view)}>Calendar View</Button>
         <Button style={{ backgroundColor: "CornflowerBlue", color: "white", fontWeight: "bold" }} onClick={() => setView(!view)}>Table View</Button>
@@ -65,7 +60,12 @@ const Leave = (props) => {
     return (
       <>
         <LeaveCards />
-        <LeaveForm />
+      
+        <Link to="/leaveform"></Link>
+        <br />
+        <Button style={{ backgroundColor: "Coral", color: "white", fontWeight: "bold" }} onClick={() => navigate('/leaveform')}>Apply Leave</Button>
+
+       
       </>
     )
 
@@ -74,30 +74,6 @@ const Leave = (props) => {
 
 
   }
-
-
-
-
-  return (
-
-    <>
-
-      <LeaveCards />
-      <Link to="/leaveform"></Link>
-      <br />
-      <Button onClick={() => navigate('/leaveform')}>Apply Leave</Button>
-
-      <h1>{view}</h1>
-      <Button onClick={() => setView(!view)}>Calendarview</Button>
-      <Button onClick={() => setView(!view)}>Tableview</Button>
-
-      {view ? <LeaveTable /> : <LeaveCalendar />}
-
-
-
-
-    </>
-  );
 };
 
 
