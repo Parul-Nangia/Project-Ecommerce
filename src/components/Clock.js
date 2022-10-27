@@ -41,6 +41,10 @@ const Clock = () => {
     };
   }, []);
 
+
+
+
+
   useEffect(() => {
     employeecheckin();
   }, []);
@@ -51,9 +55,7 @@ const Clock = () => {
     var decoded = jwt_decode(token);
     console.log("Decoded token data", decoded);
 
-    await axios
-      .get(
-        `http://localhost:1999/attendance/${decoded._id}`,
+    await axios.get(`http://localhost:1999/attendance/${decoded._id}`,
         console.log("hello EmpID here", decoded._id)
       )
       .then((res) => {
