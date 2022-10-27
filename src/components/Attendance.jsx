@@ -10,68 +10,49 @@ import { useState, useEffect } from "react";
 
 const Attendance = () => {
 
-  const[name,setName]=useState("");
-  
+  const [name, setName] = useState("");
+
   useEffect(() => {
     userData();
 
   }, [])
 
-  
 
-  
-  const userData = ()=> {
+
+
+  const userData = () => {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token)
     // let token = token;
     var decoded = jwt_decode(token);
-    console.log("Decoded token data",decoded);
+    console.log("Decoded token data", decoded);
     setName(decoded)
   }
 
-  if (name.role === "admin"){
-    console.log("my role is " ,name.role)
+  if (name.role === "admin") {
+    console.log("my role is ", name.role)
     return (
       <>
 
-      <AttendanceCards />
-
-      <AttendanceTable />
+        <AttendanceCards />
+        <br />
+        <AttendanceTable />
 
       </>
-  )
+    )
   }
-  if(name.role==="employee"){
-    return(
+  if (name.role === "employee") {
+    return (
       <Error />
     )
-  
+
   }
-  else{
+  else {
 
-    
-   
-    
+
+
+
   }
-
- 
-  return (
-    <>
-
-
-            
-            <AttendanceCards />
-            <br/>
-            <AttendanceTable />
-             
-             
-
-
-
-
-
-    </>
-  );
 };
 
 export default Attendance;

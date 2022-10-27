@@ -9,6 +9,7 @@ const Clock = () => {
   // const[minutes,setMinutes] = useState(0)
 
   const [attendance, setAttendance] = useState([]);
+  // const[disable,setDisable]=useState(false)
 
   // var timer;
   // useEffect(() => {
@@ -177,7 +178,7 @@ const Clock = () => {
         <h1>{minutes<10? "0"+minutes:minutes}:{seconds<10? "0"+seconds: seconds}</h1>
       </div> */}
 
-      <div className="clock-btn" style={{ marginLeft: "70%" }}>
+      <div>
         <Button
           style={{
             color: "white",
