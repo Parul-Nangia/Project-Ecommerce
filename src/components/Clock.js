@@ -9,6 +9,7 @@ const Clock = () => {
   // const[minutes,setMinutes] = useState(0)
 
   const [attendance, setAttendance] = useState([]);
+  // const[disable,setDisable]=useState(false)
 
 
 // var timer;
@@ -143,6 +144,7 @@ const Clock = () => {
     console.log("id",decoded._id)
 
     console.log("employee break",res)
+    // setDisable(true)
   });
 } 
 
@@ -193,6 +195,7 @@ const employeeresume = async () => {
       <div>
         <Button onClick={() => {employeecheckin()}}>Checkin</Button>
         <Button onClick={() => {employeebreak()}}>Break</Button>
+        {/* <Button disabled={disable} onClick={() => {employeebreak()}}>Break</Button> */}
         <Button onClick={() => {employeeresume()}}>Resume</Button>
         <Button onClick={() => {employeecheckout()}}>Checkout</Button>
       </div>
