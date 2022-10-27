@@ -45,7 +45,7 @@ const Leave = (props) => {
         <LeaveCards />
         <Link to="/leaveform"></Link>
         <br />
-        <Button style={{ backgroundColor: "Coral", color: "white", fontWeight: "bold" }} onClick={() => navigate('/leaveform')}>Apply Leave</Button>
+        <Button style={{ backgroundColor: "Coral", color: "white", fontWeight: "bold", display: "flex", float: "right" }} onClick={() => navigate('/leaveform')}>Apply Leave</Button>
 
         <h1>{view}</h1>
         <Button style={{ backgroundColor: "DarkSlateGray", color: "white", fontWeight: "bold" }} onClick={() => setView(!view)}>Calendar View</Button>

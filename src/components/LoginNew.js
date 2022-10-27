@@ -1,18 +1,15 @@
-import { Button, Form, Input, Row } from 'antd';
-import React, { useState } from 'react';
+import { Button, Form, Input, Row } from "antd";
+import React, { useState } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import axios from 'axios'
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import GoogleAuth from "./GoogleAuth";
-import "./LoginNew.css"; 
-
-
+import "./LoginNew.css";
 
 const LoginNew = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-
 
   const submit = async (e) => {
     console.log("going forward");
@@ -30,14 +27,11 @@ const LoginNew = () => {
     localStorage.setItem("access_token1", JSON.stringify(data.token));
     window.location.reload();
     navigate("/dashboard");
-
   };
 
   // if (navigate) {
   //   return <Navigate to="/dashboard" />;
   // }
-
-
 
   // const onFinish = (values) => {
   //     console.log('Success:', values);
@@ -47,65 +41,46 @@ const LoginNew = () => {
   // };
   return (
     <>
-    
-    
-    <Row justify="center" style={{ padding: "10%" , marginTop:"20px" }}>
-    
-      <Form>
-      <img className="logoimg" src="ebs.png" />
+      <Row justify="center" style={{ padding: "10%", marginTop: "20px" }}>
+        <Form>
+          <img className="logoimg" src="ebs.png" />
 
-
-        <Form.Item
-          rules={[{ required: true, message: "Please input your Username!" }]}
-        >
-          <Input
-            prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Username"
-
-            onChange={(e) => setName(e.target.value)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          rules={[{ required: true, message: "Please input your Password!" }]}
-          
-        >
-          <Input
-            type="password"
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            placeholder="Password"
-
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Item>
-
-        <Form.Item>
-          <Button
-            htmlType="submit"
-            onClick={submit}
-            className="center-btn"
-
+          <Form.Item
+            rules={[{ required: true, message: "Please input your Username!" }]}
           >
-            Login
-          </Button>
-          <br />
-        </Form.Item>
+            <Input
+              prefix={<UserOutlined className="site-form-item-icon" />}
+              placeholder="Username"
+              onChange={(e) => setName(e.target.value)}
+            />
+          </Form.Item>
 
-        <div className='GoogleAuthen'>
-        <GoogleAuth />
-        </div>
-      </Form>
-    </Row>
+          <Form.Item
+            rules={[{ required: true, message: "Please input your Password!" }]}
+          >
+            <Input
+              type="password"
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Form.Item>
+
+          <Form.Item>
+            <Button htmlType="submit" onClick={submit} className="center-btn">
+              Login
+            </Button>
+            <br />
+          </Form.Item>
+
+          <div className="GoogleAuthen">
+            <GoogleAuth />
+          </div>
+        </Form>
+      </Row>
     </>
   );
 };
-
-
-
-
-
-
-
 
 //         <Row justify="center" align="middle">
 //             <Col span={12} offset={6}>
