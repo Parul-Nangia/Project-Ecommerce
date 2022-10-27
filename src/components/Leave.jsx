@@ -5,8 +5,7 @@ import LeaveCalendar from '../components/LeaveCalendar';
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from 'antd';
 import jwt_decode from 'jwt-decode';
-import Error from '../components/Error';
-import LeaveForm from '../components/LeaveForm';
+
 
 
 
@@ -42,6 +41,11 @@ const Leave = (props) => {
 
       <>
 
+        <LeaveCards />
+        <Link to="/leaveform"></Link>
+        <br />
+        <Button style={{ backgroundColor: "Coral", color: "white", fontWeight: "bold", display: "flex", float: "right" }} onClick={() => navigate('/leaveform')}>Apply Leave</Button>
+
         <h1>{view}</h1>
         <Button style={{ backgroundColor: "DarkSlateGray", color: "white", fontWeight: "bold" }} onClick={() => setView(!view)}>Calendar View</Button>
         <Button style={{ backgroundColor: "CornflowerBlue", color: "white", fontWeight: "bold" }} onClick={() => setView(!view)}>Table View</Button>
@@ -60,12 +64,12 @@ const Leave = (props) => {
     return (
       <>
         <LeaveCards />
-      
+
         <Link to="/leaveform"></Link>
         <br />
         <Button style={{ backgroundColor: "Coral", color: "white", fontWeight: "bold" }} onClick={() => navigate('/leaveform')}>Apply Leave</Button>
 
-       
+
       </>
     )
 

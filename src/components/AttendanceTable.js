@@ -1,12 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Table } from "antd";
 
-
-
-
 const AttendanceTable = () => {
-
- 
   // const [attendancedata, setAttendanceData] = useState([]);
 
   // useEffect(() => {
@@ -22,12 +17,10 @@ const AttendanceTable = () => {
   //       let emptime = data.attendanceRecord;
   //       setAttendanceData(emptime);
   //       console.log("response", emptime);
-       
+
   //     });
   // };
   // console.log(attendancedata, "hh")
-
-
 
   const columns = [
     {
@@ -56,13 +49,11 @@ const AttendanceTable = () => {
     },
   ];
 
-  return(
+  return (
     <>
-
-     <Table columns={columns}  />
-
-     </>
-  )
+      <Table columns={columns} />
+    </>
+  );
 };
 
 export default AttendanceTable;

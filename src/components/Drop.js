@@ -1,48 +1,40 @@
-import { DownOutlined } from '@ant-design/icons';
-import { Dropdown, Menu, Space } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { useNavigate ,Link} from 'react-router-dom';
-import { LoginOutlined, SettingTwoTone, InfoCircleTwoTone } from '@ant-design/icons';
+import { DownOutlined } from "@ant-design/icons";
+import { Dropdown, Menu, Space } from "antd";
+import React, { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import {
+  LoginOutlined,
+  SettingTwoTone,
+  InfoCircleTwoTone,
+} from "@ant-design/icons";
 
-import jwt_decode from 'jwt-decode';
-
-// import { useSelector, useDispatch } from 'react-redux';
+import jwt_decode from "jwt-decode";
 
 const Drop = () => {
-
-
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
 
-
-  const logout=(e)=>{
+  const logout = (e) => {
     e.preventDefault();
-    console.log('Logout');
+    console.log("Logout");
     localStorage.clear();
-    sessionStorage.clear()
+    sessionStorage.clear();
     window.location.reload();
-    navigate('/LoginNew');
-  }
-
-
+    navigate("/LoginNew");
+  };
 
   useEffect(() => {
     userData();
-
-  }, [])
-
-
-
+  }, []);
 
   const userData = (_id) => {
     const token = localStorage.getItem("access_token1");
-    console.log("token from local storage:", token)
+    console.log("token from local storage:", token);
     // let token = token;
     var decoded = jwt_decode(token);
-    console.log("Decoded token data",decoded);
-    setName(decoded)
-
+    console.log("Decoded token data", decoded);
+    setName(decoded);
 
     // fetch(`http://localhost:1999/user/${_id}`).then((response) => {
     //   return response.json();
@@ -53,78 +45,63 @@ const Drop = () => {
     //   console.log("user Api response data", user);
 
     // })
-
-  }
-
-
-
-
-
-
+  };
 
   const handleOpenChange = (flag) => {
     setOpen(flag);
   };
 
   const menu = (
-    <Menu style={{ marginTop: "-25px" }}
+    <Menu
+      style={{ marginTop: "-25px" }}
       onClick={({ key }) => {
         if (key === "demo") {
-
         } else {
-          navigate(key)
-            ;
+          navigate(key);
         }
       }}
       items={[
-
         {
-          label: 'Settings',
-          key: '/setting',
+          label: "Settings",
+          key: "/setting",
           icon: <SettingTwoTone />,
         },
 
         {
-          label: 'Help',
-          key: '/help',
+          label: "Help",
+          key: "/help",
           icon: <InfoCircleTwoTone />,
         },
 
         {
-          label:
-          <nav className="sb-topnav">
-          <LoginOutlined />
+          label: (
+            <nav className="sb-topnav">
+              <LoginOutlined />
 
-          <Link className="drop-down"
-          onClick={logout}> Logout</Link>
-
-         
-          </nav>,
+              <Link className="drop-down" onClick={logout}>
+                {" "}
+                Logout
+              </Link>
+            </nav>
+          ),
         },
-
-
-
       ]}
     />
   );
 
-
-
-
   return (
     <Dropdown overlay={menu} onOpenChange={handleOpenChange} open={open}>
-      <a onClick={(e) => e.preventDefault()}>
+      <a href onClick={(e) => e.preventDefault()}>
         <Space style={{ color: "White", float: "right" }}>
-          <h3 style={{color:"white",fontStyle:"italic"}}>Hii {name.name}</h3>
+          <h3 style={{ color: "white", fontStyle: "italic" }}>
+            Hii {name.name}
+          </h3>
           <DownOutlined />
-          
         </Space>
       </a>
     </Dropdown>
   );
 };
 
-
-
-export const selectUser = (state) => (state.user.user)
+export const selectUser = (state) => state.user.user;
 export default Drop;
