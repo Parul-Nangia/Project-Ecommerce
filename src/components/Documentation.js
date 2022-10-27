@@ -73,6 +73,8 @@ const Documentation = () => {
 
     console.log("Document Name", documentname);
     console.log("Document Type", documenttype);
+    console.log(typeof(documentname))
+    console.log(typeof(documenttype))
     // console.log("Document File", documentfile)
     const formData = new FormData();
     // const image = formData
