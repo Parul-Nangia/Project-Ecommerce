@@ -5,6 +5,7 @@ import axios from "axios";
 const AttendanceTable = () => {
   const [dataSource, setDataSource] = useState([]);
   const [state, setState] = useState([]);
+  console.log("atten rec",dataSource)
   // const [attendancedata, setAttendanceData] = useState([]);
 
   // useEffect(() => {
@@ -49,7 +50,7 @@ const AttendanceTable = () => {
     await axios.get("http://localhost:1999/attendance").then((res) => {
       console.log(res, "bhvhv");
       setDataSource(res?.data?.attendanceRecord);
-      console.log(dataSource, "hiiii");
+      console.log("attendance record",dataSource);
     });
   };
 
@@ -59,20 +60,16 @@ const AttendanceTable = () => {
       dataIndex: "name",
     },
     {
-      title: "Date",
-      dataIndex: "Date",
-    },
-    {
       title: "CheckIn Time",
-      dataIndex: "CheckIn ",
+      dataIndex: "CheckIn",
     },
     {
       title: "CheckOut Time",
-      dataIndex: "CheckOut ",
+      dataIndex: "CheckOut",
     },
     {
-      title: "Resume",
-      dataIndex: "Resume",
+      title: "Break",
+      dataIndex: "Break",
     },
   ];
 

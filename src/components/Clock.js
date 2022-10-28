@@ -62,7 +62,7 @@ const Clock = () => {
     console.log("Current Date", currentDate);
 
 
-    if (attendance[0].CheckIn == currentDate) {
+    if (attendance.CheckIn === currentDate) {
       alert("You have already checked in");
     } else {
       const CheckIn = new Date();
