@@ -129,14 +129,12 @@ const Clock = () => {
     const CheckIn = "";
     const CheckOut = "";
     const Break = new Date();
-    const Resume = "";
 
     await axios
       .put(`http://localhost:1999/attendance/${decoded._id}`, {
         CheckIn,
         CheckOut,
         Break,
-        Resume,
       })
       .then((res) => {
         console.log("id", decoded._id);
@@ -190,7 +188,6 @@ const Clock = () => {
       {attendance?.CheckIn}
       {attendance?.CheckOut}
       {attendance?.Break}
-      {attendance?.Resume}
       {/* <div>
         <h1>Timer</h1>
         <h1>{minutes<10? "0"+minutes:minutes}:{seconds<10? "0"+seconds: seconds}</h1>
