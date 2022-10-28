@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Table } from "antd";
+import axios from "axios";
 
 const AttendanceTable = () => {
+  const [dataSource, setDataSource] = useState([]);
+  const [state, setState] = useState([]);
+  console.log("atten rec", dataSource);
   // const [attendancedata, setAttendanceData] = useState([]);
 
   // useEffect(() => {
@@ -21,27 +25,47 @@ const AttendanceTable = () => {
   //     });
   // };
   // console.log(attendancedata, "hh")
+  // useEffect(() => {
+  //   attendancelist();
+  // }, []);
+
+  // const attendancelist = () => {
+  //   fetch("http://localhost:1999/attendance")
+  //     .then((response) => {
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       let emp = data.userData;
+  //       setState(emp);
+
+  //       console.log("response", emp);
+  //     });
+  // };
+  // console.log(state, "hh");
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    await axios.get(`http://localhost:1999/attendance`).then((res) => {
+      console.log(res, "bhvhv");
+      setDataSource(res?.data?.attendanceRecord);
+      console.log("attendance record", dataSource);
+    });
+  };
 
   const columns = [
     {
-      title: "Employee Id",
-      dataIndex: "emp_id",
+      title: "Employee Name",
+      dataIndex: "name",
     },
     {
-      title: "Date",
-      dataIndex: "Date",
+      title: "CheckIn",
+      dataIndex: "CheckIn",
     },
     {
-      title: "CheckIn Time",
-      dataIndex: "CheckIn ",
-    },
-    {
-      title: "CheckOut Time",
-      dataIndex: "CheckOut ",
-    },
-    {
-      title: "Resume",
-      dataIndex: "Resume",
+      title: "CheckOut",
+      dataIndex: "CheckOut",
     },
     {
       title: "Break",
@@ -51,7 +75,7 @@ const AttendanceTable = () => {
 
   return (
     <>
-      <Table columns={columns} />
+      <Table columns={columns} dataSource={dataSource} />
     </>
   );
 };
