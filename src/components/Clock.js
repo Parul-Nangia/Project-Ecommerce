@@ -7,27 +7,14 @@ const Clock = () => {
   const [date, setDate] = useState(new Date());
   // const[seconds,setSeconds] = useState(0)
   // const[minutes,setMinutes] = useState(0)
-
   const [attendance, setAttendance] = useState([]);
   const [show, setShow] = useState(true);
+ 
 
-  // var timer;
-  // useEffect(() => {
 
-  //   timer= setInterval(()=>{
 
-  //     setSeconds(seconds+1);
 
-  //     if(seconds===59){
-  //       setMinutes(minutes+1);
-  //       setSeconds(0);
-  //     }
-
-  //   },1000)
-
-  // return () => clearInterval(timer);
-  // });
-
+//-------------------------------------------- Clock---------------------------------------------------------------
   const refreshClock = () => {
     setDate(new Date());
   };
@@ -37,7 +24,12 @@ const Clock = () => {
       clearInterval(timerId);
     };
   }, []);
+//-------------------------------------------- Clock---------------------------------------------------------------
 
+
+
+
+//-------------------------------------------- Attendance Checkin---------------------------------------------------------------
   useEffect(() => {
     employeecheckin();
   }, []);
@@ -60,15 +52,23 @@ const Clock = () => {
         // console.log("attendance checkin", attendance.CheckIn);
       });
 
-    if (attendance.CheckIn == new Date()) {
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let currentDate = `${year}-${month}-${day}`;
+    console.log(currentDate);
+
+    if (attendance[1].CheckIn = currentDate) {
       alert("You have already checked in");
     } else {
+
       const CheckIn = new Date();
       console.log("I am here Clock Date", CheckIn);
+      const name = decoded.name;
       const CheckOut = "";
       const Break = "";
-      const Resume = "";
-      const name = decoded.name;
+      
 
       await axios
         .post(`http://localhost:1999/attendance/${decoded._id}`, {
@@ -76,14 +76,19 @@ const Clock = () => {
           CheckIn,
           CheckOut,
           Break,
-          Resume,
+         
         })
         .then((res) => {
           console.log("attendance response", res);
         });
     }
   };
+//-------------------------------------------- Attendance Checkin---------------------------------------------------------------
 
+
+
+
+//-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   const employeecheckout = async () => {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token);
@@ -93,14 +98,14 @@ const Clock = () => {
     const CheckIn = "";
     const CheckOut = new Date();
     const Break = "";
-    const Resume = "";
+    
 
     await axios
       .put(`http://localhost:1999/attendance/${decoded._id}`, {
         CheckIn,
         CheckOut,
         Break,
-        Resume,
+      
       })
       .then((res) => {
         console.log("id", decoded._id);
@@ -108,7 +113,11 @@ const Clock = () => {
         console.log("employee check out", res);
       });
   };
+//-------------------------------------------- Attendance Checkout---------------------------------------------------------------
 
+
+
+//-------------------------------------------- Attendance Break---------------------------------------------------------------
   const employeebreak = async () => {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token);
@@ -137,6 +146,9 @@ const Clock = () => {
     setShow(!show);
     // show?
   };
+//-------------------------------------------- Attendance Break---------------------------------------------------------------
+
+
 
   // const employeeresume = async () => {
   //   const token = localStorage.getItem("access_token1");
@@ -195,6 +207,7 @@ const Clock = () => {
           onClick={() => {
             employeecheckin();
           }}
+          
         >
           Checkin
         </Button>
@@ -208,7 +221,7 @@ const Clock = () => {
             employeebreak();
           }}
         >
-          Break/Resume{" "}
+          Break
         </Button>
         {/* <Button
           disabled={false}
