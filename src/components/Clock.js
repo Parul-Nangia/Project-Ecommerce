@@ -60,15 +60,14 @@ const Clock = () => {
         // console.log("attendance checkin", attendance.CheckIn);
       });
 
-    if (attendance.CheckIn == new Date()) {
+    if (attendance.CheckIn === new Date()) {
       alert("You have already checked in");
     } else {
       const CheckIn = new Date();
       console.log("I am here Clock Date", CheckIn);
-      const CheckOut = "";
-      const Break = "";
-      const Resume = "";
       const name = decoded.name;
+      const CheckOut = new Date();
+      const Break = "";
 
       await axios
         .post(`http://localhost:1999/attendance/${decoded._id}`, {
@@ -76,7 +75,6 @@ const Clock = () => {
           CheckIn,
           CheckOut,
           Break,
-          Resume,
         })
         .then((res) => {
           console.log("attendance response", res);
@@ -93,14 +91,12 @@ const Clock = () => {
     const CheckIn = "";
     const CheckOut = new Date();
     const Break = "";
-    const Resume = "";
 
     await axios
       .put(`http://localhost:1999/attendance/${decoded._id}`, {
         CheckIn,
         CheckOut,
         Break,
-        Resume,
       })
       .then((res) => {
         console.log("id", decoded._id);
@@ -120,14 +116,12 @@ const Clock = () => {
     const CheckIn = "";
     const CheckOut = "";
     const Break = new Date();
-    const Resume = "";
 
     await axios
       .put(`http://localhost:1999/attendance/${decoded._id}`, {
         CheckIn,
         CheckOut,
         Break,
-        Resume,
       })
       .then((res) => {
         console.log("id", decoded._id);
@@ -178,7 +172,6 @@ const Clock = () => {
       {attendance?.CheckIn}
       {attendance?.CheckOut}
       {attendance?.Break}
-      {attendance?.Resume}
       {/* <div>
         <h1>Timer</h1>
         <h1>{minutes<10? "0"+minutes:minutes}:{seconds<10? "0"+seconds: seconds}</h1>
