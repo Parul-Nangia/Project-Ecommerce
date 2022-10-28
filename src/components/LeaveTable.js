@@ -1,36 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "antd";
 import axios from "axios";
-import jwt_decode from 'jwt-decode';
-import Error from '../components/Error';
-
-
-
-
 
 const LeaveTable = () => {
   const [dataSource, setDataSource] = useState([]);
- 
-  const[name,setName]=useState("");
-  
- useEffect(() => {
+
+  const [name, setName] = useState("");
+
+  useEffect(() => {
     getData();
   }, []);
 
-
-
- 
-  
   const getData = async () => {
     await axios.get("http://localhost:1999/leave").then((res) => {
       console.log(res, "bhvhv");
-     setDataSource(res?.data?.leaveData);
-      console.log(dataSource,"jj")
-        }
-  )
-      }
-   const columns = [
-  
+      setDataSource(res?.data?.leaveData);
+      console.log(dataSource, "jj");
+    });
+  };
+  const columns = [
     {
       title: "Employee Name",
       dataIndex: "EmployeeName",
@@ -67,14 +55,12 @@ const LeaveTable = () => {
       title: "Status",
       dataIndex: "ApprovalStatus",
     },
-    
   ];
-        return (
+  return (
     <>
-      <Table columns={columns} 
-       dataSource={dataSource}/>
+      <Table columns={columns} dataSource={dataSource} />
     </>
   );
-        }
+};
 
 export default LeaveTable;
