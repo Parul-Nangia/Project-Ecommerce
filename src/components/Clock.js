@@ -57,9 +57,9 @@ const Clock = () => {
       .then((res) => {
         setAttendance(res?.data?.attendanceData);
         console.log("Logged In Employee Attendance", attendance);
-<
 
-        console.log("attendance checkin", attendance.CheckIn);
+
+        // console.log("attendance checkin", attendance.CheckIn);
       });
 
 
