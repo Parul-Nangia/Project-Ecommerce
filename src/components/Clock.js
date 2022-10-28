@@ -5,9 +5,12 @@ import jwt_decode from "jwt-decode";
 
 const Clock = () => {
   const [date, setDate] = useState(new Date());
-  // const[seconds,setSeconds] = useState(0)
-  // const[minutes,setMinutes] = useState(0)
+
+
   const [attendance, setAttendance] = useState([]);
+  
+  
+
   const [show, setShow] = useState(true);
  
 
@@ -115,14 +118,31 @@ const Clock = () => {
   };
 //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
 
+  
 
 
 //-------------------------------------------- Attendance Break---------------------------------------------------------------
+
   const employeebreak = async () => {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token);
     var decoded = jwt_decode(token);
     console.log("Decoded token data", decoded);
+
+
+    // const CheckIn ="";
+    // const CheckOut = "";
+    const Breaks = {
+      start: "10.10",
+      end: "10.30"
+    };
+
+
+    console.log("obj", Breaks);
+
+    await axios
+      .put(`http://localhost:1999/attendance/${decoded._id}`, {Breaks})
+
     var chkin = attendance?.CheckIn;
     console.log("checkin", chkin);
 
@@ -136,15 +156,18 @@ const Clock = () => {
         CheckOut,
         Break,
       })
-      .then((res) => {
-        console.log("id", decoded._id);
 
+      .then((res) => {
         console.log("employee break", res);
       });
-    setShow(!show);
-    // show?
+
+    // setShow(!show);
+    // // show?
+
   };
 //-------------------------------------------- Attendance Break---------------------------------------------------------------
+
+
 
 
 
@@ -170,7 +193,7 @@ const Clock = () => {
   //       console.log("id", decoded._id);
 
   //       console.log("employee resume", res);
-  //       setDisabled(false);
+  //       // setDisabled(false);
   //     });
   // };
 
@@ -184,17 +207,24 @@ const Clock = () => {
         </span>
       </div>
 
+
+      {/* {attendance?.emp_id} */}
+
       {attendance?.name}
+
       {attendance?.CheckIn}
-      {attendance?.CheckOut}
+      {/* {attendance?.CheckOut}
       {attendance?.Break}
+
+      {attendance?.Resume} */}
+
       {/* <div>
         <h1>Timer</h1>
         <h1>{minutes<10? "0"+minutes:minutes}:{seconds<10? "0"+seconds: seconds}</h1>
       </div> */}
 
+
       <div>
-        {/* <Button style={{color:"white" ,backgroundColor:"yellow",fontWeight:"Bold"}} onClick={() => {employeereturn()}}>Return</Button> */}
         <Button
           style={{
             color: "white",
@@ -220,15 +250,8 @@ const Clock = () => {
         >
           Break
         </Button>
-        {/* <Button
-          disabled={false}
-          style={{ color: "white", backgroundColor: "Red", fontWeight: "Bold" }}
-          onClick={() => {
-            employeeresume();
-          }}
-        >
-          Resume
-        </Button> */}
+       
+
         <Button
           style={{
             color: "white",
