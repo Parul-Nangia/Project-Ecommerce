@@ -1,8 +1,35 @@
 import React from "react";
 import { Table } from "antd";
+import { useState } from "react";
 
 const AttendanceTable = () => {
-  // const [attendancedata, setAttendanceData] = useState([]);
+  const [data, setData] = useState([{
+  name:"abcd",
+  Date:"",
+  CheckIn:"",
+  CheckOut:"",
+  Resume:"",
+  Break:""
+  
+  },
+  {
+    name:"xyz",
+    Date:"",
+    CheckIn:"",
+    CheckOut:"",
+    Resume:"",
+    Break:""
+    
+    },
+    {
+      name:"xy",
+      Date:"",
+      CheckIn:"",
+      CheckOut:"",
+      Resume:"",
+      Break:""
+      
+      }]);
 
   // useEffect(() => {
   //   employeetime();
@@ -24,8 +51,27 @@ const AttendanceTable = () => {
 
   const columns = [
     {
-      title: "Employee Id",
-      dataIndex: "emp_id",
+      title: "Name",
+      dataIndex: "name",
+      filters: [
+        {
+          text: 'abcd',
+          value: 'abcd',
+        },
+        {
+          text: 'xyz',
+          value: 'xyz',
+        },
+        {
+          text: 'xy',
+          value: 'xy',
+        },
+      ],
+    //   filterMode: 'tree',
+      filterSearch: true,
+      onFilter: (value, record) => record.name.startsWith(value),
+      width: '30%',
+
     },
     {
       title: "Date",
@@ -51,7 +97,9 @@ const AttendanceTable = () => {
 
   return (
     <>
-      <Table columns={columns} />
+      <Table 
+      columns={columns}
+      dataSource={data} />
     </>
   );
 };
