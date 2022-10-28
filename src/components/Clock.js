@@ -9,8 +9,7 @@ const Clock = () => {
   // const[minutes,setMinutes] = useState(0)
 
   const [attendance, setAttendance] = useState([]);
-  const[show,setShow]=useState(true)
- 
+  const [show, setShow] = useState(true);
 
   // var timer;
   // useEffect(() => {
@@ -58,11 +57,8 @@ const Clock = () => {
         setAttendance(res?.data?.attendanceData);
         console.log("Logged In Employee Attendance", attendance);
 
-
         // console.log("attendance checkin", attendance.CheckIn);
       });
-
-
 
     if (attendance.CheckIn == new Date()) {
       alert("You have already checked in");
@@ -72,11 +68,11 @@ const Clock = () => {
       const CheckOut = "";
       const Break = "";
       const Resume = "";
-      const emp_id = decoded._id;
+      const name = decoded.name;
 
       await axios
         .post(`http://localhost:1999/attendance/${decoded._id}`, {
-          emp_id,
+          name,
           CheckIn,
           CheckOut,
           Break,
@@ -113,19 +109,15 @@ const Clock = () => {
       });
   };
 
-
-
-
   const employeebreak = async () => {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token);
     var decoded = jwt_decode(token);
     console.log("Decoded token data", decoded);
-    var chkin =  attendance?.CheckIn
-    console.log("checkin",chkin)
+    var chkin = attendance?.CheckIn;
+    console.log("checkin", chkin);
 
-
-    const CheckIn ="";
+    const CheckIn = "";
     const CheckOut = "";
     const Break = new Date();
     const Resume = "";
@@ -141,16 +133,11 @@ const Clock = () => {
         console.log("id", decoded._id);
 
         console.log("employee break", res);
-        
       });
-      setShow(!show)
-      // show?
-      
+    setShow(!show);
+    // show?
   };
 
-
-
- 
   // const employeeresume = async () => {
   //   const token = localStorage.getItem("access_token1");
   //   console.log("token from local storage:", token);
@@ -177,7 +164,6 @@ const Clock = () => {
   //     });
   // };
 
- 
   return (
     <>
       <div>
@@ -188,7 +174,7 @@ const Clock = () => {
         </span>
       </div>
 
-      {attendance?.emp_id}
+      {attendance?.name}
       {attendance?.CheckIn}
       {attendance?.CheckOut}
       {attendance?.Break}
@@ -212,7 +198,18 @@ const Clock = () => {
         >
           Checkin
         </Button>
-        <Button style={{color: "white" ,backgroundColor: "Tomato",fontWeight: "Bold"}} onClick={() => {employeebreak()}}>Break/Resume </Button>
+        <Button
+          style={{
+            color: "white",
+            backgroundColor: "Tomato",
+            fontWeight: "Bold",
+          }}
+          onClick={() => {
+            employeebreak();
+          }}
+        >
+          Break/Resume{" "}
+        </Button>
         {/* <Button
           disabled={false}
           style={{ color: "white", backgroundColor: "Red", fontWeight: "Bold" }}
@@ -229,7 +226,7 @@ const Clock = () => {
             fontWeight: "Bold",
           }}
           onClick={() => {
-            employeecheckout()
+            employeecheckout();
           }}
         >
           Checkout
@@ -240,7 +237,3 @@ const Clock = () => {
 };
 
 export default Clock;
-
-
-      
-
