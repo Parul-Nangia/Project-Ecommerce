@@ -11,6 +11,7 @@ import LeaveForm from "../components/LeaveForm";
 import LeaveCalendar from "../components/LeaveCalendar";
 import Documentation from "../components/Documentation";
 import Profile from "../components/Profile";
+import Report from "../components/Report";
 
 const Routing = () => {
   return (
@@ -25,6 +26,7 @@ const Routing = () => {
         
 
         </Route>
+        <Route path="/report" element={<Report />} />
         <Route path="/edit/:_id" element={<Edit />} />
         <Route path="/view/:_id" element={<View />} />
         <Route path="/leaveform" element={<LeaveForm />} />
