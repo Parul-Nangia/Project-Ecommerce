@@ -3,32 +3,21 @@ import { Button } from "antd";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
+
+
 const Clock = () => {
   const [date, setDate] = useState(new Date());
   // const[seconds,setSeconds] = useState(0)
   // const[minutes,setMinutes] = useState(0)
-
   const [attendance, setAttendance] = useState([]);
-  const[show,setShow]=useState(true)
- 
+  const [show, setShow] = useState(true)
 
-  // var timer;
-  // useEffect(() => {
+  // console.log("check attendance CheckIn here", attendance[0].CheckIn)
 
-  //   timer= setInterval(()=>{
 
-  //     setSeconds(seconds+1);
 
-  //     if(seconds===59){
-  //       setMinutes(minutes+1);
-  //       setSeconds(0);
-  //     }
 
-  //   },1000)
-
-  // return () => clearInterval(timer);
-  // });
-
+  //---------------------------------------------- Clock ----------------------------------------------------------------
   const refreshClock = () => {
     setDate(new Date());
   };
@@ -38,7 +27,12 @@ const Clock = () => {
       clearInterval(timerId);
     };
   }, []);
+  //---------------------------------------------- Clock ----------------------------------------------------------------
 
+
+
+
+  //---------------------------------------------- Attendance CheckIn----------------------------------------------------------------
   useEffect(() => {
     employeecheckin();
   }, []);
@@ -57,14 +51,18 @@ const Clock = () => {
       .then((res) => {
         setAttendance(res?.data?.attendanceData);
         console.log("Logged In Employee Attendance", attendance);
-
-
         // console.log("attendance checkin", attendance.CheckIn);
       });
 
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let currentDate = `${year}-${month}-${day}`;
+    console.log("Current Date", currentDate);
 
 
-    if (attendance.CheckIn == new Date()) {
+    if (attendance[0].CheckIn == currentDate) {
       alert("You have already checked in");
     } else {
       const CheckIn = new Date();
@@ -87,7 +85,11 @@ const Clock = () => {
         });
     }
   };
+  //---------------------------------------------- Attendance CheckIn----------------------------------------------------------------
 
+
+
+  //---------------------------------------------- Attendance CheckOut----------------------------------------------------------------
   const employeecheckout = async () => {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token);
@@ -112,20 +114,22 @@ const Clock = () => {
         console.log("employee check out", res);
       });
   };
+  //---------------------------------------------- Attendance CheckOut----------------------------------------------------------------
 
 
 
 
+  //---------------------------------------------- Attendance Break----------------------------------------------------------------
   const employeebreak = async () => {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token);
     var decoded = jwt_decode(token);
     console.log("Decoded token data", decoded);
-    var chkin =  attendance?.CheckIn
-    console.log("checkin",chkin)
+    var chkin = attendance?.CheckIn
+    console.log("checkin", chkin)
 
 
-    const CheckIn ="";
+    const CheckIn = "";
     const CheckOut = "";
     const Break = new Date();
     const Resume = "";
@@ -141,16 +145,18 @@ const Clock = () => {
         console.log("id", decoded._id);
 
         console.log("employee break", res);
-        
+
       });
-      setShow(!show)
-      // show?
-      
+    setShow(!show)
+    // show?
+
   };
+  //---------------------------------------------- Attendance Break----------------------------------------------------------------
 
 
 
- 
+
+  //---------------------------------------------- Attendance Resume----------------------------------------------------------------
   // const employeeresume = async () => {
   //   const token = localStorage.getItem("access_token1");
   //   console.log("token from local storage:", token);
@@ -176,8 +182,9 @@ const Clock = () => {
   //       setDisabled(false);
   //     });
   // };
+  //---------------------------------------------- Attendance Resume----------------------------------------------------------------
 
- 
+
   return (
     <>
       <div>
@@ -212,7 +219,7 @@ const Clock = () => {
         >
           Checkin
         </Button>
-        <Button style={{color: "white" ,backgroundColor: "Tomato",fontWeight: "Bold"}} onClick={() => {employeebreak()}}>Break/Resume </Button>
+        <Button style={{ color: "white", backgroundColor: "Tomato", fontWeight: "Bold" }} onClick={() => { employeebreak() }}>Break/Resume </Button>
         {/* <Button
           disabled={false}
           style={{ color: "white", backgroundColor: "Red", fontWeight: "Bold" }}
@@ -242,5 +249,21 @@ const Clock = () => {
 export default Clock;
 
 
-      
+
+ // var timer;
+  // useEffect(() => {
+
+  //   timer= setInterval(()=>{
+
+  //     setSeconds(seconds+1);
+
+  //     if(seconds===59){
+  //       setMinutes(minutes+1);
+  //       setSeconds(0);
+  //     }
+
+  //   },1000)
+
+  // return () => clearInterval(timer);
+  // });
 
