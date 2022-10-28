@@ -24,6 +24,12 @@ const Documentation = () => {
   const [documentfile, setDocumentFile] = useState("");
   const [empID, setEmpID] = useState("");
 
+
+
+
+
+
+
   const columns = [
     {
       title: "No.",
@@ -54,29 +60,40 @@ const Documentation = () => {
   // console.log(formData, "jhgrt")
   // formData.append("documentfile", documentfile)
 
-  const handleInputChange = (e) => {
-    console.log("I am in file function");
-    setDocumentFile(e.file);
+
+  const handleInputChange = e => {
+    console.log("I am in file function", e.file.name)
+    setDocumentFile(e.file.name)
     // console.log("File function e value", e)
     // console.log(e.file)
-    console.log("Document File", documentfile);
-  };
+
+  }
+
 
   const handleOk = () => {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token);
     var decoded = jwt_decode(token);
     console.log("Decoded token data", decoded);
-    console.log("Employee ID", decoded._id);
-    setEmpID(decoded._id);
-    const emp_id = decoded._id;
+    console.log("Employee ID", decoded._id)
+    setEmpID(decoded._id)
+    const emp_id = decoded._id
+
+
 
     console.log("Document Name", documentname);
     console.log("Document Type", documenttype);
-    // console.log("Document File", documentfile)
-    const formData = new FormData();
+    console.log("Document File", documentfile)
+    const formData = new FormData()
     // const image = formData
-    formData.append("image", documentfile);
+    formData.append("image", documentfile)
+    formData.append("documentname", documentname)
+    formData.append("documenttype", documenttype)
+    formData.append("emp_id", emp_id)
+
+
+
+
 
     axios
       .post(
@@ -84,14 +101,17 @@ const Documentation = () => {
         formData
         // {
 
-        //   emp_id,
-        //   documentname,
-        //   documenttype
+      //   emp_id,
+      //   documentname,
+      //   documenttype
 
-        // }
-      )
-      .then((res) => {
-        console.log("Document Response", res);
+      // }
+    )
+      .then(res => {
+        console.log("Document Response", res)
+      })
+      .catch(error => {
+        console.log(error)
       })
       .catch((error) => {
         console.log(error);

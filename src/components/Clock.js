@@ -9,7 +9,8 @@ const Clock = () => {
   // const[minutes,setMinutes] = useState(0)
 
   const [attendance, setAttendance] = useState([]);
-  // const[disable,setDisable]=useState(false)
+  const[show,setShow]=useState(true)
+ 
 
   // var timer;
   // useEffect(() => {
@@ -57,10 +58,13 @@ const Clock = () => {
         setAttendance(res?.data?.attendanceData);
         console.log("Logged In Employee Attendance", attendance);
 
-        console.log("attendance empid", attendance[0].emp_id);
+
+        // console.log("attendance checkin", attendance.CheckIn);
       });
 
-    if (attendance[0].emp_id === decoded._id) {
+
+
+    if (attendance.CheckIn == new Date()) {
       alert("You have already checked in");
     } else {
       const CheckIn = new Date();
@@ -109,13 +113,19 @@ const Clock = () => {
       });
   };
 
+
+
+
   const employeebreak = async () => {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token);
     var decoded = jwt_decode(token);
     console.log("Decoded token data", decoded);
+    var chkin =  attendance?.CheckIn
+    console.log("checkin",chkin)
 
-    const CheckIn = "";
+
+    const CheckIn ="";
     const CheckOut = "";
     const Break = new Date();
     const Resume = "";
@@ -131,33 +141,43 @@ const Clock = () => {
         console.log("id", decoded._id);
 
         console.log("employee break", res);
+        
       });
+      setShow(!show)
+      // show?
+      
   };
 
-  const employeeresume = async () => {
-    const token = localStorage.getItem("access_token1");
-    console.log("token from local storage:", token);
-    var decoded = jwt_decode(token);
-    console.log("Decoded token data", decoded);
 
-    const CheckIn = "";
-    const CheckOut = "";
-    const Break = "";
-    const Resume = new Date();
 
-    await axios
-      .put(`http://localhost:1999/attendance/${decoded._id}`, {
-        CheckIn,
-        CheckOut,
-        Break,
-        Resume,
-      })
-      .then((res) => {
-        console.log("id", decoded._id);
+ 
+  // const employeeresume = async () => {
+  //   const token = localStorage.getItem("access_token1");
+  //   console.log("token from local storage:", token);
+  //   var decoded = jwt_decode(token);
+  //   console.log("Decoded token data", decoded);
 
-        console.log("employee resume", res);
-      });
-  };
+  //   const CheckIn = "";
+  //   const CheckOut = "";
+  //   const Break = "";
+  //   const Resume = Date();
+
+  //   await axios
+  //     .put(`http://localhost:1999/attendance/${decoded._id}`, {
+  //       CheckIn,
+  //       CheckOut,
+  //       Break,
+  //       Resume,
+  //     })
+  //     .then((res) => {
+  //       console.log("id", decoded._id);
+
+  //       console.log("employee resume", res);
+  //       setDisabled(false);
+  //     });
+  // };
+
+ 
   return (
     <>
       <div>
@@ -178,7 +198,8 @@ const Clock = () => {
         <h1>{minutes<10? "0"+minutes:minutes}:{seconds<10? "0"+seconds: seconds}</h1>
       </div> */}
 
-      <div style={{ display: "flex", marginLeft: "70%" }}>
+      <div>
+        {/* <Button style={{color:"white" ,backgroundColor:"yellow",fontWeight:"Bold"}} onClick={() => {employeereturn()}}>Return</Button> */}
         <Button
           style={{
             color: "white",
@@ -191,26 +212,16 @@ const Clock = () => {
         >
           Checkin
         </Button>
-        <Button
-          style={{
-            color: "white",
-            backgroundColor: "Tomato",
-            fontWeight: "Bold",
-          }}
-          onClick={() => {
-            employeebreak();
-          }}
-        >
-          Break
-        </Button>
-        <Button
+        <Button style={{color: "white" ,backgroundColor: "Tomato",fontWeight: "Bold"}} onClick={() => {employeebreak()}}>Break/Resume </Button>
+        {/* <Button
+          disabled={false}
           style={{ color: "white", backgroundColor: "Red", fontWeight: "Bold" }}
           onClick={() => {
             employeeresume();
           }}
         >
           Resume
-        </Button>
+        </Button> */}
         <Button
           style={{
             color: "white",
@@ -218,7 +229,7 @@ const Clock = () => {
             fontWeight: "Bold",
           }}
           onClick={() => {
-            employeecheckout();
+            employeecheckout()
           }}
         >
           Checkout
@@ -229,3 +240,7 @@ const Clock = () => {
 };
 
 export default Clock;
+
+
+      
+
