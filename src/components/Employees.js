@@ -376,6 +376,41 @@ const documentation =(user_id)=>{
     {
       title: "Name",
       dataIndex: "name",
+      filterDropdown:({setSelectedKeys,selectedKeys,confirm,clearFilters})=>{
+        return( <>
+        <Input autoFocus 
+        value={selectedKeys[0]}
+        onChange={(e)=>{setSelectedKeys(e.target.value?[e.target.value]:[])
+        confirm({closeDropdown:false})}}
+        onPressEnter={() => {confirm()}}
+        onBlur={() => {confirm()}} >
+        
+        </Input>
+        <Button onClick={()=>{confirm()}} type='primary'>Search</Button>
+        <Button onClick={()=>{clearFilters()}} type='danger'>Reset</Button>
+        </>)
+      },
+      // filters: [
+      //   {
+      //     text: 'Amit',
+      //     value: 'Amit',
+      //   },
+      //   {
+      //     text: 'Prince',
+      //     value: 'Prince',
+      //   },
+      //   {
+      //     text: 'Baljeet',
+      //     value: 'Baljeet',
+      //   },
+      // ],
+    //   filterMode: 'tree',
+      // filterSearch: true,
+      // onFilter: (value, record) => record.name.startsWith(value),
+      onFilter:(value,record)=>{
+           return record.name.toLowerCase().includes(value.toLowerCase())
+      },
+      width: '30%',
     },
     {
       title: "Email",
