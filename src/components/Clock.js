@@ -9,7 +9,8 @@ const Clock = () => {
   const [attendance, setAttendance] = useState([]);
   const [show, setShow] = useState(true);
   const [disable, setDisable] = React.useState(false);
-  
+
+
 
 
 
@@ -35,28 +36,27 @@ const Clock = () => {
 
   //---------------------------------------------Employee Attendance GET by id API----------------------------------------------------------
   useEffect(() => {
-    employeeAttendanceRecord();
+    LoggedAttendanceAllRecord();
   }, []);
 
-  const employeeAttendanceRecord = async () => {
+  const LoggedAttendanceAllRecord = async () => {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token);
     var decoded = jwt_decode(token);
     console.log("Decoded token data", decoded);
     await axios
       .get(
-        `http://localhost:1999/attendance/${decoded._id}`,
+        `http://localhost:1999/attendance/employee/${decoded._id}`,
         console.log("hello EmpID here", decoded._id)
       )
       .then((res) => {
-        setAttendance(res?.data?.attendanceRecord);
-        
+        setAttendance(res?.data?.attendanceDataByEmpID);
+        console.log("Logged In Employee Attendance", attendance);
 
         // console.log("Checkin Type", typeof attendance[0].CheckIn);
         // console.log("attendance checkin", attendance.CheckIn);
 
       });
-      console.log("Logged In Employee Attendance", attendance);
 
 
 
@@ -118,9 +118,14 @@ const Clock = () => {
 
 
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
+  useEffect(() => {
+    employeecheckout();
+  }, []);
+  
   const employeecheckout = async () => {
 
-    const CheckIn = attendance.CheckIn;
+    const CheckIn = attendance[0].CheckIn;
+    console.log("i am here attendance checkin spread", CheckIn)
     const CheckOut = new Date();
     const Break = "";
 
