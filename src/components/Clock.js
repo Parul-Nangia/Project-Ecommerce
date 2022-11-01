@@ -66,7 +66,7 @@ const Clock = () => {
       const CheckIn = new Date();
       console.log("I am here Clock Date", CheckIn);
       const name = decoded.name;
-      const CheckOut = new Date();
+      const CheckOut = "";
       const Break = "";
 
       await axios
