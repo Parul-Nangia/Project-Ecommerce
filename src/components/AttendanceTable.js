@@ -4,7 +4,6 @@ import axios from "axios";
 
 const AttendanceTable = () => {
   const [dataSource, setDataSource] = useState([]);
-  const [state, setState] = useState([]);
   console.log("atten rec", dataSource);
   // const [attendancedata, setAttendanceData] = useState([]);
 
