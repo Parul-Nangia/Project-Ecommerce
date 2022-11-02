@@ -103,7 +103,7 @@ const DashboardCards = () => {
           </Col>
           <Col span={6} className="dashboardcards">
             <Card title="Leave Data(Month) " bordered={false}>
-              {monthLeave.length}
+              {/* {monthLeave.length} */}
             </Card>
           </Col>
         </Row>
