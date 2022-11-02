@@ -125,11 +125,11 @@ const Clock = () => {
 
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
-  const employeebreak = async () => {
-    const token = localStorage.getItem("access_token1");
-    console.log("token from local storage:", token);
-    var decoded = jwt_decode(token);
-    console.log("Decoded token data", decoded);
+  const employeebreak = async (_id) => {
+    // const token = localStorage.getItem("access_token1");
+    // console.log("token from local storage:", token);
+    // var decoded = jwt_decode(token);
+    // console.log("Decoded token data", decoded);
 
     // const CheckIn ="";
     // const CheckOut = "";
@@ -140,29 +140,20 @@ const Clock = () => {
 
     console.log("obj", Break);
 
-    await axios.put(`http://localhost:1999/attendance/${decoded._id}`, {
+    await axios.put(`http://localhost:1999/attendance/${_id}`, {
       Break,
     });
     var chkin = attendance?.CheckIn;
     console.log("checkin", chkin);
 
-    const CheckIn = "";
-    const CheckOut = "";
-    const Breaks = new Date();
+    // const CheckIn = "";
+    // const CheckOut = "";
+    // const Breaks = new Date();
 
-    await axios
-      .put(`http://localhost:1999/attendance/${decoded._id}`, {
-        CheckIn,
-        CheckOut,
-        Break,
-      })
+   
 
-      .then((res) => {
-        console.log("employee break", res);
-      });
-
-    // setShow(!show);
-    // // show?
+    
+  
   };
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
@@ -230,11 +221,13 @@ const Clock = () => {
           Checkin
         </Button>
         <Button
+         
           style={{
             color: "white",
             backgroundColor: "Tomato",
             fontWeight: "Bold",
           }}
+         
           onClick={() => {
             employeebreak();
           }}
