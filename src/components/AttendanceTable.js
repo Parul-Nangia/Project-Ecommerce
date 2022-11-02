@@ -8,6 +8,7 @@ import { SearchOutlined } from "@ant-design/icons";
 
 const AttendanceTable = () => {
   const [dataSource, setDataSource] = useState([]);
+  const [filterDate, setFilterDate] = useState("");
   // const [state, setState] = useState([]);
   console.log("atten rec", dataSource);
   // const [attendancedata, setAttendanceData] = useState([]);
@@ -49,6 +50,22 @@ const AttendanceTable = () => {
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    EmployeeDateData();
+  }, []);
+
+  const EmployeeDateData = async () => {
+    await axios
+      .get(
+        `http://localhost:1999/attendance/Daterange`,
+        console.log("Filter Data is")
+      )
+      .then((res) => {
+        setFilterDate(res?.data?.attendanceDataByEmpID);
+        console.log("Logged In Employee Attendance", filterDate);
+      });
+  };
 
   const getData = async () => {
     await axios.get(`http://localhost:1999/attendance`).then((res) => {
