@@ -41,11 +41,11 @@ const Sidebar = () => {
                 key: "/employees",
                 icon: <UserOutlined />,
               },
-              {
-                label: "Report",
-                key: "/report",
-                icon: <UserOutlined />,
-              },
+              // {
+              //   label: "Report",
+              //   key: "/report",
+              //   icon: <UserOutlined />,
+              // },
             ],
           },
           { label: "LEAVE", key: "/leave", icon: <PaperClipOutlined /> },

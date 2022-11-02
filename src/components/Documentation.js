@@ -97,7 +97,7 @@ const Documentation = () => {
 
     axios
       .post(
-        `http://localhost:1999/document/add/${decoded._id}`,
+        `http://localhost:1999/document/add/${emp_id}`,
         
         formData
         // {
