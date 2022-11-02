@@ -3,7 +3,7 @@ import { Table, Input, Button } from "antd";
 import axios from "axios";
 import { DatePicker, Space } from "antd";
 // import Highlighter from "react-highlight-words";
-import { SearchOutlined } from "@ant-design/icons";
+// import { SearchOutlined } from "@ant-design/icons";
 // import { DatePicker, Space } from 'antd';
 
 const AttendanceTable = () => {
@@ -49,7 +49,7 @@ const AttendanceTable = () => {
   // console.log(state, "hh");
   useEffect(() => {
     getData();
-  }, []);
+  },[] );
 
   useEffect(() => {
     EmployeeDateData();
@@ -74,9 +74,9 @@ const AttendanceTable = () => {
       console.log("attendance record", dataSource);
     });
   };
-  const onChange = (date, dateString) => {
-    console.log(date, dateString);
-  };
+  // const onChange = (date, dateString) => {
+  //   console.log(date, dateString);
+  // };
 
   const columns = [
     {
