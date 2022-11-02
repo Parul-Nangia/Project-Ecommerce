@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Table, Input, Button } from "antd";
 import axios from "axios";
 import { DatePicker, Space } from "antd";
+const { RangePicker } = DatePicker;
 // import Highlighter from "react-highlight-words";
 // import { SearchOutlined } from "@ant-design/icons";
 // import { DatePicker, Space } from 'antd';

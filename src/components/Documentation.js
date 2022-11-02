@@ -62,8 +62,8 @@ const Documentation = () => {
 
 
   const handleInputChange = e => {
-    console.log("I am in file function", e.file.name)
-    setDocumentFile(e.file.name)
+    console.log("I am in file function", e.file)
+    setDocumentFile(e.file)
     // console.log("File function e value", e)
     // console.log(e.file)
 
@@ -98,16 +98,16 @@ const Documentation = () => {
     axios
       .post(
         `http://localhost:1999/document/add/${emp_id}`,
-        
+
         formData
         // {
 
-      //   emp_id,
-      //   documentname,
-      //   documenttype
+        //   emp_id,
+        //   documentname,
+        //   documenttype
 
-      // }
-    )
+        // }
+      )
       .then(res => {
         console.log("Document Response", res)
       })

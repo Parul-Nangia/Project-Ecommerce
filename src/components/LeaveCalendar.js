@@ -10,7 +10,7 @@ import "antd/dist/antd.css";
 const LeaveCalendar = () => {
 
   const [calendarLeaveData, setCalendarLeaveData] = useState([]);
-  console.log(" check LeaveDate here", calendarLeaveData.LeaveDate)
+  // console.log(" check LeaveDate here", calendarLeaveData.LeaveDate)
 
 
 
@@ -18,25 +18,20 @@ const LeaveCalendar = () => {
 
 
 
-  const thisWeekEmployeeLeaveData = () => {
-    fetch("http://localhost:1999/leave/MonthData")
+  const MonthLeaveData = () => {
+    fetch("http://localhost:1999/leave/monthdata").then((response) => {
+      return response.json();
+    }).then((data) => {
+      let employeeLeaves = data.MonthLeaveData
+      setCalendarLeaveData(employeeLeaves);
 
-      .then((response) => {
-        return response.json();
-      }).then((empMonthdata) => {
+      console.log("Month Leave Data for Calendar", employeeLeaves);
 
-        let empLeave = empMonthdata.data
-
-        console.log("Employee Leave Data", empLeave)
-
-        setCalendarLeaveData(empLeave)
-
-
-      })
+    })
 
   }
   useEffect(() => {
-    thisWeekEmployeeLeaveData();
+    MonthLeaveData();
 
   }, [])
 
