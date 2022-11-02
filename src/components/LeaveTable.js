@@ -5,8 +5,6 @@ import axios from "axios";
 const LeaveTable = () => {
   const [dataSource, setDataSource] = useState([]);
 
-  const [name, setName] = useState("");
-
   useEffect(() => {
     getData();
   }, []);
@@ -15,7 +13,7 @@ const LeaveTable = () => {
     await axios.get("http://localhost:1999/leave").then((res) => {
       console.log(res, "bhvhv");
       setDataSource(res?.data?.leaveData);
-      console.log(dataSource, "jj");
+      console.log(dataSource, "data");
     });
   };
   const columns = [
