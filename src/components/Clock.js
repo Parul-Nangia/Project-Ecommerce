@@ -9,6 +9,21 @@ const Clock = () => {
   const [attendance, setAttendance] = useState([]);
   const [show, setShow] = useState(true);
   const [disable, setDisable] = React.useState(false);
+<<<<<<< Updated upstream
+=======
+  const [start, setStart] = useState("");
+  const [end, setEnd] = useState("");
+  const [EmployeeCheckIn, setEmployeeCheckIn] = useState([])
+
+
+
+
+
+
+
+
+
+>>>>>>> Stashed changes
 
   //-------------------------------------------- Clock---------------------------------------------------------------
   const refreshClock = () => {
@@ -84,7 +99,12 @@ const Clock = () => {
       })
       .then((res) => {
         console.log("CheckIn Response", res);
+<<<<<<< Updated upstream
         setDisable(true);
+=======
+        setDisable(false)
+
+>>>>>>> Stashed changes
       });
     // }
   };
@@ -114,16 +134,29 @@ const Clock = () => {
   };
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
 
+<<<<<<< Updated upstream
+=======
+  
+
+  // const Break = {
+  //      start: new Date(),
+  //      end: ""
+  //    };
+
+
+
+>>>>>>> Stashed changes
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
-  const employeebreak = async () => {
-    const token = localStorage.getItem("access_token1");
-    console.log("token from local storage:", token);
-    var decoded = jwt_decode(token);
-    console.log("Decoded token data", decoded);
+  const employeebreak = async (_id) => {
+    // const token = localStorage.getItem("access_token1");
+    // console.log("token from local storage:", token);
+    // var decoded = jwt_decode(token);
+    // console.log("Decoded token data", decoded);
 
     // const CheckIn ="";
     // const CheckOut = "";
+<<<<<<< Updated upstream
     const Break = {
       start: "10.10",
       end: "10.30",
@@ -149,12 +182,50 @@ const Clock = () => {
         Break,
       })
 
+=======
+    // const Break = {
+    //   start: "10.10",
+    //   end: "10.30"
+    // };
+
+    // const obj={
+    //   start:"10.20",
+    //   end:"11.10"
+    // }
+    // const Breaks={
+    //   ...obj,
+    //   startt:"11.15",
+    //   endt:"12:00"
+    // }
+    // console.log("obj", Breaks);
+    // const d = new Date();
+    // let time = d.getTime();
+    // console.log(time,"Time")
+
+    const Break = new FormData()
+    Break.append("start",start)
+    Break.append("end",end)
+    console.log(start,"Start")
+    console.log(end,"End")
+  
+    console.log("obj", Break);
+
+    
+    await axios
+      .put(`http://localhost:1999/attendance/${_id}`,
+      Break
+      )
+>>>>>>> Stashed changes
       .then((res) => {
         console.log("employee break", res);
       });
 
+<<<<<<< Updated upstream
     // setShow(!show);
     // // show?
+=======
+    
+>>>>>>> Stashed changes
   };
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
@@ -224,11 +295,18 @@ const Clock = () => {
           Checkin
         </Button>
         <Button
+         
           style={{
             color: "white",
             backgroundColor: "Tomato",
             fontWeight: "Bold",
           }}
+          onChange={(e) => {
+            setStart(() => {
+               console.log("Start  " + e.target.value);
+               return e.target.value;
+             })
+            }}
           onClick={() => {
             employeebreak();
           }}

@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Table } from "antd";
+import { Table ,Input,Button} from "antd";
 import axios from "axios";
+import {  DatePicker,  Space } from "antd";
+// import Highlighter from "react-highlight-words";
+import { SearchOutlined } from "@ant-design/icons";
+// import { DatePicker, Space } from 'antd';
 
 const AttendanceTable = () => {
   const [dataSource, setDataSource] = useState([]);
-  const [state, setState] = useState([]);
+  // const [state, setState] = useState([]);
   console.log("atten rec", dataSource);
   // const [attendancedata, setAttendanceData] = useState([]);
 
@@ -53,15 +57,78 @@ const AttendanceTable = () => {
       console.log("attendance record", dataSource);
     });
   };
+  const onChange = (date, dateString) => {
+    console.log(date, dateString);
+  };
 
   const columns = [
     {
       title: "Employee Name",
       dataIndex: "name",
+      filterDropdown:({setSelectedKeys,selectedKeys,confirm,clearFilters})=>{
+       return ( <><Input
+       autoFocus
+       placeholder="Text here"
+       value={selectedKeys[0]}
+      onChange={(e)=>{setSelectedKeys(e.target.value?[e.target.value]:[])}}
+       onPressEnter={()=>{confirm()}}
+       onBlur={()=>{confirm()}}
+       ></Input>
+       <Button onClick={()=>{confirm()}} type='primary'>Search</Button>
+        <Button onClick={()=>{clearFilters()}} type='danger'>Reset</Button>
+        </>)
+      },
+         onFilter:(value,record)=>{
+return record.name.toLowerCase().includes(value.toLowerCase())
+  },
+  width: '30%',
+  
     },
+
     {
       title: "CheckIn",
       dataIndex: "CheckIn",
+      // filterDropdown:({setSelectedKeys,selectedKeys,confirm,clearFilters})=>{
+      //   return(
+      //   <> 
+      //     <Space>
+      //     <DatePicker
+      //       // format={"DD-MM-YY"}
+      //       onChange={(e) => {
+      //         setSelectedKeys([e.format("YYYY-MM-DDT00:00:00Z")]);
+      //       }}
+            
+      //       allowClear={false}
+      //     />
+        
+      //   <Space>
+      //   <Button onClick={()=>{confirm()}} type='primary'>Search</Button>
+      //   <Button onClick={()=>{clearFilters()}} type='danger'>Reset</Button>
+      //   </Space>
+      //   </Space>
+      //   <Input autoFocus 
+      //   value={selectedKeys[0]}
+      //   onChange={(e)=>{setSelectedKeys(e.target.value?[e.target.value]:[])
+      //   confirm({closeDropdown:false})}}
+      //   onPressEnter={() => {confirm()}}
+      //   onBlur={() => {confirm()}} >
+        
+      //   </Input>
+      //   </>
+      //   )
+      // },
+  //     onFilter:(value,record)=>{
+  //       return (
+  //         record[CheckIn]
+  //         ? record[CheckIn]
+  //             .toString()
+  //             .toLowerCase()
+  //             .includes(value.toLowerCase())
+  //         : ""
+  
+  //       )
+  //  },
+  //  width: '30%',
     },
     {
       title: "CheckOut",
