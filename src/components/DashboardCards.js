@@ -65,21 +65,23 @@ const DashboardCards = () => {
 
   //============================================================== Start Monthly On Leave Employees====================================================================================
 
-  const monthlyEmployeeLeaveData = () => {
-    fetch("http://localhost:1999/leave/MonthData")
-      .then((response) => {
-        return response.json();
-      })
-      .then((monthData) => {
-        let empMonthLeave = monthData.data;
-        console.log("Monthly On Leave", empMonthLeave);
+  const MonthLeaveData = () => {
+    fetch("http://localhost:1999/leave/monthdata").then((response) => {
+      return response.json();
+    }).then((data) => {
+      let employeeLeaves = data.MonthLeaveData
+      setMonthLeave(employeeLeaves);
 
-        setMonthLeave(empMonthLeave);
-      });
-  };
+      console.log("Month Leave Data", employeeLeaves);
+
+    })
+
+  }
   useEffect(() => {
-    monthlyEmployeeLeaveData();
-  }, []);
+    MonthLeaveData();
+
+  }, [])
+
   //============================================================== End Monthly On Leave Employees====================================================================================
 
   return (
@@ -103,7 +105,7 @@ const DashboardCards = () => {
           </Col>
           <Col span={6} className="dashboardcards">
             <Card title="Leave Data(Month) " bordered={false}>
-              {/* {monthLeave.length} */}
+              {monthLeave.length}
             </Card>
           </Col>
         </Row>

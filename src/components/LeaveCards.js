@@ -11,6 +11,7 @@ const LeaveCards = () => {
   const [sick, setSick] = useState([]);
   const [casual, setCasual] = useState([]);
   const [holiday, setHoliday] = useState([]);
+  
 
 
 
@@ -146,16 +147,12 @@ const LeaveCards = () => {
 
   //============================================================== Start Holiday API====================================================================================
 
-  useEffect(() => {
-    HolidayList();
+ 
 
-  }, [])
-
-  const HolidayList = () => {
-    fetch("http://localhost:1999/holiday/pending").then((response) => {
+  const holidayList = () => {
+    fetch("http://localhost:1999/holiday").then((response) => {
       return response.json();
     }).then((data) => {
-      console.log("hello Holidays Here", data)
       let userHolidays = data.HolidaysPending
       setHoliday(userHolidays);
 
@@ -164,6 +161,11 @@ const LeaveCards = () => {
     })
 
   }
+  useEffect(() => {
+    holidayList();
+
+  }, [])
+
 
 
   //===========

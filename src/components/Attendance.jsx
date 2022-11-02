@@ -1,6 +1,7 @@
 import React from 'react';
 import AttendanceCards from '../components/AttendanceCards';
 import AttendanceTable from '../components/AttendanceTable';
+import Clock from '../components/Clock';
 import jwt_decode from 'jwt-decode';
 import Error from '../components/Error';
 import { useState, useEffect } from "react";
@@ -33,7 +34,7 @@ const Attendance = () => {
     console.log("my role is ", name.role)
     return (
       <>
-
+       
         <AttendanceCards />
         <br />
         <AttendanceTable />
