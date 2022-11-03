@@ -9,7 +9,12 @@ const { RangePicker } = DatePicker;
 
 const AttendanceTable = () => {
   const [dataSource, setDataSource] = useState([]);
-  const [filterDate, setFilterDate] = useState("");
+  const [filterDate, setFilterDate] = useState([]);
+  const [startDate, setStartDate] = useState([]);
+  const [endDate, setEndDate] = useState([]);
+
+  // const [filterDate, setFilterDate] = useState("");
+
   // const [state, setState] = useState([]);
   console.log("atten rec", dataSource);
   // const [attendancedata, setAttendanceData] = useState([]);
@@ -50,21 +55,21 @@ const AttendanceTable = () => {
   // console.log(state, "hh");
   useEffect(() => {
     getData();
-  },[] );
-
-  useEffect(() => {
-    EmployeeDateData();
   }, []);
 
-  const EmployeeDateData = async () => {
-    await axios
+  // useEffect(() => {
+  //   EmployeeDateData();
+  // }, []);
+
+  const EmployeeDateData = () => {
+    axios
       .get(
-        `http://localhost:1999/attendance/Daterange`,
-        console.log("Filter Data is")
+        "http://localhost:1999/attendance/Daterange",
+        console.log("Filter Data is", dataSource)
       )
       .then((res) => {
-        setFilterDate(res?.data?.attendanceDataByEmpID);
-        console.log("Logged In Employee Attendance", filterDate);
+        setDataSource(res?.data?.attendanceRecord);
+        console.log("Logged In Employee Attendance", dataSource);
       });
   };
 
@@ -133,42 +138,51 @@ const AttendanceTable = () => {
     {
       title: "CheckIn",
       dataIndex: "CheckIn",
-      
-      filterDropdown:({setSelectedKeys,selectedKeys,confirm})=>{
-        return(
-        <>
-           <Space>
-          <RangePicker 
-            // format={"DD-MM-YY"}
-            onChange={(e) => {
-              setSelectedKeys([e.format("YYYY-MM-DDT00:00:00Z")]);
-            }}
-            // onChange={e => setSelectedKeys(e !== null ? [e.format("DD.MM.YYYY")] : [])}
+      filterDropdown: ({ setSelectedKeys, selectedKeys, clearFilters }) => {
+        return (
+          <>
+            <Space>
+              <DatePicker
+                // format={"DD-MM-YY"}
+                onChange={(e) => {
+                  setSelectedKeys([e.format("YYYY-MM-DD")]);
+                }}
+                allowClear={true}
+              />
 
-            allowClear={false}
-          />
-
-        <Space>
-        <Button onClick={()=>{confirm()}} type='primary'>Search</Button>
-       
-        </Space>
-        </Space>
-    
-        </>
-        )
+              <Space>
+                <DatePicker
+                  // format={"DD-MM-YY"}
+                  onChange={(e) => {
+                    selectedKeys([e.format("YYYY-MM-DD")]);
+                  }}
+                  allowClear={true}
+                />
+                <Button
+                  onClick={() => {
+                    EmployeeDateData();
+                  }}
+                  type="primary"
+                >
+                  Search
+                </Button>
+              </Space>
+            </Space>
+          </>
+        );
       },
-    //       onFilter:(value,record)=>{
-    //         return (
-    //           record[dataIndex]
-    //           ? record[dataIndex]
-    //               .toString()
-    //               .toLowerCase()
-    //               .includes(value.toLowerCase())
-    //           : ""
+      //     onFilter:(value,record)=>{
+      //       return (
+      //         record[CheckIn]
+      //         ? record[CheckIn]
+      //             .toString()
+      //             .toLowerCase()
+      //             .includes(value.toLowerCase())
+      //         : ""
 
-    //         )
-    //    },
-    //    width: '30%',
+      //       )
+      //  },
+      width: "30%",
     },
     {
       title: "CheckOut",
