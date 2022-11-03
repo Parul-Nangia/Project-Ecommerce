@@ -12,6 +12,9 @@ const AttendanceTable = () => {
   const [filterDate, setFilterDate] = useState([]);
   const [startDate, setStartDate] = useState([]);
   const [endDate, setEndDate] = useState([]);
+
+  // const [filterDate, setFilterDate] = useState("");
+
   // const [state, setState] = useState([]);
   console.log("atten rec", dataSource);
   // const [attendancedata, setAttendanceData] = useState([]);
@@ -54,9 +57,9 @@ const AttendanceTable = () => {
     getData();
   }, []);
 
-  useEffect(() => {
-    EmployeeDateData();
-  }, []);
+  // useEffect(() => {
+  //   EmployeeDateData();
+  // }, []);
 
   const EmployeeDateData = () => {
     axios
