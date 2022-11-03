@@ -13,7 +13,7 @@ const Clock = () => {
   const [EmployeeCheckIn, setEmployeeCheckIn] = useState([])
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([])
   // console.log("attendance state", attendance[0].CheckIn)
-
+  const [object, setObject] = useState({start:new Date(),end:""})
 
 
 
@@ -131,21 +131,21 @@ const Clock = () => {
 
 //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
-  const employeebreak = async () => {
-    const token = localStorage.getItem("access_token1");
-    console.log("token from local storage:", token);
-    var decoded = jwt_decode(token);
-    console.log("Decoded token data", decoded);
+  // const employeebreak = async () => {
+  //   const token = localStorage.getItem("access_token1");
+  //   console.log("token from local storage:", token);
+  //   var decoded = jwt_decode(token);
+  //   console.log("Decoded token data", decoded);
 
 
-    // const CheckIn ="";
-    // const CheckOut = "";
-    const Breaks = {
-      start: "",
-      end: ""
-    };
+  //   // const CheckIn ="";
+  //   // const CheckOut = "";
+  //   const Breaks = {
+  //     start: "",
+  //     end: ""
+  //   };
 
-    
+
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   useEffect(() => {
     employeecheckout();
@@ -175,7 +175,92 @@ const Clock = () => {
 
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
-  const employeebreak = async (_id) => {
+  // const employeebreak = async (_id) => {
+    // const token = localStorage.getItem("access_token1");
+    // console.log("token from local storage:", token);
+    // var decoded = jwt_decode(token);
+    // console.log("Decoded token data", decoded);
+     
+
+    // const CheckIn ="";
+    // const CheckOut = "";
+    //   const obj = {
+    //     start:"",
+    //     end: ""
+    // }
+
+
+    //   console.log("obj", Breaks);
+
+    // const Break = new FormData()
+    // Break.append("Object",object)
+
+    // Break.append("end",end)
+
+    // console.log("Object", object);
+
+    const employeebreak = async (_id) => {
+
+
+    const Breaks = [{
+      ...object,
+    
+    }];
+    console.log("break", Breaks);
+
+    // const Break={
+    //   ...object,
+    //   ...Breaks
+    // }
+
+
+    // console.log("break", Break);
+    
+
+      await axios
+      .put(`http://localhost:1999/attendance/${_id}`,{Breaks})
+
+      // var chkin = attendance?.CheckIn;
+      // console.log("checkin", chkin);
+
+      // const CheckIn = "";
+      // const CheckOut = "";
+      // const Breaks = new Date();
+
+
+
+      .then((res) => {
+        console.log("employee break", res);
+      });
+
+
+
+       setObject({...object,end:new Date()
+        // object:object.length
+   
+        
+      })
+
+      await axios
+      .put(`http://localhost:1999/attendance/${_id}`,{Breaks})
+      .then((res) => {
+        console.log("employee breaks", res);
+      });
+
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+  // const employeebreak = async (_id) => {
     // const token = localStorage.getItem("access_token1");
     // console.log("token from local storage:", token);
     // var decoded = jwt_decode(token);
@@ -183,24 +268,24 @@ const Clock = () => {
 
     // const CheckIn ="";
     // const CheckOut = "";
-    const Break = {
-      start: "10.10",
-      end: "10.30",
-    };
+    // const Break = {
+    //   start: "10.10",
+    //   end: "10.30",
+    // };
 
-    console.log("obj", Break);
+    // console.log("obj", Break);
 
-    await axios.put(`http://localhost:1999/attendance/${_id}`, {
-      Break,
-    });
-    var chkin = attendance?.CheckIn;
-    console.log("checkin", chkin);
+    // await axios.put(`http://localhost:1999/attendance/${_id}`, {
+    //   Break,
+    // });
+    // var chkin = attendance?.CheckIn;
+    // console.log("checkin", chkin);
 
     // const CheckIn = "";
     // const CheckOut = "";
     // const Breaks = new Date();
   
-  };
+  // };
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
   // const employeeresume = async () => {
