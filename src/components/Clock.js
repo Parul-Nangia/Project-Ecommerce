@@ -81,8 +81,8 @@ const Clock = () => {
     employeecheckin();
   }, []);
 
-  const employeecheckin = async (e) => {
-    e.preventDefault()
+  const employeecheckin = async () => {
+  
     const token = localStorage.getItem("access_token1");
     var decoded = jwt_decode(token);
     const CheckIn = new Date().toISOString();
@@ -102,7 +102,7 @@ const Clock = () => {
         setEmployeeCheckIn(res?.data?.attendanceData)
         setDisable(true)
         // console.log("AttendanceID For checkout", EmployeeCheckIn._id);
-        console.log("Today Checkin Data", EmployeeCheckOut);
+        console.log("Today Checkin Data", EmployeeCheckIn);
       });
   };
 
@@ -136,15 +136,15 @@ const Clock = () => {
   }, []);
 
   const employeecheckout = async () => {
-    const CheckIn = attendance[0].CheckIn;
+    const CheckIn = attendance.CheckIn;
     console.log("i am here attendance checkin spread", CheckIn);
     const CheckOut = new Date();
     const Break = "";
-    const ID = attendance[0]._id
+    const ID = attendance._id
     console.log("Attendance id for CheckOut", ID)
 
     await axios
-      .put(`http://localhost:1999/attendance/${ID}`, {
+      .put(`http://localhost:1999/attendance`, {
 
         CheckIn,
         CheckOut,
@@ -187,10 +187,10 @@ const Clock = () => {
     const employeebreak = async (_id) => {
 
 
-    const Breaks = [{
+    const Breaks = {
       ...object,
     
-    }];
+    };
     console.log("break", Breaks);
 
     // const Break={
@@ -221,7 +221,7 @@ const Clock = () => {
 
 
        setObject({...object,end:new Date()
-        // object:object.length
+  
    
         
       })
@@ -309,7 +309,7 @@ const Clock = () => {
         </span>
       </div>
 
-      {/* {attendance?.emp_id} */}
+       {attendance?.emp_id} 
 
 
       {/* {attendance?.CheckOut}
