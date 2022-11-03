@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form, Input, Button, Row } from 'antd';
 import axios from 'axios';
+import jwt_decode from "jwt-decode";
 import { makeStyles } from "@material-ui/core";
 import { useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react";
@@ -30,14 +31,17 @@ const LeaveForm = () => {
   const [ReturnDate, setReturnDate] = useState("")
   const [TotalHoursRequested, setTotalHoursRequested] = useState("");
   const [TotalDaysRequested, setTotalDaysRequested] = useState("")
+  
+
 
 
 
 
 
   function applyLeave() {
-    console.warn({ EmployeeName, SupervisorName, Department, LeaveType, LeaveDate, ReturnDate, TotalHoursRequested, TotalDaysRequested });
-    let data = { EmployeeName, SupervisorName, Department, LeaveType, LeaveDate, ReturnDate, TotalHoursRequested, TotalDaysRequested }
+    const token = localStorage.getItem("access_token1");
+    var decoded = jwt_decode(token);
+    let data = {emp_id: decoded._id, EmployeeName, SupervisorName, Department, LeaveType, LeaveDate, ReturnDate, TotalHoursRequested, TotalDaysRequested }
 
 
     fetch("http://localhost:1999/leave", {

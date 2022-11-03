@@ -9,17 +9,19 @@ const { RangePicker } = DatePicker;
 
 const AttendanceTable = () => {
   const [dataSource, setDataSource] = useState([]);
-  const [filterData, setFilterData] = useState([]);
+  const [queryData, setQueryData] = useState([]);
   const [startDate, setStartDate] = useState("");
 
-
   console.log("Start date", startDate)
+
   const [endDate, setEndDate] = useState("");
+  console.log("End date", endDate)
+
 
   // const [filterDate, setFilterDate] = useState("");
 
   // const [state, setState] = useState([]);
-  console.log("atten rec", dataSource);
+ 
   // const [attendancedata, setAttendanceData] = useState([]);
 
   // useEffect(() => {
@@ -58,36 +60,43 @@ const AttendanceTable = () => {
   // console.log(state, "hh");
 
 
-  useEffect(() => {
-    EmployeeDateData();
-  }, []);
-
-  const EmployeeDateData = async () => {
-
-    await axios
-      .get(
-        `http://localhost:1999/attendance/daterange`,
-      )
-      .then((res) => {
-        setFilterData(res?.data?.data);
-        console.log("Date range data", res);
-
-
-      });
-
-  }
-
   // useEffect(() => {
-  //   getData();
+  //   EmployeeDateData();
   // }, []);
-  // const getData = async () => {
-  //   await axios.get(`http://localhost:1999/attendance`).then((res) => {
-  //     console.log(res, "bhvhv");
-  //     setDataSource(res?.data?.attendanceRecord);
-  //     console.log("attendance record", dataSource);
 
-  //   });
-  // };
+  // const EmployeeDateData = async () => {
+
+  //   await axios
+  //     .get(
+  //       `http://localhost:1999/attendance/daterange`,
+        
+  //     )
+  //     .then((res) => {
+  //       setQuery(res?.data?.data);
+  //       console.log("Date range data", res);
+
+
+  //     });
+  //     console.log("filter data", query);
+
+
+  // }
+
+  useEffect(() => {
+    getData();
+  }, []);
+  const getData = async () => {
+    await axios.get(`http://localhost:1999/attendance`,{
+      startDate,
+      endDate
+    })
+    .then((res) => {  
+      setQueryData(res?.data?.attendanceRecord);
+      console.log("attendance record", res);
+
+    });
+  };
+  // console.log("atten record", dataSource);
   // const onChange = (date, dateString) => {
   //   console.log(date, dateString);
   // };
@@ -146,39 +155,7 @@ const AttendanceTable = () => {
     {
       title: "CheckIn",
       dataIndex: "CheckIn",
-      filterDropdown: ({ setSelectedKeys, selectedKeys, clearFilters }) => {
-        return (
-          <>
-            <Space>
-              <DatePicker
-                // format={"DD-MM-YY"}
-                onChange={(e) => {
-                  setStartDate([e.format("YYYY-MM-DD")]);
-                }}
-                allowClear={true}
-              />
 
-              <Space>
-                <DatePicker
-                  // format={"DD-MM-YY"}
-                  onChange={(e) => {
-                    setEndDate([e.format("YYYY-MM-DD")]);
-                  }}
-                  allowClear={true}
-                />
-                <Button
-                  onClick={() => {
-                    EmployeeDateData();
-                  }}
-                  type="primary"
-                >
-                  Search
-                </Button>
-              </Space>
-            </Space>
-          </>
-        );
-      },
       //     onFilter:(value,record)=>{
       //       return (
       //         record[CheckIn]
@@ -203,12 +180,44 @@ const AttendanceTable = () => {
     {
       title: "Date",
       dataIndex: "TodayDate",
+      filterDropdown: ({ setSelectedKeys, selectedKeys, clearFilters }) => {
+        return (
+          <>
+            <Space>
+              <DatePicker
+                // format={"DD-MM-YY"}
+                onChange={(e) => {
+                  setStartDate([e.format("YYYY-MM-DD")]);
+                }}
+                allowClear={true}
+              />
+
+              <Space>
+                <DatePicker
+                  // format={"DD-MM-YY"}
+                  onChange={(e) => {
+                    setEndDate([e.format("YYYY-MM-DD")]);
+                  }}
+                  allowClear={true}
+                />
+                <Button
+                  onClick={getData}
+
+                  type="primary"
+                >
+                  Search
+                </Button>
+              </Space>
+            </Space>
+          </>
+        );
+      },
     },
   ];
 
   return (
     <>
-      <Table columns={columns} filterData={filterData} />
+      <Table columns={columns} queryData={queryData} />
     </>
   );
 };
