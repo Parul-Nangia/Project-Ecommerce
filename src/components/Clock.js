@@ -121,8 +121,31 @@ const Clock = () => {
       console.log("Today Checkin Data", EmployeeCheckIn)
     // }
   };
+
   //-------------------------------------------- Attendance Checkin---------------------------------------------------------------
 
+//-------------------------------------------- Attendance Checkout---------------------------------------------------------------
+
+  
+
+
+//-------------------------------------------- Attendance Break---------------------------------------------------------------
+
+  const employeebreak = async () => {
+    const token = localStorage.getItem("access_token1");
+    console.log("token from local storage:", token);
+    var decoded = jwt_decode(token);
+    console.log("Decoded token data", decoded);
+
+
+    // const CheckIn ="";
+    // const CheckOut = "";
+    const Breaks = {
+      start: "",
+      end: ""
+    };
+
+    
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   useEffect(() => {
     employeecheckout();
