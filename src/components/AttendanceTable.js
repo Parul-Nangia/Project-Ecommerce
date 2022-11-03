@@ -72,6 +72,26 @@ const AttendanceTable = () => {
   //   console.log("filter data", query);
   // };
 
+  // useEffect(() => {
+  //   EmployeeDateData();
+  // }, []);
+
+  // const EmployeeDateData = async () => {
+
+  //   await axios
+  //     .get(
+  //       `http://localhost:1999/attendance/daterange`,
+
+  //     )
+  //     .then((res) => {
+  //       setQuery(res?.data?.data);
+  //       console.log("Date range data", res);
+
+  //     });
+  //     console.log("filter data", query);
+
+  // }
+
   useEffect(() => {
     getData();
   }, []);
