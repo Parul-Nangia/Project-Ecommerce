@@ -13,7 +13,8 @@ const Clock = () => {
   const [EmployeeCheckIn, setEmployeeCheckIn] = useState([])
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([])
   // console.log("attendance state", attendance[0].CheckIn)
-  const [object, setObject] = useState({start:new Date(),end:""})
+  const [object, setObject] = useState({ start: new Date(), end: "" })
+
 
 
   //-------------------------------------------- Clock---------------------------------------------------------------
@@ -34,10 +35,12 @@ const Clock = () => {
   }, []);
 
   const LoggedAttendanceAllRecord = async () => {
+    const token = localStorage.getItem("access_token1");
+    var decoded = jwt_decode(token);
 
     await axios
       .get(
-        `http://localhost:1999/attendance/record`,
+        `http://localhost:1999/attendance/record/${decoded._id}`,
       )
       .then((res) => {
         setAttendance(res?.data?.attendanceDataByID);
@@ -49,7 +52,6 @@ const Clock = () => {
   }
   //---------------------------------------------Employee Attendance GET by id API----------------------------------------------------------
 
-  //-------------------------------------------- Attendance Checkin---------------------------------------------------------------
   // const checkDate = new Date();
   // // console.log("Checkin Date", checkDate)
   // let day = checkDate.getDate();
@@ -86,34 +88,43 @@ const Clock = () => {
     const token = localStorage.getItem("access_token1");
     var decoded = jwt_decode(token);
     const CheckIn = new Date().toISOString();
+    const checkINDate = new Date();
+    // console.log("Checkin Date", checkDate)
+    let day = checkINDate.getDate();
+    let month = checkINDate.getMonth() + 1;
+    let year = checkINDate.getFullYear();
+    let currentDate = `${year}-${month}-${day}`;
+    const TodayDate = currentDate;
+    console.log("Today Date", TodayDate)
+
     const CheckOut = "";
     const Break = "";
     const emp_id = decoded._id
 
     await axios
       .post(`http://localhost:1999/attendance/${emp_id}`, {
-        name : decoded.name,
-        emp_id : decoded._id,
+        name: decoded.name,
+        emp_id: decoded._id,
         CheckIn,
         CheckOut,
         Break,
       })
       .then((res) => {
-        setEmployeeCheckIn(res?.data?.attendanceData)
+        setEmployeeCheckIn(res?.data?.newAttendance)
         setDisable(true)
         // console.log("AttendanceID For checkout", EmployeeCheckIn._id);
-        console.log("Today Checkin Data", EmployeeCheckOut);
+        console.log("Today Checkin Data", EmployeeCheckIn);
       });
   };
 
   //-------------------------------------------- Attendance Checkin---------------------------------------------------------------
 
-//-------------------------------------------- Attendance Checkout---------------------------------------------------------------
-
-  
+  //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
 
 
-//-------------------------------------------- Attendance Break---------------------------------------------------------------
+
+
+  //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
   // const employeebreak = async () => {
   //   const token = localStorage.getItem("access_token1");
@@ -161,35 +172,35 @@ const Clock = () => {
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
   // const employeebreak = async (_id) => {
-    // const token = localStorage.getItem("access_token1");
-    // console.log("token from local storage:", token);
-    // var decoded = jwt_decode(token);
-    // console.log("Decoded token data", decoded);
-     
-
-    // const CheckIn ="";
-    // const CheckOut = "";
-    //   const obj = {
-    //     start:"",
-    //     end: ""
-    // }
+  // const token = localStorage.getItem("access_token1");
+  // console.log("token from local storage:", token);
+  // var decoded = jwt_decode(token);
+  // console.log("Decoded token data", decoded);
 
 
-    //   console.log("obj", Breaks);
+  // const CheckIn ="";
+  // const CheckOut = "";
+  //   const obj = {
+  //     start:"",
+  //     end: ""
+  // }
 
-    // const Break = new FormData()
-    // Break.append("Object",object)
 
-    // Break.append("end",end)
+  //   console.log("obj", Breaks);
 
-    // console.log("Object", object);
+  // const Break = new FormData()
+  // Break.append("Object",object)
 
-    const employeebreak = async (_id) => {
+  // Break.append("end",end)
+
+  // console.log("Object", object);
+
+  const employeebreak = async (_id) => {
 
 
     const Breaks = [{
       ...object,
-    
+
     }];
     console.log("break", Breaks);
 
@@ -200,10 +211,10 @@ const Clock = () => {
 
 
     // console.log("break", Break);
-    
 
-      await axios
-      .put(`http://localhost:1999/attendance/${_id}`,{Breaks})
+
+    await axios
+      .put(`http://localhost:1999/attendance/${_id}`, { Breaks })
 
       // var chkin = attendance?.CheckIn;
       // console.log("checkin", chkin);
@@ -220,14 +231,15 @@ const Clock = () => {
 
 
 
-       setObject({...object,end:new Date()
-        // object:object.length
-   
-        
-      })
+    setObject({
+      ...object, end: new Date()
+      // object:object.length
 
-      await axios
-      .put(`http://localhost:1999/attendance/${_id}`,{Breaks})
+
+    })
+
+    await axios
+      .put(`http://localhost:1999/attendance/${_id}`, { Breaks })
       .then((res) => {
         console.log("employee breaks", res);
       });
@@ -246,58 +258,32 @@ const Clock = () => {
 
 
   // const employeebreak = async (_id) => {
-    // const token = localStorage.getItem("access_token1");
-    // console.log("token from local storage:", token);
-    // var decoded = jwt_decode(token);
-    // console.log("Decoded token data", decoded);
+  // const token = localStorage.getItem("access_token1");
+  // console.log("token from local storage:", token);
+  // var decoded = jwt_decode(token);
+  // console.log("Decoded token data", decoded);
 
-    // const CheckIn ="";
-    // const CheckOut = "";
-    // const Break = {
-    //   start: "10.10",
-    //   end: "10.30",
-    // };
+  // const CheckIn ="";
+  // const CheckOut = "";
+  // const Break = {
+  //   start: "10.10",
+  //   end: "10.30",
+  // };
 
-    // console.log("obj", Break);
+  // console.log("obj", Break);
 
-    // await axios.put(`http://localhost:1999/attendance/${_id}`, {
-    //   Break,
-    // });
-    // var chkin = attendance?.CheckIn;
-    // console.log("checkin", chkin);
+  // await axios.put(`http://localhost:1999/attendance/${_id}`, {
+  //   Break,
+  // });
+  // var chkin = attendance?.CheckIn;
+  // console.log("checkin", chkin);
 
-    // const CheckIn = "";
-    // const CheckOut = "";
-    // const Breaks = new Date();
-  
+  // const CheckIn = "";
+  // const CheckOut = "";
+  // const Breaks = new Date();
+
   // };
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
-
-  // const employeeresume = async () => {
-  //   const token = localStorage.getItem("access_token1");
-  //   console.log("token from local storage:", token);
-  //   var decoded = jwt_decode(token);
-  //   console.log("Decoded token data", decoded);
-
-  //   const CheckIn = "";
-  //   const CheckOut = "";
-  //   const Break = "";
-  //   const Resume = Date();
-
-  //   await axios
-  //     .put(`http://localhost:1999/attendance/${decoded._id}`, {
-  //       CheckIn,
-  //       CheckOut,
-  //       Break,
-  //       Resume,
-  //     })
-  //     .then((res) => {
-  //       console.log("id", decoded._id);
-
-  //       console.log("employee resume", res);
-  //       // setDisabled(false);
-  //     });
-  // };
 
   return (
     <>
