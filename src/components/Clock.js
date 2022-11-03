@@ -52,6 +52,7 @@ const Clock = () => {
   };
   //---------------------------------------------Employee Attendance GET by id API----------------------------------------------------------
 
+
   // const checkDate = new Date();
   // // console.log("Checkin Date", checkDate)
   // let day = checkDate.getDate();
@@ -78,6 +79,36 @@ const Clock = () => {
   //     closable
   //   />
   // }
+
+  
+  //-------------------------------------------- Attendance Checkin---------------------------------------------------------------
+  const checkDate = new Date();
+  // console.log("Checkin Date", checkDate)
+  let day = checkDate.getDate();
+  let month = checkDate.getMonth() + 1;
+  let year = checkDate.getFullYear();
+  let currentDate = `${year}-${month}-${day}`;
+
+  const checkinConvert = new Date().toDateString();
+  // const againcheckinConvert = new Date().toISOString();
+  // console.log("Checkin Date Conversion", checkinConvert)
+  // let day1 = checkinConvert.getDate();
+  // let month1 = checkinConvert.getMonth() + 1;
+  // let year1 = checkinConvert.getFullYear();
+  // let currentDate1 = `${year1}-${month1}-${day1}`;
+  
+  if (currentDate === currentDate){
+    const token = localStorage.getItem("access_token1");
+    var decoded = jwt_decode(token);
+    <Alert
+      message = {decoded.name}
+      description="You have already Checked-in"
+      type="warning"
+      showIcon
+      closable
+    /> 
+  }
+
 
   useEffect(() => {
     var MyDate = new Date();
