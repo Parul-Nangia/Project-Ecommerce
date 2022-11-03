@@ -9,9 +9,12 @@ const { RangePicker } = DatePicker;
 
 const AttendanceTable = () => {
   const [dataSource, setDataSource] = useState([]);
-  const [filterDate, setFilterDate] = useState([]);
-  const [startDate, setStartDate] = useState([]);
-  const [endDate, setEndDate] = useState([]);
+  const [filterData, setFilterData] = useState([]);
+  const [startDate, setStartDate] = useState("");
+
+
+  console.log("Start date", startDate)
+  const [endDate, setEndDate] = useState("");
 
   // const [filterDate, setFilterDate] = useState("");
 
@@ -53,33 +56,38 @@ const AttendanceTable = () => {
   //     });
   // };
   // console.log(state, "hh");
+
+
   useEffect(() => {
-    getData();
+    EmployeeDateData();
   }, []);
 
-  // useEffect(() => {
-  //   EmployeeDateData();
-  // }, []);
+  const EmployeeDateData = async () => {
 
-  const EmployeeDateData = () => {
-    axios
+    await axios
       .get(
-        "http://localhost:1999/attendance/Daterange",
-        console.log("Filter Data is", dataSource)
+        `http://localhost:1999/attendance/daterange`,
       )
       .then((res) => {
-        setDataSource(res?.data?.attendanceRecord);
-        console.log("Logged In Employee Attendance", dataSource);
-      });
-  };
+        setFilterData(res?.data?.data);
+        console.log("Date range data", res);
 
-  const getData = async () => {
-    await axios.get(`http://localhost:1999/attendance`).then((res) => {
-      console.log(res, "bhvhv");
-      setDataSource(res?.data?.attendanceRecord);
-      console.log("attendance record", dataSource);
-    });
-  };
+
+      });
+
+  }
+
+  // useEffect(() => {
+  //   getData();
+  // }, []);
+  // const getData = async () => {
+  //   await axios.get(`http://localhost:1999/attendance`).then((res) => {
+  //     console.log(res, "bhvhv");
+  //     setDataSource(res?.data?.attendanceRecord);
+  //     console.log("attendance record", dataSource);
+
+  //   });
+  // };
   // const onChange = (date, dateString) => {
   //   console.log(date, dateString);
   // };
@@ -145,7 +153,7 @@ const AttendanceTable = () => {
               <DatePicker
                 // format={"DD-MM-YY"}
                 onChange={(e) => {
-                  setSelectedKeys([e.format("YYYY-MM-DD")]);
+                  setStartDate([e.format("YYYY-MM-DD")]);
                 }}
                 allowClear={true}
               />
@@ -154,7 +162,7 @@ const AttendanceTable = () => {
                 <DatePicker
                   // format={"DD-MM-YY"}
                   onChange={(e) => {
-                    selectedKeys([e.format("YYYY-MM-DD")]);
+                    setEndDate([e.format("YYYY-MM-DD")]);
                   }}
                   allowClear={true}
                 />
@@ -192,11 +200,15 @@ const AttendanceTable = () => {
       title: "Break",
       dataIndex: "Break",
     },
+    {
+      title: "Date",
+      dataIndex: "TodayDate",
+    },
   ];
 
   return (
     <>
-      <Table columns={columns} dataSource={dataSource} />
+      <Table columns={columns} filterData={filterData} />
     </>
   );
 };
