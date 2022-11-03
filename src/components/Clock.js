@@ -18,6 +18,7 @@ const Clock = () => {
     end: "",
   });
 
+
   //-------------------------------------------- Clock---------------------------------------------------------------
   const refreshClock = () => {
     setDate(new Date());
@@ -79,10 +80,21 @@ const Clock = () => {
   // }
 
   useEffect(() => {
-    employeecheckin();
+    var MyDate = new Date();
+    var MyDateString;
+    MyDate.setDate(MyDate.getDate());
+    MyDateString = MyDate.getFullYear() + '-' + ('0' + (MyDate.getMonth() + 1)).slice(-2) + '-'
+      + ('0' + MyDate.getDate()).slice(-2)
+    if (attendance.TodayDate === MyDateString) {
+      setDisable(true)
+      // window.alert("You have already checkin")
+    } else {
+      employeecheckin();
+    }
   }, []);
 
-  const employeecheckin = async () => {
+  const employeecheckin = async (e) => {
+    e.preventDefault()
     const token = localStorage.getItem("access_token1");
     var decoded = jwt_decode(token);
     // today date
@@ -114,11 +126,26 @@ const Clock = () => {
         Breaks,
       })
       .then((res) => {
-        setEmployeeCheckIn(res?.data?.newAttendance);
-        setDisable(true);
+        setEmployeeCheckIn(res?.data?.newAttendance)
+
         // console.log("AttendanceID For checkout", EmployeeCheckIn._id);
       });
     console.log("Today Checkin Data", EmployeeCheckIn);
+
+    if (attendance[0].CheckIn >= "09:10:00 AM") {
+      let data = { emp_id: decoded._id, EmployeeName: decoded.name, SupervisorName: "Sudhir Dadwal", Department: "Software", LeaveType: "ShortLeave", LeaveDate: MyDateString, ReturnDate: "Null", TotalHoursRequested: "Half Day", TotalDaysRequested: 0 }
+
+      fetch("http://localhost:1999/leave", {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      }).then((res) => {
+        console.log("You Are Late By 9:10AM. Short Leave Applied", data);
+      })
+    }
   };
 
   //-------------------------------------------- Attendance Checkin---------------------------------------------------------------
@@ -146,7 +173,7 @@ const Clock = () => {
   }, []);
 
   const employeecheckout = async () => {
-    const CheckIn = attendance.CheckIn;
+    const CheckIn = attendance[0].CheckIn;
     console.log("i am here attendance checkin spread", CheckIn);
     const CheckOut = new Date();
     const Breaks = "";
