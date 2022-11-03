@@ -16,11 +16,6 @@ const Clock = () => {
 
 
 
-
-
-
-
-
   //-------------------------------------------- Clock---------------------------------------------------------------
   const refreshClock = () => {
     setDate(new Date());
@@ -39,17 +34,13 @@ const Clock = () => {
   }, []);
 
   const LoggedAttendanceAllRecord = async () => {
-    const token = localStorage.getItem("access_token1");
-    console.log("token from local storage:", token);
-    var decoded = jwt_decode(token);
-    console.log("Decoded token data", decoded);
+
     await axios
       .get(
-        `http://localhost:1999/attendance/employee/${decoded._id}`,
-        console.log("hello EmpID here", decoded._id)
+        `http://localhost:1999/attendance/record`,
       )
       .then((res) => {
-        setAttendance(res?.data?.attendanceDataByEmpID);
+        setAttendance(res?.data?.attendanceDataByID);
         console.log("Logged In Employee Attendance", attendance);
 
         // console.log("Checkin Type", typeof attendance[0].CheckIn);
@@ -57,69 +48,62 @@ const Clock = () => {
       });
   }
   //---------------------------------------------Employee Attendance GET by id API----------------------------------------------------------
-  
-  //-------------------------------------------- Attendance Checkin---------------------------------------------------------------
-  const checkDate = new Date();
-  // console.log("Checkin Date", checkDate)
-  let day = checkDate.getDate();
-  let month = checkDate.getMonth() + 1;
-  let year = checkDate.getFullYear();
-  let currentDate = `${year}-${month}-${day}`;
 
-  const checkinConvert = new Date().toDateString();
-  // const againcheckinConvert = new Date().toISOString();
-  console.log("Checkin Date Conversion", checkinConvert)
-  // let day1 = checkinConvert.getDate();
-  // let month1 = checkinConvert.getMonth() + 1;
-  // let year1 = checkinConvert.getFullYear();
-  // let currentDate1 = `${year1}-${month1}-${day1}`;
-  
-  if (currentDate === currentDate){
-    const token = localStorage.getItem("access_token1");
-    var decoded = jwt_decode(token);
-    <Alert
-      message = {decoded.name}
-      description="You have already Checked-in"
-      type="warning"
-      showIcon
-      closable
-    /> 
-  }
+  //-------------------------------------------- Attendance Checkin---------------------------------------------------------------
+  // const checkDate = new Date();
+  // // console.log("Checkin Date", checkDate)
+  // let day = checkDate.getDate();
+  // let month = checkDate.getMonth() + 1;
+  // let year = checkDate.getFullYear();
+  // let currentDate = `${year}-${month}-${day}`;
+
+  // const checkinConvert = new Date().toDateString();
+  // // const againcheckinConvert = new Date().toISOString();
+  // console.log("Checkin Date Conversion", checkinConvert)
+  // // let day1 = checkinConvert.getDate();
+  // // let month1 = checkinConvert.getMonth() + 1;
+  // // let year1 = checkinConvert.getFullYear();
+  // // let currentDate1 = `${year1}-${month1}-${day1}`;
+
+  // if (currentDate === currentDate){
+  //   const token = localStorage.getItem("access_token1");
+  //   var decoded = jwt_decode(token);
+  //   <Alert
+  //     message = {decoded.name}
+  //     description="You have already Checked-in"
+  //     type="warning"
+  //     showIcon
+  //     closable
+  //   /> 
+  // }
 
   useEffect(() => {
     employeecheckin();
   }, []);
 
   const employeecheckin = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const token = localStorage.getItem("access_token1");
     var decoded = jwt_decode(token);
-
     const CheckIn = new Date().toISOString();
-    console.log("I am in Checkin function", CheckIn);
-    const name = decoded.name;
     const CheckOut = "";
     const Break = "";
     const emp_id = decoded._id
 
     await axios
       .post(`http://localhost:1999/attendance/${emp_id}`, {
-        emp_id: emp_id,
-        name,
+        name : decoded.name,
+        emp_id : decoded._id,
         CheckIn,
         CheckOut,
         Break,
       })
       .then((res) => {
-        // console.log("CheckIn Response", res);
-        setEmployeeCheckIn(res?.data?.attendanceRecord)
-        
-        // console.log("Checkin id", EmployeeCheckIn._id)
-        setDisable(true);
-        // window.location.reload(false);
+        setEmployeeCheckIn(res?.data?.attendanceData)
+        setDisable(true)
+        // console.log("AttendanceID For checkout", EmployeeCheckIn._id);
+        console.log("Today Checkin Data", EmployeeCheckOut);
       });
-      console.log("Today Checkin Data", EmployeeCheckIn)
-    // }
   };
   //-------------------------------------------- Attendance Checkin---------------------------------------------------------------
 
@@ -129,11 +113,12 @@ const Clock = () => {
   }, []);
 
   const employeecheckout = async () => {
-    const CheckIn = EmployeeCheckIn.CheckIn;
+    const CheckIn = attendance[0].CheckIn;
     console.log("i am here attendance checkin spread", CheckIn);
     const CheckOut = new Date();
     const Break = "";
-    const ID = EmployeeCheckIn._id
+    const ID = attendance[0]._id
+    console.log("Attendance id for CheckOut", ID)
 
     await axios
       .put(`http://localhost:1999/attendance/${ID}`, {
@@ -176,7 +161,7 @@ const Clock = () => {
     // const CheckIn = "";
     // const CheckOut = "";
     // const Breaks = new Date();
-  
+
   };
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
@@ -218,7 +203,7 @@ const Clock = () => {
 
       {/* {attendance?.emp_id} */}
 
-    
+
       {/* {attendance?.CheckOut}
       {attendance?.Break}
 
@@ -236,20 +221,20 @@ const Clock = () => {
             backgroundColor: "Green",
             fontWeight: "Bold",
           }}
-          onClick= {employeecheckin}
-          
+          onClick={employeecheckin}
+
           disabled={disable}
         >
           Checkin
         </Button>
         <Button
-         
+
           style={{
             color: "white",
             backgroundColor: "Tomato",
             fontWeight: "Bold",
           }}
-         
+
           onClick={employeebreak}
         >
           Break
@@ -261,12 +246,12 @@ const Clock = () => {
             backgroundColor: "Orange",
             fontWeight: "Bold",
           }}
-          onClick={ employeecheckout}
+          onClick={employeecheckout}
         >
           Checkout
         </Button>
       </div>
-      <br/>
+      <br />
     </>
   );
 };
