@@ -1,32 +1,34 @@
 import { makeStyles } from "@material-ui/core";
-import React from 'react';
+import React from "react";
 import { useState, useEffect } from "react";
-import { Table } from 'antd';
-import { Button, Modal, Form, Input, Row  } from 'antd';
-import { FileAddOutlined, LockOutlined, UserOutlined, MailOutlined, PhoneOutlined, UserSwitchOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import axios from 'axios';
-import {useNavigate} from "react-router-dom"
-import jwt_decode from 'jwt-decode';
-
-
-
-
-
+import { Table } from "antd";
+import { Button, Modal, Form, Input, Row } from "antd";
+import {
+  FileAddOutlined,
+  LockOutlined,
+  UserOutlined,
+  MailOutlined,
+  PhoneOutlined,
+  UserSwitchOutlined,
+  EyeOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 const useStyles = makeStyles({
-
   frmItem: {
     padding: "10px",
-    width: "50vh"
-
+    width: "50vh",
   },
   headingColor: {
     backgroundColor: "#87CEEB",
     color: "#000000",
     marginBottom: "20px",
     textAlign: "center",
-    fontWeight: "bold"
-
+    fontWeight: "bold",
   },
   addEmpColor: {
     backgroundColor: "#87CEEB",
@@ -35,34 +37,31 @@ const useStyles = makeStyles({
     color: "#000000",
     marginTop: "30px",
     fontWeight: "bold",
-    paddingTop: "1px"
-
-
+    paddingTop: "1px",
   },
   empListColor: {
     backgroundColor: "#87CEEB",
     color: "#000000",
     textAlign: "center",
     marginTop: "30px",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   tableHeadCell: {
     color: "#000000",
     fontWeight: "bold",
     fontSize: 16,
-
   },
   empListColor: {
     backgroundColor: "#87CEEB",
     color: "#000000",
     textAlign: "center",
     marginTop: "30px",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   tableHeadCell: {
     color: "#000000",
     fontWeight: "bold",
-    fontSize: 16
+    fontSize: 16,
   },
   btnCenter: {
     padding: "10px",
@@ -73,83 +72,59 @@ const useStyles = makeStyles({
     "&:hover": {
       borderRadius: 4,
       backgroundColor: "white",
-      color: "black"
+      color: "black",
     },
   },
-})
+});
 
-
-
-
-
-const Employees = ({dataSource})=> {
+const Employees = ({ dataSource }) => {
   // const [ignored, forceUpdate] = useReducer(x=>x+1, 0);
-  
+
   // const [profile, setProfile] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
- 
-  
-  
+
   const classes = useStyles();
   const [state, setState] = useState([]);
   // const [view, setView] = useState([]);
-  
+
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
   const [gender, setGender] = useState("");
-  const [role,setRole] = useState("")
-  const navigate = useNavigate()
-  const[name,setName]=useState("");
-
+  const [role, setRole] = useState("");
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [employeename, setEmployeeName] = useState("");
 
   useEffect(() => {
     userData();
-  
-  }, [])
-
+  }, []);
 
   useEffect(() => {
     employeelist();
+  }, []);
 
-  }, [])
-
- 
-  
-  
-  
-  const userData = ()=> {
+  const userData = () => {
     const token = localStorage.getItem("access_token1");
-    console.log("token from local storage:", token)
+    console.log("token from local storage:", token);
     // let token = token;
     var decoded = jwt_decode(token);
-    console.log("Decoded token data",decoded);
-    setName(decoded)
-  }
-  
-  
-  
-   
-  
-  
+    console.log("Decoded token data", decoded);
+    setName(decoded);
+  };
+
   // if(name.role==="employee"){
   //   return(
   //     <Error />
   //   )
-  
+
   // }
- 
-  
- 
-  const profile = (user_id) =>{
-    navigate("/profile/"+user_id)
-  }
 
-
-
-
+  const profile = (user_id) => {
+    navigate("/profile/" + user_id);
+  };
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -163,48 +138,32 @@ const Employees = ({dataSource})=> {
     setIsModalOpen(false);
   };
 
-
-
-
-
   const ondeleteEmployee = (record) => {
     Modal.confirm({
       title: "Are you Sure, you want to delete this employee record?",
       okText: "Yes",
       okType: "danger",
       onOk: () => {
-        deleteEmployee(record._id)
-
-
-      }
-    })
+        deleteEmployee(record._id);
+      },
+    });
   };
-
-
-
-
-
 
   //================================================= START employee delete ( API==================================================
 
   function deleteEmployee(_id) {
-
     fetch(`http://localhost:1999/user/${_id}`, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
 
-    })
-
-    console.log("Employee Deleted", _id)
+    console.log("Employee Deleted", _id);
     // forceUpdate();
     window.location.reload(false);
-
   }
-
-
 
   // ----------------------------------------axios delete method (delete api)
   // const deleteData = async (_id)=> {
@@ -220,62 +179,49 @@ const Employees = ({dataSource})=> {
   //     );
   // };
 
-
-
-
   // //================================================= START employee post (POST API)
   function saveEmployee() {
-    console.warn({ name,password ,email, contact, gender,role });
-    let data = { name,password ,email, contact, gender,role }
-
+    console.warn({ name, password, email, contact, gender, role });
+    let data = { name, password, email, contact, gender, role };
 
     fetch("http://localhost:1999/user/signup", {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     }).then((Employee) => {
       console.log("result", Employee);
-      window.alert("New Employee added successfully")
-
-    })
-
+      window.alert("New Employee added successfully");
+    });
   }
 
   // //================================================= END employee post (POST API)
 
-
-
-
-
-
   // //================================================= START employee put (PUT API)
   // ----------------------------------------axios method (PUT api)
   const editEmployee = async (_id) => {
-    console.log("hdghja")
-    console.log(_id)
+    console.log("hdghja");
+    console.log(_id);
 
-
-
-    const name = editingEmployee.name
-    console.log( "editing Employee",editingEmployee)
-    console.log(editingEmployee.name, "editingEmployee.name")
-    const email = editingEmployee.email
-    const gender = editingEmployee.gender
-    const contact = editingEmployee.contact
-    const role = editingEmployee.role
-    await axios.put(`http://localhost:1999/user/${_id}`, { name, email, gender, contact, role })
-      .then(
-        res => {
-
-
-
-        }
-      )
+    const name = editingEmployee.name;
+    console.log("editing Employee", editingEmployee);
+    console.log(editingEmployee.name, "editingEmployee.name");
+    const email = editingEmployee.email;
+    const gender = editingEmployee.gender;
+    const contact = editingEmployee.contact;
+    const role = editingEmployee.role;
+    await axios
+      .put(`http://localhost:1999/user/${_id}`, {
+        name,
+        email,
+        gender,
+        contact,
+        role,
+      })
+      .then((res) => {});
     setIsEditing(false);
-
   };
   // ----------------------------------------fetch method (PUT api)
   //  function editEmployee(_id) {
@@ -304,35 +250,30 @@ const Employees = ({dataSource})=> {
   const onEditEmployee = (record) => {
     setIsEditing(true);
     setEditingEmployee({ ...record });
-  }
+  };
   const resetEditing = () => {
     setIsEditing(false);
     setEditingEmployee(null);
-
   };
   // //================================================= END employee put (PUT API)
 
-
   // //================================================= START employee GET (GET API)
-  
-  
 
   const employeelist = () => {
-    fetch("http://localhost:1999/user").then((response) => {
-      return response.json();
-    }).then((data) => {
-      let emp = data.userData
-      setState(emp);
+    fetch("http://localhost:1999/user")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        let emp = data.userData;
+        setState(emp);
 
-      console.log("response", emp);
-
-    })
-
-  }
-  console.log(state, "hh")
+        console.log("response", emp);
+      });
+  };
+  console.log(state, "hh");
 
   // //================================================= END employee GET (GET API)
-
 
   // //=================================================START View employee GET (GET API)
   // useEffect((_id) => {
@@ -347,12 +288,10 @@ const Employees = ({dataSource})=> {
   //     let ab = data.viewData;
   //     setView(ab)
 
-        
-
   //     console.log("response", ab);
 
   //   })
-    
+
   // }
   // console.log(view, "qq")
   // //=================================================END  View employee GET (GET API)
@@ -361,39 +300,60 @@ const Employees = ({dataSource})=> {
 
   // }
 
-
-  
-// const navigate=useNavigate()
-const documentation =(user_id)=>{
-   navigate("/documentation/"+user_id)
-}
-
-
+  // const navigate=useNavigate()
+  const documentation = (user_id) => {
+    navigate("/documentation/" + user_id);
+  };
 
   const columns = [
     {
       title: "Name",
       dataIndex: "name",
-      filterDropdown:({setSelectedKeys,selectedKeys,confirm,clearFilters})=>{
-        return(
+      filterDropdown: ({
+        setSelectedKeys,
+        selectedKeys,
+        confirm,
+        clearFilters,
+      }) => {
+        return (
           <>
-        <Input autoFocus 
-        value={selectedKeys[0]}
-        onChange={(e)=>{setSelectedKeys(e.target.value?[e.target.value]:[])
-        confirm({closeDropdown:false})}}
-        onPressEnter={() => {confirm()}}
-        onBlur={() => {confirm()}} >
-        
-        </Input>
-        <Button onClick={()=>{confirm()}} type='primary'>Search</Button>
-        <Button onClick={()=>{clearFilters()}} type='danger'>Reset</Button>
-        </>
-        )
+            <Input
+              autoFocus
+              value={selectedKeys[0]}
+              onChange={(e) => {
+                setSelectedKeys(e.target.value ? [e.target.value] : []);
+                confirm({ closeDropdown: false });
+              }}
+              onPressEnter={() => {
+                confirm();
+              }}
+              onBlur={() => {
+                confirm();
+              }}
+            ></Input>
+            <Button
+              onClick={() => {
+                confirm();
+              }}
+              type="primary"
+            >
+              Search
+            </Button>
+            <Button
+              onClick={() => {
+                clearFilters();
+              }}
+              type="danger"
+            >
+              Reset
+            </Button>
+          </>
+        );
       },
-      onFilter:(value,record)=>{
-           return record.name.toLowerCase().includes(value.toLowerCase())
+      onFilter: (value, record) => {
+        return record.name.toLowerCase().includes(value.toLowerCase());
       },
-      width: '30%',
+      width: "30%",
     },
     {
       title: "Email",
@@ -415,163 +375,222 @@ const documentation =(user_id)=>{
     {
       title: "Actions",
       render: (record) => {
-        console.log(record, "record id")
+        console.log(record, "record id");
         return (
           <>
-            
-
-          
-            <Button style={{color:"black" , backgroundColor:"grey"}} onClick={()=>{documentation(record._id)}}><FileAddOutlined /></Button>
-            <Button style={{color:"black" , backgroundColor:"skyblue"}} onClick={()=>{profile(record._id)}}><EyeOutlined /></Button>
-            <Button style={{color:"black" , backgroundColor:"Khaki"}} onClick={() =>{onEditEmployee(record) }}><EditOutlined /></Button>
-            <Button style={{color:"black" , backgroundColor:"Tomato"}} onClick={() =>{ondeleteEmployee(record) }}><DeleteOutlined /></Button>
-
-
+            <Button
+              style={{ color: "black", backgroundColor: "grey" }}
+              onClick={() => {
+                documentation(record._id);
+              }}
+            >
+              <FileAddOutlined />
+            </Button>
+            <Button
+              style={{ color: "black", backgroundColor: "skyblue" }}
+              onClick={() => {
+                profile(record._id);
+              }}
+            >
+              <EyeOutlined />
+            </Button>
+            <Button
+              style={{ color: "black", backgroundColor: "Khaki" }}
+              onClick={() => {
+                onEditEmployee(record);
+              }}
+            >
+              <EditOutlined />
+            </Button>
+            <Button
+              style={{ color: "black", backgroundColor: "Tomato" }}
+              onClick={() => {
+                ondeleteEmployee(record);
+              }}
+            >
+              <DeleteOutlined />
+            </Button>
           </>
         );
-      }
-    }
-
+      },
+    },
   ];
 
+  if (name.role === "admin") {
+    console.log("my role is ", name.role);
 
+    return (
+      <>
+        <Table columns={columns} dataSource={state} />
 
-  
-  if (name.role === "admin"){
-    console.log("my role is " ,name.role)
-  
-  
- 
+        <Modal
+          title=" Edit Profile"
+          visible={isEditing}
+          onText="Save"
+          onCancel={() => {
+            resetEditing();
+          }}
+          onOk={() => {
+            setState((pre) => {
+              console.log(pre, "s");
+              console.log(editingEmployee, "kk");
+              editEmployee(editingEmployee._id);
+              return pre.map((employee) => {
+                console.log(employee, "gdh");
+                if (employee._id === editingEmployee._id) {
+                  return editEmployee;
+                } else {
+                  return employee;
+                }
+              });
+            });
+            setIsEditing(false);
+          }}
+        >
+          <Input
+            value={editingEmployee?.name}
+            onChange={(e) => {
+              setEditingEmployee((pre) => {
+                return { ...pre, name: e.target.value };
+              });
+            }}
+          />
+          <Input
+            value={editingEmployee?.email}
+            onChange={(e) => {
+              setEditingEmployee((pre) => {
+                return { ...pre, email: e.target.value };
+              });
+            }}
+          />
+          <Input
+            value={editingEmployee?.contact}
+            onChange={(e) => {
+              setEditingEmployee((pre) => {
+                return { ...pre, contact: e.target.value };
+              });
+            }}
+          />
+          <Input
+            value={editingEmployee?.gender}
+            onChange={(e) => {
+              setEditingEmployee((pre) => {
+                return { ...pre, gender: e.target.value };
+              });
+            }}
+          />
+          <Input
+            value={editingEmployee?.role}
+            onChange={(e) => {
+              setEditingEmployee((pre) => {
+                return { ...pre, role: e.target.value };
+              });
+            }}
+          />
+        </Modal>
 
-  return (
+        <Button style={{ float: "right", margin: "50px" }} onClick={showModal}>
+          {" "}
+          Add New Employee
+        </Button>
+        <Modal
+          title="Employee Form"
+          open={isModalOpen}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+          <Row justify="center" style={{ padding: "10%" }}>
+            <Form>
+              <Form.Item rules={[{ required: true }]}>
+                <Input
+                  type="name"
+                  prefix={<UserOutlined className="site-form-item-icon" />}
+                  placeholder="Name"
+                  className={classes.frmItem}
+                  // onChange={(e) => {
+                  //   setName(e.target.value);
+                  // }}
+                />
+              </Form.Item>
 
-    <>
-       
+              <Form.Item rules={[{ required: true }]}>
+                <Input
+                  type="password"
+                  prefix={<LockOutlined className="site-form-item-icon" />}
+                  placeholder="Password"
+                  className={classes.frmItem}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                />
+              </Form.Item>
 
-              <Table
-                columns={columns}
-                dataSource={state} />
-               
-                
-                 
+              <Form.Item rules={[{ required: true }]}>
+                <Input
+                  prefix={<MailOutlined className="site-form-item-icon" />}
+                  placeholder="Email Address"
+                  className={classes.frmItem}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                />
+              </Form.Item>
 
-              <Modal
-                title=" Edit Profile"
-                visible={isEditing}
-                onText="Save"
-                onCancel={() => {
-                  resetEditing();
-                }}
+              <Form.Item rules={[{ required: true }]}>
+                <Input
+                  type="number"
+                  prefix={<PhoneOutlined className="site-form-item-icon" />}
+                  placeholder="Contact"
+                  className={classes.frmItem}
+                  onChange={(e) => {
+                    setContact(e.target.value);
+                  }}
+                />
+              </Form.Item>
 
-                onOk=
-                {() => {
-                  setState((pre) => {
-                    console.log(pre, "s")
-                    console.log(editingEmployee, "kk")
-                    editEmployee(editingEmployee._id);
-                    return pre.map((employee) => {
-                      console.log(employee, "gdh")
-                      if (employee._id ===  editingEmployee._id) {
-                        return editEmployee;
-
-                      } else {
-                        return employee;
-                      }
-                    });
+              <Form.Item rules={[{ required: true }]}>
+                <Input
+                  prefix={
+                    <UserSwitchOutlined className="site-form-item-icon" />
                   }
-                  );
-                  setIsEditing(false);
+                  placeholder="Gender"
+                  className={classes.frmItem}
+                  onChange={(e) => {
+                    setGender(e.target.value);
+                  }}
+                />
+              </Form.Item>
+              <Form.Item rules={[{ required: true }]}>
+                <Input
+                  prefix={
+                    <UserSwitchOutlined className="site-form-item-icon" />
+                  }
+                  placeholder="Role"
+                  className={classes.frmItem}
+                  onChange={(e) => {
+                    setRole(e.target.value);
+                  }}
+                />
+              </Form.Item>
 
-                }
-                }
+              <Form.Item>
+                <Button
+                  htmlType="submit"
+                  className={classes.btnCenter}
+                  onClick={() => {
+                    saveEmployee();
+                  }}
+                >
+                  Add
+                </Button>
+                <br />
+              </Form.Item>
+            </Form>
+          </Row>
+        </Modal>
+      </>
+    );
+  }
+};
 
-              >
-                <Input value={editingEmployee?.name} onChange={(e) => {
-                  setEditingEmployee(pre => {
-                    return { ...pre, name: e.target.value }
-                  })
-                }} />
-                <Input value={editingEmployee?.email} onChange={(e) => {
-                  setEditingEmployee(pre => {
-                    return { ...pre, email: e.target.value }
-                  })
-                }} />
-                <Input value={editingEmployee?.contact} onChange={(e) => {
-                  setEditingEmployee(pre => {
-                    return { ...pre, contact: e.target.value }
-                  })
-                }} />
-                <Input value={editingEmployee?.gender} onChange={(e) => {
-                  setEditingEmployee(pre => {
-                    return { ...pre, gender: e.target.value }
-                  })
-                }} />
-                <Input value={editingEmployee?.role} onChange={(e) => {
-                  setEditingEmployee(pre => {
-                    return { ...pre, role: e.target.value }
-                  })
-                }} />
-
-              </Modal>
-            
-              
-              
-
-              <Button style={{ float: "right", margin: "50px" }} onClick={showModal}> Add New Employee</Button>
-              <Modal title="Employee Form" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-
-                <Row justify="center" style={{ padding: "10%" }}>
-
-
-                  <Form >
-
-
-                    <Form.Item rules={[{ required: true }]} >
-                      <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Employee name" className={classes.frmItem} onChange={(e) => { setName(e.target.value) }} />
-                    </Form.Item>
-
-                    <Form.Item rules={[{ required: true }]} >
-                      <Input type="password" prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" className={classes.frmItem} onChange={(e) => { setPassword(e.target.value) }} />
-                    </Form.Item>
-
-                    <Form.Item rules={[{ required: true }]} >
-                      <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email Address" className={classes.frmItem} onChange={(e) => { setEmail(e.target.value) }} />
-                    </Form.Item>
-
-                    <Form.Item rules={[{ required: true }]}>
-                      <Input type="number" prefix={<PhoneOutlined className="site-form-item-icon" />} placeholder="Contact" className={classes.frmItem} onChange={(e) => { setContact(e.target.value) }} />
-                    </Form.Item>
-
-                    <Form.Item rules={[{ required: true }]}>
-                      <Input prefix={<UserSwitchOutlined className="site-form-item-icon" />} placeholder="Gender" className={classes.frmItem} onChange={(e) => { setGender(e.target.value) }} />
-                    </Form.Item>
-                    <Form.Item rules={[{ required: true }]}>
-                      <Input prefix={<UserSwitchOutlined className="site-form-item-icon" />} placeholder="Role" className={classes.frmItem} onChange={(e) => { setRole(e.target.value) }} />
-                    </Form.Item>
-
-                    <Form.Item>
-                      <Button htmlType="submit" className={classes.btnCenter} onClick={() => {saveEmployee() }}>Add</Button><br />
-                    </Form.Item>
-
-                  </Form>
-                </Row>
-
-              </Modal>
-
-           
-
-
-
-
-
-
-
-    </>
-  
-  );
-
-}
-
-}
-
-export default Employees; 
+export default Employees;

@@ -13,7 +13,6 @@ const AttendanceTable = () => {
   const [attendanceByDateRange, setAttendanceByDateRange] = useState([]);
   const [attendanceDataByName, setAttendanceDataByName] = useState([]);
 
-
   console.log("Start date", startDate);
 
   const [endDate, setEndDate] = useState("");
@@ -197,18 +196,12 @@ const AttendanceTable = () => {
 
       //       )
       //  },
-
     },
     {
       title: "CheckOut",
       dataIndex: "CheckOut",
-      key: 'CheckOut',
       width: '150px',
     },
-    // {
-    //   title: "Breaks",
-    //   dataIndex: "Breaks",
-    //   width: '150px',
     // },
     {
       title: "Date",
