@@ -14,10 +14,11 @@ const Clock = () => {
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
   // console.log("attendance state", attendance[0].CheckIn)
   const [object, setObject] = useState({
-    start: new Date().toLocaleTimeString(),
+    start: "",
     end: "",
   });
 
+  // const [object, setObject] = useState({start:"",end:""});
 
   //-------------------------------------------- Clock---------------------------------------------------------------
   const refreshClock = () => {
@@ -52,7 +53,6 @@ const Clock = () => {
   };
   //---------------------------------------------Employee Attendance GET by id API----------------------------------------------------------
 
-
   // const checkDate = new Date();
   // // console.log("Checkin Date", checkDate)
   // let day = checkDate.getDate();
@@ -80,7 +80,6 @@ const Clock = () => {
   //   />
   // }
 
-  
   //-------------------------------------------- Attendance Checkin---------------------------------------------------------------
   const checkDate = new Date();
   // console.log("Checkin Date", checkDate)
@@ -96,28 +95,31 @@ const Clock = () => {
   // let month1 = checkinConvert.getMonth() + 1;
   // let year1 = checkinConvert.getFullYear();
   // let currentDate1 = `${year1}-${month1}-${day1}`;
-  
-  if (currentDate === currentDate){
+
+  if (currentDate === currentDate) {
     const token = localStorage.getItem("access_token1");
     var decoded = jwt_decode(token);
     <Alert
-      message = {decoded.name}
+      message={decoded.name}
       description="You have already Checked-in"
       type="warning"
       showIcon
       closable
-    /> 
+    />;
   }
-
 
   useEffect(() => {
     var MyDate = new Date();
     var MyDateString;
     MyDate.setDate(MyDate.getDate());
-    MyDateString = MyDate.getFullYear() + '-' + ('0' + (MyDate.getMonth() + 1)).slice(-2) + '-'
-      + ('0' + MyDate.getDate()).slice(-2)
+    MyDateString =
+      MyDate.getFullYear() +
+      "-" +
+      ("0" + (MyDate.getMonth() + 1)).slice(-2) +
+      "-" +
+      ("0" + MyDate.getDate()).slice(-2);
     if (attendance.TodayDate === MyDateString) {
-      setDisable(true)
+      setDisable(true);
       // window.alert("You have already checkin")
     } else {
       employeecheckin();
@@ -125,7 +127,7 @@ const Clock = () => {
   }, []);
 
   const employeecheckin = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const token = localStorage.getItem("access_token1");
     var decoded = jwt_decode(token);
     // today date
@@ -157,25 +159,35 @@ const Clock = () => {
         Breaks,
       })
       .then((res) => {
-        setEmployeeCheckIn(res?.data?.newAttendance)
+        setEmployeeCheckIn(res?.data?.newAttendance);
 
         // console.log("AttendanceID For checkout", EmployeeCheckIn._id);
       });
     console.log("Today Checkin Data", EmployeeCheckIn);
 
     if (attendance[0].CheckIn >= "09:10:00 AM") {
-      let data = { emp_id: decoded._id, EmployeeName: decoded.name, SupervisorName: "Sudhir Dadwal", Department: "Software", LeaveType: "ShortLeave", LeaveDate: MyDateString, ReturnDate: "Null", TotalHoursRequested: "Half Day", TotalDaysRequested: 0 }
+      let data = {
+        emp_id: decoded._id,
+        EmployeeName: decoded.name,
+        SupervisorName: "Sudhir Dadwal",
+        Department: "Software",
+        LeaveType: "ShortLeave",
+        LeaveDate: MyDateString,
+        ReturnDate: "Null",
+        TotalHoursRequested: "Half Day",
+        TotalDaysRequested: 0,
+      };
 
       fetch("http://localhost:1999/leave", {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       }).then((res) => {
         console.log("You Are Late By 9:10AM. Short Leave Applied", data);
-      })
+      });
     }
   };
 
@@ -227,20 +239,7 @@ const Clock = () => {
 
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
-  // const employeebreak = async (_id) => {
-  // const token = localStorage.getItem("access_token1");
-  // console.log("token from local storage:", token);
-  // var decoded = jwt_decode(token);
-  // console.log("Decoded token data", decoded);
-
-  // const CheckIn ="";
-  // const CheckOut = "";
-  //   const obj = {
-  //     start:"",
-  //     end: ""
-  // }
-
-  //   console.log("obj", Breaks);
+ 
 
   // const Break = new FormData()
   // Break.append("Object",object)
@@ -252,51 +251,81 @@ const Clock = () => {
   const employeebreak = async () => {
     const breaks = [
       {
+        // ...object
+        start: new Date().toLocaleTimeString(),
+      end:""
+      },
+      
+      {
         ...object
-      }]
-      console.log("break", breaks);
-     
-      const arr = breaks.map(function()
-     {
+      }
+    ];
+    console.log("break", breaks);
 
-      return object;
 
-      })
- 
+
+
+
+
+   
+    // const arr={
+
+    //   ...breaks,
+    //   end: new Date().toLocaleTimeString()}
+      
+        
+    // }
+   
+
+    // const arr = breaks.map(()=> {
      
-    
+    //   return object;
+      
+    // });
+
+      // breaks.push(arr);
+      // console.log("arrr", arr)
+
+    const obj =
+    {
+      ...breaks 
+
+     }
+    console.log("obj",obj)
+
+
+
     const ID = attendance[0]._id;
     const CheckIn = attendance[0].CheckIn;
-    const Breaks = arr;
+    const Breaks =breaks;
     const CheckOut = "";
     // console.log("Attendance id for break", ID);
     await axios
-      .put(`http://localhost:1999/attendance/${ID}`,{
+      .put(`http://localhost:1999/attendance/${ID}`, {
         CheckIn,
         Breaks,
         CheckOut,
       })
 
-      // var chkin = attendance?.CheckIn;
-      // console.log("checkin", chkin);
-
-      // const CheckIn = "";
-      // const CheckOut = "";
-      // const Breaks = new Date();
-
+      
       .then((res) => {
-        console.log("employee break", res);
-       
+        console.log("employee break", res );
       });
+     
 
-      // const nobj= {start:new Date().toLocaleTimeString(),end:""}
-      // const arr= object.concat(nobj);
-      // console.log("array",arr)
+
+    // const nobj= {start:new Date().toLocaleTimeString(),end:""}
+    // const arr= object.concat(nobj);
+    // console.log("array",arr)
+
+    //  setObject();
+    
+    // const obj={
+      
+    //   end: new Date().toLocaleTimeString()
+    // }
 
     setObject({ ...object, end:new Date().toLocaleTimeString()} );
-    breaks.push(arr)
-
-    console.log("arrr", arr);
 
     await axios
       .put(`http://localhost:1999/attendance/${ID}`, {
@@ -305,41 +334,28 @@ const Clock = () => {
         CheckOut,
       })
       .then((res) => {
-        console.log("employee breaks",res );
+        console.log("employee breaks", res  );
       });
+      //  breaks.push(setObject)
+
+      breaks.push(obj)
+    };
+
+      //  const arr = breaks.map(function(){});
+      // const arr={
+      //   ...breaks,
+      //  end:new Date().toLocaleTimeString()
+  
+      // }
+      // console.log("array",arr)
       
+      // breaks.push(arr)
+
+      // breaks.push(end: new Date().toLocaleTimeString())
     // breaks.push(object);
-    
-  };
   
 
-  // const employeebreak = async (_id) => {
-  // const token = localStorage.getItem("access_token1");
-  // console.log("token from local storage:", token);
-  // var decoded = jwt_decode(token);
-  // console.log("Decoded token data", decoded);
-
-  // const CheckIn ="";
-  // const CheckOut = "";
-  // const Break = {
-  //   start: "10.10",
-  //   end: "10.30",
-  // };
-
-  // console.log("obj", Break);
-
-  // await axios.put(`http://localhost:1999/attendance/${_id}`, {
-  //   Break,
-  // });
-  // var chkin = attendance?.CheckIn;
-  // console.log("checkin", chkin);
-
-  // const CheckIn = "";
-  // const CheckOut = "";
-  // const Breaks = new Date();
-
-  // };
-  //-------------------------------------------- Attendance Break---------------------------------------------------------------
+ 
 
   return (
     <>
@@ -352,7 +368,7 @@ const Clock = () => {
       </div>
 
       {attendance?.emp_id}
-     
+
       {/* {attendance?.CheckOut}
       {attendance?.Break}
 
