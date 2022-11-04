@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table, Input, Button } from "antd";
 import axios from "axios";
-import { DatePicker, Space } from "antd";
+import { DatePicker, Space, Form } from "antd";
 const { RangePicker } = DatePicker;
 // import Highlighter from "react-highlight-words";
 // import { SearchOutlined } from "@ant-design/icons";
@@ -21,7 +21,7 @@ const AttendanceTable = () => {
   // const [filterDate, setFilterDate] = useState("");
 
   // const [state, setState] = useState([]);
- 
+
   // const [attendancedata, setAttendanceData] = useState([]);
 
   // useEffect(() => {
@@ -69,7 +69,7 @@ const AttendanceTable = () => {
   //   await axios
   //     .get(
   //       `http://localhost:1999/attendance/daterange`,
-        
+
   //     )
   //     .then((res) => {
   //       setQuery(res?.data?.data);
@@ -82,19 +82,33 @@ const AttendanceTable = () => {
 
   // }
 
+
+
   useEffect(() => {
     getData();
   }, []);
   const getData = async () => {
-    await axios.get(`http://localhost:1999/attendance`,{
-      startDate,
-      endDate
-    })
-    .then((res) => {  
-      setQueryData(res?.data?.attendanceRecord);
-      console.log("attendance record", res);
+
+    // await axios.get(`http://localhost:1999/attendance`)
+    //   .then((res) => {
+    //     setQueryData(res?.data);
+    //     console.log("attendance record", res);
+
+    //   });
+
+    const data = { startDate: startDate, endDate: endDate };
+
+    axios.get('http://localhost:1999/attendance', data).then(response => {
+      console.log(response.data);
+      setDataSource({
+        dataSource: response.data
+
+      });
+      console.log("startDate endDate response", dataSource);
 
     });
+
+
   };
   // console.log("atten record", dataSource);
   // const onChange = (date, dateString) => {
@@ -180,43 +194,33 @@ const AttendanceTable = () => {
     {
       title: "Date",
       dataIndex: "TodayDate",
-      filterDropdown: ({ setSelectedKeys, selectedKeys, clearFilters }) => {
-        return (
-          <>
-            <Space>
-              <DatePicker
-                // format={"DD-MM-YY"}
-                onChange={(e) => {
-                  setStartDate([e.format("YYYY-MM-DD")]);
-                }}
-                allowClear={true}
-              />
-
-              <Space>
-                <DatePicker
-                  // format={"DD-MM-YY"}
-                  onChange={(e) => {
-                    setEndDate([e.format("YYYY-MM-DD")]);
-                  }}
-                  allowClear={true}
-                />
-                <Button
-                  onClick={getData}
-
-                  type="primary"
-                >
-                  Search
-                </Button>
-              </Space>
-            </Space>
-          </>
-        );
-      },
     },
   ];
 
   return (
     <>
+      <Form >
+        <Form.Item>
+
+          <DatePicker
+            dateFormat="yyyy/MM/dd"
+            value={startDate}
+            onChange={(date) => {
+              const d = new Date(date).toLocaleDateString();
+              console.log("startDate ", d);
+              setStartDate(d);
+            }}
+            allowClear={true}
+          />
+
+          <DatePicker onChange={(e) => { setEndDate(e.format("YYYY-MM-DD")); }}
+            allowClear={true}
+          />
+
+          <Button onClick={onsubmit} type="primary">Search</Button>
+
+        </Form.Item>
+      </Form>
       <Table columns={columns} queryData={queryData} />
     </>
   );
