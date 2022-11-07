@@ -13,12 +13,10 @@ const Clock = () => {
   const [EmployeeCheckIn, setEmployeeCheckIn] = useState([]);
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
   // console.log("attendance state", attendance[0].CheckIn)
-  const [objects, setObjects] = useState({
-    //  start: "",
-    // end: ""
-  });
+  const [objects, setObjects] = useState({});
+  const[show,setShow]=useState(true)
 
-  // const [object, setObject] = useState({start:"",end:""});
+
 
   //-------------------------------------------- Clock---------------------------------------------------------------
   const refreshClock = () => {
@@ -249,27 +247,33 @@ const Clock = () => {
 
 
   const employeebreak = async () => {
+    const start= new Date().toLocaleTimeString()
     const breaks = [
       {
-         ...objects,
-       
-        start: new Date().toLocaleTimeString(),
-      
-        //  end:""
+
+          ...objects,
+          start: start,
       },
+      // {
+      // ...objects,
+      // }
     ];
 
+     console.log("break", breaks);
 
-   
+    
+
     const ID = attendance[0]._id;
     const CheckIn = attendance[0].CheckIn;
     const Breaks = breaks;
+    const Resume= "";
     const CheckOut = "";
-    // console.log("Attendance id for break", ID);
+    
     await axios
       .put(`http://localhost:1999/attendance/${ID}`, {
         CheckIn,
         Breaks,
+        Resume,
         CheckOut,
       })
 
@@ -277,61 +281,52 @@ const Clock = () => {
         console.log("employee break", res?.data?.updatedAttendance);
       });
 
-    // const nobj= {start:new Date().toLocaleTimeString(),end:""}
-    // const arr= object.concat(nobj);
-    // console.log("array",arr)
-
-    setObjects({ end: new Date().toLocaleTimeString() });
-    console.log("breakss", breaks);
-
-    // console.log("arrr", arr);
-
-    await axios
-      .put(`http://localhost:1999/attendance/${ID}`, {
-        CheckIn,
-        Breaks,
-        CheckOut,
-      })
-      .then((res) => {
-        console.log("employee breaks", res    );
-      });
-
-      
-      // const newArray = Array.from (this.state.myarray)
-      // const newarr = breaks.map(function()
-      // {
+    }
  
-      //  return breaks;
-       
- 
-      //  })
-      //   breaks.push(newarr)
-      //      console.log ("arr", newarr)
 
-      //  const newarr =[
-      // {
- 
-      // ...breaks,
      
-      
- 
-      //  }]
-      //  console.log ("arr", newarr)
-      //    breaks.push(newarr)
+    
+    const employeeresume = async () => {
+      const end= new Date().toLocaleTimeString() 
+     
+      const resume = [
+        {
 
-      //      console.log ("arr", newarr)
-       };
+          ...objects,
+          end:end
+           
+          },
+          // {
+          //   ...objects,
+          //   end:end
+          // }
+      ];
+      // console.log(resume,"Breaks")
+       setObjects({...objects, end:end });
 
-          // start:"",
-          // end:""
+       console.log("resume", resume);
 
-  // const arr=new FormData()
-  // arr.append("objects",objects)
-  // console.log ("arr", arr)
+      const ID = attendance[0]._id;
+      const CheckIn = attendance[0].CheckIn;
+      const Breaks =resume;
+      // const Resume= breaks;
+      const CheckOut = "";
+       await axios
+        .put(`http://localhost:1999/attendance/${ID}`, {
+          CheckIn,
+          Breaks,
+          
+          CheckOut,
+        })
+        .then((res) => {
+          console.log("employee resume",  res?.data?.updatedAttendance  );
+        });
+
+    }
+    
   
-    // breaks.push(objects);
- 
-
+    
+    
   return (
     <>
       <div>
@@ -380,7 +375,16 @@ const Clock = () => {
         >
           Break
         </Button>
-
+        <Button
+          style={{
+            color: "white",
+            backgroundColor: "Orange",
+            fontWeight: "Bold",
+          }}
+          onClick={employeeresume}
+        >
+          Resume
+        </Button>
         <Button
           style={{
             color: "white",
