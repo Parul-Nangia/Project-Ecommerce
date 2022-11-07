@@ -1,4 +1,4 @@
-// export default AttendanceTable;
+
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, DatePicker, Form } from 'antd';
 import React, { useState, useEffect } from 'react';
@@ -8,15 +8,51 @@ const AttendanceTable = () => {
   const [dataSource, setDataSource] = useState([]);
   const [queryData, setQueryData] = useState([]);
   const [startDate, setStartDate] = useState("");
+ const[endDate,setEndDate] =useState("");
   const [name, setName] = useState("");
   const [attendanceAllData, setAttendanceAllData] = useState([]);
   const [attendanceByDateRange, setAttendanceByDateRange] = useState([]);
   const [attendanceDataByName, setAttendanceDataByName] = useState([]);
 
-  console.log("Start date", startDate);
 
-  const [endDate, setEndDate] = useState("");
-  console.log("End date", endDate);
+
+//   console.log("Start date", startDate);
+
+//   const [endDate, setEndDate] = useState("");
+//   console.log("End date", endDate);
+
+
+
+
+  // useEffect(() => {
+  //   getFilteredDataByName();
+  // }, []);
+  // const getFilteredDataByName = async () => {
+
+  //   const empName = { name: name };
+  //   console.log("name filter dddddd", empName)
+
+  //   await axios.post(`http://localhost:1999/attendance`, empName)
+  //     .then((res) => {
+  //       setAttendanceDataByName(res);
+  //       console.log("Filter By name", res);
+  //     });
+  // };
+
+  // const getDataByDateRange = async () => {
+
+  
+   
+
+  //   await axios.post(`http://localhost:1999/attendance`, data)
+  //     .then((res) => {
+  //       setAttendanceByDateRange(res);
+  //       console.log("Filter By daterange", res);
+  //     });
+  // };
+
+
+
 
 
 
@@ -24,50 +60,38 @@ const AttendanceTable = () => {
     getFilteredDataByName();
   }, []);
   const getFilteredDataByName = async () => {
-
     const empName = { name: name };
-    console.log("name filter dddddd", empName)
+    console.log("name filter", empName);
 
-    await axios.post(`http://localhost:1999/attendance`, empName)
+    await axios
+      .post(`http://localhost:1999/attendance`, empName)
       .then((res) => {
         setAttendanceDataByName(res);
         console.log("Filter By name", res);
       });
   };
 
-
-
-
-
   useEffect(() => {
     getDataByDateRange();
   }, []);
   const getDataByDateRange = async () => {
-
     const data = { startDate: startDate, endDate: endDate };
-    console.log("start/end Date", data)
+    console.log("start/end Date", data);
 
-    await axios.post(`http://localhost:1999/attendance`, data)
-      .then((res) => {
-        setAttendanceByDateRange(res);
-        console.log("Filter By daterange", res);
-      });
+    await axios.post(`http://localhost:1999/attendance`, data).then((res) => {
+      setAttendanceByDateRange(res);
+      console.log("Filter By daterange", res);
+    });
   };
-
-
-
-
 
   useEffect(() => {
     getAllData();
   }, []);
   const getAllData = async () => {
-
-    await axios.post(`http://localhost:1999/attendance`)
-      .then((res) => {
-        setAttendanceAllData(res?.data?.attendanceRecord);
-        console.log("Attendance All Data", attendanceAllData);
-      });
+    await axios.post(`http://localhost:1999/attendance`).then((res) => {
+      setDataSource(res?.data?.attendanceRecord);
+      console.log("Attendance All Data", dataSource);
+    });
   };
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
@@ -87,18 +111,18 @@ const AttendanceTable = () => {
     setSearchedColumn(dataIndex);
     console.log(selectedKeys[0],"pp")
     console.log(dataIndex,"bv")
-    const payload={selectedKeys}
+    // const payload={selectedKeys}
     // console.log(payload,"lll")
-    // const payload =selectedKeys[0]
+    const payload =selectedKeys[0]
     // const a={}
     // a.append(payload)
     // console.log(a)
     // const payload="sudhir"
-    // axios.get("http://localhost:1999/attendance/employeeName",{name:payload}).then((res) => {
-    //   console.log(res, "kj");
-    //   setDataSource(res?.data?.attendanceDataByEmpID.selectedKeys[0]);
-    //   console.log(dataSource, "data");
-    // });
+    axios.post("http://localhost:1999/attendance",{name:payload}).then((res) => {
+      console.log(res, "kj");
+      // setDataSource(res?.data?.attendanceDataByEmpID.selectedKeys[0]);
+      console.log(dataSource, "data");
+    });
 
   };
   const handleReset = (clearFilters) => {
@@ -206,53 +230,67 @@ const AttendanceTable = () => {
     {
       title: "CheckOut",
       dataIndex: "CheckOut",
-      width: '150px',
+      key: "CheckOut",
+      width: "150px",
     },
+    // {
+    //   title: "Breaks",
+    //   dataIndex: "Breaks",
+    //   width: '150px',
     // },
     {
       title: "Date",
       dataIndex: "TodayDate",
-      key: 'TodayDate',
-      width: '150px',
+      key: "TodayDate",
+      width: "150px",
     },
-
-
   ];
 
   return (
     <>
        <Form>
         <Form.Item>
+          <DatePicker
+            onChange={(e) => {
+              setStartDate(e.format("YYYY-MM-DD"));
+            }}
+            allowClear={true}
+          />
 
           <DatePicker
-            onChange={(e) => { setStartDate(e.format("YYYY-MM-DD")); }}
+            onChange={(e) => {
+              setEndDate(e.format("YYYY-MM-DD"));
+            }}
             allowClear={true}
           />
 
-          <DatePicker onChange={(e) => { setEndDate(e.format("YYYY-MM-DD")); }}
-            allowClear={true}
-          />
-
-          <Button onClick={getDataByDateRange} type="primary">Search</Button>
-
+          <Button onClick={getDataByDateRange} type="primary">
+            Search
+          </Button>
         </Form.Item>
       </Form>
 
-      <Form >
+      <Form>
         <Form.Item>
-
-          <Input placeholder="Enter Name" style={{ width: "20%" }} onChange={(e) => { setName(e.target.value) }} />
-          <Button onClick={getFilteredDataByName} type="primary">Search</Button>
-
+          <Input
+            placeholder="Enter Name"
+            style={{ width: "20%" }}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+          <Button onClick={getFilteredDataByName} type="primary">
+            Search
+          </Button>
         </Form.Item>
       </Form>
 
-      <Table columns={columns} dataSource={attendanceAllData} />
+      <Table columns={columns} dataSource={dataSource} />
     </>
-  )
-}
+  );
+};
 
-export default AttendanceTable
+export default AttendanceTable;
 
 
 
