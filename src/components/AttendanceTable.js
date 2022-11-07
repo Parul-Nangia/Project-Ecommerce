@@ -143,15 +143,21 @@ const AttendanceTable = () => {
     confirm();
     // setSearchDate(selectedKeys[0]);
 
+
     moment(selectedKeys[0])
+
+    // moment(selectedKeys[0])
+
     setSearchColumnDate(dataIndex);
     console.log(selectedKeys[0], "pp")
     console.log(dataIndex, "bv")
     const payload = selectedKeys[0]
     axios.post("http://localhost:1999/attendance", { TodayDate: payload }).then((res) => {
+
       console.log("daterange res",res);
       // setDataSource
-      
+      // setDataSource(res?.data?.attendanceDataByEmpID.selectedKeys[0]);
+
       console.log(dataSource, "data");
     });
   }
