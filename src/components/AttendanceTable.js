@@ -1,26 +1,25 @@
-// export default AttendanceTable;
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, DatePicker, Form } from 'antd';
 import React, { useState, useEffect } from 'react';
 import Highlighter from 'react-highlight-words';
 import axios from 'axios';
-import moment from 'moment';
-
-
 const AttendanceTable = () => {
   const [dataSource, setDataSource] = useState([]);
   const [queryData, setQueryData] = useState([]);
   const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [name, setName] = useState("");
   const [attendanceAllData, setAttendanceAllData] = useState([]);
   const [attendanceByDateRange, setAttendanceByDateRange] = useState([]);
   const [attendanceDataByName, setAttendanceDataByName] = useState([]);
-  const [searchText, setSearchText] = useState('');
-  const [searchedColumn, setSearchedColumn] = useState('');
-  console.log("Start date", startDate);
 
-  const [endDate, setEndDate] = useState("");
-  console.log("End date", endDate);
+
+
+  //   console.log("Start date", startDate);
+
+  //   const [endDate, setEndDate] = useState("");
+  //   console.log("End date", endDate);
+
 
 
 
@@ -30,28 +29,21 @@ const AttendanceTable = () => {
   // const getFilteredDataByName = async () => {
 
   //   const empName = { name: name };
-  //   // console.log("name filter", empName)
+  //   console.log("name filter dddddd", empName)
 
-  //   await axios.get(`http://localhost:1999/attendance`, empName)
+  //   await axios.post(`http://localhost:1999/attendance`, empName)
   //     .then((res) => {
   //       setAttendanceDataByName(res);
   //       console.log("Filter By name", res);
   //     });
   // };
 
-
-
-
-
-  // useEffect(() => {
-  //   getDataByDateRange();
-  // }, []);
   // const getDataByDateRange = async () => {
 
-  //   const data = { startDate: startDate, endDate: endDate };
-  //   console.log("start/end Date", data)
 
-  //   await axios.get(`http://localhost:1999/attendance`, data)
+
+
+  //   await axios.post(`http://localhost:1999/attendance`, data)
   //     .then((res) => {
   //       setAttendanceByDateRange(res);
   //       console.log("Filter By daterange", res);
@@ -62,44 +54,46 @@ const AttendanceTable = () => {
 
 
 
+
   useEffect(() => {
-    getFilteredData();
+    getFilteredDataByName();
   }, []);
-
-  const getFilteredData = async () => {
-
-
-    const data = { startDate: startDate, endDate: endDate };
-    console.log("start/end Date", data)
-
-    await axios.get(`http://localhost:1999/attendance`, data)
-      .then((res) => {
-        setAttendanceAllData(res);
-        console.log("Filter By daterange", res);
-      });
-
-
+  const getFilteredDataByName = async () => {
     const empName = { name: name };
-    // console.log("name filter", empName)
+    console.log("name filter", empName);
 
-    await axios.get(`http://localhost:1999/attendance`, empName)
+    await axios
+      .post(`http://localhost:1999/attendance`, empName)
       .then((res) => {
-        setAttendanceAllData(res);
+        setAttendanceDataByName(res);
         console.log("Filter By name", res);
       });
-
-
-
-    await axios.get(`http://localhost:1999/attendance`)
-      .then((res) => {
-        setAttendanceAllData(res?.data);
-        console.log("Attendance All Data", attendanceAllData);
-      });
-
-
-
   };
 
+  useEffect(() => {
+    getDataByDateRange();
+  }, []);
+  const getDataByDateRange = async () => {
+    const data = { startDate: startDate, endDate: endDate };
+    console.log("start/end Date", data);
+
+    await axios.post(`http://localhost:1999/attendance`, data).then((res) => {
+      setAttendanceByDateRange(res);
+      console.log("Filter By daterange", res);
+    });
+  };
+
+  useEffect(() => {
+    getAllData();
+  }, []);
+  const getAllData = async () => {
+    await axios.post(`http://localhost:1999/attendance`).then((res) => {
+      setDataSource(res?.data?.attendanceRecord);
+      console.log("Attendance All Data", dataSource);
+    });
+  };
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
   // useEffect(() => {
   //   getData();
   // }, []);
@@ -116,26 +110,42 @@ const AttendanceTable = () => {
     setSearchedColumn(dataIndex);
     console.log(selectedKeys[0], "pp")
     console.log(dataIndex, "bv")
-    const payload = { selectedKeys }
+    // const payload={selectedKeys}
     // console.log(payload,"lll")
-    // const payload =selectedKeys[0]
+    const payload = selectedKeys[0]
     // const a={}
     // a.append(payload)
     // console.log(a)
     // const payload="sudhir"
-    // axios.get("http://localhost:1999/attendance/employeeName",{name:payload}).then((res) => {
-    //   console.log(res, "kj");
-    //   setDataSource(res?.data?.attendanceDataByEmpID.selectedKeys[0]);
-    //   console.log(dataSource, "data");
-    // });
+    axios.post("http://localhost:1999/attendance", { name: payload }).then((res) => {
+      console.log(res, "kj");
+      // setDataSource(res?.data?.attendanceDataByEmpID.selectedKeys[0]);
+      console.log(dataSource, "data");
+    });
 
   };
-  const handleReset = (clearFilters) => {
-    clearFilters();
-    setSearchText('');
+
+
+  const handleSearch2 = (startDate[0], endDate[0], confirm, dataIndex) => {
+    confirm();
+    setStartDate(startDate);
+    setEndDate(endDate);
+    console.log(selectedKeys[0], "pp")
+    console.log(dataIndex, "bv")
+    // const payload={selectedKeys}
+    // console.log(payload,"lll")
+    const payload = selectedKeys[0]
+    // const a={}
+    // a.append(payload)
+    // console.log(a)
+    // const payload="sudhir"
+    axios.post("http://localhost:1999/attendance", { name: payload }).then((res) => {
+      console.log(res, "kj");
+      // setDataSource(res?.data?.attendanceDataByEmpID.selectedKeys[0]);
+      console.log(dataSource, "data");
+    });
+
   };
-
-
 
 
 
@@ -146,27 +156,35 @@ const AttendanceTable = () => {
           padding: 8,
         }}
       >
-        <DatePicker
-
-          onChange={(e) => {
-            setStartDate([e.format("YYYY-MM-DD")]);
+        {/* <Input
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => handleSearch2(selectedKeys, confirm, dataIndex)}
+          style={{
+            marginBottom: 8,
+            display: 'block',
           }}
+        /> */}
 
+        <DatePicker
+          placeholder={`Enter Start Date`}
+          value={startDate[0]}
+          onChange={date => setStartDate(date)}
+          // onPressEnter={() => handleSearch2(selectedKeys, confirm, dataIndex)}
           allowClear={false}
         />
-
         <DatePicker
-
-          onChange={(e) => {
-            setEndDate([e.format("YYYY-MM-DD")]);
-          }}
-
+          placeholder={`Enter End Date`}
+          value={endDate[0]}
+          onChange={date => setEndDate(date)}
+          // onPressEnter={() => handleSearch2(selectedKeys, confirm, dataIndex)}
           allowClear={false}
         />
         <Space>
           <Button
             type="primary"
-            onClick={() => getFilteredData(selectedKeys, confirm, dataIndex)}
+            onClick={() => handleSearch2(startDate, endDate)}
             icon={<SearchOutlined />}
             size="small"
             style={{
@@ -232,7 +250,10 @@ const AttendanceTable = () => {
 
 
 
-
+  const handleReset = (clearFilters) => {
+    clearFilters();
+    setSearchText('');
+  };
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, }) => (
       <div
@@ -334,29 +355,29 @@ const AttendanceTable = () => {
     {
       title: "CheckOut",
       dataIndex: "CheckOut",
-      width: '150px',
+      key: "CheckOut",
+      width: "150px",
     },
+    // {
+    //   title: "Breaks",
+    //   dataIndex: "Breaks",
+    //   width: '150px',
     // },
     {
       title: "Date",
       dataIndex: "TodayDate",
-      key: 'TodayDate',
-      width: '150px',
+      key: "TodayDate",
+      width: "150px",
       ...getColumnSearchProps2('TodayDate'),
 
     },
-
-
   ];
 
   return (
     <>
-      <Table columns={columns} dataSource={attendanceAllData} />
+      <Table columns={columns} dataSource={dataSource} />
     </>
-  )
-}
+  );
+};
 
-export default AttendanceTable
-
-
-
+export default AttendanceTable;
