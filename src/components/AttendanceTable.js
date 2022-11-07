@@ -56,103 +56,6 @@ const AttendanceTable = () => {
     });
   };
 
-  // useEffect(() => {
-  //   getData();
-  // }, []);
-  // const getData = async () => {
-
-  //   const data = { startDate: startDate, endDate: endDate };
-
-  //   axios.get('http://localhost:1999/attendance', data).then(response => {
-  //     console.log(response.data);
-  //     setDataSource({
-  //       dataSource: response.data
-
-  //     });
-  //     console.log("startDate endDate response", dataSource);
-
-  //   });
-
-  //   await axios
-  //     .get(`http://localhost:1999/attendance`, {
-  //       startDate,
-  //       endDate,
-  //     })
-  //     .then((res) => {
-  //       setQueryData(res?.data?.attendanceRecord);
-  //       console.log("attendance record", res);
-  //     });
-
-  // };
-  // console.log("atten record", dataSource);
-  // const onChange = (date, dateString) => {
-  //   console.log(date, dateString);
-  // };
-  // const Reset = (clearFilters) => {
-  //   clearFilters();
-  //   setSearchDate('');
-  // }
-  //   const getColumnSearchProps = (dataIndex) => ({
-  //     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, }) => (
-  //       <div style={{ padding: 8, }}>
-  //         <Input
-  //           placeholder={`Search ${dataIndex}`}
-  //           value={selectedKeys[0]}
-  //           onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-  //           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-  //           style={{ marginBottom: 8, display: 'block', }} />
-  //         <Space>
-  //           <Button
-  //             type="primary"
-  //             onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-  //             icon={<SearchOutlined />}
-  //             size="small" style={{  width: 90,  }}  >
-  //             Search
-  //           </Button>
-  //           <Button
-  //             onClick={() => clearFilters && handleReset(clearFilters)}
-  //             size="small"
-  //             style={{
-  //               width: 90,
-  //             }}
-  //           >
-  //             Reset
-  //           </Button>
-  //           <Button
-  //           type="link"
-  //           size="small"
-  //           onClick={() => {confirm({closeDropdown: false,});setSearchText(selectedKeys[0]);setSearchedColumn(dataIndex);
-  //             }}>
-  //             Filter
-  //           </Button>
-  //         </Space>
-  //       </div>
-  //     ),
-  //     filterIcon: (filtered) => (
-  //       <SearchOutlined
-  //         style={{
-  //           color: filtered ? '#1890ff' : undefined,
-  //         }}
-  //       />
-  //     ),
-  //     onFilter: (value, record) =>
-  //     record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
-  //     render: (text) =>
-  //     searchedColumn === dataIndex ? (
-  //       <Highlighter
-  //         highlightStyle={{
-  //           backgroundColor: '#ffc069',
-  //           padding: 0,
-  //         }}
-  //         searchWords={[searchText]}
-  //         autoEscape
-  //         textToHighlight={text ? text.toString() : ''}
-  //       />
-  //     ) : (
-  //       text
-  //     ),
-  // });
-
   const columns = [
     {
       title: "Employee Name",
@@ -166,18 +69,6 @@ const AttendanceTable = () => {
       dataIndex: "CheckIn",
       key: "CheckIn",
       width: "150px",
-
-      //     onFilter:(value,record)=>{
-      //       return (
-      //         record[CheckIn]
-      //         ? record[CheckIn]
-      //             .toString()
-      //             .toLowerCase()
-      //             .includes(value.toLowerCase())
-      //         : ""
-
-      //       )
-      //  },
     },
     {
       title: "CheckOut",
@@ -185,11 +76,7 @@ const AttendanceTable = () => {
       key: "CheckOut",
       width: "150px",
     },
-    // {
-    //   title: "Breaks",
-    //   dataIndex: "Breaks",
-    //   width: '150px',
-    // },
+
     {
       title: "Date",
       dataIndex: "TodayDate",
@@ -221,7 +108,6 @@ const AttendanceTable = () => {
           </Button>
         </Form.Item>
       </Form>
-
       <Form>
         <Form.Item>
           <Input
@@ -237,7 +123,7 @@ const AttendanceTable = () => {
         </Form.Item>
       </Form>
 
-      <Table columns={columns} attendanceAllData={attendanceAllData} />
+      <Table columns={columns} dataSource={attendanceAllData} />
     </>
   );
 };

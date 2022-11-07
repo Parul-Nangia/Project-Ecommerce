@@ -507,9 +507,9 @@ const Employees = ({ dataSource }) => {
                   prefix={<UserOutlined className="site-form-item-icon" />}
                   placeholder="Name"
                   className={classes.frmItem}
-                  // onChange={(e) => {
-                  //   setName(e.target.value);
-                  // }}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
                 />
               </Form.Item>
 
