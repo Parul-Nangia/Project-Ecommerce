@@ -81,14 +81,14 @@ const Clock = () => {
   // }
 
   //-------------------------------------------- Attendance Checkin---------------------------------------------------------------
-  const checkDate = new Date();
-  // console.log("Checkin Date", checkDate)
-  let day = checkDate.getDate();
-  let month = checkDate.getMonth() + 1;
-  let year = checkDate.getFullYear();
-  let currentDate = `${year}-${month}-${day}`;
+  // const checkDate = new Date();
+  // // console.log("Checkin Date", checkDate)
+  // let day = checkDate.getDate();
+  // let month = checkDate.getMonth() + 1;
+  // let year = checkDate.getFullYear();
+  // let currentDate = `${year}-${month}-${day}`;
 
-  const checkinConvert = new Date().toDateString();
+  // const checkinConvert = new Date().toDateString();
   // const againcheckinConvert = new Date().toISOString();
   // console.log("Checkin Date Conversion", checkinConvert)
   // let day1 = checkinConvert.getDate();
@@ -96,28 +96,26 @@ const Clock = () => {
   // let year1 = checkinConvert.getFullYear();
   // let currentDate1 = `${year1}-${month1}-${day1}`;
 
-  if (currentDate === currentDate) {
-    const token = localStorage.getItem("access_token1");
-    var decoded = jwt_decode(token);
-    <Alert
-      message={decoded.name}
-      description="You have already Checked-in"
-      type="warning"
-      showIcon
-      closable
-    />
-  }
+  // if (currentDate === currentDate) {
+  //   const token = localStorage.getItem("access_token1");
+  //   var decoded = jwt_decode(token);
+  //   <Alert
+  //     message={decoded.name}
+  //     description="You have already Checked-in"
+  //     type="warning"
+  //     showIcon
+  //     closable
+  //   />
+  // }
 
   useEffect(() => {
     var MyDate = new Date();
     var MyDateString;
-    MyDate.setDate(MyDate.getDate());
-    MyDateString =
-      MyDate.getFullYear() +
-      "-" +
-      ("0" + (MyDate.getMonth() + 1)).slice(-2) +
-      "-" +
-      ("0" + MyDate.getDate()).slice(-2);
+    MyDate.setDate(MyDate.getDate());  // date format "2022-10-02" with zero
+    MyDateString = MyDate.getFullYear() +
+      "-" + ("0" + (MyDate.getMonth() + 1)).slice(-2) +
+      "-" + ("0" + MyDate.getDate()).slice(-2);
+
     if (attendance.TodayDate === MyDateString) {
       setDisable(true);
       // window.alert("You have already checkin")
@@ -135,12 +133,10 @@ const Clock = () => {
     var MyDate = new Date();
     var MyDateString;
     MyDate.setDate(MyDate.getDate());
-    MyDateString =
-      MyDate.getFullYear() +
-      "-" +
-      ("0" + (MyDate.getMonth() + 1)).slice(-2) +
-      "-" +
-      ("0" + MyDate.getDate()).slice(-2);
+
+    MyDateString = MyDate.getFullYear() +
+      "-" + ("0" + (MyDate.getMonth() + 1)).slice(-2) +
+      "-" + ("0" + MyDate.getDate()).slice(-2);
     // today date
 
     const CheckIn = new Date().toLocaleTimeString();
@@ -193,7 +189,6 @@ const Clock = () => {
 
   //-------------------------------------------- Attendance Checkin---------------------------------------------------------------
 
-  //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
 
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
@@ -209,6 +204,8 @@ const Clock = () => {
   //     start: "",
   //     end: ""
   //   };
+  //-------------------------------------------- Attendance Break---------------------------------------------------------------
+
 
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   useEffect(() => {
@@ -237,9 +234,8 @@ const Clock = () => {
   };
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
 
-  //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
- 
+
 
   // const Break = new FormData()
   // Break.append("Object",object)
@@ -253,9 +249,9 @@ const Clock = () => {
       {
         // ...object
         start: new Date().toLocaleTimeString(),
-      end:""
+        end: ""
       },
-      
+
       {
         ...object
       }]
@@ -270,7 +266,7 @@ const Clock = () => {
 
     const ID = attendance[0]._id;
     const CheckIn = attendance[0].CheckIn;
-    const Breaks =breaks;
+    const Breaks = breaks;
     const CheckOut = "";
     // console.log("Attendance id for break", ID);
     await axios
@@ -280,12 +276,12 @@ const Clock = () => {
         CheckOut,
       })
 
-      
+
       .then((res) => {
         console.log("employee break", res?.data?.updatedAttendance);
 
       });
-     
+
 
     // const nobj= {start:new Date().toLocaleTimeString(),end:""}
     // const arr= object.concat(nobj);
@@ -311,7 +307,7 @@ const Clock = () => {
   };
 
 
- 
+
 
   return (
     <>
