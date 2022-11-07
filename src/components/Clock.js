@@ -13,9 +13,9 @@ const Clock = () => {
   const [EmployeeCheckIn, setEmployeeCheckIn] = useState([]);
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
   // console.log("attendance state", attendance[0].CheckIn)
-  const [object, setObject] = useState({
-    start: "",
-    end: "",
+  const [objects, setObjects] = useState({
+    //  start: "",
+    // end: ""
   });
 
   // const [object, setObject] = useState({start:"",end:""});
@@ -105,7 +105,7 @@ const Clock = () => {
   //     type="warning"
   //     showIcon
   //     closable
-  //   />
+  //   />;
   // }
 
   useEffect(() => {
@@ -251,23 +251,16 @@ const Clock = () => {
   const employeebreak = async () => {
     const breaks = [
       {
-        // ...object
+         ...objects,
+       
         start: new Date().toLocaleTimeString(),
-        end: ""
+      
+        //  end:""
       },
-
-      {
-        ...object
-      }]
-    console.log("break", breaks);
-
-    const arr = breaks.map(function () {
+    ];
 
 
-    })
-
-
-
+   
     const ID = attendance[0]._id;
     const CheckIn = attendance[0].CheckIn;
     const Breaks = breaks;
@@ -280,21 +273,18 @@ const Clock = () => {
         CheckOut,
       })
 
-
       .then((res) => {
         console.log("employee break", res?.data?.updatedAttendance);
-
       });
-
 
     // const nobj= {start:new Date().toLocaleTimeString(),end:""}
     // const arr= object.concat(nobj);
     // console.log("array",arr)
 
-    setObject({ ...object, end: new Date().toLocaleTimeString() });
-    breaks.push(arr)
+    setObjects({ end: new Date().toLocaleTimeString() });
+    console.log("breakss", breaks);
 
-    console.log("arrr", arr);
+    // console.log("arrr", arr);
 
     await axios
       .put(`http://localhost:1999/attendance/${ID}`, {
@@ -303,15 +293,44 @@ const Clock = () => {
         CheckOut,
       })
       .then((res) => {
-        console.log("employee breaks", res);
+        console.log("employee breaks", res    );
       });
 
-    // breaks.push(object);
+      
+      // const newArray = Array.from (this.state.myarray)
+      // const newarr = breaks.map(function()
+      // {
+ 
+      //  return breaks;
+       
+ 
+      //  })
+      //   breaks.push(newarr)
+      //      console.log ("arr", newarr)
 
-  };
+      //  const newarr =[
+      // {
+ 
+      // ...breaks,
+     
+      
+ 
+      //  }]
+      //  console.log ("arr", newarr)
+      //    breaks.push(newarr)
 
+      //      console.log ("arr", newarr)
+       };
 
+          // start:"",
+          // end:""
 
+  // const arr=new FormData()
+  // arr.append("objects",objects)
+  // console.log ("arr", arr)
+  
+    // breaks.push(objects);
+ 
 
   return (
     <>
@@ -324,6 +343,8 @@ const Clock = () => {
       </div>
 
       {attendance?.emp_id}
+      {/* {breaks.map(=>())} */}
+      {/* {objects.map(object=>())} */}
 
       {/* {attendance?.CheckOut}
       {attendance?.Break}
