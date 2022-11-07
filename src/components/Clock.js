@@ -105,7 +105,7 @@ const Clock = () => {
       type="warning"
       showIcon
       closable
-    />;
+    />
   }
 
   useEffect(() => {
@@ -258,40 +258,13 @@ const Clock = () => {
       
       {
         ...object
-      }
-    ];
+      }]
     console.log("break", breaks);
 
+    const arr = breaks.map(function () {
 
 
-
-
-
-   
-    // const arr={
-
-    //   ...breaks,
-    //   end: new Date().toLocaleTimeString()}
-      
-        
-    // }
-   
-
-    // const arr = breaks.map(()=> {
-     
-    //   return object;
-      
-    // });
-
-      // breaks.push(arr);
-      // console.log("arrr", arr)
-
-    const obj =
-    {
-      ...breaks 
-
-     }
-    console.log("obj",obj)
+    })
 
 
 
@@ -309,23 +282,19 @@ const Clock = () => {
 
       
       .then((res) => {
-        console.log("employee break", res );
+        console.log("employee break", res?.data?.updatedAttendance);
+
       });
      
-
 
     // const nobj= {start:new Date().toLocaleTimeString(),end:""}
     // const arr= object.concat(nobj);
     // console.log("array",arr)
 
-    //  setObject();
-    
-    // const obj={
-      
-    //   end: new Date().toLocaleTimeString()
-    // }
+    setObject({ ...object, end: new Date().toLocaleTimeString() });
+    breaks.push(arr)
 
-    setObject({ ...object, end:new Date().toLocaleTimeString()} );
+    console.log("arrr", arr);
 
     await axios
       .put(`http://localhost:1999/attendance/${ID}`, {
@@ -334,26 +303,13 @@ const Clock = () => {
         CheckOut,
       })
       .then((res) => {
-        console.log("employee breaks", res  );
+        console.log("employee breaks", res);
       });
-      //  breaks.push(setObject)
 
-      breaks.push(obj)
-    };
-
-      //  const arr = breaks.map(function(){});
-      // const arr={
-      //   ...breaks,
-      //  end:new Date().toLocaleTimeString()
-  
-      // }
-      // console.log("array",arr)
-      
-      // breaks.push(arr)
-
-      // breaks.push(end: new Date().toLocaleTimeString())
     // breaks.push(object);
-  
+
+  };
+
 
  
 

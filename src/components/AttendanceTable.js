@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import Highlighter from "react-highlight-words";
 import axios from "axios";
 const AttendanceTable = () => {
+  const [state, setState] = useState(false);
   const [dataSource, setDataSource] = useState([]);
   const [queryData, setQueryData] = useState([]);
   const [startDate, setStartDate] = useState("");
