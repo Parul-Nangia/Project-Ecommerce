@@ -157,6 +157,7 @@ const Clock = () => {
       .then((res) => {
         setEmployeeCheckIn(res?.data?.newAttendance);
 
+
         // console.log("AttendanceID For checkout", EmployeeCheckIn._id);
       });
     console.log("Today Checkin Data", EmployeeCheckIn);
@@ -207,6 +208,7 @@ const Clock = () => {
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
 
+  
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   useEffect(() => {
     employeecheckout();
@@ -243,6 +245,8 @@ const Clock = () => {
   // Break.append("end",end)
 
   // console.log("Object", object);
+
+
 
   const employeebreak = async () => {
     const breaks = [
