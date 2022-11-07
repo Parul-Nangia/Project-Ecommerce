@@ -42,6 +42,7 @@ const AttendanceTable = () => {
       .post("http://localhost:1999/attendance", { name: payload })
       .then((res) => {
         console.log(res, "kj");
+        setDataSource(res?.data?.attendanceDataByName);
         // setDataSource(res?.data?.attendanceDataByEmpID.selectedKeys[0]);
         // console.log(dataSource, "data");
       });
@@ -133,110 +134,6 @@ const AttendanceTable = () => {
             padding: 0,
           }}
           searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ""}
-        />
-      ) : (
-        text
-      ),
-  });
-  const [searchDate, setSearchDate] = useState("");
-  const [searchColumnDate, setSearchColumnDate] = useState("");
-  const Search = (selectedKeys, confirm, dataIndex) => {
-    confirm();
-    // setSearchDate(selectedKeys[0]);
-
-    moment(selectedKeys[0]);
-    setSearchColumnDate(dataIndex);
-    console.log(selectedKeys[0], "pp");
-    console.log(dataIndex, "bv");
-    const payload = selectedKeys[0];
-    axios
-      .post("http://localhost:1999/attendance", { TodayDate: payload })
-      .then((res) => {
-        console.log(res, "kj");
-        // setDataSource(res?.data?.attendanceDataByEmpID.selectedKeys[0]);
-        console.log(dataSource, "data");
-      });
-  };
-  const Reset = (clearFilters) => {
-    clearFilters();
-    setSearchDate("");
-  };
-  const columnSearch = (dataIndex) => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-    }) => (
-      <div
-        style={{
-          padding: 8,
-        }}
-      >
-        <Space>
-          <DatePicker.RangePicker
-            onChange={(e) => {
-              setSelectedKeys(e.length ? [e] : []);
-            }}
-            placeholder={["Start", "End"]}
-            value={selectedKeys[0]}
-            format="YYYY-MM-DD"
-          />
-        </Space>
-        <Space>
-          <Button
-            type="primary"
-            onClick={() => Search(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{
-              width: 90,
-            }}
-          >
-            Search
-          </Button>
-          <Button
-            onClick={() => clearFilters && Reset(clearFilters)}
-            size="small"
-            style={{
-              width: 90,
-            }}
-          >
-            Reset
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered) => (
-      <SearchOutlined
-        style={{
-          color: filtered ? "#1890ff" : undefined,
-        }}
-      />
-    ),
-    // onFilter: (value, record) => {
-    //   return (
-    //     moment(record[dataIndex]).format("DD-MM-YYYY") ===
-    //     value.format("DD-MM-YYYY")
-    //   );
-    // },
-    onFilter: (value, record) =>
-      record[dataIndex]
-        ? moment(record[dataIndex]).isBetween(
-            moment(value[0]),
-            moment(value[1])
-          )
-        : "",
-    render: (text) =>
-      searchColumnDate === dataIndex ? (
-        <Highlighter
-          highlightStyle={{
-            backgroundColor: "#ffc069",
-            padding: 0,
-          }}
-          searchWords={[searchDate]}
           autoEscape
           textToHighlight={text ? text.toString() : ""}
         />
