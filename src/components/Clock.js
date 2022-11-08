@@ -14,9 +14,7 @@ const Clock = () => {
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
   // console.log("attendance state", attendance[0].CheckIn)
   const [objects, setObjects] = useState({});
-  const[show,setShow]=useState(true)
-
-
+  const [show, setShow] = useState(true);
 
   //-------------------------------------------- Clock---------------------------------------------------------------
   const refreshClock = () => {
@@ -109,10 +107,13 @@ const Clock = () => {
   useEffect(() => {
     var MyDate = new Date();
     var MyDateString;
-    MyDate.setDate(MyDate.getDate());  // date format "2022-10-02" with zero
-    MyDateString = MyDate.getFullYear() +
-      "-" + ("0" + (MyDate.getMonth() + 1)).slice(-2) +
-      "-" + ("0" + MyDate.getDate()).slice(-2);
+    MyDate.setDate(MyDate.getDate()); // date format "2022-10-02" with zero
+    MyDateString =
+      MyDate.getFullYear() +
+      "-" +
+      ("0" + (MyDate.getMonth() + 1)).slice(-2) +
+      "-" +
+      ("0" + MyDate.getDate()).slice(-2);
 
     if (attendance.TodayDate === MyDateString) {
       setDisable(true);
@@ -132,9 +133,12 @@ const Clock = () => {
     var MyDateString;
     MyDate.setDate(MyDate.getDate());
 
-    MyDateString = MyDate.getFullYear() +
-      "-" + ("0" + (MyDate.getMonth() + 1)).slice(-2) +
-      "-" + ("0" + MyDate.getDate()).slice(-2);
+    MyDateString =
+      MyDate.getFullYear() +
+      "-" +
+      ("0" + (MyDate.getMonth() + 1)).slice(-2) +
+      "-" +
+      ("0" + MyDate.getDate()).slice(-2);
     // today date
 
     const CheckIn = new Date().toLocaleTimeString();
@@ -154,7 +158,6 @@ const Clock = () => {
       })
       .then((res) => {
         setEmployeeCheckIn(res?.data?.newAttendance);
-
 
         // console.log("AttendanceID For checkout", EmployeeCheckIn._id);
       });
@@ -188,7 +191,6 @@ const Clock = () => {
 
   //-------------------------------------------- Attendance Checkin---------------------------------------------------------------
 
-
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
   // const employeebreak = async () => {
@@ -205,8 +207,6 @@ const Clock = () => {
   //   };
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
-
-  
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   useEffect(() => {
     employeecheckout();
@@ -234,9 +234,6 @@ const Clock = () => {
   };
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
 
-
-
-
   // const Break = new FormData()
   // Break.append("Object",object)
 
@@ -244,89 +241,73 @@ const Clock = () => {
 
   // console.log("Object", object);
 
-
-
   const employeebreak = async () => {
-    const start= new Date().toLocaleTimeString()
-    const breaks = [
-      {
+    const start = new Date().toLocaleTimeString();
 
-          ...objects,
-          start: start,
-      },
-      // {
-      // ...objects,
-      // }
-    ];
-
-     console.log("break", breaks);
-
-    
+    const obj = {
+      start: "",
+      end: "",
+    };
 
     const ID = attendance[0]._id;
     const CheckIn = attendance[0].CheckIn;
-    const Breaks = breaks;
-    const Resume= "";
+    const Breaks = [];
     const CheckOut = "";
-    
+    Breaks.push(obj);
+    console.log("break", Breaks);
+    // Breaks.append(start);
+
     await axios
       .put(`http://localhost:1999/attendance/${ID}`, {
         CheckIn,
         Breaks,
-        Resume,
         CheckOut,
       })
 
       .then((res) => {
-        console.log("employee break", res?.data?.updatedAttendance);
+        setObjects(res?.data?.updatedAttendance);
+        console.log("updatedAttendance start time ", objects);
       });
+  };
 
-    }
- 
+  const employeeresume = async () => {
+    // const end = new Date().toLocaleTimeString()
+    //  const start = objects?.Breaks
+    const breaks = [
+      {
+        // ...objects,
+        // start : objects?.Breaks,
+        //  start:objects?.Breaks,
+        // ...start,
+        ...objects?.Breaks,
+        end: new Date().toLocaleTimeString(),
+      },
+    ];
 
-     
-    
-    const employeeresume = async () => {
-      const end= new Date().toLocaleTimeString() 
-     
-      const resume = [
-        {
+    //  breaks.push( ...start,end=end)
 
-          ...objects,
-          end:end
-           
-          },
-          // {
-          //   ...objects,
-          //   end:end
-          // }
-      ];
-      // console.log(resume,"Breaks")
-       setObjects({...objects, end:end });
+    // const breaks = []
+    // const start= objects?.Breaks;
+    // console.log(("data in start", start))
+    // breaks.push(end)
 
-       console.log("resume", resume);
+    // console.log(("data in start", start));
+    console.log("breakssss", breaks);
 
-      const ID = attendance[0]._id;
-      const CheckIn = attendance[0].CheckIn;
-      const Breaks =resume;
-      // const Resume= breaks;
-      const CheckOut = "";
-       await axios
-        .put(`http://localhost:1999/attendance/${ID}`, {
-          CheckIn,
-          Breaks,
-          
-          CheckOut,
-        })
-        .then((res) => {
-          console.log("employee resume",  res?.data?.updatedAttendance  );
-        });
+    //  setObjects({ ...objects, end:new Date().toLocaleTimeString() });
+    const ID = attendance[0]._id;
+    const Breaks = breaks;
 
-    }
-    
-  
-    
-    
+    await axios
+      .put(`http://localhost:1999/attendance/${ID}`, {
+        //  ...objects,
+        Breaks,
+      })
+      .then((res) => {
+        console.log("employee resume", res);
+      });
+  };
+
   return (
     <>
       <div>
