@@ -245,8 +245,9 @@ const Clock = () => {
     const start = new Date().toLocaleTimeString();
 
     const obj = {
-      start: "",
-      end: "",
+      start: start,
+      // end: "",
+
     };
 
     const ID = attendance[0]._id;
@@ -256,6 +257,8 @@ const Clock = () => {
     Breaks.push(obj);
     console.log("break", Breaks);
     // Breaks.append(start);
+    // setObjects({...objects,start: new Date().toLocaleTimeString()})
+    // setObjects({ ...objects, start: new Date().toLocaleTimeString() });
 
     await axios
       .put(`http://localhost:1999/attendance/${ID}`, {
@@ -265,13 +268,15 @@ const Clock = () => {
       })
 
       .then((res) => {
-        setObjects(res?.data?.updatedAttendance);
-        console.log("updatedAttendance start time ", objects);
+         setObjects(res?.data?.updatedAttendance);
+        console.log("updatedAttendance start time ", res);
       });
   };
 
+
+
   const employeeresume = async () => {
-    // const end = new Date().toLocaleTimeString()
+     const end = new Date().toLocaleTimeString()
     //  const start = objects?.Breaks
     const breaks = [
       {
@@ -279,11 +284,13 @@ const Clock = () => {
         // start : objects?.Breaks,
         //  start:objects?.Breaks,
         // ...start,
-        ...objects?.Breaks,
+         ...objects?.Breaks,
+        
         end: new Date().toLocaleTimeString(),
       },
     ];
 
+    
     //  breaks.push( ...start,end=end)
 
     // const breaks = []
@@ -292,11 +299,12 @@ const Clock = () => {
     // breaks.push(end)
 
     // console.log(("data in start", start));
-    console.log("breakssss", breaks);
+    // console.log("breakssss", breaks);
 
-    //  setObjects({ ...objects, end:new Date().toLocaleTimeString() });
+    //  setObjects({ ...objects, end:new Date().toLocaleTimeString()});
     const ID = attendance[0]._id;
     const Breaks = breaks;
+   
 
     await axios
       .put(`http://localhost:1999/attendance/${ID}`, {
