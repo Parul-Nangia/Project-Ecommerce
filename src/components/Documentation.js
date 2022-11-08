@@ -6,9 +6,7 @@ import { UploadOutlined, CloudDownloadOutlined } from "@ant-design/icons";
 import { Upload } from "antd";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-
 const { Option } = Select;
-
 const Documentation = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dataSource, setDataSource] = useState([
@@ -23,12 +21,6 @@ const Documentation = () => {
   const [documenttype, setDocumentType] = useState("");
   const [documentfile, setDocumentFile] = useState("");
   const [empID, setEmpID] = useState("");
-
-
-
-
-
-
 
   const columns = [
     {
@@ -59,8 +51,8 @@ const Documentation = () => {
   // const formData = new FormData()
   // console.log(formData, "jhgrt")
   // formData.append("documentfile", documentfile)
-
-
+  
+    
   const handleInputChange = e => {
     console.log("I am in file function", e.file)
     setDocumentFile(e.file)
