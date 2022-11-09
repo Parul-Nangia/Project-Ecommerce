@@ -191,22 +191,6 @@ const Clock = () => {
 
   //-------------------------------------------- Attendance Checkin---------------------------------------------------------------
 
-  //-------------------------------------------- Attendance Break---------------------------------------------------------------
-
-  // const employeebreak = async () => {
-  //   const token = localStorage.getItem("access_token1");
-  //   console.log("token from local storage:", token);
-  //   var decoded = jwt_decode(token);
-  //   console.log("Decoded token data", decoded);
-
-  //   // const CheckIn ="";
-  //   // const CheckOut = "";
-  //   const Breaks = {
-  //     start: "",
-  //     end: ""
-  //   };
-  //-------------------------------------------- Attendance Break---------------------------------------------------------------
-
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   useEffect(() => {
     employeecheckout();
@@ -228,39 +212,44 @@ const Clock = () => {
       })
       .then((res) => {
         setEmployeeCheckOut(res?.data?.updatedAttendance);
-        // console.log("AttendanceID For checkout", EmployeeCheckIn._id);
       });
     console.log("Today CheckOut Data", EmployeeCheckOut);
   };
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
 
-  // const Break = new FormData()
-  // Break.append("Object",object)
+  //-------------------------------------------- Attendance Break------------------------------------------------------------------
 
-  // Break.append("end",end)
-
-  // console.log("Object", object);
-
-  const employeebreak = async () => {
+  const employeebreak = async (action) => {
     const start = new Date().toLocaleTimeString();
+    const end = new Date().toLocaleTimeString();
 
     const obj = {
-      start: start,
-      // end: "",
-
+      start: "",
+      end: "",
     };
+    obj.start = start;
+    if (!action) {
+      obj.end = end;
+    }
+
+    const breaks = [];
+    breaks.push(obj);
+    // breaks.push(obj)
 
     const ID = attendance[0]._id;
     const CheckIn = attendance[0].CheckIn;
-    const Breaks = [];
+    const Breaks = breaks;
     const CheckOut = "";
-    Breaks.push(obj);
     console.log("break", Breaks);
-    // Breaks.append(start);
-    // setObjects({...objects,start: new Date().toLocaleTimeString()})
-    // setObjects({ ...objects, start: new Date().toLocaleTimeString() });
 
-    await axios
+     Breaks.push(obj);
+
+    // objects.push(obj)
+    setObjects({...objects,obj})
+
+    // res?.data?.updatedAttendance?.Breaks.push(obj);
+
+    objects.obj = await axios
       .put(`http://localhost:1999/attendance/${ID}`, {
         CheckIn,
         Breaks,
@@ -268,53 +257,14 @@ const Clock = () => {
       })
 
       .then((res) => {
-         setObjects(res?.data?.updatedAttendance);
-        console.log("updatedAttendance start time ", res);
+        setObjects(res?.data?.updatedAttendance);
+        console.log("updatedAttendance start time ", res );
       });
+
+    setShow(!show);
   };
 
-
-
-  const employeeresume = async () => {
-     const end = new Date().toLocaleTimeString()
-    //  const start = objects?.Breaks
-    const breaks = [
-      {
-        // ...objects,
-        // start : objects?.Breaks,
-        //  start:objects?.Breaks,
-        // ...start,
-         ...objects?.Breaks,
-        
-        end: new Date().toLocaleTimeString(),
-      },
-    ];
-
-    
-    //  breaks.push( ...start,end=end)
-
-    // const breaks = []
-    // const start= objects?.Breaks;
-    // console.log(("data in start", start))
-    // breaks.push(end)
-
-    // console.log(("data in start", start));
-    // console.log("breakssss", breaks);
-
-    //  setObjects({ ...objects, end:new Date().toLocaleTimeString()});
-    const ID = attendance[0]._id;
-    const Breaks = breaks;
-   
-
-    await axios
-      .put(`http://localhost:1999/attendance/${ID}`, {
-        //  ...objects,
-        Breaks,
-      })
-      .then((res) => {
-        console.log("employee resume", res);
-      });
-  };
+  //-------------------------------------------- Attendance Break----------------------------------------------------------------
 
   return (
     <>
@@ -327,18 +277,11 @@ const Clock = () => {
       </div>
 
       {attendance?.emp_id}
-      {/* {breaks.map(=>())} */}
-      {/* {objects.map(object=>())} */}
 
       {/* {attendance?.CheckOut}
       {attendance?.Break}
 
       {attendance?.Resume} */}
-
-      {/* <div>
-        <h1>Timer</h1>
-        <h1>{minutes<10? "0"+minutes:minutes}:{seconds<10? "0"+seconds: seconds}</h1>
-      </div> */}
 
       <div>
         <Button
@@ -359,21 +302,22 @@ const Clock = () => {
             fontWeight: "Bold",
           }}
           onClick={() => {
-            employeebreak();
+            employeebreak(show);
           }}
         >
-          Break
+          {show ? "Break" : "Resume"}
         </Button>
-        <Button
+
+        {/* <Button
           style={{
             color: "white",
             backgroundColor: "Orange",
             fontWeight: "Bold",
           }}
-          onClick={employeeresume}
-        >
-          Resume
-        </Button>
+          onClick={()=>setShow(!show){employeeresume()}
+        >{show?"Resume":"Break"}}
+    
+        </Button> */}
         <Button
           style={{
             color: "white",

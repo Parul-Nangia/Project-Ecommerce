@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import {makeStyles } from "@material-ui/core";
 import React from "react";
 import { useState, useEffect } from "react";
 import { Table } from "antd";
@@ -88,7 +88,8 @@ const Employees = ({ dataSource }) => {
   const classes = useStyles();
   const [state, setState] = useState([]);
   // const [view, setView] = useState([]);
-
+  const [employeeData, setEmployeeData] = useState([]);
+  
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
@@ -96,28 +97,29 @@ const Employees = ({ dataSource }) => {
   const [role, setRole] = useState("");
   const navigate = useNavigate();
   const [name, setName] = useState("");
+  console.log("emo name", name)
   const [employeename, setEmployeeName] = useState("");
 
   useEffect(() => {
-    userData();
+    LoggedInEmployeeRole();
   }, []);
 
   useEffect(() => {
     employeelist();
   }, []);
 
-  const userData = () => {
+  const LoggedInEmployeeRole = () => {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token);
     // let token = token;
     var decoded = jwt_decode(token);
     console.log("Decoded token data", decoded);
-    setName(decoded);
+    setEmployeeName(decoded);
   };
 
-  // if(name.role==="employee"){
+  // if(employeename.role==="employee"){
   //   return(
-  //     <Error />
+    
   //   )
 
   // }
@@ -220,7 +222,7 @@ const Employees = ({ dataSource }) => {
         contact,
         role,
       })
-      .then((res) => {});
+      .then((res) => { });
     setIsEditing(false);
   };
   // ----------------------------------------fetch method (PUT api)
@@ -266,9 +268,9 @@ const Employees = ({ dataSource }) => {
       })
       .then((data) => {
         let emp = data.userData;
-        setState(emp);
+        setEmployeeData(emp);
 
-        console.log("response", emp);
+        console.log("list response", emp);
       });
   };
   console.log(state, "hh");
@@ -287,6 +289,7 @@ const Employees = ({ dataSource }) => {
   //   }).then((data) => {
   //     let ab = data.viewData;
   //     setView(ab)
+
 
   //     console.log("response", ab);
 
@@ -416,12 +419,12 @@ const Employees = ({ dataSource }) => {
     },
   ];
 
-  if (name.role === "admin") {
-    console.log("my role is ", name.role);
+  if (employeename.role === "admin") {
+    console.log("my role is ", employeename.role);
 
     return (
       <>
-        <Table columns={columns} dataSource={state} />
+        <Table columns={columns} dataSource={employeeData} />
 
         <Modal
           title=" Edit Profile"
@@ -490,7 +493,7 @@ const Employees = ({ dataSource }) => {
         </Modal>
 
         <Button style={{ float: "right", margin: "50px" }} onClick={showModal}>
-          {" "}
+
           Add New Employee
         </Button>
         <Modal
