@@ -38,7 +38,7 @@ const Clock = () => {
     var decoded = jwt_decode(token);
 
     await axios
-      .get(`http://localhost:1999/attendance/record/${decoded._id}`)
+      .get(`${process.env.REACT_APP_BASE_URL}/attendance/record/${decoded._id}`)
       .then((res) => {
         setAttendance(res?.data?.attendanceDataByID);
 
@@ -148,7 +148,7 @@ const Clock = () => {
     const emp_id = decoded._id;
 
     await axios
-      .post(`http://localhost:1999/attendance/${emp_id}`, {
+      .post(`${process.env.REACT_APP_BASE_URL}/attendance/${emp_id}`, {
         name: decoded.name,
         emp_id: decoded._id,
         TodayDate,
@@ -176,7 +176,7 @@ const Clock = () => {
         TotalDaysRequested: 0,
       };
 
-      fetch("http://localhost:1999/leave", {
+      fetch(`${process.env.REACT_APP_BASE_URL}/leave`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -205,7 +205,7 @@ const Clock = () => {
     console.log("Attendance id for CheckOut", ID);
 
     await axios
-      .put(`http://localhost:1999/attendance/${ID}`, {
+      .put(`${process.env.REACT_APP_BASE_URL}/attendance/${ID}`, {
         CheckIn,
         CheckOut,
         Breaks,
@@ -224,8 +224,8 @@ const Clock = () => {
     const end = new Date().toLocaleTimeString();
 
     const obj = {
-      start: "",
-      end: "",
+      start: start,
+      // end: "",
     };
     obj.start = start;
     if (!action) {
@@ -242,15 +242,8 @@ const Clock = () => {
     const CheckOut = "";
     console.log("break", Breaks);
 
-     Breaks.push(obj);
-
-    // objects.push(obj)
-    setObjects({...objects,obj})
-
-    // res?.data?.updatedAttendance?.Breaks.push(obj);
-
-    objects.obj = await axios
-      .put(`http://localhost:1999/attendance/${ID}`, {
+    await axios
+      .put(`${process.env.REACT_APP_BASE_URL}/attendance/${ID}`, {
         CheckIn,
         Breaks,
         CheckOut,
@@ -258,13 +251,18 @@ const Clock = () => {
 
       .then((res) => {
         setObjects(res?.data?.updatedAttendance);
-        console.log("updatedAttendance start time ", res );
+        console.log("updatedAttendance start time ", res);
       });
 
     setShow(!show);
   };
 
+
   //-------------------------------------------- Attendance Break----------------------------------------------------------------
+
+  
+    
+
 
   return (
     <>

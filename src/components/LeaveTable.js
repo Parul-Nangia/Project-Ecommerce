@@ -10,7 +10,7 @@ const LeaveTable = () => {
   }, []);
 
   const getData = async () => {
-    await axios.get("http://localhost:1999/leave").then((res) => {
+    await axios.get(`${process.env.REACT_APP_BASE_URL}/leave`).then((res) => {
       console.log(res, "bhvhv");
       setDataSource(res?.data?.leaveData);
       console.log(dataSource, "data");
