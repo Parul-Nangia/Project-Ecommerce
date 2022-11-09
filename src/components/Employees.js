@@ -78,16 +78,12 @@ const useStyles = makeStyles({
 });
 
 const Employees = ({ dataSource }) => {
-  // const [ignored, forceUpdate] = useReducer(x=>x+1, 0);
-
-  // const [profile, setProfile] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
 
   const classes = useStyles();
   const [state, setState] = useState([]);
-  // const [view, setView] = useState([]);
 
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -96,7 +92,6 @@ const Employees = ({ dataSource }) => {
   const [role, setRole] = useState("");
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  const [employeename, setEmployeeName] = useState("");
 
   useEffect(() => {
     userData();
@@ -109,18 +104,11 @@ const Employees = ({ dataSource }) => {
   const userData = () => {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token);
-    // let token = token;
+
     var decoded = jwt_decode(token);
     console.log("Decoded token data", decoded);
     setName(decoded);
   };
-
-  // if(name.role==="employee"){
-  //   return(
-  //     <Error />
-  //   )
-
-  // }
 
   const profile = (user_id) => {
     navigate("/profile/" + user_id);
@@ -152,7 +140,7 @@ const Employees = ({ dataSource }) => {
   //================================================= START employee delete ( API==================================================
 
   function deleteEmployee(_id) {
-    fetch(`http://localhost:1999/user/${_id}`, {
+    fetch(`${process.env.REACT_APP_BASE_URL}/user/${_id}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -161,30 +149,16 @@ const Employees = ({ dataSource }) => {
     });
 
     console.log("Employee Deleted", _id);
-    // forceUpdate();
+
     window.location.reload(false);
   }
-
-  // ----------------------------------------axios delete method (delete api)
-  // const deleteData = async (_id)=> {
-  //   await axios.delete(`http://localhost:1999/employee/${_id}`)
-  //     .then((res) => {
-  //       console.log(_id, "resif")
-  //       setState(
-  //         res.data.map(row => ({
-  //           id: row.id
-  //         }))
-  //       );
-  //     }
-  //     );
-  // };
 
   // //================================================= START employee post (POST API)
   function saveEmployee() {
     console.warn({ name, password, email, contact, gender, role });
     let data = { name, password, email, contact, gender, role };
 
-    fetch("http://localhost:1999/user/signup", {
+    fetch(`${process.env.REACT_APP_BASE_URL}/user/signup`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -213,7 +187,7 @@ const Employees = ({ dataSource }) => {
     const contact = editingEmployee.contact;
     const role = editingEmployee.role;
     await axios
-      .put(`http://localhost:1999/user/${_id}`, {
+      .put(`${process.env.REACT_APP_BASE_URL}/user/${_id}`, {
         name,
         email,
         gender,
@@ -223,29 +197,6 @@ const Employees = ({ dataSource }) => {
       .then((res) => {});
     setIsEditing(false);
   };
-  // ----------------------------------------fetch method (PUT api)
-  //  function editEmployee(_id) {
-  //   console.warn({ name, email, contact, gender });
-  //   let data = { name, email, contact, gender }
-  //   fetch(`http://localhost:1999/employee/${_id}`, {
-  //     method: 'PUT',
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(data)
-  //   }).then((Employee) => {
-  //     console.warn("result", Employee);
-  //     // setState((pre)=>{
-  //     //   return[...pre,editEmployee]
-  //     // })
-
-  //   })
-  //   setIsEditing(false);
-  // }
-  // const viewEmployee =()=>{
-
-  // }
 
   const onEditEmployee = (record) => {
     setIsEditing(true);
@@ -260,7 +211,7 @@ const Employees = ({ dataSource }) => {
   // //================================================= START employee GET (GET API)
 
   const employeelist = () => {
-    fetch("http://localhost:1999/user")
+    fetch(`${process.env.REACT_APP_BASE_URL}/user`)
       .then((response) => {
         return response.json();
       })
@@ -276,31 +227,7 @@ const Employees = ({ dataSource }) => {
   // //================================================= END employee GET (GET API)
 
   // //=================================================START View employee GET (GET API)
-  // useEffect((_id) => {
-  //   viewEmployee(_id);
 
-  // }, [])
-
-  // const viewEmployee = (_id) => {
-  //   fetch(`http://localhost:1999/employee/${_id}`).then((response) => {
-  //     return response.json();
-  //   }).then((data) => {
-  //     let ab = data.viewData;
-  //     setView(ab)
-
-  //     console.log("response", ab);
-
-  //   })
-
-  // }
-  // console.log(view, "qq")
-  // //=================================================END  View employee GET (GET API)
-  // const onViewEmployee = (record) => {
-  //   viewEmployee = (record._id)
-
-  // }
-
-  // const navigate=useNavigate()
   const documentation = (user_id) => {
     navigate("/documentation/" + user_id);
   };

@@ -7,11 +7,7 @@ import moment from "moment";
 // import * as moment from 'moment'
 const AttendanceTable = () => {
   const [dataSource, setDataSource] = useState([]);
-  const [queryData, setQueryData] = useState([]);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [attendanceByDateRange, setAttendanceByDateRange] = useState([]);
-  const [attendanceDataByName, setAttendanceDataByName] = useState([]);
+
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
 
@@ -19,10 +15,12 @@ const AttendanceTable = () => {
     getAllData();
   }, []);
   const getAllData = async () => {
-    await axios.post(`http://localhost:1999/attendance`).then((res) => {
-      setDataSource(res?.data?.attendanceRecord);
-      console.log("Attendance All Data", dataSource);
-    });
+    await axios
+      .post(`${process.env.REACT_APP_BASE_URL}/attendance`)
+      .then((res) => {
+        setDataSource(res?.data?.attendanceRecord);
+        console.log("Attendance All Data", dataSource);
+      });
   };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {

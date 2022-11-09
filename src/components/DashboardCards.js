@@ -10,7 +10,7 @@ const DashboardCards = () => {
 
   //============================================================== Start Total Employees====================================================================================
   const employeeList = () => {
-    fetch("http://localhost:1999/user")
+    fetch(`${process.env.REACT_APP_BASE_URL}/user`)
       .then((response) => {
         return response.json();
       })
@@ -28,7 +28,7 @@ const DashboardCards = () => {
   //============================================================== Start Weekly On Leave Employees====================================================================================
 
   const thisWeekEmployeeLeaveData = () => {
-    fetch("http://localhost:1999/leave/WeekData")
+    fetch(`${process.env.REACT_APP_BASE_URL}/leave/WeekData`)
       .then((response) => {
         return response.json();
       })
@@ -46,7 +46,7 @@ const DashboardCards = () => {
 
   //============================================================== Start Today On Leave Employee====================================================================================
   const todayEmployeeLeaveData = () => {
-    fetch("http://localhost:1999/leave/TodayData")
+    fetch(`${process.env.REACT_APP_BASE_URL}/leave/TodayData`)
       .then((response) => {
         return response.json();
       })
@@ -66,21 +66,20 @@ const DashboardCards = () => {
   //============================================================== Start Monthly On Leave Employees====================================================================================
 
   const MonthLeaveData = () => {
-    fetch("http://localhost:1999/leave/monthdata").then((response) => {
-      return response.json();
-    }).then((data) => {
-      let employeeLeaves = data.MonthLeaveData
-      setMonthLeave(employeeLeaves);
+    fetch(`${process.env.REACT_APP_BASE_URL}/leave/monthdata`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        let employeeLeaves = data.MonthLeaveData;
+        setMonthLeave(employeeLeaves);
 
-      console.log("Month Leave Data", employeeLeaves);
-
-    })
-
-  }
+        console.log("Month Leave Data", employeeLeaves);
+      });
+  };
   useEffect(() => {
     MonthLeaveData();
-
-  }, [])
+  }, []);
 
   //============================================================== End Monthly On Leave Employees====================================================================================
 

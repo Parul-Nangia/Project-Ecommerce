@@ -14,9 +14,7 @@ const Clock = () => {
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
   // console.log("attendance state", attendance[0].CheckIn)
   const [objects, setObjects] = useState({});
-  const[show,setShow]=useState(true)
-
-
+  const [show, setShow] = useState(true);
 
   //-------------------------------------------- Clock---------------------------------------------------------------
   const refreshClock = () => {
@@ -40,7 +38,7 @@ const Clock = () => {
     var decoded = jwt_decode(token);
 
     await axios
-      .get(`http://localhost:1999/attendance/record/${decoded._id}`)
+      .get(`${process.env.REACT_APP_BASE_URL}/attendance/record/${decoded._id}`)
       .then((res) => {
         setAttendance(res?.data?.attendanceDataByID);
 
@@ -109,10 +107,13 @@ const Clock = () => {
   useEffect(() => {
     var MyDate = new Date();
     var MyDateString;
-    MyDate.setDate(MyDate.getDate());  // date format "2022-10-02" with zero
-    MyDateString = MyDate.getFullYear() +
-      "-" + ("0" + (MyDate.getMonth() + 1)).slice(-2) +
-      "-" + ("0" + MyDate.getDate()).slice(-2);
+    MyDate.setDate(MyDate.getDate()); // date format "2022-10-02" with zero
+    MyDateString =
+      MyDate.getFullYear() +
+      "-" +
+      ("0" + (MyDate.getMonth() + 1)).slice(-2) +
+      "-" +
+      ("0" + MyDate.getDate()).slice(-2);
 
     if (attendance.TodayDate === MyDateString) {
       setDisable(true);
@@ -132,9 +133,12 @@ const Clock = () => {
     var MyDateString;
     MyDate.setDate(MyDate.getDate());
 
-    MyDateString = MyDate.getFullYear() +
-      "-" + ("0" + (MyDate.getMonth() + 1)).slice(-2) +
-      "-" + ("0" + MyDate.getDate()).slice(-2);
+    MyDateString =
+      MyDate.getFullYear() +
+      "-" +
+      ("0" + (MyDate.getMonth() + 1)).slice(-2) +
+      "-" +
+      ("0" + MyDate.getDate()).slice(-2);
     // today date
 
     const CheckIn = new Date().toLocaleTimeString();
@@ -144,7 +148,7 @@ const Clock = () => {
     const emp_id = decoded._id;
 
     await axios
-      .post(`http://localhost:1999/attendance/${emp_id}`, {
+      .post(`${process.env.REACT_APP_BASE_URL}/attendance/${emp_id}`, {
         name: decoded.name,
         emp_id: decoded._id,
         TodayDate,
@@ -154,7 +158,6 @@ const Clock = () => {
       })
       .then((res) => {
         setEmployeeCheckIn(res?.data?.newAttendance);
-
 
         // console.log("AttendanceID For checkout", EmployeeCheckIn._id);
       });
@@ -173,7 +176,7 @@ const Clock = () => {
         TotalDaysRequested: 0,
       };
 
-      fetch("http://localhost:1999/leave", {
+      fetch(`${process.env.REACT_APP_BASE_URL}/leave`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -187,7 +190,6 @@ const Clock = () => {
   };
 
   //-------------------------------------------- Attendance Checkin---------------------------------------------------------------
-
 
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
@@ -205,8 +207,6 @@ const Clock = () => {
   //   };
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
-
-  
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   useEffect(() => {
     employeecheckout();
@@ -221,7 +221,7 @@ const Clock = () => {
     console.log("Attendance id for CheckOut", ID);
 
     await axios
-      .put(`http://localhost:1999/attendance/${ID}`, {
+      .put(`${process.env.REACT_APP_BASE_URL}/attendance/${ID}`, {
         CheckIn,
         CheckOut,
         Breaks,
@@ -234,9 +234,6 @@ const Clock = () => {
   };
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
 
-
-
-
   // const Break = new FormData()
   // Break.append("Object",object)
 
@@ -244,33 +241,28 @@ const Clock = () => {
 
   // console.log("Object", object);
 
-
-
   const employeebreak = async () => {
-    const start= new Date().toLocaleTimeString()
+    const start = new Date().toLocaleTimeString();
     const breaks = [
       {
-
-          ...objects,
-          start: start,
+        ...objects,
+        start: start,
       },
       // {
       // ...objects,
       // }
     ];
 
-     console.log("break", breaks);
-
-    
+    console.log("break", breaks);
 
     const ID = attendance[0]._id;
     const CheckIn = attendance[0].CheckIn;
     const Breaks = breaks;
-    const Resume= "";
+    const Resume = "";
     const CheckOut = "";
-    
+
     await axios
-      .put(`http://localhost:1999/attendance/${ID}`, {
+      .put(`${process.env.REACT_APP_BASE_URL}/attendance/${ID}`, {
         CheckIn,
         Breaks,
         Resume,
@@ -280,53 +272,43 @@ const Clock = () => {
       .then((res) => {
         console.log("employee break", res?.data?.updatedAttendance);
       });
+  };
 
-    }
- 
+  const employeeresume = async () => {
+    const end = new Date().toLocaleTimeString();
 
-     
-    
-    const employeeresume = async () => {
-      const end= new Date().toLocaleTimeString() 
-     
-      const resume = [
-        {
+    const resume = [
+      {
+        ...objects,
+        end: end,
+      },
+      // {
+      //   ...objects,
+      //   end:end
+      // }
+    ];
+    // console.log(resume,"Breaks")
+    setObjects({ ...objects, end: end });
 
-          ...objects,
-          end:end
-           
-          },
-          // {
-          //   ...objects,
-          //   end:end
-          // }
-      ];
-      // console.log(resume,"Breaks")
-       setObjects({...objects, end:end });
+    console.log("resume", resume);
 
-       console.log("resume", resume);
+    const ID = attendance[0]._id;
+    const CheckIn = attendance[0].CheckIn;
+    const Breaks = resume;
+    // const Resume= breaks;
+    const CheckOut = "";
+    await axios
+      .put(`${process.env.REACT_APP_BASE_URL}/attendance/${ID}`, {
+        CheckIn,
+        Breaks,
 
-      const ID = attendance[0]._id;
-      const CheckIn = attendance[0].CheckIn;
-      const Breaks =resume;
-      // const Resume= breaks;
-      const CheckOut = "";
-       await axios
-        .put(`http://localhost:1999/attendance/${ID}`, {
-          CheckIn,
-          Breaks,
-          
-          CheckOut,
-        })
-        .then((res) => {
-          console.log("employee resume",  res?.data?.updatedAttendance  );
-        });
+        CheckOut,
+      })
+      .then((res) => {
+        console.log("employee resume", res?.data?.updatedAttendance);
+      });
+  };
 
-    }
-    
-  
-    
-    
   return (
     <>
       <div>

@@ -39,7 +39,9 @@ const View = () => {
   useEffect(() => {
     async function getOneEmploy() {
       try {
-        const employ = await axios.get(`http://localhost:1999/employee/${_id}`);
+        const employ = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/employee/${_id}`
+        );
         console.log(employ.data);
         setEmploy(employ.data);
         console.log(employ._id);

@@ -15,10 +15,13 @@ const LoginNew = () => {
     console.log("going forward");
     e.preventDefault();
 
-    const { data } = await axios.post("http://localhost:1999/user/login", {
-      name,
-      password,
-    });
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_BASE_URL}/user/login`,
+      {
+        name,
+        password,
+      }
+    );
 
     axios.defaults.headers.common["Authorization"] = `Bearer ${data["token"]}`;
 
