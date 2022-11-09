@@ -78,12 +78,17 @@ const useStyles = makeStyles({
 });
 
 const Employees = ({ dataSource }) => {
+  // const [ignored, forceUpdate] = useReducer(x=>x+1, 0);
+
+  // const [profile, setProfile] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
 
   const classes = useStyles();
   const [state, setState] = useState([]);
+  // const [view, setView] = useState([]);
+  const [employeeData, setEmployeeData] = useState([]);
 
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -92,23 +97,32 @@ const Employees = ({ dataSource }) => {
   const [role, setRole] = useState("");
   const navigate = useNavigate();
   const [name, setName] = useState("");
+  console.log("emo name", name);
+  const [employeename, setEmployeeName] = useState("");
 
   useEffect(() => {
-    userData();
+    LoggedInEmployeeRole();
   }, []);
 
   useEffect(() => {
     employeelist();
   }, []);
 
-  const userData = () => {
+  const LoggedInEmployeeRole = () => {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token);
-
+    // let token = token;
     var decoded = jwt_decode(token);
     console.log("Decoded token data", decoded);
-    setName(decoded);
+    setEmployeeName(decoded);
   };
+
+  // if(employeename.role==="employee"){
+  //   return(
+
+  //   )
+
+  // }
 
   const profile = (user_id) => {
     navigate("/profile/" + user_id);
@@ -140,7 +154,7 @@ const Employees = ({ dataSource }) => {
   //================================================= START employee delete ( API==================================================
 
   function deleteEmployee(_id) {
-    fetch(`${process.env.REACT_APP_BASE_URL}/user/${_id}`, {
+    fetch(`http://localhost:1999/user/${_id}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -149,16 +163,30 @@ const Employees = ({ dataSource }) => {
     });
 
     console.log("Employee Deleted", _id);
-
+    // forceUpdate();
     window.location.reload(false);
   }
+
+  // ----------------------------------------axios delete method (delete api)
+  // const deleteData = async (_id)=> {
+  //   await axios.delete(`http://localhost:1999/employee/${_id}`)
+  //     .then((res) => {
+  //       console.log(_id, "resif")
+  //       setState(
+  //         res.data.map(row => ({
+  //           id: row.id
+  //         }))
+  //       );
+  //     }
+  //     );
+  // };
 
   // //================================================= START employee post (POST API)
   function saveEmployee() {
     console.warn({ name, password, email, contact, gender, role });
     let data = { name, password, email, contact, gender, role };
 
-    fetch(`${process.env.REACT_APP_BASE_URL}/user/signup`, {
+    fetch("http://localhost:1999/user/signup", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -187,7 +215,7 @@ const Employees = ({ dataSource }) => {
     const contact = editingEmployee.contact;
     const role = editingEmployee.role;
     await axios
-      .put(`${process.env.REACT_APP_BASE_URL}/user/${_id}`, {
+      .put(`http://localhost:1999/user/${_id}`, {
         name,
         email,
         gender,
@@ -197,6 +225,29 @@ const Employees = ({ dataSource }) => {
       .then((res) => {});
     setIsEditing(false);
   };
+  // ----------------------------------------fetch method (PUT api)
+  //  function editEmployee(_id) {
+  //   console.warn({ name, email, contact, gender });
+  //   let data = { name, email, contact, gender }
+  //   fetch(`http://localhost:1999/employee/${_id}`, {
+  //     method: 'PUT',
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(data)
+  //   }).then((Employee) => {
+  //     console.warn("result", Employee);
+  //     // setState((pre)=>{
+  //     //   return[...pre,editEmployee]
+  //     // })
+
+  //   })
+  //   setIsEditing(false);
+  // }
+  // const viewEmployee =()=>{
+
+  // }
 
   const onEditEmployee = (record) => {
     setIsEditing(true);
@@ -211,15 +262,15 @@ const Employees = ({ dataSource }) => {
   // //================================================= START employee GET (GET API)
 
   const employeelist = () => {
-    fetch(`${process.env.REACT_APP_BASE_URL}/user`)
+    fetch("http://localhost:1999/user")
       .then((response) => {
         return response.json();
       })
       .then((data) => {
         let emp = data.userData;
-        setState(emp);
+        setEmployeeData(emp);
 
-        console.log("response", emp);
+        console.log("list response", emp);
       });
   };
   console.log(state, "hh");
@@ -227,7 +278,31 @@ const Employees = ({ dataSource }) => {
   // //================================================= END employee GET (GET API)
 
   // //=================================================START View employee GET (GET API)
+  // useEffect((_id) => {
+  //   viewEmployee(_id);
 
+  // }, [])
+
+  // const viewEmployee = (_id) => {
+  //   fetch(`http://localhost:1999/employee/${_id}`).then((response) => {
+  //     return response.json();
+  //   }).then((data) => {
+  //     let ab = data.viewData;
+  //     setView(ab)
+
+  //     console.log("response", ab);
+
+  //   })
+
+  // }
+  // console.log(view, "qq")
+  // //=================================================END  View employee GET (GET API)
+  // const onViewEmployee = (record) => {
+  //   viewEmployee = (record._id)
+
+  // }
+
+  // const navigate=useNavigate()
   const documentation = (user_id) => {
     navigate("/documentation/" + user_id);
   };
@@ -343,12 +418,12 @@ const Employees = ({ dataSource }) => {
     },
   ];
 
-  if (name.role === "admin") {
-    console.log("my role is ", name.role);
+  if (employeename.role === "admin") {
+    console.log("my role is ", employeename.role);
 
     return (
       <>
-        <Table columns={columns} dataSource={state} />
+        <Table columns={columns} dataSource={employeeData} />
 
         <Modal
           title=" Edit Profile"
@@ -417,7 +492,6 @@ const Employees = ({ dataSource }) => {
         </Modal>
 
         <Button style={{ float: "right", margin: "50px" }} onClick={showModal}>
-          {" "}
           Add New Employee
         </Button>
         <Modal

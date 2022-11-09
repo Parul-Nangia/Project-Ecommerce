@@ -274,30 +274,15 @@ const Clock = () => {
 
   const employeeresume = async () => {
     const end = new Date().toLocaleTimeString();
-    //  const start = objects?.Breaks
+
     const breaks = [
       {
-        // ...objects,
-        // start : objects?.Breaks,
-        //  start:objects?.Breaks,
-        // ...start,
         ...objects?.Breaks,
 
         end: new Date().toLocaleTimeString(),
       },
     ];
 
-    //  breaks.push( ...start,end=end)
-
-    // const breaks = []
-    // const start= objects?.Breaks;
-    // console.log(("data in start", start))
-    // breaks.push(end)
-
-    // console.log(("data in start", start));
-    // console.log("breakssss", breaks);
-
-    //  setObjects({ ...objects, end:new Date().toLocaleTimeString()});
     const ID = attendance[0]._id;
     const Breaks = breaks;
 
