@@ -243,69 +243,71 @@ const Clock = () => {
 
   const employeebreak = async () => {
     const start = new Date().toLocaleTimeString();
-    const breaks = [
-      {
-        ...objects,
-        start: start,
-      },
-      // {
-      // ...objects,
-      // }
-    ];
 
-    console.log("break", breaks);
+    const obj = {
+      start: start,
+      // end: "",
+    };
 
     const ID = attendance[0]._id;
     const CheckIn = attendance[0].CheckIn;
-    const Breaks = breaks;
-    const Resume = "";
+    const Breaks = [];
     const CheckOut = "";
+    Breaks.push(obj);
+    console.log("break", Breaks);
+    // Breaks.append(start);
+    // setObjects({...objects,start: new Date().toLocaleTimeString()})
+    // setObjects({ ...objects, start: new Date().toLocaleTimeString() });
 
     await axios
       .put(`${process.env.REACT_APP_BASE_URL}/attendance/${ID}`, {
         CheckIn,
         Breaks,
-        Resume,
         CheckOut,
       })
 
       .then((res) => {
-        console.log("employee break", res?.data?.updatedAttendance);
+        setObjects(res?.data?.updatedAttendance);
+        console.log("updatedAttendance start time ", res);
       });
   };
 
   const employeeresume = async () => {
     const end = new Date().toLocaleTimeString();
-
-    const resume = [
+    //  const start = objects?.Breaks
+    const breaks = [
       {
-        ...objects,
-        end: end,
+        // ...objects,
+        // start : objects?.Breaks,
+        //  start:objects?.Breaks,
+        // ...start,
+        ...objects?.Breaks,
+
+        end: new Date().toLocaleTimeString(),
       },
-      // {
-      //   ...objects,
-      //   end:end
-      // }
     ];
-    // console.log(resume,"Breaks")
-    setObjects({ ...objects, end: end });
 
-    console.log("resume", resume);
+    //  breaks.push( ...start,end=end)
 
+    // const breaks = []
+    // const start= objects?.Breaks;
+    // console.log(("data in start", start))
+    // breaks.push(end)
+
+    // console.log(("data in start", start));
+    // console.log("breakssss", breaks);
+
+    //  setObjects({ ...objects, end:new Date().toLocaleTimeString()});
     const ID = attendance[0]._id;
-    const CheckIn = attendance[0].CheckIn;
-    const Breaks = resume;
-    // const Resume= breaks;
-    const CheckOut = "";
-    await axios
-      .put(`${process.env.REACT_APP_BASE_URL}/attendance/${ID}`, {
-        CheckIn,
-        Breaks,
+    const Breaks = breaks;
 
-        CheckOut,
+    await axios
+      .put(`http://localhost:1999/attendance/${ID}`, {
+        //  ...objects,
+        Breaks,
       })
       .then((res) => {
-        console.log("employee resume", res?.data?.updatedAttendance);
+        console.log("employee resume", res);
       });
   };
 

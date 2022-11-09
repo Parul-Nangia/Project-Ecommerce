@@ -6,9 +6,7 @@ import { UploadOutlined, CloudDownloadOutlined } from "@ant-design/icons";
 import { Upload } from "antd";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-
 const { Option } = Select;
-
 const Documentation = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dataSource, setDataSource] = useState([
