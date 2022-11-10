@@ -219,15 +219,23 @@ const Clock = () => {
 
   //-------------------------------------------- Attendance Break------------------------------------------------------------------
 
-  const employeebreak = async (action) => {
+
+  // const employeebreak = async (action) => {
     // const start = new Date().toLocaleTimeString();
     // const end = new Date().toLocaleTimeString();
     //  const start2 = new Date().toLocaleTimeString();
     //  const end2 = new Date().toLocaleTimeString();
 
+    
+
+    const employeebreak = async (action) => {
+    // const start = new Date().toLocaleTimeString();
+    // const end = new Date().toLocaleTimeString();
+
     const obj = {
-      start: "",
-    };
+      start:"",
+       };
+
     obj.start = new Date().toLocaleTimeString();
     if (!action) {
       obj.end = new Date().toLocaleTimeString();
@@ -252,6 +260,8 @@ const Clock = () => {
 
      breaks.push(obj2);
 
+   
+
     const ID = attendance[0]._id;
     const CheckIn = attendance[0].CheckIn;
     const Breaks = breaks;
@@ -259,6 +269,10 @@ const Clock = () => {
     console.log("break", Breaks);
 
     
+
+    
+
+
     await axios
       .put(`${process.env.REACT_APP_BASE_URL}/attendance/${ID}`, {
         CheckIn,
@@ -268,7 +282,9 @@ const Clock = () => {
 
       .then((res) => {
         setObjects(res?.data?.updatedAttendance);
-        console.log("breakss", res );
+      
+
+        console.log("breakss", res);
       });
 
     setShow(!show);

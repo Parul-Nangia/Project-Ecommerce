@@ -27,6 +27,7 @@ const LeaveForm = () => {
   const [ReturnDate, setReturnDate] = useState("");
   const [TotalHoursRequested, setTotalHoursRequested] = useState("");
   const [TotalDaysRequested, setTotalDaysRequested] = useState("");
+  const [status, setStatus] = useState("");
 
   function applyLeave() {
     const token = localStorage.getItem("access_token1");
@@ -41,6 +42,7 @@ const LeaveForm = () => {
       ReturnDate,
       TotalHoursRequested,
       TotalDaysRequested,
+      status,
     };
 
     fetch(`${process.env.REACT_APP_BASE_URL}/leave`, {

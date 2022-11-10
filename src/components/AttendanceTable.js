@@ -41,7 +41,7 @@ const AttendanceTable = () => {
       .then((res) => {
         console.log(res, "kj");
         // setDataSource(res?.data?.attendanceDataByName);
-        // setDataSource(res?.data?.attendanceDataByName.selectedKeys[0]);
+        // setDataSource(res?.data?.attendanceDataByEmpID.selectedKeys[0]);
         // console.log(dataSource, "data");
       });
   };
