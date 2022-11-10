@@ -231,7 +231,7 @@ const Employees = ({ dataSource }) => {
         contact,
         role,
       })
-      .then((res) => {});
+      .then((res) => { });
     setIsEditing(false);
   };
   // ----------------------------------------fetch method (PUT api)
@@ -298,6 +298,7 @@ const Employees = ({ dataSource }) => {
   //   }).then((data) => {
   //     let ab = data.viewData;
   //     setView(ab)
+
 
   //     console.log("response", ab);
 
