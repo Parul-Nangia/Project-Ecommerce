@@ -220,21 +220,37 @@ const Clock = () => {
   //-------------------------------------------- Attendance Break------------------------------------------------------------------
 
   const employeebreak = async (action) => {
-    const start = new Date().toLocaleTimeString();
-    const end = new Date().toLocaleTimeString();
+    // const start = new Date().toLocaleTimeString();
+    // const end = new Date().toLocaleTimeString();
+    //  const start2 = new Date().toLocaleTimeString();
+    //  const end2 = new Date().toLocaleTimeString();
 
     const obj = {
-      start: start,
-      // end: "",
+      start: "",
     };
-    obj.start = start;
+    obj.start = new Date().toLocaleTimeString();
     if (!action) {
-      obj.end = end;
+      obj.end = new Date().toLocaleTimeString();
     }
 
     const breaks = [];
     breaks.push(obj);
-    // breaks.push(obj)
+    
+
+    const obj2 = {
+     
+
+       ...objects?.Breaks,
+       start: new Date().toLocaleTimeString(),
+    };
+
+    if (!action) {
+      obj2.end = new Date().toLocaleTimeString();
+    }
+
+   
+
+     breaks.push(obj2);
 
     const ID = attendance[0]._id;
     const CheckIn = attendance[0].CheckIn;
@@ -242,6 +258,7 @@ const Clock = () => {
     const CheckOut = "";
     console.log("break", Breaks);
 
+    
     await axios
       .put(`${process.env.REACT_APP_BASE_URL}/attendance/${ID}`, {
         CheckIn,
@@ -251,18 +268,13 @@ const Clock = () => {
 
       .then((res) => {
         setObjects(res?.data?.updatedAttendance);
-        console.log("updatedAttendance start time ", res);
+        console.log("breakss", res );
       });
 
     setShow(!show);
   };
 
-
   //-------------------------------------------- Attendance Break----------------------------------------------------------------
-
-  
-    
-
 
   return (
     <>
@@ -280,6 +292,7 @@ const Clock = () => {
       {attendance?.Break}
 
       {attendance?.Resume} */}
+      {/* {breaks.map(objects=>())} */}
 
       <div>
         <Button
@@ -305,17 +318,6 @@ const Clock = () => {
         >
           {show ? "Break" : "Resume"}
         </Button>
-
-        {/* <Button
-          style={{
-            color: "white",
-            backgroundColor: "Orange",
-            fontWeight: "Bold",
-          }}
-          onClick={()=>setShow(!show){employeeresume()}
-        >{show?"Resume":"Break"}}
-    
-        </Button> */}
         <Button
           style={{
             color: "white",
