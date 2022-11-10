@@ -1,48 +1,36 @@
 import React from "react";
 import { Table } from "antd";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Modal, Input, Form, Select, Button } from "antd";
 import { UploadOutlined, CloudDownloadOutlined } from "@ant-design/icons";
 import { Upload } from "antd";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-
 const { Option } = Select;
-
 const Documentation = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [dataSource, setDataSource] = useState([
-    {
-      no: "",
-      emp_id: "",
-      documentname: "",
-      documenttype: "",
-    },
-  ]);
   const [documentname, setDocumentName] = useState("");
   const [documenttype, setDocumentType] = useState("");
   const [documentfile, setDocumentFile] = useState("");
   const [empID, setEmpID] = useState("");
-
-
-
-
-
-
-
+  const [dataSource, setDataSource] = useState([]);//[ { no: "", emp_id: "", documentname: "", documenttype: "",}, ]
   const columns = [
+    // {
+    //   title: "No.",
+    //   dataIndex: "no",
+    // },
     {
-      title: "No.",
-      dataIndex: "no",
-    },
-    {
-      title: "Document Name",
+      title: "document name",
       dataIndex: "documentname",
     },
     {
-      title: "Type",
+      title: "document type",
       dataIndex: "documenttype",
     },
+    // {
+    // title:"image",
+    // dataIndex:"image"
+    // },
     {
       title: "Actions",
       render: (record) => {
@@ -56,11 +44,20 @@ const Documentation = () => {
       },
     },
   ];
-  // const formData = new FormData()
-  // console.log(formData, "jhgrt")
-  // formData.append("documentfile", documentfile)
+  useEffect(() => {
+    showHandle();
+  },[] );
+  const showHandle = async () => {
+    await axios.get(`http://localhost:1999/document`).then((res) => {
+      console.log("Reaponse getttttttt",res)
 
-
+      setDataSource(res?.data?.documentData);
+      // console.log("Attendance All Data", dataSource);
+      // console.log(setDataSource,"setDataSource")
+    });
+  };
+  
+    
   const handleInputChange = e => {
     console.log("I am in file function", e.file)
     setDocumentFile(e.file)
@@ -68,36 +65,28 @@ const Documentation = () => {
     // console.log(e.file)
 
   }
-
-
   const handleOk = () => {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token);
     var decoded = jwt_decode(token);
     console.log("Decoded token data", decoded);
-    console.log("Employee ID", decoded._id)
-    setEmpID(decoded._id)
-    const emp_id = decoded._id
-
-
+    console.log("Employee ID", decoded._id);
+    setEmpID(decoded._id);
+    const emp_id = decoded._id;
 
     console.log("Document Name", documentname);
     console.log("Document Type", documenttype);
-    console.log("Document File", documentfile)
-    const formData = new FormData()
+    console.log("Document File", documentfile);
+    const formData = new FormData();
     // const image = formData
-    formData.append("image", documentfile)
-    formData.append("documentname", documentname)
-    formData.append("documenttype", documenttype)
-    formData.append("emp_id", emp_id)
-
-
-
-
+    formData.append("image", documentfile);
+    formData.append("documentname", documentname);
+    formData.append("documenttype", documenttype);
+    formData.append("emp_id", emp_id);
 
     axios
       .post(
-        `http://localhost:1999/document/add/${emp_id}`,
+        `${process.env.REACT_APP_BASE_URL}/document/add/${emp_id}`,
 
         formData
         // {
@@ -108,17 +97,15 @@ const Documentation = () => {
 
         // }
       )
-      .then(res => {
-        console.log("Document Response", res)
-      })
-      .catch(error => {
-        console.log(error)
+      .then((res) => {
+        console.log("Document Response", res);
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
     setIsModalOpen(false);
   };
+ 
 
   const showModal = () => {
     setIsModalOpen(true);

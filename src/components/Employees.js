@@ -89,7 +89,7 @@ const Employees = ({ dataSource }) => {
   const [state, setState] = useState([]);
   // const [view, setView] = useState([]);
   const [employeeData, setEmployeeData] = useState([]);
-  
+
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
@@ -97,7 +97,7 @@ const Employees = ({ dataSource }) => {
   const [role, setRole] = useState("");
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  console.log("emo name", name)
+  console.log("emo name", name);
   const [employeename, setEmployeeName] = useState("");
 
   useEffect(() => {
@@ -119,7 +119,7 @@ const Employees = ({ dataSource }) => {
 
   // if(employeename.role==="employee"){
   //   return(
-    
+
   //   )
 
   // }
@@ -153,18 +153,27 @@ const Employees = ({ dataSource }) => {
 
   //================================================= START employee delete ( API==================================================
 
-  function deleteEmployee(_id) {
-    fetch(`http://localhost:1999/user/${_id}`, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
+  //   fetch(`${process.env.REACT_APP_BASE_URL}/user/${_id}`, {
+  //     method: "DELETE",
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
 
-    console.log("Employee Deleted", _id);
-    // forceUpdate();
-    window.location.reload(false);
+  //   console.log("Employee Deleted", _id);
+  //   // forceUpdate();
+  //   window.location.reload(false);
+  // }
+
+  function deleteEmployee(_id) {
+    fetch(`${process.env.REACT_APP_BASE_URL}/user/empdel/${_id}`, {
+      method: "DELETE",
+    }).then((res) => {
+      console.log("result", res);
+      // window.alert("Employee Deleted successfully");
+      // window.location.reload(false);
+    });
   }
 
   // ----------------------------------------axios delete method (delete api)
@@ -186,7 +195,7 @@ const Employees = ({ dataSource }) => {
     console.warn({ name, password, email, contact, gender, role });
     let data = { name, password, email, contact, gender, role };
 
-    fetch("http://localhost:1999/user/signup", {
+    fetch(`${process.env.REACT_APP_BASE_URL}/user/signup`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -215,7 +224,7 @@ const Employees = ({ dataSource }) => {
     const contact = editingEmployee.contact;
     const role = editingEmployee.role;
     await axios
-      .put(`http://localhost:1999/user/${_id}`, {
+      .put(`${process.env.REACT_APP_BASE_URL}/user/delete${_id}`, {
         name,
         email,
         gender,
@@ -262,7 +271,7 @@ const Employees = ({ dataSource }) => {
   // //================================================= START employee GET (GET API)
 
   const employeelist = () => {
-    fetch("http://localhost:1999/user")
+    fetch(`${process.env.REACT_APP_BASE_URL}/user`)
       .then((response) => {
         return response.json();
       })
@@ -289,6 +298,7 @@ const Employees = ({ dataSource }) => {
   //   }).then((data) => {
   //     let ab = data.viewData;
   //     setView(ab)
+
 
   //     console.log("response", ab);
 
@@ -381,7 +391,7 @@ const Employees = ({ dataSource }) => {
         return (
           <>
             <Button
-              style={{ color: "black", backgroundColor: "grey" }}
+              style={{ color: "black" }}
               onClick={() => {
                 documentation(record._id);
               }}
@@ -389,7 +399,7 @@ const Employees = ({ dataSource }) => {
               <FileAddOutlined />
             </Button>
             <Button
-              style={{ color: "black", backgroundColor: "skyblue" }}
+              style={{ color: "black" }}
               onClick={() => {
                 profile(record._id);
               }}
@@ -397,7 +407,7 @@ const Employees = ({ dataSource }) => {
               <EyeOutlined />
             </Button>
             <Button
-              style={{ color: "black", backgroundColor: "Khaki" }}
+              style={{ color: "black" }}
               onClick={() => {
                 onEditEmployee(record);
               }}
@@ -405,7 +415,7 @@ const Employees = ({ dataSource }) => {
               <EditOutlined />
             </Button>
             <Button
-              style={{ color: "black", backgroundColor: "Tomato" }}
+              style={{ color: "black" }}
               onClick={() => {
                 ondeleteEmployee(record);
               }}
@@ -492,7 +502,6 @@ const Employees = ({ dataSource }) => {
         </Modal>
 
         <Button style={{ float: "right", margin: "50px" }} onClick={showModal}>
-
           Add New Employee
         </Button>
         <Modal
