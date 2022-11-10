@@ -220,26 +220,50 @@ const Clock = () => {
   //-------------------------------------------- Attendance Break------------------------------------------------------------------
 
   const employeebreak = async (action) => {
-    const start = new Date().toLocaleTimeString();
-    const end = new Date().toLocaleTimeString();
-
-    const obj = {
-      start: start,
-      // end: "",
-    };
-    obj.start = start;
-    if (!action) {
-      obj.end = end;
-    }
+    // const start =
+    // const end =
 
     const breaks = [];
+    const obj = {
+      start: "",
+      
+    };
+
+    obj.start = new Date().toLocaleTimeString();
+
+    if (!action) {
+      obj.end = new Date().toLocaleTimeString();
+    }
     breaks.push(obj);
-    // breaks.push(obj)
+    // console.log("objj", breaks);
+
+    // obj.start = start;
+    // console.log("objc", obj);
+
+    // if (!action) {
+    //   obj.end = end;
+    // }
+
+    
+
+    // breaks.push(obj2);
 
     const ID = attendance[0]._id;
     const CheckIn = attendance[0].CheckIn;
     const Breaks = breaks;
     const CheckOut = "";
+
+    const obj2 = {
+      ...objects?.Breaks,
+
+      start: new Date().toLocaleTimeString(),
+    };
+
+    if (!action) {
+      obj2.end = new Date().toLocaleTimeString();
+    }
+
+    Breaks.push(obj2)
     console.log("break", Breaks);
 
     await axios
@@ -248,21 +272,15 @@ const Clock = () => {
         Breaks,
         CheckOut,
       })
-
       .then((res) => {
         setObjects(res?.data?.updatedAttendance);
-        console.log("updatedAttendance start time ", res);
-      });
 
+        console.log("updatedattendance", res  );
+      });
     setShow(!show);
   };
 
-
   //-------------------------------------------- Attendance Break----------------------------------------------------------------
-
-  
-    
-
 
   return (
     <>
@@ -306,16 +324,6 @@ const Clock = () => {
           {show ? "Break" : "Resume"}
         </Button>
 
-        {/* <Button
-          style={{
-            color: "white",
-            backgroundColor: "Orange",
-            fontWeight: "Bold",
-          }}
-          onClick={()=>setShow(!show){employeeresume()}
-        >{show?"Resume":"Break"}}
-    
-        </Button> */}
         <Button
           style={{
             color: "white",

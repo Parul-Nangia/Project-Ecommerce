@@ -37,11 +37,11 @@ const AttendanceTable = () => {
     // console.log(a)
     // const payload="sudhir"
     axios
-      .post("http://localhost:1999/attendance", { name: payload })
+      .post(`${process.env.REACT_APP_BASE_URL}/attendance`, { name: payload })
       .then((res) => {
         console.log(res, "kj");
         // setDataSource(res?.data?.attendanceDataByName);
-        // setDataSource(res?.data?.attendanceDataByName.selectedKeys[0]);
+        // setDataSource(res?.data?.attendanceDataByEmpID.selectedKeys[0]);
         // console.log(dataSource, "data");
       });
   };
@@ -86,7 +86,9 @@ const AttendanceTable = () => {
             Search
           </Button>
           <Button
-            onClick={() => {clearFilters();}}
+            onClick={() => {
+              clearFilters();
+            }}
             size="small"
             style={{
               width: 90,
@@ -154,7 +156,7 @@ const AttendanceTable = () => {
     console.log("data/payload = ", TodayDate);
 
     axios
-      .post("http://localhost:1999/attendance", { TodayDate })
+      .post(`${process.env.REACT_APP_BASE_URL}/attendance`, { TodayDate })
       .then((res) => {
         console.log("daterange res", res);
         // setDataSource
@@ -291,8 +293,6 @@ const AttendanceTable = () => {
 
 export default AttendanceTable;
 
-
-
 // import { SearchOutlined } from '@ant-design/icons';
 // import { Button, Input, Space, Table, DatePicker, Form } from 'antd';
 // import React, { useState, useEffect } from 'react';
@@ -308,15 +308,10 @@ export default AttendanceTable;
 // const [attendanceByDateRange, setAttendanceByDateRange] = useState([]);
 // const [attendanceDataByName, setAttendanceDataByName] = useState([]);
 
-
-
 // //   console.log("Start date", startDate);
 
 // //   const [endDate, setEndDate] = useState("");
 // //   console.log("End date", endDate);
-
-
-
 
 //   // useEffect(() => {
 //   //   getFilteredDataByName();
@@ -334,9 +329,6 @@ export default AttendanceTable;
 //   // };
 
 //   // const getDataByDateRange = async () => {
-
-  
-   
 
 //   //   await axios.post(`http://localhost:1999/attendance`, data)
 //   //     .then((res) => {
@@ -550,7 +542,7 @@ export default AttendanceTable;
 //           >
 //             Reset
 //           </Button>
-         
+
 //         </Space>
 //       </div>
 //     ),
@@ -641,8 +633,6 @@ export default AttendanceTable;
 //           </Button>
 //         </Form.Item>
 //       </Form>
-
-    
 
 //       <Table columns={columns} dataSource={dataSource} />
 //     </>

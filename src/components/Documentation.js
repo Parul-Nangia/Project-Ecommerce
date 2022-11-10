@@ -13,7 +13,7 @@ const Documentation = () => {
   const [documenttype, setDocumentType] = useState("");
   const [documentfile, setDocumentFile] = useState("");
   const [empID, setEmpID] = useState("");
-  const [dataSource, setDataSource] = useState([]);//[ { no: "", emp_id: "", documentname: "", documenttype: "",}, ]
+  const [dataSource, setDataSource] = useState([]); //[ { no: "", emp_id: "", documentname: "", documenttype: "",}, ]
   const columns = [
     // {
     //   title: "No.",
@@ -46,15 +46,17 @@ const Documentation = () => {
   ];
   useEffect(() => {
     showHandle();
-  },[] );
+  }, []);
   const showHandle = async () => {
-    await axios.get(`http://localhost:1999/document`).then((res) => {
-      console.log("Reaponse getttttttt",res)
+    await axios
+      .get(`${process.env.REACT_APP_BASE_URL}/document`)
+      .then((res) => {
+        console.log("Reaponse getttttttt", res);
 
-      setDataSource(res?.data?.documentData);
-      // console.log("Attendance All Data", dataSource);
-      // console.log(setDataSource,"setDataSource")
-    });
+        setDataSource(res?.data?.documentData);
+        // console.log("Attendance All Data", dataSource);
+        // console.log(setDataSource,"setDataSource")
+      });
   };
   const props = {
     beforeUpload: (file) => {
@@ -135,7 +137,7 @@ const Documentation = () => {
       })
       .catch((error) => {
         console.log(error);
-      })
+      });
     setIsModalOpen(false);
   };
  
