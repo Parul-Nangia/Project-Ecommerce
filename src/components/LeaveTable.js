@@ -52,6 +52,7 @@ const LeaveTable = () => {
     {
       title: "Status",
       dataIndex: "ApprovalStatus",
+      
     },
   ];
   return (
