@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Login from "../components/Login";
 import Dashboard from "../components/Dashboard";
 import Attendance from "../components/Attendance";
 import Leave from "../components/Leave";
@@ -21,11 +20,8 @@ const Routing = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/attendance" element={<Attendance />} />
         <Route path="/leave" element={<Leave />} />
-        
-        <Route path="/employees" element={<Employees />}>
-        
 
-        </Route>
+        <Route path="/employees" element={<Employees />}></Route>
         {/* <Route path="/report" element={<Report />} /> */}
         <Route path="/edit/:_id" element={<Edit />} />
         <Route path="/view/:_id" element={<View />} />
