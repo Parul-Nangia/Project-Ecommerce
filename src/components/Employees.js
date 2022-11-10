@@ -390,7 +390,7 @@ const Employees = ({ dataSource }) => {
         return (
           <>
             <Button
-              style={{ color: "black", backgroundColor: "grey" }}
+              style={{ color: "black" }}
               onClick={() => {
                 documentation(record._id);
               }}
@@ -398,7 +398,7 @@ const Employees = ({ dataSource }) => {
               <FileAddOutlined />
             </Button>
             <Button
-              style={{ color: "black", backgroundColor: "skyblue" }}
+              style={{ color: "black" }}
               onClick={() => {
                 profile(record._id);
               }}
@@ -406,7 +406,7 @@ const Employees = ({ dataSource }) => {
               <EyeOutlined />
             </Button>
             <Button
-              style={{ color: "black", backgroundColor: "Khaki" }}
+              style={{ color: "black" }}
               onClick={() => {
                 onEditEmployee(record);
               }}
@@ -414,7 +414,7 @@ const Employees = ({ dataSource }) => {
               <EditOutlined />
             </Button>
             <Button
-              style={{ color: "black", backgroundColor: "Tomato" }}
+              style={{ color: "black" }}
               onClick={() => {
                 ondeleteEmployee(record);
               }}
