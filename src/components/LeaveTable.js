@@ -18,11 +18,6 @@ const LeaveTable = () => {
       console.log(dataSource, "data");
     });
   };
-
-  // const items = [
-  //   { dataIndex: "Item1", key: "1" },
-  //   { dataIndex: "item2", key: "2" },
-  // ];
   const columns = [
     {
       title: "Employee Name",
@@ -64,9 +59,7 @@ const LeaveTable = () => {
   return (
     <>
       <Table columns={columns} dataSource={dataSource} />
-      {/* <Dropdown menu={{ items }}>
-        <a>Hover me</a>
-      </Dropdown> */}
+    
     </>
   );
 };
