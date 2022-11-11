@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "antd";
+import { message, Table } from "antd";
 import { useState,useEffect } from "react";
 import { Modal, Input, Form, Select, Button } from "antd";
 import { UploadOutlined, CloudDownloadOutlined } from "@ant-design/icons";
@@ -13,7 +13,7 @@ const Documentation = () => {
   const [documenttype, setDocumentType] = useState("");
   const [documentfile, setDocumentFile] = useState("");
   const [empID, setEmpID] = useState("");
-  const [dataSource, setDataSource] = useState([]);//[ { no: "", emp_id: "", documentname: "", documenttype: "",}, ]
+  const [dataSource, setDataSource] = useState([]); //[ { no: "", emp_id: "", documentname: "", documenttype: "",}, ]
   const columns = [
     // {
     //   title: "No.",
@@ -46,25 +46,61 @@ const Documentation = () => {
   ];
   useEffect(() => {
     showHandle();
-  },[] );
+  }, []);
   const showHandle = async () => {
-    await axios.get(`http://localhost:1999/document`).then((res) => {
-      console.log("Reaponse getttttttt",res)
+    await axios
+      .get(`${process.env.REACT_APP_BASE_URL}/document`)
+      .then((res) => {
+        console.log("Reaponse getttttttt", res);
 
-      setDataSource(res?.data?.documentData);
-      // console.log("Attendance All Data", dataSource);
-      // console.log(setDataSource,"setDataSource")
-    });
+        setDataSource(res?.data?.documentData);
+        // console.log("Attendance All Data", dataSource);
+        // console.log(setDataSource,"setDataSource")
+      });
   };
-  
-    
-  const handleInputChange = e => {
-    console.log("I am in file function", e.file)
-    setDocumentFile(e.file)
-    // console.log("File function e value", e)
-    // console.log(e.file)
+  const props = {
+    beforeUpload: (file) => {
+      const isfile = file.type === 'image/png' || file.type==='image/jpeg' || file.type==='application/msword' || file.type==='application/pdf';
+      if (!isfile) {
+        // message.error(`${file.name} is not a png,jpeg,doc,pdf file`);
+        message.error("only jpeg,pdf,doc and png file upload")
+      }
+      else{
+        message.success("Yess Upload ")
+      }
+      setDocumentFile(file)
+      // return false
+      // return isfile
+      // return false || Upload.LIST_IGNORE ;
+      return isfile&&false || Upload.LIST_IGNORE ;
+      
+    },
+    onChange: (info) => {
+      console.log(info.fileList,"kkkkkkkkkk");
+      console.log(info.file,"hhhhhhhh")
+      // setDocumentFile(info.file)
+    },
+  };
 
-  }
+    const handleInputChange = (e)=>{
+      console.log(e,"File")
+      console.log(e.file,"Filee")
+      const isUpload = e.file.type==='image/jpeg' || e.file.type==='image/png'  || e.file.type==='application/msword' || e.file.type==='application/pdf';
+      if(!isUpload){
+        message.error("You can only Upload jpg,png,doc,pdf file")
+      } 
+    setDocumentFile(e.file)
+    return isUpload || Upload.LIST_IGNORE;
+
+    }
+  // const handleInputChange = e => {
+  //   console.log(e,"EEEEEEEE")
+  //   console.log("I am in file function", e.file)
+  //   setDocumentFile(e.file)
+  //   // console.log("File function e value", e)
+  //   // console.log(e.file)
+
+  // }
   const handleOk = () => {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token);
@@ -88,9 +124,8 @@ const Documentation = () => {
       .post(
         `${process.env.REACT_APP_BASE_URL}/document/add/${emp_id}`,
 
-        formData
+        formData 
         // {
-
         //   emp_id,
         //   documentname,
         //   documenttype
@@ -102,11 +137,10 @@ const Documentation = () => {
       })
       .catch((error) => {
         console.log(error);
-      })
+      });
     setIsModalOpen(false);
   };
  
-
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -118,6 +152,13 @@ const Documentation = () => {
     setDocumentType(value);
     console.log("document type", value);
   };
+  // const beforeUpload =(file)=>{
+  //         const isUpload = file.type==='image/jpeg' || file.type==='image/png'  || file.type==='application/msword' || file.type==='application/pdf';
+  //         if(!isUpload){
+  //           message.error("You can only Upload jpg,png,pdf,doc file")
+  //         } 
+  //        return  isUpload 
+  // }
 
   return (
     <>
@@ -128,7 +169,7 @@ const Documentation = () => {
         title="Add Document"
         open={isModalOpen}
         onOk={handleOk}
-        okText="Upload Document"
+        okText="Upload"
         onCancel={handleCancel}
       >
         <Form
@@ -166,19 +207,21 @@ const Documentation = () => {
             </Select>
           </Form.Item>
           <Form.Item>
-            <Upload.Dragger
+            {/* <Upload.Dragger
               name="image"
               type="file"
               onChange={handleInputChange}
-              // multiple
-              // type="image"
-              // action={"http://localhost:3000"}
-              showUploadList={{ showRemoveIcon: false }}
+              // showUploadList={{ showRemoveIcon: false }}
               beforeUpload={() => false}
-              accept=".png,.doc,.jpeg,.pdf,.jpg"
+              // beforeUpload={()=>{beforeUpload()}}
+              // accept=".png,.doc,.jpeg,.pdf,.jpg"
             >
               <Button icon={<UploadOutlined />}>Upload</Button>
-            </Upload.Dragger>
+            </Upload.Dragger> */}
+            <Upload.Dragger {...props}>
+              {/* beforeUpload={() => false} */}
+    <Button icon={<UploadOutlined /> }>Upload </Button>
+  </Upload.Dragger>
           </Form.Item>
         </Form>
       </Modal>
@@ -188,3 +231,7 @@ const Documentation = () => {
 };
 
 export default Documentation;
+
+
+
+

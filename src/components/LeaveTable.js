@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Table } from "antd";
+import { Dropdown, Input, Table } from "antd";
 import axios from "axios";
+import { Button, Icon, Menu, menu } from "antd";
+import { LoginOutlined } from "@mui/icons-material";
 
 const LeaveTable = () => {
   const [dataSource, setDataSource] = useState([]);
@@ -58,6 +60,7 @@ const LeaveTable = () => {
   return (
     <>
       <Table columns={columns} dataSource={dataSource} />
+    
     </>
   );
 };
