@@ -223,19 +223,15 @@ const Clock = () => {
     // const start =
     // const end =
 
-    const breaks = [];
-    const obj = {
-      start: "",
-      
-    };
+    // const breaks = [];
+    
 
-    obj.start = new Date().toLocaleTimeString();
+    // obj.start = new Date().toLocaleTimeString();
+    //  const oldbreak=[{
 
-    if (!action) {
-      obj.end = new Date().toLocaleTimeString();
-    }
-    breaks.push(obj);
-    // console.log("objj", breaks);
+    //  }]
+
+     
 
     // obj.start = start;
     // console.log("objc", obj);
@@ -244,26 +240,42 @@ const Clock = () => {
     //   obj.end = end;
     // }
 
-    
+   
 
     // breaks.push(obj2);
 
     const ID = attendance[0]._id;
     const CheckIn = attendance[0].CheckIn;
-    const Breaks = breaks;
+    const Breaks = [];
     const CheckOut = "";
 
-    const obj2 = {
-      ...objects?.Breaks,
 
-      start: new Date().toLocaleTimeString(),
+    const obj = {
+      start:new Date().toLocaleTimeString(),
+      end:""
+
     };
 
     if (!action) {
-      obj2.end = new Date().toLocaleTimeString();
-    }
+      // Breaks[Breaks.length-1].end=new Date().toLocaleTimeString();
+       obj.end = new Date().toLocaleTimeString();
+     }
+     Breaks.push(obj);
 
-    Breaks.push(obj2)
+
+
+     console.log("objj", Breaks);
+    // const obj2 = {
+    //   ...objects?.Breaks,
+
+    //   start: new Date().toLocaleTimeString(),
+    // };
+
+    // if (!action) {
+    //   obj2.end = new Date().toLocaleTimeString();
+    // }
+
+    // Breaks.push(obj2)
     console.log("break", Breaks);
 
     await axios
