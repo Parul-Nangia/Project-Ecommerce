@@ -89,22 +89,22 @@ const DashboardCards = () => {
         <Row gutter={16}>
           <Col span={6} className="dashboardcards">
             <Card title="Employees" bordered={false}>
-              {employs.length}
+              {/* {employs.length} */}
             </Card>
           </Col>
           <Col span={6} className="dashboardcards">
             <Card title="Today On Leave" bordered={false}>
-              {todayLeave.length}
+              {/* {todayLeave.length} */}
             </Card>
           </Col>
           <Col span={6} className="dashboardcards">
             <Card title="Leave Data(Week)" bordered={false}>
-              {weekLeave.length}
+              {/* {weekLeave.length} */}
             </Card>
           </Col>
           <Col span={6} className="dashboardcards">
             <Card title="Leave Data(Month) " bordered={false}>
-              {monthLeave.length}
+              {/* {monthLeave.length} */}
             </Card>
           </Col>
         </Row>

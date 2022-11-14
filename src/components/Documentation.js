@@ -66,7 +66,7 @@ const Documentation = () => {
         message.error("only jpeg,pdf,doc and png file upload")
       }
       else{
-        message.success("Yess Upload ")
+        message.success("Yes File is Upload ")
       }
       setDocumentFile(file)
       // return false

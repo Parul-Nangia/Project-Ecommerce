@@ -10,9 +10,12 @@ const Clock = () => {
   const [date, setDate] = useState(new Date());
   const [attendance, setAttendance] = useState([]);
   const [TodayAttendance, setTodayAttendance] = useState([]);
+  const [disableCheckin, setDisableCheckin] = React.useState(false);
   const [disableCheckout, setDisableCheckout] = React.useState(false);
   const [EmployeeCheckIn, setEmployeeCheckIn] = useState([]);
+  const [attendanceAll, setAttendanceAll] = useState([]);
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
+
 
   // console.log("attendance state", attendance[0].CheckIn)
   const [objects, setObjects] = useState({});
@@ -35,24 +38,28 @@ const Clock = () => {
 
   //---------------------------------------------Employee Attendance GET by id API----------------------------------------------------------
   useEffect(() => {
-    LoggedAttendanceAllRecord(attendance);
-    console.log("Logged In Employee Attendance", attendance);
+
+    const LoggedAttendanceAllRecord = async () => {
+      const token = localStorage.getItem("access_token1");
+      var decoded = jwt_decode(token);
+
+      await axios
+        .get(`${process.env.REACT_APP_BASE_URL}/attendance/employee/${decoded._id}`)
+        .then((res) => {
+          setAttendance(res?.data?.attendanceDataByEmpID[0]);
+          if (res?.data?.attendanceDataByEmpID[0].CheckIn !== "") {
+            setDisableCheckin(true);
+          }
+          if (res?.data?.attendanceDataByEmpID[0].CheckOut !== "") {
+            setDisableCheckout(true);
+
+          }
+        });
+    };
+    LoggedAttendanceAllRecord();
+    console.log("Today Attendance Data", attendance)
 
   }, []);
-
-  const LoggedAttendanceAllRecord = async () => {
-    const token = localStorage.getItem("access_token1");
-    var decoded = jwt_decode(token);
-
-    await axios
-      .get(`http://localhost:1999/attendance/record/${decoded._id}`)
-      .then((res) => {
-        setAttendance(res?.data?.attendanceDataByID);
-
-        // console.log("Checkin Type", typeof attendance[0].CheckIn);
-        // console.log("attendance checkin", attendance.CheckIn);
-      });
-  };
   //---------------------------------------------Employee Attendance GET by id API----------------------------------------------------------
 
 
@@ -78,7 +85,7 @@ const Clock = () => {
     const Breaks = [];
     const emp_id = decoded._id;
     await axios
-      .post(`http://localhost:1999/attendance/${emp_id}`, {
+      .post(`${process.env.REACT_APP_BASE_URL}/attendance/${emp_id}`, {
         name: decoded.name,
         emp_id: decoded._id,
         TodayDate,
@@ -88,7 +95,8 @@ const Clock = () => {
       })
       .then((res) => {
         setEmployeeCheckIn(res?.data?.newAttendance);
-        // setDisableCheckin(true);
+        setDisableCheckin(true);
+        window.location.reload()  // used bcz we need id of LoggedAttendanceAllRecord func which is in useEffect
         console.log("Today CheckIn data", attendance);
 
         // console.log("AttendanceID For checkout", EmployeeCheckIn._id);
@@ -127,33 +135,26 @@ const Clock = () => {
 
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   const employeecheckout = async () => {
-    const token = localStorage.getItem("access_token1");
-    var decoded = jwt_decode(token);
-    await axios
-      .get(`http://localhost:1999/attendance/record/${decoded._id}`)
-      .then((res) => {
-        setTodayAttendance(res?.data?.attendanceDataByID);
-        console.log("TodayAttendance", TodayAttendance)
-
-      });
-
-    if (TodayAttendance[0].CheckOut === "") {
-      const CheckIn = attendance[0].CheckIn;
+    console.log("checkout", attendance?.CheckOut)
+    if (attendance?.CheckOut === "") {
+      const CheckIn = attendance?.CheckIn;
       // console.log("i am here attendance checkin spread", CheckIn);
       const CheckOut = new Date().toLocaleTimeString();
       const Breaks = [];
-      const ID = attendance[0]._id;
+      const ID = attendance?._id;
+      console.log("attendance id in checkout", ID)
+
       // console.log("Attendance id for CheckOut", ID);
 
       await axios
-        .put(`http://localhost:1999/attendance/${ID}`, {
+        .put(`${process.env.REACT_APP_BASE_URL}/attendance/addon/${ID}`, {
           CheckIn,
           CheckOut,
           Breaks,
         })
         .then((res) => {
           setEmployeeCheckOut(res?.data?.updatedAttendance);
-          // setDisableCheckout(true);
+          setDisableCheckout(true);
         });
       // console.log("Today CheckOut Data", EmployeeCheckOut);
     } else {
@@ -167,25 +168,27 @@ const Clock = () => {
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
 
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
-  const employeebreak = async () => {
+  const employeebreak = async (show) => {
 
-    let Breaks = attendance[0].Breaks;
-    const ID = attendance[0]._id;
-    const CheckIn = attendance[0].CheckIn;
+    let Breaks = attendance?.Breaks;
+    const employ = attendance?._id;
+    console.log("attendance id in break", attendance?._id)
+    const CheckIn = attendance?.CheckIn;
     const CheckOut = "";
 
-    if (attendance[0].Breaks[Breaks.length - 1].end === "") {
+    if (attendance?.Breaks[Breaks.length - 1]?.end === "") {
       Breaks[Breaks.length - 1].end = new Date().toLocaleTimeString()
-      console.log("Breaks", Breaks)
+      console.log("Breaks/endTime", attendance?.Breaks[Breaks.length - 1]?.end)
     } else {
       const obj = {
         start: new Date().toLocaleTimeString(),
         end: ""
       }
-      Breaks.push(obj)
+      console.log("Breaks/startTime", obj.start)
+      attendance?.Breaks.push(obj)
     }
     await axios
-      .put(`http://localhost:1999/attendance/${ID}`, {
+      .put(`${process.env.REACT_APP_BASE_URL}/attendance/addon/${employ}`, {
         CheckIn,
         Breaks,
         CheckOut,
@@ -195,10 +198,10 @@ const Clock = () => {
         setObjects(res?.data?.updatedAttendance);
         console.log("Breaks Response", res);
         // console.log("Breaks", Breaks);
-
       });
 
-    setShow(!show);
+    setShow(!show)
+
   };
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
@@ -214,14 +217,6 @@ const Clock = () => {
         </span>
       </div>
 
-      {attendance?.emp_id}
-      {/* {breaks.map(=>())} */}
-      {/* {objects.map(object=>())} */}
-
-      {/* {attendance?.CheckOut}
-      {attendance?.Break}
-
-      {attendance?.Resume} */}
 
       {/* <div>
         <h1>Timer</h1>
@@ -238,7 +233,7 @@ const Clock = () => {
           onClick={() => {
             employeecheckin();
           }}
-        // disabled={disableCheckin}
+          disabled={disableCheckin}
         >
           Checkin
         </Button>
@@ -249,7 +244,7 @@ const Clock = () => {
             fontWeight: "Bold",
           }}
           onClick={() => {
-            employeebreak();
+            employeebreak(show);
           }}
         >
           {show ? "Break" : "Resume"}
@@ -264,7 +259,7 @@ const Clock = () => {
           onClick={() => {
             employeecheckout();
           }}
-        // disabled={disableCheckout}
+          disabled={disableCheckout}
         >
           Checkout
         </Button>
