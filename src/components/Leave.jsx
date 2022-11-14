@@ -50,7 +50,7 @@ const Leave = (props) => {
         <Button style={{ backgroundColor: "DarkSlateGray", color: "white", fontWeight: "bold" }} onClick={() => setView(!view)}>Calendar View</Button>
         <Button style={{ backgroundColor: "CornflowerBlue", color: "white", fontWeight: "bold" }} onClick={() => setView(!view)}>Table View</Button>
 
-        {view ? <LeaveTable /> : <LeaveCalendar />}
+        {view ? <LeaveCalendar /> : <LeaveTable />}
 
 
 
