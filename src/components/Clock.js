@@ -168,7 +168,7 @@ const Clock = () => {
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
 
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
-  const employeebreak = async () => {
+  const employeebreak = async (show) => {
 
     let Breaks = attendance?.Breaks;
     const employ = attendance?._id;
@@ -199,7 +199,9 @@ const Clock = () => {
         console.log("Breaks Response", res);
         // console.log("Breaks", Breaks);
       });
-    setShow(false);
+
+    setShow(!show)
+
   };
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
