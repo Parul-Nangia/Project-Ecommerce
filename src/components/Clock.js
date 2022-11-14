@@ -49,7 +49,7 @@ const Clock = () => {
           setAttendance(res?.data?.attendanceDataByEmpID[0]);
           if (res?.data?.attendanceDataByEmpID[0].CheckIn !== "") {
             setDisableCheckin(true);
-          } 
+          }
           if (res?.data?.attendanceDataByEmpID[0].CheckOut !== "") {
             setDisableCheckout(true);
 
@@ -96,6 +96,7 @@ const Clock = () => {
       .then((res) => {
         setEmployeeCheckIn(res?.data?.newAttendance);
         setDisableCheckin(true);
+        window.location.reload()
         console.log("Today CheckIn data", attendance);
 
         // console.log("AttendanceID For checkout", EmployeeCheckIn._id);
@@ -134,7 +135,7 @@ const Clock = () => {
 
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   const employeecheckout = async () => {
-
+    console.log("checkout", attendance?.CheckOut)
     if (attendance?.CheckOut === "") {
       const CheckIn = attendance?.CheckIn;
       // console.log("i am here attendance checkin spread", CheckIn);
@@ -198,8 +199,7 @@ const Clock = () => {
         console.log("Breaks Response", res);
         // console.log("Breaks", Breaks);
       });
-
-    setShow(!show);
+    setShow(false);
   };
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
@@ -242,7 +242,7 @@ const Clock = () => {
             fontWeight: "Bold",
           }}
           onClick={() => {
-            employeebreak();
+            employeebreak(show);
           }}
         >
           {show ? "Break" : "Resume"}
