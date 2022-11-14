@@ -16,10 +16,10 @@ const AttendanceTable = () => {
   }, []);
   const getAllData = async () => {
     await axios
-      .post(`${process.env.REACT_APP_BASE_URL}/attendance`)
+      .get(`${process.env.REACT_APP_BASE_URL}/attendance`)
       .then((res) => {
-        setDataSource(res?.data?.attendanceRecord);
-        console.log("Attendance All Data", dataSource);
+        setDataSource(res?.data?.attendanceData);
+        console.log("Attendance All Data", res);
       });
   };
 
