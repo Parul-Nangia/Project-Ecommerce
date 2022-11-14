@@ -9,8 +9,7 @@ import { Alert } from "antd";
 const Clock = () => {
   const [date, setDate] = useState(new Date());
   const [attendance, setAttendance] = useState([]);
-
-  const [disableCheckin, setDisableCheckin] = React.useState(false);
+  const [TodayAttendance, setTodayAttendance] = useState([]);
   const [disableCheckout, setDisableCheckout] = React.useState(false);
   const [EmployeeCheckIn, setEmployeeCheckIn] = useState([]);
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
@@ -76,9 +75,8 @@ const Clock = () => {
     const CheckIn = new Date().toLocaleTimeString();
     const TodayDate = MyDateString;
     const CheckOut = "";
-    const Breaks = "";
+    const Breaks = [];
     const emp_id = decoded._id;
-
     await axios
       .post(`http://localhost:1999/attendance/${emp_id}`, {
         name: decoded.name,
@@ -90,14 +88,14 @@ const Clock = () => {
       })
       .then((res) => {
         setEmployeeCheckIn(res?.data?.newAttendance);
-        setDisableCheckin(true);
+        // setDisableCheckin(true);
         console.log("Today CheckIn data", attendance);
 
         // console.log("AttendanceID For checkout", EmployeeCheckIn._id);
       });
 
 
-    if (attendance[0].CheckIn > "09:10:00 AM") {
+    if (CheckIn > "09:10:00 AM") {
       let data = {
         emp_id: decoded._id,
         EmployeeName: decoded.name,
@@ -129,31 +127,48 @@ const Clock = () => {
 
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   const employeecheckout = async () => {
-
-    const CheckIn = attendance[0]?.CheckIn;
-    console.log("i am here attendance checkin spread", CheckIn);
-    const CheckOut = new Date().toLocaleTimeString();
-    const Breaks = "";
-    const ID = attendance[0]?._id;
-    console.log("Attendance id for CheckOut", ID);
-
+    const token = localStorage.getItem("access_token1");
+    var decoded = jwt_decode(token);
     await axios
-      .put(`http://localhost:1999/attendance/${ID}`, {
-        CheckIn,
-        CheckOut,
-        Breaks,
-      })
+      .get(`http://localhost:1999/attendance/record/${decoded._id}`)
       .then((res) => {
-        setEmployeeCheckOut(res?.data?.updatedAttendance);
-        setDisableCheckout(true);
+        setTodayAttendance(res?.data?.attendanceDataByID);
+        console.log("TodayAttendance", TodayAttendance)
+
       });
-    console.log("Today CheckOut Data", EmployeeCheckOut);
-  };
+
+    if (TodayAttendance[0].CheckOut === "") {
+      const CheckIn = attendance[0].CheckIn;
+      // console.log("i am here attendance checkin spread", CheckIn);
+      const CheckOut = new Date().toLocaleTimeString();
+      const Breaks = [];
+      const ID = attendance[0]._id;
+      // console.log("Attendance id for CheckOut", ID);
+
+      await axios
+        .put(`http://localhost:1999/attendance/${ID}`, {
+          CheckIn,
+          CheckOut,
+          Breaks,
+        })
+        .then((res) => {
+          setEmployeeCheckOut(res?.data?.updatedAttendance);
+          // setDisableCheckout(true);
+        });
+      // console.log("Today CheckOut Data", EmployeeCheckOut);
+    } else {
+      window.alert("you have already Checked-Out")
+    }
+
+  }
+
+
+
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
 
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
   const employeebreak = async () => {
-    
+
     let Breaks = attendance[0].Breaks;
     const ID = attendance[0]._id;
     const CheckIn = attendance[0].CheckIn;
@@ -223,7 +238,7 @@ const Clock = () => {
           onClick={() => {
             employeecheckin();
           }}
-          disabled={disableCheckin}
+        // disabled={disableCheckin}
         >
           Checkin
         </Button>
@@ -249,7 +264,7 @@ const Clock = () => {
           onClick={() => {
             employeecheckout();
           }}
-          disabled={disableCheckout}
+        // disabled={disableCheckout}
         >
           Checkout
         </Button>
