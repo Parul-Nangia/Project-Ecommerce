@@ -96,7 +96,7 @@ const Clock = () => {
       .then((res) => {
         setEmployeeCheckIn(res?.data?.newAttendance);
         setDisableCheckin(true);
-        window.location.reload()
+        window.location.reload()  // used bcz we need id of LoggedAttendanceAllRecord func which is in useEffect
         console.log("Today CheckIn data", attendance);
 
         // console.log("AttendanceID For checkout", EmployeeCheckIn._id);
