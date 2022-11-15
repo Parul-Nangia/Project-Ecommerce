@@ -55,7 +55,7 @@ const Top = () => {
             <Menu mode="horizontal" className="Headermenu">
               <Menu.Item
                 key="1"
-                style={{ color: "White", fontStyle: "italic" }}
+                style={{ color: "White", fontStyle: "normal" }}
               >
                 Ebullient Soft
               </Menu.Item>
