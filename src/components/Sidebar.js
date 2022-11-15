@@ -33,13 +33,13 @@ const Sidebar = () => {
             label: "EMPLOYEES",
             key: "/employees",
             icon: <UserOutlined />,
-            children: [
-              {
-                label: "EMPLOYEES DATA ",
-                key: "/employees",
-                icon: <UserOutlined />,
-              },
-            ],
+            // children: [
+            //   {
+            //     label: "EMPLOYEES DATA ",
+            //     key: "/employees",
+            //     icon: <UserOutlined />,
+            //   },
+            // ],
           },
           { label: "LEAVE", key: "/leave", icon: <PaperClipOutlined /> },
         ]}

@@ -94,6 +94,7 @@ const Clock = () => {
       .then((res) => {
         setEmployeeCheckIn(res?.data?.newAttendance);
         setDisableCheckin(true);
+        window.location.reload(); // used bcz we need id of LoggedAttendanceAllRecord func which is in useEffect
         console.log("Today CheckIn data", attendance);
 
         // console.log("AttendanceID For checkout", EmployeeCheckIn._id);
@@ -128,6 +129,7 @@ const Clock = () => {
 
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   const employeecheckout = async () => {
+    console.log("checkout", attendance?.CheckOut);
     if (attendance?.CheckOut === "") {
       const CheckIn = attendance?.CheckIn;
       // console.log("i am here attendance checkin spread", CheckIn);
@@ -157,7 +159,7 @@ const Clock = () => {
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
 
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
-  const employeebreak = async () => {
+  const employeebreak = async (show) => {
     let Breaks = attendance?.Breaks;
     const employ = attendance?._id;
     console.log("attendance id in break", attendance?._id);
@@ -262,7 +264,7 @@ const Clock = () => {
             fontWeight: "Bold",
           }}
           onClick={() => {
-            employeebreak();
+            employeebreak(show);
           }}
         >
           {/* if () */}
