@@ -4,6 +4,7 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useParams } from "react-router-dom";
 import { Alert } from "antd";
+import moment from "moment";
 
 const Clock = () => {
   const [date, setDate] = useState(new Date());
@@ -218,17 +219,13 @@ const Clock = () => {
 
     setShow(!show);
   };
+
+  const attCheckOut = moment(attendance?.CheckOut("hh:mm:ss a"));
+  const attCheckIn = moment(attendance?.CheckIn("hh:mm:ss a"));
+
+  const timeDifference = moment.duration(attCheckOut.diff(attCheckIn));
+  console.log("Time diff here", timeDifference);
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
-  // const attCheckIn = moment(attendance.CheckIn);
-  // const attCheckOut = moment(attendance.CheckOut);
-  // attCheckOut.diff(attCheckIn, "hours");
-  // console.log("hjhgcgffsfgdfh", totalhour);
-  var attCheckIn = moment.duration(attendance.CheckIn);
-  var attCheckOut = moment.duration(attendance.CheckOut);
-  var diff = attCheckOut.subtract(attCheckIn);
-  diff.hours();
-  // console.log("jdbsjbdjbajhbhbja", diff);
-  diff.minutes();
 
   return (
     <>
