@@ -16,10 +16,10 @@ const Clock = () => {
   const [attendanceAll, setAttendanceAll] = useState([]);
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
 
-
   // console.log("attendance state", attendance[0].CheckIn)
   const [objects, setObjects] = useState({});
-  const [show, setShow] = useState(true)
+  const [show, setShow] = useState()
+  // console.log("show?", !show)
 
 
 
@@ -47,12 +47,33 @@ const Clock = () => {
         .get(`${process.env.REACT_APP_BASE_URL}/attendance/employee/${decoded._id}`)
         .then((res) => {
           setAttendance(res?.data?.attendanceDataByEmpID[0]);
+          // const Breaks = attendance?.Breaks
+          // console.log("Breaks", Breaks)
           if (res?.data?.attendanceDataByEmpID[0].CheckIn !== "") {
             setDisableCheckin(true);
           }
           if (res?.data?.attendanceDataByEmpID[0].CheckOut !== "") {
             setDisableCheckout(true);
+          }
 
+          if (attendance?.Breaks.length > 0) {
+            console.log("breaks???", attendance?.Breaks.length)
+            console.log("Break/end", attendance?.Breaks[attendance?.Breaks.length - 1]?.end)
+
+          } else {
+            console.log("breaks", attendance?.Breaks)
+          }
+          if (attendance?.Breaks === []) {
+            setShow(true)
+            console.log("if Break []", show)
+
+          } else if (attendance?.Breaks[attendance?.Breaks.length - 1]?.end !== "") {
+            setShow(true)
+            console.log("if end ! null", show)
+          }
+          else if (attendance?.Breaks[attendance?.Breaks.length - 1]?.start !== "" && attendance?.Breaks[attendance?.Breaks.length - 1]?.end === "") {
+            setShow(false)
+            console.log("if start ! null and end null", show)
           }
         });
     };
@@ -162,13 +183,10 @@ const Clock = () => {
     }
 
   }
-
-
-
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
 
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
-  const employeebreak = async (show) => {
+  const employeebreak = async () => {
 
     let Breaks = attendance?.Breaks;
     const employ = attendance?._id;
@@ -244,7 +262,7 @@ const Clock = () => {
             fontWeight: "Bold",
           }}
           onClick={() => {
-            employeebreak(show);
+            employeebreak();
           }}
         >
           {show ? "Break" : "Resume"}
