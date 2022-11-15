@@ -14,6 +14,7 @@ const Clock = () => {
   const [disableCheckout, setDisableCheckout] = React.useState(false);
   const [EmployeeCheckIn, setEmployeeCheckIn] = useState([]);
   const [attendanceAll, setAttendanceAll] = useState([]);
+  // const[timeDifference,setTimeDifference]=useState([]);
 
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
 
@@ -113,7 +114,7 @@ const Clock = () => {
         TotalDaysRequested: 0,
       };
 
-      fetch("http://localhost:1999/leave", {
+      fetch(`${process.env.REACT_APP_BASE_URL}/leave`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -201,14 +202,38 @@ const Clock = () => {
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
   // const attCheckIn = moment(attendance.CheckIn);
   // const attCheckOut = moment(attendance.CheckOut);
+
+  // function getTimeDiff(attCheckIn, attCheckOut) {
+  //   return moment
+  //     .duration(moment(attCheckOut, "HH:mm:ss a"))
+  //     .diff(moment(attCheckIn, "HH:mm:ss a"));
+  // }
+
+  // diff = getTimeDiff(attCheckIn, attCheckOut);
+
+  // console.log(`${diff.hours()} Hour ${diff.minutes()} minutes`);
+
+  const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
+  const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
+
+  const timeDifference = moment.duration(attCheckOut.diff(attCheckIn));
+  console.log("Time Difference is here", timeDifference);
+
+  // // calculate total duration
+  // var duration = moment.duration(attCheckOut.diff(attCheckIn));
+
+  // // duration in hours
+  // var hours = parseInt(duration.asHours());
+
+  // // duration in minutes
+  // var minutes = parseInt(duration.asMinutes()) % 60;
+
+  // alert(hours + " hour and " + minutes + " minutes.");
+
+  // var attCheckIn = moment(attendance?.CheckIn);
+  // var attCheckOut = moment(attendance?.CheckOut);
+
   // attCheckOut.diff(attCheckIn, "hours");
-  // console.log("hjhgcgffsfgdfh", totalhour);
-  var attCheckIn = moment.duration(attendance.CheckIn);
-  var attCheckOut = moment.duration(attendance.CheckOut);
-  var diff = attCheckOut.subtract(attCheckIn);
-  diff.hours();
-  // console.log("jdbsjbdjbajhbhbja", diff);
-  diff.minutes();
 
   return (
     <>
@@ -287,13 +312,15 @@ const Clock = () => {
         <div
           style={{
             display: "flex",
-            justifyContent: "flex-end",
+            justifyContent: "center",
             marginTop: "2px",
           }}
         >
           <span>CheckIn: {attendance?.CheckIn}</span>
+          <br />
           <span>CheckOut: {attendance?.CheckOut}</span>
-          <span>Total Hours : {}</span>
+          <br />
+          <span>Total Time:{attCheckOut.diff(attCheckIn)}</span>
         </div>
       </div>
       <br />
