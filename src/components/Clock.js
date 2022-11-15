@@ -57,27 +57,25 @@ const Clock = () => {
 
           if (attendance?.Breaks.length > 0) {
             console.log("breaks???", attendance?.Breaks.length);
-            console.log(
-              "Break/end",
-              attendance?.Breaks[attendance?.Breaks.length - 1]?.end
-            );
+            console.log("Break/end", attendance?.Breaks[attendance?.Breaks.length - 1]?.end);
+
           } else {
             console.log("breaks", attendance?.Breaks);
           }
           if (attendance?.Breaks === []) {
             setShow(true);
             console.log("if Break []", show);
-          } else if (
-            attendance?.Breaks[attendance?.Breaks.length - 1]?.end !== ""
-          ) {
+
+          } else if (attendance?.Breaks[attendance?.Breaks.length - 1]?.end !== "") {
             setShow(true);
             console.log("if end ! null", show);
-          } else if (
-            attendance?.Breaks[attendance?.Breaks.length - 1]?.start !== "" &&
-            attendance?.Breaks[attendance?.Breaks.length - 1]?.end === ""
-          ) {
-            setShow(false);
+
+          } else if (attendance?.Breaks[attendance?.Breaks.length - 1]?.start !== "" && attendance?.Breaks[attendance?.Breaks.length - 1]?.end === "") {
+            setShow(true);
             console.log("if start ! null and end null", show);
+          } else {
+            setShow(true);
+
           }
         });
     };
@@ -186,7 +184,7 @@ const Clock = () => {
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
 
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
-  const employeebreak = async () => {
+  const employeebreak = async (show) => {
     let Breaks = attendance?.Breaks;
     const employ = attendance?._id;
     console.log("attendance id in break", attendance?._id);
@@ -217,14 +215,14 @@ const Clock = () => {
         // console.log("Breaks", Breaks);
       });
 
-    setShow(!show);
+    setShow(false);
   };
 
-  const attCheckOut = moment(attendance?.CheckOut("hh:mm:ss a"));
-  const attCheckIn = moment(attendance?.CheckIn("hh:mm:ss a"));
+  // const attCheckOut = moment(attendance?.CheckOut("hh:mm:ss a"));
+  // const attCheckIn = moment(attendance?.CheckIn("hh:mm:ss a"));
 
-  const timeDifference = moment.duration(attCheckOut.diff(attCheckIn));
-  console.log("Time diff here", timeDifference);
+  // const timeDifference = moment.duration(attCheckOut.diff(attCheckIn));
+  // console.log("Time diff here", timeDifference);
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
   return (
@@ -262,7 +260,7 @@ const Clock = () => {
             backgroundColor: "Tomato",
             fontWeight: "Bold",
           }}
-          onClick={() => {
+          onClick={(show) => {
             employeebreak(show);
           }}
         >
