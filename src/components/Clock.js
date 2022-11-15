@@ -4,7 +4,6 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useParams } from "react-router-dom";
 import { Alert } from "antd";
-import moment from "moment/moment";
 
 const Clock = () => {
   const [date, setDate] = useState(new Date());
@@ -14,13 +13,13 @@ const Clock = () => {
   const [disableCheckout, setDisableCheckout] = React.useState(false);
   const [EmployeeCheckIn, setEmployeeCheckIn] = useState([]);
   const [attendanceAll, setAttendanceAll] = useState([]);
-  // const[timeDifference,setTimeDifference]=useState([]);
 
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
 
   // console.log("attendance state", attendance[0].CheckIn)
   const [objects, setObjects] = useState({});
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState();
+  // console.log("show?", !show)
 
   //-------------------------------------------- Clock---------------------------------------------------------------
   const refreshClock = () => {
@@ -46,11 +45,38 @@ const Clock = () => {
         )
         .then((res) => {
           setAttendance(res?.data?.attendanceDataByEmpID[0]);
+          // const Breaks = attendance?.Breaks
+          // console.log("Breaks", Breaks)
           if (res?.data?.attendanceDataByEmpID[0].CheckIn !== "") {
             setDisableCheckin(true);
           }
           if (res?.data?.attendanceDataByEmpID[0].CheckOut !== "") {
             setDisableCheckout(true);
+          }
+
+          if (attendance?.Breaks.length > 0) {
+            console.log("breaks???", attendance?.Breaks.length);
+            console.log(
+              "Break/end",
+              attendance?.Breaks[attendance?.Breaks.length - 1]?.end
+            );
+          } else {
+            console.log("breaks", attendance?.Breaks);
+          }
+          if (attendance?.Breaks === []) {
+            setShow(true);
+            console.log("if Break []", show);
+          } else if (
+            attendance?.Breaks[attendance?.Breaks.length - 1]?.end !== ""
+          ) {
+            setShow(true);
+            console.log("if end ! null", show);
+          } else if (
+            attendance?.Breaks[attendance?.Breaks.length - 1]?.start !== "" &&
+            attendance?.Breaks[attendance?.Breaks.length - 1]?.end === ""
+          ) {
+            setShow(false);
+            console.log("if start ! null and end null", show);
           }
         });
     };
@@ -156,11 +182,10 @@ const Clock = () => {
       window.alert("you have already Checked-Out");
     }
   };
-
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
 
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
-  const employeebreak = async (show) => {
+  const employeebreak = async () => {
     let Breaks = attendance?.Breaks;
     const employ = attendance?._id;
     console.log("attendance id in break", attendance?._id);
@@ -193,47 +218,17 @@ const Clock = () => {
 
     setShow(!show);
   };
-
-  // function diff(CheckIn,CheckOut){
-  //   CheckIn = ChechIn.split(":");
-  //   CheckOut=CheckOut.split(":");
-
-  // }
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
   // const attCheckIn = moment(attendance.CheckIn);
   // const attCheckOut = moment(attendance.CheckOut);
-
-  // function getTimeDiff(attCheckIn, attCheckOut) {
-  //   return moment
-  //     .duration(moment(attCheckOut, "HH:mm:ss a"))
-  //     .diff(moment(attCheckIn, "HH:mm:ss a"));
-  // }
-
-  // diff = getTimeDiff(attCheckIn, attCheckOut);
-
-  // console.log(`${diff.hours()} Hour ${diff.minutes()} minutes`);
-
-  const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
-  const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
-
-  const timeDifference = moment.duration(attCheckOut.diff(attCheckIn));
-  console.log("Time Difference is here", timeDifference);
-
-  // // calculate total duration
-  // var duration = moment.duration(attCheckOut.diff(attCheckIn));
-
-  // // duration in hours
-  // var hours = parseInt(duration.asHours());
-
-  // // duration in minutes
-  // var minutes = parseInt(duration.asMinutes()) % 60;
-
-  // alert(hours + " hour and " + minutes + " minutes.");
-
-  // var attCheckIn = moment(attendance?.CheckIn);
-  // var attCheckOut = moment(attendance?.CheckOut);
-
   // attCheckOut.diff(attCheckIn, "hours");
+  // console.log("hjhgcgffsfgdfh", totalhour);
+  var attCheckIn = moment.duration(attendance.CheckIn);
+  var attCheckOut = moment.duration(attendance.CheckOut);
+  var diff = attCheckOut.subtract(attCheckIn);
+  diff.hours();
+  // console.log("jdbsjbdjbajhbhbja", diff);
+  diff.minutes();
 
   return (
     <>
@@ -241,31 +236,13 @@ const Clock = () => {
         <span>
           {date.toLocaleDateString()}
           <br />
-          {/* {date.toLocaleTimeString()} */}
+          {date.toLocaleTimeString()}
         </span>
       </div>
 
-      {/* <div
-        className="TimeCounter"
-        style={{
-          display: "flex",
-          marginLeft: "50%",
-          justifyContent: "space-between",
-        }}
-      >
-        <span>CheckIn{attendance.CheckIn}</span>
-
-        <span>CheckOut{attendance.CheckOut}</span>
-
-        <span>Total Time</span>
-      </div> */}
-
       {/* <div>
         <h1>Timer</h1>
-        <h1>
-          {minutes < 10 ? "0" + minutes : minutes}:
-          {seconds < 10 ? "0" + seconds : seconds}
-        </h1>
+        <h1>{minutes<10? "0"+minutes:minutes}:{seconds<10? "0"+seconds: seconds}</h1>
       </div> */}
 
       <div>
@@ -289,10 +266,9 @@ const Clock = () => {
             fontWeight: "Bold",
           }}
           onClick={() => {
-            employeebreak(show);
+            employeebreak();
           }}
         >
-          {/* if () */}
           {show ? "Break" : "Resume"}
         </Button>
 
@@ -312,15 +288,13 @@ const Clock = () => {
         <div
           style={{
             display: "flex",
-            justifyContent: "center",
+            justifyContent: "flex-end",
             marginTop: "2px",
           }}
         >
           <span>CheckIn: {attendance?.CheckIn}</span>
-          <br />
           <span>CheckOut: {attendance?.CheckOut}</span>
-          <br />
-          <span>Total Time:{attCheckOut.diff(attCheckIn)}</span>
+          <span>Total Hours : {}</span>
         </div>
       </div>
       <br />
