@@ -78,9 +78,7 @@ const LoginNew = () => {
             <br />
           </Form.Item>
 
-          <div className="GoogleAuthen">
-            <GoogleAuth />
-          </div>
+          <div className="GoogleAuthen"></div>
         </Form>
       </Row>
     </>
