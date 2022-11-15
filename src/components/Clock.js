@@ -46,7 +46,7 @@ const Clock = () => {
         )
         .then((res) => {
           setAttendance(res?.data?.attendanceDataByEmpID[0]);
-          // const Breaks = attendance?.Breaks
+          const Breaks = attendance?.Breaks
           // console.log("Breaks", Breaks)
           if (res?.data?.attendanceDataByEmpID[0].CheckIn !== "") {
             setDisableCheckin(true);
@@ -263,7 +263,7 @@ const Clock = () => {
             fontWeight: "Bold",
           }}
           onClick={() => {
-            employeebreak();
+            employeebreak(show);
           }}
         >
           {show ? "Break" : "Resume"}
@@ -291,7 +291,7 @@ const Clock = () => {
         >
           <span>CheckIn: {attendance?.CheckIn}</span>
           <span>CheckOut: {attendance?.CheckOut}</span>
-          <span>Total Hours : {}</span>
+          <span>Total Hours : { }</span>
         </div>
       </div>
       <br />
