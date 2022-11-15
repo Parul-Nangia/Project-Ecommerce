@@ -47,7 +47,7 @@ const Clock = () => {
         .get(`${process.env.REACT_APP_BASE_URL}/attendance/employee/${decoded._id}`)
         .then((res) => {
           setAttendance(res?.data?.attendanceDataByEmpID[0]);
-          // const Breaks = attendance?.Breaks
+          const Breaks = attendance?.Breaks
           // console.log("Breaks", Breaks)
           if (res?.data?.attendanceDataByEmpID[0].CheckIn !== "") {
             setDisableCheckin(true);
@@ -56,24 +56,27 @@ const Clock = () => {
             setDisableCheckout(true);
           }
 
-          if (attendance?.Breaks.length > 0) {
-            console.log("breaks???", attendance?.Breaks.length)
-            console.log("Break/end", attendance?.Breaks[attendance?.Breaks.length - 1]?.end)
+          if (attendance?.Breaks?.length > 0) {
+            console.log("breaks???", Breaks?.length)
+            console.log("Break/end", Breaks[Breaks.length - 1]?.end)
 
           } else {
-            console.log("breaks", attendance?.Breaks)
+            console.log("breaks", Breaks)
           }
-          if (attendance?.Breaks === []) {
+          if (Breaks === []) {
             setShow(true)
             console.log("if Break []", show)
 
-          } else if (attendance?.Breaks[attendance?.Breaks.length - 1]?.end !== "") {
+          } else if (attendance?.Breaks[Breaks.length - 1].end !== "") {
             setShow(true)
             console.log("if end ! null", show)
-          }
-          else if (attendance?.Breaks[attendance?.Breaks.length - 1]?.start !== "" && attendance?.Breaks[attendance?.Breaks.length - 1]?.end === "") {
+            console.log("if end ! null", show)
+          } else if (Breaks[Breaks.length - 1].start !== "" && Breaks[Breaks.length - 1].end !== "") {
+            setShow(true)
+            console.log("if start ! null and end ! null", show)
+          } else if (Breaks[Breaks.length - 1].start !== "" && Breaks[Breaks.length - 1].end === "") {
             setShow(false)
-            console.log("if start ! null and end null", show)
+
           }
         });
     };
@@ -155,7 +158,7 @@ const Clock = () => {
 
 
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
-  const employeecheckout = async () => {
+  const employeecheckout = async (show) => {
     console.log("checkout", attendance?.CheckOut)
     if (attendance?.CheckOut === "") {
       const CheckIn = attendance?.CheckIn;
@@ -218,7 +221,7 @@ const Clock = () => {
         // console.log("Breaks", Breaks);
       });
 
-    setShow(!show)
+    setShow(false)
 
   };
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
@@ -262,7 +265,7 @@ const Clock = () => {
             fontWeight: "Bold",
           }}
           onClick={() => {
-            employeebreak();
+            employeebreak(show);
           }}
         >
           {show ? "Break" : "Resume"}
