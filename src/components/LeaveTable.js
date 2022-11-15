@@ -1,42 +1,20 @@
 import React, { useState, useEffect } from "react";
-// import { DownOutlined } from '@ant-design/icons';
-import { Dropdown } from "antd";
-
-// import { DownOutlined, UserOutlined } from "@ant-design/icons";
-import { Table, Button } from "antd";
+import { Select, Table } from "antd";
 import axios from "axios";
-// import { Button, Icon, Menu, menu } from "antd";
-// import { LoginOutlined } from "@mui/icons-material";
-const handleButtonClick = (e) => {
-  // console.log("click left button", e);
-};
 
-const handleMenuClick = (e) => {
-  console.log("click", e);
-};
 
-const items = [
-  {
-    label: "Pending",
-    key: "1",
-  },
-  {
-    label: "Approved",
-    key: "2",
-  },
-  {
-    label: "Denied",
-    key: "3",
-  },
-];
-const menuProps = {
-  items,
-  onClick: handleMenuClick,
-};
+const { Option } = Select;
+// const selecthere = (value) => {
+
+//   console.log("status type", value);
+// };
 
 const LeaveTable = () => {
   const [dataSource, setDataSource] = useState([]);
-  const [leavestatus, setLeaveStatus] = useState(null);
+  // const[data,setData]=useState([])
+  const [leavestatus, setLeaveStatus] = useState("");
+
+  
 
   useEffect(() => {
     getData();
@@ -85,54 +63,64 @@ const LeaveTable = () => {
     },
     {
       title: "Status",
-      dataIndex: "ApprovalStatus",
-      render: () => {
+      dataIndex: "inddata",
+      render: (_, dataSource) => {
+        
+       
         return (
           <>
-            <Dropdown.Button menu={menuProps} onClick={handleButtonClick}>
-              Status
-            </Dropdown.Button>
+          
+            <Select 
+              defaultValue={{
+                value: "Pending",
+              }}
+              
+               onChange={(value) => leaveapproval(dataSource._id,value)}
+              
+            >
+              <Option value="Approved">Approved</Option>
+              <Option value="Denied">Denied</Option>
+             
+
+            </Select>
           </>
         );
       },
     },
   ];
 
-  const leaveapproval = async () => {
-    const ID = leavestatus.attendance[0]._id;
-    const EmployeeName = leavestatus.EmployeeName;
-    const SupervisorName = leavestatus.SupervisorName;
-    const Department = leavestatus.Department;
-    const LeaveType = leavestatus.LeaveType;
-    const ApprovalStatus = leavestatus.ApprovalStatus;
-    const LeaveDate = leavestatus.LeaveDate;
-    const ReturnDate = leavestatus.ReturnDate;
-    const TotalHoursRequested = leavestatus.TotalHoursRequested;
-    const TotalDaysRequested = leavestatus.TotalDaysRequested;
+ 
+
+  const leaveapproval = async (value,optValue) => {
+     console.log("id", value);
+     console.log("optionvalue", optValue)
+
+     const ApprovalStatus = optValue
+    
 
     await axios
-      .put(`${process.env.REACT_APP_BASE_URL}/leave/${ID}`, {
-        ID,
-        EmployeeName,
-        SupervisorName,
-        Department,
-        LeaveType,
+      .put(`${process.env.REACT_APP_BASE_URL}/leave/${value}`, {
+        _id: value,
         ApprovalStatus,
-        LeaveDate,
-        ReturnDate,
-        TotalHoursRequested,
-        TotalDaysRequested,
       })
 
       .then((res) => {
-        setLeaveStatus(res?.data?.leaveData);
+        setLeaveStatus(res?.data?.leave);
         console.log("status", res);
       });
   };
 
+
   return (
     <>
-      <Table columns={columns} dataSource={dataSource} />
+      <Table
+        columns={columns}
+        dataSource={dataSource}
+        rowKey={(dataSource) => {
+          const id = dataSource?.["_id"];
+          return id;
+        }}
+      />
     </>
   );
 };

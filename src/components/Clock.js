@@ -16,6 +16,7 @@ const Clock = () => {
   const [attendanceAll, setAttendanceAll] = useState([]);
 
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
+  const [attendancetime, setAttendanceTime] = useState([]);
 
   // console.log("attendance state", attendance[0].CheckIn)
   const [objects, setObjects] = useState({});
@@ -222,10 +223,22 @@ const Clock = () => {
     setShow(!show);
   };
 
-  const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
-  const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
+  useEffect(() => {
+    // const timerId = setInterval(refreshClock, 1000);
+    const timeAttendance = () => {
+      const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
+      const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
+      const timeDifference = moment.duration(attCheckOut.diff(attCheckIn));
+      setAttendanceTime(timeDifference);
+      // console.log("tttttttttt", timeAttendance?._data);
+      console.log("Time Difference is here", timeDifference);
+    };
+    timeAttendance();
+  }, []);
+  // const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
+  // const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
 
-  const timeDifference = moment.duration(attCheckOut.diff(attCheckIn));
+  // const timeDifference = moment.duration(attCheckOut.diff(attCheckIn));
   // console.log("Time Difference is here", timeDifference);
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
