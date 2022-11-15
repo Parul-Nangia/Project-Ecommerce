@@ -220,11 +220,11 @@ const Clock = () => {
     setShow(!show);
   };
 
-  const attCheckOut = moment(attendance?.CheckOut("hh:mm:ss a"));
-  const attCheckIn = moment(attendance?.CheckIn("hh:mm:ss a"));
+  const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
+  const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
 
   const timeDifference = moment.duration(attCheckOut.diff(attCheckIn));
-  console.log("Time diff here", timeDifference);
+  console.log("Time Difference is here", timeDifference);
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
   return (
