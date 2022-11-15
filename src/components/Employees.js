@@ -232,7 +232,7 @@ const Employees = ({ dataSource }) => {
         contact,
         role,
       })
-      .then((res) => { });
+      .then((res) => {});
     setIsEditing(false);
   };
   // ----------------------------------------fetch method (PUT api)
@@ -299,7 +299,6 @@ const Employees = ({ dataSource }) => {
   //   }).then((data) => {
   //     let ab = data.viewData;
   //     setView(ab)
-
 
   //     console.log("response", ab);
 
@@ -434,6 +433,9 @@ const Employees = ({ dataSource }) => {
 
     return (
       <>
+        <Button style={{ float: "right", margin: "10px" }} onClick={showModal}>
+          Add New Employee
+        </Button>
         <Table columns={columns} dataSource={employeeData} />
 
         <Modal
@@ -502,9 +504,6 @@ const Employees = ({ dataSource }) => {
           />
         </Modal>
 
-        <Button style={{ float: "right", margin: "50px" }} onClick={showModal}>
-          Add New Employee
-        </Button>
         <Modal
           title="Employee Form"
           open={isModalOpen}

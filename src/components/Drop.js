@@ -62,18 +62,6 @@ const Drop = () => {
       }}
       items={[
         {
-          label: "Settings",
-          key: "/setting",
-          icon: <SettingTwoTone />,
-        },
-
-        {
-          label: "Help",
-          key: "/help",
-          icon: <InfoCircleTwoTone />,
-        },
-
-        {
           label: (
             <nav className="sb-topnav">
               <LoginOutlined />
@@ -93,7 +81,7 @@ const Drop = () => {
     <Dropdown overlay={menu} onOpenChange={handleOpenChange} open={open}>
       <a href onClick={(e) => e.preventDefault()}>
         <Space style={{ color: "White", float: "right" }}>
-          <h3 style={{ color: "white", fontStyle: "italic" }}>
+          <h3 style={{ color: "white", fontStyle: "normal" }}>
             Hii {name.name}
           </h3>
           <DownOutlined />
