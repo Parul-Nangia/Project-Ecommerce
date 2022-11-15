@@ -46,7 +46,7 @@ const Clock = () => {
         )
         .then((res) => {
           setAttendance(res?.data?.attendanceDataByEmpID[0]);
-          const Breaks = attendance?.Breaks
+          const Breaks = attendance?.Breaks;
           // console.log("Breaks", Breaks)
           if (res?.data?.attendanceDataByEmpID[0].CheckIn !== "") {
             setDisableCheckin(true);
@@ -76,8 +76,10 @@ const Clock = () => {
             attendance?.Breaks[attendance?.Breaks.length - 1]?.start !== "" &&
             attendance?.Breaks[attendance?.Breaks.length - 1]?.end === ""
           ) {
-            setShow(false);
+            setShow(true);
             console.log("if start ! null and end null", show);
+          } else {
+            setShow(true);
           }
         });
     };
@@ -186,7 +188,7 @@ const Clock = () => {
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
 
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
-  const employeebreak = async () => {
+  const employeebreak = async (show) => {
     let Breaks = attendance?.Breaks;
     const employ = attendance?._id;
     console.log("attendance id in break", attendance?._id);
@@ -217,7 +219,7 @@ const Clock = () => {
         // console.log("Breaks", Breaks);
       });
 
-    setShow(!show);
+    setShow(false);
   };
 
   const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
@@ -262,7 +264,7 @@ const Clock = () => {
             backgroundColor: "Tomato",
             fontWeight: "Bold",
           }}
-          onClick={() => {
+          onClick={(show) => {
             employeebreak(show);
           }}
         >
@@ -291,7 +293,7 @@ const Clock = () => {
         >
           <span>CheckIn: {attendance?.CheckIn}</span>
           <span>CheckOut: {attendance?.CheckOut}</span>
-          <span>Total Hours : { }</span>
+          <span>Total Hours : {}</span>
         </div>
       </div>
       <br />
