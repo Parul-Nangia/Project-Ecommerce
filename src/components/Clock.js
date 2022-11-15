@@ -21,7 +21,7 @@ const Clock = () => {
   // console.log("attendance state", attendance[0].CheckIn)
   const [objects, setObjects] = useState({});
   const [show, setShow] = useState();
-  // console.log("show?", !show)
+  // console.log("show?", show)
 
   //-------------------------------------------- Clock---------------------------------------------------------------
   const refreshClock = () => {
@@ -48,7 +48,11 @@ const Clock = () => {
         .then((res) => {
           setAttendance(res?.data?.attendanceDataByEmpID[0]);
           const Breaks = attendance?.Breaks;
-          // console.log("Breaks", Breaks)
+          // console.log("attendance", attendance)
+          if (Breaks[Breaks.length - 1]?.end === "") {
+            setShow(false);
+            console.log("if start ! null and end null", show)
+          }
           if (res?.data?.attendanceDataByEmpID[0].CheckIn !== "") {
             setDisableCheckin(true);
           }
@@ -56,31 +60,27 @@ const Clock = () => {
             setDisableCheckout(true);
           }
 
-          if (attendance?.Breaks.length > 0) {
-            console.log("breaks???", attendance?.Breaks.length);
-            console.log(
-              "Break/end",
-              attendance?.Breaks[attendance?.Breaks.length - 1]?.end
-            );
-          } else {
-            console.log("breaks", attendance?.Breaks);
+          // if (attendance?.Breaks?.length !== 0) {
+          //   console.log("breaks???", attendance?.Breaks.length);
+          //   console.log("Break/end", attendance?.Breaks[attendance?.Breaks.length - 1]?.end);
+
+          // } else {
+          //   console.log("breaks", attendance?.Breaks);
+          // }
+
+          if (attendance?.Breaks?.length === 0) {
+            setShow(true);
+            console.log("if Break niull", show);
           }
-          if (attendance?.Breaks === []) {
+
+          else if (attendance?.Breaks[attendance?.Breaks?.length - 1]?.end === "") {
+            setShow(false);
+            console.log("if start ! null and end null", show)
+          }
+
+          else if (attendance?.Breaks[attendance?.Breaks.length - 1]?.start !== "" && attendance?.Breaks[attendance?.Breaks.length - 1]?.end !== "") {
             setShow(true);
-            console.log("if Break []", show);
-          } else if (
-            attendance?.Breaks[attendance?.Breaks.length - 1]?.end !== ""
-          ) {
-            setShow(true);
-            console.log("if end ! null", show);
-          } else if (
-            attendance?.Breaks[attendance?.Breaks.length - 1]?.start !== "" &&
-            attendance?.Breaks[attendance?.Breaks.length - 1]?.end === ""
-          ) {
-            setShow(true);
-            console.log("if start ! null and end null", show);
-          } else {
-            setShow(true);
+            console.log("if start ! null and end ! null", show);
           }
         });
     };
@@ -165,7 +165,7 @@ const Clock = () => {
       const CheckIn = attendance?.CheckIn;
       // console.log("i am here attendance checkin spread", CheckIn);
       const CheckOut = new Date().toLocaleTimeString();
-      const Breaks = [];
+      const Breaks = attendance?.Breaks;
       const ID = attendance?._id;
       console.log("attendance id in checkout", ID);
 
@@ -189,7 +189,7 @@ const Clock = () => {
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
 
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
-  const employeebreak = async (show) => {
+  const employeebreak = async () => {
     let Breaks = attendance?.Breaks;
     const employ = attendance?._id;
     console.log("attendance id in break", attendance?._id);
@@ -220,7 +220,7 @@ const Clock = () => {
         // console.log("Breaks", Breaks);
       });
 
-    setShow(false);
+    setShow(!show);
   };
 
   useEffect(() => {
@@ -277,8 +277,8 @@ const Clock = () => {
             backgroundColor: "Tomato",
             fontWeight: "Bold",
           }}
-          onClick={(show) => {
-            employeebreak(show);
+          onClick={() => {
+            employeebreak();
           }}
         >
           {show ? "Break" : "Resume"}
@@ -306,7 +306,7 @@ const Clock = () => {
         >
           <span>CheckIn: {attendance?.CheckIn}</span>
           <span>CheckOut: {attendance?.CheckOut}</span>
-          <span>Total Hours : {}</span>
+          <span>Total Hours : { }</span>
         </div>
       </div>
       <br />

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Select, Table } from "antd";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+
 
 const { Option } = Select;
 // const selecthere = (value) => {
@@ -14,11 +14,7 @@ const LeaveTable = () => {
   // const[data,setData]=useState([])
   const [leavestatus, setLeaveStatus] = useState("");
 
-  // const params = useParams();
-
-  // console.log(params.id, "params");
-  // const [id] = useState(params.id);
-  // console.log(id, "iduser");
+  
 
   useEffect(() => {
     getData();
@@ -69,7 +65,7 @@ const LeaveTable = () => {
       title: "Status",
       dataIndex: "inddata",
       render: (_, dataSource) => {
-        // console.log("id",dataSource)
+        
        
         return (
           <>
@@ -79,12 +75,13 @@ const LeaveTable = () => {
                 value: "Pending",
               }}
               
-               onChange={() => leaveapproval(dataSource._id)}
+               onChange={(value) => leaveapproval(dataSource._id,value)}
               
             >
               <Option value="Approved">Approved</Option>
               <Option value="Denied">Denied</Option>
-              <Option value="Pending">Pending</Option>
+             
+
             </Select>
           </>
         );
@@ -94,10 +91,11 @@ const LeaveTable = () => {
 
  
 
-  const leaveapproval = async (value) => {
+  const leaveapproval = async (value,optValue) => {
      console.log("id", value);
+     console.log("optionvalue", optValue)
 
-     const ApprovalStatus = ""
+     const ApprovalStatus = optValue
     
 
     await axios
@@ -108,7 +106,6 @@ const LeaveTable = () => {
 
       .then((res) => {
         setLeaveStatus(res?.data?.leave);
-        //  console.log("status type", value);
         console.log("status", res);
       });
   };

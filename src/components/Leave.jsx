@@ -52,7 +52,7 @@ const Leave = (props) => {
         <br/>
         <br/>
 
-        {view ? <LeaveCalendar /> : <LeaveTable />}
+        {view ? <LeaveTable/> : <LeaveCalendar />}
 
 
 
