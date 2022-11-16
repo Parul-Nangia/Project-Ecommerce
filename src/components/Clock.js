@@ -5,7 +5,7 @@ import jwt_decode from "jwt-decode";
 import { useParams } from "react-router-dom";
 import { Alert } from "antd";
 import moment from "moment";
-import { Col, Row } from "antd";
+import { Col, Row, Modal, Card, Input } from "antd";
 
 const Clock = () => {
   const [date, setDate] = useState(new Date());
@@ -18,13 +18,28 @@ const Clock = () => {
 
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
   const [attendancetime, setAttendanceTime] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // console.log("attendance state", attendance[0].CheckIn)
   const [objects, setObjects] = useState({});
   const [show, setShow] = useState();
+  const { TextArea } = Input;
   // console.log("show?", show)
 
   //-------------------------------------------- Clock---------------------------------------------------------------
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+    employeecheckout();
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   const refreshClock = () => {
     setDate(new Date());
   };
@@ -52,7 +67,7 @@ const Clock = () => {
           // console.log("attendance", attendance)
           if (Breaks[Breaks.length - 1]?.end === "") {
             setShow(false);
-            console.log("if start ! null and end null", show)
+            console.log("if start ! null and end null", show);
           }
           if (res?.data?.attendanceDataByEmpID[0].CheckIn !== "") {
             setDisableCheckin(true);
@@ -72,14 +87,15 @@ const Clock = () => {
           if (attendance?.Breaks?.length === 0) {
             setShow(true);
             console.log("if Break niull", show);
-          }
-
-          else if (attendance?.Breaks[attendance?.Breaks?.length - 1]?.end === "") {
+          } else if (
+            attendance?.Breaks[attendance?.Breaks?.length - 1]?.end === ""
+          ) {
             setShow(false);
-            console.log("if start ! null and end null", show)
-          }
-
-          else if (attendance?.Breaks[attendance?.Breaks.length - 1]?.start !== "" && attendance?.Breaks[attendance?.Breaks.length - 1]?.end !== "") {
+            console.log("if start ! null and end null", show);
+          } else if (
+            attendance?.Breaks[attendance?.Breaks.length - 1]?.start !== "" &&
+            attendance?.Breaks[attendance?.Breaks.length - 1]?.end !== ""
+          ) {
             setShow(true);
             console.log("if start ! null and end ! null", show);
           }
@@ -224,24 +240,36 @@ const Clock = () => {
     setShow(!show);
   };
 
-  useEffect(() => {
-    // const timerId = setInterval(refreshClock, 1000);
-    const timeAttendance = () => {
-      const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
-      const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
-      const timeDifference = moment.duration(attCheckOut.diff(attCheckIn));
-      // setAttendanceTime(timeDifference?.Duration?._data);
-      setAttendanceTime(timeDifference?.Duration?.data);
-      // console.log();
-      console.log("Time Difference is here", timeDifference);
-    };
-    timeAttendance();
-  }, []);
+  // useEffect(() => {
+  //   // const timerId = setInterval(refreshClock, 1000);
+  //   const timeAttendance = () => {
+  //     const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
+  //     const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
+  //     const timeDifference = moment.duration(attCheckOut.diff(attCheckIn));
+  //     // setAttendanceTime(timeDifference?.Duration?._data);
+  //     setAttendanceTime(timeDifference?.Duration?.data);
+  //     // console.log();
+  //     console.log("Time Difference is here", timeDifference);
+  //   };
+  //   timeAttendance();
+  // }, []);
 
-  // const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
-  // const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
+  const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
+  const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
 
-  // const timeDifference = moment.duration(attCheckOut.diff(attCheckIn));
+  const milliSeconds = moment.duration(attCheckOut.diff(attCheckIn));
+  // const seconds = Math.floor((milliSeconds / 1000) % 60);
+  const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
+  const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
+
+  const formatingTime = [
+    hours.toString().padStart(2, "0"),
+    minutes.toString().padStart(2, "0"),
+    // seconds.toString().padStart(2, "0"),
+  ].join(":");
+
+  // console.log("Formating time is here :", formatingTime);
+
   // console.log("Time Difference is here", timeDifference);
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
@@ -253,22 +281,36 @@ const Clock = () => {
           {date.toLocaleDateString()}
           <br />
           <br />
-          {/* {date.toLocaleTimeString()} */}
-          <Row
-            style={{
-              display: "flex",
-              marginLeft: "60px",
-              fontWeight: "bolder",
-            }}
-          >
-            <Col span={6}>CheckIn: {attendance?.CheckIn}</Col>
-            <Col span={6}>Break</Col>
-            <Col span={6}>CheckOut: {attendance?.CheckOut}</Col>
-            <Col span={6}>Total Hours: {}</Col>
+
+          <Row gutter={16}>
+            <Col span={8} className="TimeCards">
+              <Card title="CheckIn " bordered={false}>
+                {attendance?.CheckIn}
+              </Card>
+            </Col>
+            <Col span={8} className="TimeCards">
+              <Card title="CheckOut" bordered={false}>
+                {attendance?.CheckOut}
+              </Card>
+            </Col>
+            <Col span={8} className="TimeCards">
+              <Card title="Total Hours" bordered={false}>
+                {formatingTime} hr.ms
+              </Card>
+            </Col>
           </Row>
         </span>
       </div>
       <br />
+
+      <Modal
+        title="E.O.D"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <TextArea rows={10} />
+      </Modal>
 
       {/* <div>
         <h1>Timer</h1>
@@ -307,28 +349,15 @@ const Clock = () => {
             color: "white",
             backgroundColor: "Orange",
             fontWeight: "Bold",
+            // onClick={showModal},
           }}
           onClick={() => {
-            employeecheckout();
+            showModal();
           }}
-          disabled={disableCheckout}
+          // disabled={disableCheckout}
         >
           Checkout
         </Button>
-<<<<<<< HEAD
-=======
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginTop: "2px",
-          }}
-        >
-          <span>CheckIn: {attendance?.CheckIn}</span>
-          <span>CheckOut: {attendance?.CheckOut}</span>
-          <span>Total Hours : { }</span>
-        </div>
->>>>>>> d9ab147bd11e175684786497364786d86fb868d2
       </div>
       <br />
     </>
