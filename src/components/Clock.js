@@ -90,7 +90,8 @@ const Clock = () => {
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setShow(true);
             console.log("You Havn't took any Breaks", show);
-          } else if (
+          }
+          else if (
             res?.data?.attendanceDataByEmpID[0].Breaks[
               res?.data?.attendanceDataByEmpID[0].Breaks.length - 1
             ]?.start !== "" &&
@@ -100,7 +101,8 @@ const Clock = () => {
           ) {
             setShow(false);
             console.log("Please Resume Your Break", show);
-          } else if (
+          }
+          else if (
             res?.data?.attendanceDataByEmpID[0].Breaks[
               res?.data?.attendanceDataByEmpID[0].Breaks.length - 1
             ]?.start !== "" &&
@@ -110,7 +112,8 @@ const Clock = () => {
           ) {
             setShow(true);
             console.log("Click To take a Break", show);
-          } else {
+          }
+          else {
             setShow(true);
             console.log("nothing found");
           }
@@ -171,7 +174,7 @@ const Clock = () => {
         Department: "Software",
         LeaveType: "ShortLeave",
         LeaveDate: MyDateString,
-        ReturnDate: "Null",
+        ReturnDate: MyDateString,
         TotalHoursRequested: "Half Day",
         TotalDaysRequested: 0,
       };
@@ -369,7 +372,7 @@ const Clock = () => {
           onClick={() => {
             showModal();
           }}
-          // disabled={disableCheckout}
+        // disabled={disableCheckout}
         >
           Checkout
         </Button>
