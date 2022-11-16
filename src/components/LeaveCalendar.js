@@ -3,47 +3,64 @@ import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 
 const LeaveCalendar = () => {
-  const [calendarLeaveData, setCalendarLeaveData] = useState([]);
+  const [employeeLeaves, setEmployeeLeaves] = useState([]);
 
-  const MonthLeaveData = () => {
-    fetch(`${process.env.REACT_APP_BASE_URL}/leave/monthdata`)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        let employeeLeaves = data.MonthLeaveData;
-        setCalendarLeaveData(employeeLeaves);
-
-        console.log("Month Leave Data for Calendar", employeeLeaves);
-      });
-  };
   useEffect(() => {
+    const MonthLeaveData = () => {
+      fetch(`${process.env.REACT_APP_BASE_URL}/leave/monthdata`)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          let leaves = data.MonthLeaveData;
+          setEmployeeLeaves(leaves);
+
+          // console.log("Calendar Leave Data", employeeLeaves);
+          // console.log("Leave Date", leaves.LeaveDate)
+          // console.log("Return Date", leaves.ReturnDate)
+          // console.log("leave length", leaves.length)
+
+          // let text = ""
+          // for (let a = leaves[i].LeaveDate; a < leaves[i].ReturnDate; i++) {
+          //   text += leaves[i];
+          //   console.log("text", text)
+          // }
+
+        });
+    };
+
     MonthLeaveData();
   }, []);
 
-  // YYYY-MM-DDTHH:mm:ss.sssZ
 
   const dateCellRender = (value) => {
+    // var daysOfYear = [];
+    // console.log("value", value)
     const stringValue = value.format("YYYY-MM-DD");
-    const listData = calendarLeaveData.filter(
-      ({ LeaveDate }) => LeaveDate === stringValue
-    );
+    // console.log("stringValue", stringValue)
+    const listData = employeeLeaves.filter(
+      ({ LeaveDate }) => LeaveDate === stringValue);
+    // const list = employeeLeaves.filter(
+    //   ({ ReturnDate }) => ReturnDate === stringValue);
 
-    const start = calendarLeaveData.LeaveDate;
-    console.log("hello calendar start date here", start);
-    const end = calendarLeaveData.ReturnDate;
-    console.log("hello calendar end date here", end);
-    var datelist = "";
-    for (let i = "2022-10-01"; i <= "2022-10-30"; i++) {
-      datelist += [i];
-      console.log("Date List Here", datelist);
-    }
+
+    // for (var d = empleaveDate; d <= empreturnDate; d.setDate(d.getDate() + 1)) {
+    //   daysOfYear.push(new Date(d));
+    // }
+    // console.log("daysOfYear", daysOfYear)
+
+    // var now = new Date();
+    // var daysOfYear = [];
+    // for (var d = new Date(2012, 0, 1); d <= now; d.setDate(d.getDate() + 1)) {
+    //   daysOfYear.push(new Date(d));
+    // }
+    // // console.log("daysOfYear", daysOfYear)
 
     return (
       <>
         <ul className="events">
           {listData.map((item) => (
-            <li key={item.EmployeeName}>
+            <li key={item._id}>
               <Badge status={"success"} text={item.EmployeeName} />
             </li>
           ))}

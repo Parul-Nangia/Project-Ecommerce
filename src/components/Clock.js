@@ -87,7 +87,7 @@ const Clock = () => {
 
           // Check if employee Checked-In Today then he can take breaks. Otherwise Break button will remain disabled
           if (res?.data?.attendanceDataByEmpID.length === 0) {
-            setDisableBreak(true);
+            setDisableBreak(true)
           } else {
             setDisableBreak(false);
           }
@@ -96,7 +96,8 @@ const Clock = () => {
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setShow(true);
             console.log("You Havn't took any Breaks", show);
-          } else if (
+          }
+          else if (
             res?.data?.attendanceDataByEmpID[0].Breaks[
               res?.data?.attendanceDataByEmpID[0].Breaks.length - 1
             ]?.start !== "" &&
@@ -106,7 +107,8 @@ const Clock = () => {
           ) {
             setShow(false);
             console.log("Please Resume Your Break", show);
-          } else if (
+          }
+          else if (
             res?.data?.attendanceDataByEmpID[0].Breaks[
               res?.data?.attendanceDataByEmpID[0].Breaks.length - 1
             ]?.start !== "" &&
@@ -116,7 +118,8 @@ const Clock = () => {
           ) {
             setShow(true);
             console.log("Click To take a Break", show);
-          } else {
+          }
+          else {
             setShow(true);
             console.log("nothing found");
           }
@@ -227,7 +230,6 @@ const Clock = () => {
     }
   };
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
-
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
   const employeebreak = async () => {
     let Breaks = attendance?.Breaks;
@@ -380,7 +382,7 @@ const Clock = () => {
           onClick={() => {
             showModal();
           }}
-          // disabled={disableCheckout}
+        // disabled={disableCheckout}
         >
           Checkout
         </Button>
