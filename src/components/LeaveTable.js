@@ -4,14 +4,11 @@ import axios from "axios";
 
 
 const { Option } = Select;
-// const selecthere = (value) => {
 
-//   console.log("status type", value);
-// };
 
 const LeaveTable = () => {
   const [dataSource, setDataSource] = useState([]);
-  // const[data,setData]=useState([])
+  
   const [leavestatus, setLeaveStatus] = useState("");
 
   
