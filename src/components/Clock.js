@@ -90,6 +90,7 @@ const Clock = () => {
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setShow(true);
             console.log("You Havn't took any Breaks", show);
+
           } else if (
             res?.data?.attendanceDataByEmpID[0].Breaks[
               res?.data?.attendanceDataByEmpID[0].Breaks.length - 1

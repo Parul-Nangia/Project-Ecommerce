@@ -27,24 +27,26 @@ const AttendanceTable = () => {
     const columns = [
       {
         title: "Breaks",
-        dataIndex: "Break",
+        dataIndex: "Breaks",
         key: "break",
-      },
-    ];
-    const data = [
-      {
+      }
+    ]
+    
+ const data=[]
 
-      },
-    ];
-    console.log("dt", data);
-    return (
-      <>
-     
-      
-     <Table columns={columns} dataSource={dataSource} />
-     </>
-     )
-  };
+    
+  return (
+    <>
+    Breaks:{dataSource?.Breaks}
+    
+  <Table columns={columns} dataSource={data} pagination={false} />;
+  </>
+  )
+  }
+
+ 
+
+
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -308,13 +310,15 @@ const AttendanceTable = () => {
         columns={columns}
         expandable={{
           expandedRowRender,
-          defaultExpandedRowKeys: ["0"],
+          defaultExpandedRowKeys: ["0"]
+          ,
         }}
         dataSource={dataSource}
       />
     </>
   );
 };
+
 
 export default AttendanceTable;
 
