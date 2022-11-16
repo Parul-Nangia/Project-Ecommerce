@@ -20,14 +20,20 @@ const Clock = () => {
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
   const [attendancetime, setAttendanceTime] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTimer, setIsTimer] = useState(false);
 
   // console.log("attendance state", attendance[0].CheckIn)
   const [objects, setObjects] = useState({});
   const [show, setShow] = useState();
+  const [disableOk, setDisableOk] = React.useState(false);
   const { TextArea } = Input;
   // console.log("show?", show)
 
   //-------------------------------------------- Clock---------------------------------------------------------------
+  // const showTimer = () => {
+  //   setIsTimer(true);
+  // };
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -157,6 +163,7 @@ const Clock = () => {
       .then((res) => {
         setEmployeeCheckIn(res?.data?.newAttendance);
         setDisableCheckin(true);
+        date.toLocaleTimeString();
         window.location.reload(); // used bcz we need id of LoggedAttendanceAllRecord func which is in useEffect
         console.log("Today CheckIn data", attendance);
 
@@ -171,7 +178,7 @@ const Clock = () => {
         Department: "Software",
         LeaveType: "ShortLeave",
         LeaveDate: MyDateString,
-        ReturnDate: "Null",
+        ReturnDate: MyDateString,
         TotalHoursRequested: "Half Day",
         TotalDaysRequested: 0,
       };
@@ -212,6 +219,7 @@ const Clock = () => {
         .then((res) => {
           setEmployeeCheckOut(res?.data?.updatedAttendance);
           setDisableCheckout(true);
+          window.location.reload();
         });
       // console.log("Today CheckOut Data", EmployeeCheckOut);
     } else {
@@ -287,6 +295,12 @@ const Clock = () => {
 
   // console.log("Time Difference is here", timeDifference);
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
+  // const onFinish = (values) => {
+  //   console.log('Success:', values);
+  // };
+  // const onFinishFailed = (errorInfo) => {
+  //   console.log('Failed:', errorInfo);
+  // };
 
   return (
     <>
@@ -295,6 +309,7 @@ const Clock = () => {
           <br />
           {date.toLocaleDateString()}
           <br />
+          {date.toLocaleTimeString()}
           <br />
 
           <Row gutter={16}>
@@ -310,7 +325,7 @@ const Clock = () => {
             </Col>
             <Col span={8} className="TimeCards">
               <Card title="Total Hours" bordered={false}>
-                {formatingTime} hr.ms
+                {formatingTime} hours
               </Card>
             </Col>
           </Row>
@@ -326,11 +341,6 @@ const Clock = () => {
       >
         <TextArea rows={10} />
       </Modal>
-
-      {/* <div>
-        <h1>Timer</h1>
-        <h1>{minutes<10? "0"+minutes:minutes}:{seconds<10? "0"+seconds: seconds}</h1>
-      </div> */}
 
       <div>
         <Button
