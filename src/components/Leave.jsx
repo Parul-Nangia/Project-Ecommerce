@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import LeaveCards from '../components/LeaveCards';
 import LeaveTable from '../components/LeaveTable';
 import LeaveCalendar from '../components/LeaveCalendar';
+import EmployeeLeaveTable from '../components/EmployeeLeaveTable';
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from 'antd';
 import jwt_decode from 'jwt-decode';
@@ -66,6 +67,8 @@ const Leave = (props) => {
     return (
       <>
         <LeaveCards />
+        <br/>
+        <EmployeeLeaveTable />
 
         <Link to="/leaveform"></Link>
         <br />
