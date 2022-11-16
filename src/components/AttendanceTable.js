@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Highlighter from "react-highlight-words";
 import axios from "axios";
 import moment from "moment";
-// import * as moment from 'moment'
+
 const AttendanceTable = () => {
   const [dataSource, setDataSource] = useState([]);
 
@@ -21,6 +21,29 @@ const AttendanceTable = () => {
         setDataSource(res?.data?.attendanceData);
         console.log("Attendance All Data", res);
       });
+  };
+
+  const expandedRowRender = () => {
+    const columns = [
+      {
+        title: "Breaks",
+        dataIndex: "Break",
+        key: "break",
+      },
+    ];
+    const data = [
+      {
+
+      },
+    ];
+    console.log("dt", data);
+    return (
+      <>
+     
+      
+     <Table columns={columns} dataSource={dataSource} />
+     </>
+     )
   };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -266,15 +289,10 @@ const AttendanceTable = () => {
     },
     {
       title: "CheckOut",
-      dataIndex: "CheckOut",
-      key: "CheckOut",
+      dataIndex: "CheckIn",
+      key: "CheckIn",
       width: "150px",
     },
-    // {
-    //   title: "Breaks",
-    //   dataIndex: "Breaks",
-    //   width: '150px',
-    // },
     {
       title: "Date",
       dataIndex: "TodayDate",
@@ -286,7 +304,14 @@ const AttendanceTable = () => {
 
   return (
     <>
-      <Table columns={columns} dataSource={dataSource} />
+      <Table
+        columns={columns}
+        expandable={{
+          expandedRowRender,
+          defaultExpandedRowKeys: ["0"],
+        }}
+        dataSource={dataSource}
+      />
     </>
   );
 };
