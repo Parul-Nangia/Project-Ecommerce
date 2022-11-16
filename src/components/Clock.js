@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 import { useParams } from "react-router-dom";
 import { Alert } from "antd";
 import moment from "moment";
+import { Col, Row } from "antd";
 
 const Clock = () => {
   const [date, setDate] = useState(new Date());
@@ -237,12 +238,14 @@ const Clock = () => {
       const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
       const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
       const timeDifference = moment.duration(attCheckOut.diff(attCheckIn));
-      setAttendanceTime(timeDifference);
-      // console.log("tttttttttt", timeAttendance?._data);
+      // setAttendanceTime(timeDifference?.Duration?._data);
+      setAttendanceTime(timeDifference?.Duration?.data);
+      // console.log();
       console.log("Time Difference is here", timeDifference);
     };
     timeAttendance();
   }, []);
+
   // const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
   // const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
 
@@ -254,11 +257,26 @@ const Clock = () => {
     <>
       <div>
         <span>
+          <br />
           {date.toLocaleDateString()}
           <br />
-          {date.toLocaleTimeString()}
+          <br />
+          {/* {date.toLocaleTimeString()} */}
+          <Row
+            style={{
+              display: "flex",
+              marginLeft: "60px",
+              fontWeight: "bolder",
+            }}
+          >
+            <Col span={6}>CheckIn: {attendance?.CheckIn}</Col>
+            <Col span={6}>Break</Col>
+            <Col span={6}>CheckOut: {attendance?.CheckOut}</Col>
+            <Col span={6}>Total Hours: {}</Col>
+          </Row>
         </span>
       </div>
+      <br />
 
       {/* <div>
         <h1>Timer</h1>
@@ -306,6 +324,8 @@ const Clock = () => {
         >
           Checkout
         </Button>
+<<<<<<< HEAD
+=======
         <div
           style={{
             display: "flex",
@@ -317,6 +337,7 @@ const Clock = () => {
           <span>CheckOut: {attendance?.CheckOut}</span>
           <span>Total Hours : { }</span>
         </div>
+>>>>>>> d9ab147bd11e175684786497364786d86fb868d2
       </div>
       <br />
     </>
