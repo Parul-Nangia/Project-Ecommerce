@@ -49,17 +49,6 @@ const Profile = () => {;
   const Submithere =(e)=>{
     e.preventDefault();
     console.log("hello")
-    console.log(id,"IDDDDD")
-    console.log(fatherName,"FatherName")
-    console.log(motherName,"Mother Name")
-    console.log(joiningDate,"Joining Date")
-    console.log(bloodGroup,"Blood Group")
-    console.log(permanentAddress,"Permanent Address")
-    console.log(adharNumber,"Aadhar Number")
-    console.log(contactNumber,"Contact Number")
-    console.log(panNumber,"Pan Number")
-    console.log(salary,"Salary")
-    console.log(appraisal,"Last Appraisal date")
     axios.put(`${process.env.REACT_APP_BASE_URL}/user/${id}`,
     {fatherName,motherName,joiningDate,bloodGroup,permanentAddress,adharNumber,contactNumber,panNumber,salary,appraisal
     }).then(()=>{
