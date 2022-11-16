@@ -324,8 +324,6 @@ const Clock = () => {
         >
           Checkout
         </Button>
-<<<<<<< HEAD
-=======
         <div
           style={{
             display: "flex",
@@ -337,7 +335,6 @@ const Clock = () => {
           <span>CheckOut: {attendance?.CheckOut}</span>
           <span>Total Hours : { }</span>
         </div>
->>>>>>> d9ab147bd11e175684786497364786d86fb868d2
       </div>
       <br />
     </>
