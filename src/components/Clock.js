@@ -12,6 +12,7 @@ const Clock = () => {
   const [TodayAttendance, setTodayAttendance] = useState([]);
   const [disableCheckin, setDisableCheckin] = React.useState(false);
   const [disableCheckout, setDisableCheckout] = React.useState(false);
+  const [disablebreak, setDisableBreak] = React.useState(false);
   const [EmployeeCheckIn, setEmployeeCheckIn] = useState([]);
   const [attendanceAll, setAttendanceAll] = useState([]);
 
@@ -38,6 +39,7 @@ const Clock = () => {
   //---------------------------------------------Employee Attendance GET by id API----------------------------------------------------------
   useEffect(() => {
     const LoggedAttendanceAllRecord = async () => {
+
       const token = localStorage.getItem("access_token1");
       var decoded = jwt_decode(token);
 
@@ -47,40 +49,46 @@ const Clock = () => {
         )
         .then((res) => {
           setAttendance(res?.data?.attendanceDataByEmpID[0]);
-          const Breaks = attendance?.Breaks;
-          // console.log("attendance", attendance)
-          if (Breaks[Breaks.length - 1]?.end === "") {
-            setShow(false);
-            console.log("if start ! null and end null", show)
-          }
-          if (res?.data?.attendanceDataByEmpID[0].CheckIn !== "") {
+
+          // Check if employee Checked-In Today
+          if (res?.data?.attendanceDataByEmpID.length === 0) {
+            setDisableCheckin(false);
+          } else if (res?.data?.attendanceDataByEmpID[0].CheckIn !== "") {
             setDisableCheckin(true);
           }
-          if (res?.data?.attendanceDataByEmpID[0].CheckOut !== "") {
+
+          // Check if employee Checked-Out Today
+          if (res?.data?.attendanceDataByEmpID.length === 0) {
+            setDisableCheckout(false);
+          } else if (res?.data?.attendanceDataByEmpID[0].CheckOut !== "") {
             setDisableCheckout(true);
           }
 
-          // if (attendance?.Breaks?.length !== 0) {
-          //   console.log("breaks???", attendance?.Breaks.length);
-          //   console.log("Break/end", attendance?.Breaks[attendance?.Breaks.length - 1]?.end);
-
-          // } else {
-          //   console.log("breaks", attendance?.Breaks);
-          // }
-
-          if (attendance?.Breaks?.length === 0) {
-            setShow(true);
-            console.log("if Break niull", show);
+          // Check if employee Checked-In Today then he can take breaks. Otherwise Break button will remain disabled
+          if (res?.data?.attendanceDataByEmpID.length === 0){
+            setDisableBreak(true)
+          } else {
+            setDisableBreak(false)
           }
 
-          else if (attendance?.Breaks[attendance?.Breaks?.length - 1]?.end === "") {
+          // Check if employee took Breaks Today
+          if (res?.data?.attendanceDataByEmpID.length === 0) {
+            setShow(true);
+            console.log("You Havn't took any Breaks", show);
+          }
+
+          else if (res?.data?.attendanceDataByEmpID[0].Breaks[res?.data?.attendanceDataByEmpID[0].Breaks.length - 1]?.start !== "" && res?.data?.attendanceDataByEmpID[0].Breaks[res?.data?.attendanceDataByEmpID[0].Breaks.length - 1]?.end === "") {
             setShow(false);
-            console.log("if start ! null and end null", show)
+            console.log("Please Resume Your Break", show)
           }
 
-          else if (attendance?.Breaks[attendance?.Breaks.length - 1]?.start !== "" && attendance?.Breaks[attendance?.Breaks.length - 1]?.end !== "") {
+          else if (res?.data?.attendanceDataByEmpID[0].Breaks[res?.data?.attendanceDataByEmpID[0].Breaks.length - 1]?.start !== "" && res?.data?.attendanceDataByEmpID[0].Breaks[res?.data?.attendanceDataByEmpID[0].Breaks.length - 1]?.end !== "") {
             setShow(true);
-            console.log("if start ! null and end ! null", show);
+            console.log("Click To take a Break", show);
+          }
+          else {
+            setShow(true)
+            console.log("nothing found")
           }
         });
     };
@@ -280,6 +288,7 @@ const Clock = () => {
           onClick={() => {
             employeebreak();
           }}
+          disabled={disablebreak}
         >
           {show ? "Break" : "Resume"}
         </Button>
