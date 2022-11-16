@@ -66,7 +66,7 @@ const Clock = () => {
           }
 
           // Check if employee Checked-In Today then he can take breaks. Otherwise Break button will remain disabled
-          if (res?.data?.attendanceDataByEmpID.length === 0){
+          if (res?.data?.attendanceDataByEmpID.length === 0) {
             setDisableBreak(true)
           } else {
             setDisableBreak(false)
@@ -196,7 +196,6 @@ const Clock = () => {
     }
   };
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
-
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
   const employeebreak = async () => {
     let Breaks = attendance?.Breaks;
@@ -272,7 +271,7 @@ const Clock = () => {
             <Col span={6}>CheckIn: {attendance?.CheckIn}</Col>
             <Col span={6}>Break</Col>
             <Col span={6}>CheckOut: {attendance?.CheckOut}</Col>
-            <Col span={6}>Total Hours: {}</Col>
+            <Col span={6}>Total Hours: { }</Col>
           </Row>
         </span>
       </div>
@@ -324,9 +323,7 @@ const Clock = () => {
         >
           Checkout
         </Button>
-<<<<<<< HEAD
-=======
-        <div
+        {/* <div
           style={{
             display: "flex",
             justifyContent: "flex-end",
@@ -336,8 +333,8 @@ const Clock = () => {
           <span>CheckIn: {attendance?.CheckIn}</span>
           <span>CheckOut: {attendance?.CheckOut}</span>
           <span>Total Hours : { }</span>
-        </div>
->>>>>>> d9ab147bd11e175684786497364786d86fb868d2
+        </div> */}
+
       </div>
       <br />
     </>
