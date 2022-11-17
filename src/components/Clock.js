@@ -4,10 +4,12 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useParams } from "react-router-dom";
 import { Alert } from "antd";
-import moment from "moment";
-import { Col, Row, Modal, Card, Input } from "antd";
+import moment, { duration } from "moment";
+import { Col, Row, Modal, Card, Input, Form } from "antd";
+import { Calculate } from "@mui/icons-material";
 
 const Clock = () => {
+  let time = new Date().toLocaleTimeString();
   const [date, setDate] = useState(new Date());
   const [attendance, setAttendance] = useState([]);
   const [TodayAttendance, setTodayAttendance] = useState([]);
@@ -16,6 +18,7 @@ const Clock = () => {
   const [disablebreak, setDisableBreak] = React.useState(false);
   const [EmployeeCheckIn, setEmployeeCheckIn] = useState([]);
   const [attendanceAll, setAttendanceAll] = useState([]);
+  const [ctime, setCTime] = useState([]);
 
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
   const [attendancetime, setAttendanceTime] = useState([]);
@@ -27,6 +30,7 @@ const Clock = () => {
   const [show, setShow] = useState();
   const [disableOk, setDisableOk] = React.useState(false);
   const { TextArea } = Input;
+
   // console.log("show?", show)
 
   //-------------------------------------------- Clock---------------------------------------------------------------
@@ -87,7 +91,7 @@ const Clock = () => {
 
           // Check if employee Checked-In Today then he can take breaks. Otherwise Break button will remain disabled
           if (res?.data?.attendanceDataByEmpID.length === 0) {
-            setDisableBreak(true)
+            setDisableBreak(true);
           } else {
             setDisableBreak(false);
           }
@@ -96,8 +100,7 @@ const Clock = () => {
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setShow(true);
             console.log("You Havn't took any Breaks", show);
-          }
-          else if (
+          } else if (
             res?.data?.attendanceDataByEmpID[0].Breaks[
               res?.data?.attendanceDataByEmpID[0].Breaks.length - 1
             ]?.start !== "" &&
@@ -107,8 +110,7 @@ const Clock = () => {
           ) {
             setShow(false);
             console.log("Please Resume Your Break", show);
-          }
-          else if (
+          } else if (
             res?.data?.attendanceDataByEmpID[0].Breaks[
               res?.data?.attendanceDataByEmpID[0].Breaks.length - 1
             ]?.start !== "" &&
@@ -118,10 +120,49 @@ const Clock = () => {
           ) {
             setShow(true);
             console.log("Click To take a Break", show);
-          }
-          else {
+          } else {
             setShow(true);
             console.log("nothing found");
+          }
+
+          if (res?.data?.attendanceDataByEmpID.length === 0) {
+            setTodayAttendance("00:00");
+            console.log("1 am here", TodayAttendance);
+          } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn === "") {
+            setTodayAttendance("00:00");
+            console.log("2 am here", TodayAttendance);
+          } else if (res?.data?.attendanceDataByEmpID[0]?.CheckOut === "") {
+            setTodayAttendance("00:00");
+            console.log("3 am here", TodayAttendance);
+          } else {
+            const attCheckIn = moment(
+              res?.data?.attendanceDataByEmpID[0].CheckIn,
+              "HH:mm:ss a"
+            );
+            const attCheckOut = moment(
+              res?.data?.attendanceDataByEmpID[0].CheckOut,
+              "HH:mm:ss a"
+            );
+            const milliSeconds = moment.duration(attCheckOut.diff(attCheckIn));
+            // const seconds = Math.floor((milliSeconds / 1000) % 60);
+            const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
+            const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
+
+            if (minutes === 0 || hours === 0) {
+              console.log("minutes", minutes);
+              console.log("hours", hours);
+            
+              // console.log("here in minutes", minutes);
+            
+              const formatingTime = [
+                hours.toString().padStart(2, "0"),
+                minutes.toString().padStart(2, "0"),
+                // seconds.toString().padStart(2, "0"),
+              ].join(":");
+              setTodayAttendance(formatingTime);
+              console.log("Form", formatingTime);
+              console.log("finally total hours", TodayAttendance);
+            }
           }
         });
     };
@@ -279,19 +320,62 @@ const Clock = () => {
   //   timeAttendance();
   // }, []);
 
-  const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
-  const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
+  // const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
+  // const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
 
-  const milliSeconds = moment.duration(attCheckOut.diff(attCheckIn));
-  // const seconds = Math.floor((milliSeconds / 1000) % 60);
-  const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
-  const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
+  // const milliSeconds = moment.duration(attCheckOut.diff(attCheckIn));
+  // // const seconds = Math.floor((milliSeconds / 1000) % 60);
+  // const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
+  // const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
 
-  const formatingTime = [
-    hours.toString().padStart(2, "0"),
-    minutes.toString().padStart(2, "0"),
-    // seconds.toString().padStart(2, "0"),
-  ].join(":");
+  // const formatingTime = [
+  //   hours.toString().padStart(2, "0"),
+  //   minutes.toString().padStart(2, "0"),
+  //   // seconds.toString().padStart(2, "0"),
+  // ].join(":");
+  // setNewTime(formatingTime);
+  // console.log("jhvashdvhjvdhvsdhj", formatingTime);
+
+  // if (
+  //   attendance !== [] ||
+  //   attendance?.CheckIn !== "" ||
+  //   attendance?.CheckOut !== ""
+  // ) {
+  // } else {
+  //   const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
+  //   const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
+
+  //   const milliSeconds = moment.duration(attCheckOut.diff(attCheckIn));
+  //   // const seconds = Math.floor((milliSeconds / 1000) % 60);
+  //   const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
+  //   const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
+
+  //   const formatingTime = [
+  //     hours.toString().padStart(2, "0"),
+  //     minutes.toString().padStart(2, "0"),
+  //     // seconds.toString().padStart(2, "0"),
+  //   ].join(":");
+  //   setNewTime(formatingTime);
+  //   console.log("formating", newtime);
+  //   console.log("jhvashdvhjvdhvsdhj", formatingTime);
+  // }
+
+  // function getFormating(formatingTime) {
+  //   if (isNaN(formatingTime)) {
+  //     return 0;
+  //   }
+  //   return formatingTime;
+  // }
+
+  // formatingTime.replace(NaN, "0");y
+
+  // if (attendance?.CheckOut === "") {
+  //   {
+  //     formatingTime;
+  //   }
+  // } else {
+  //   ("00.00");
+  // }
 
   // console.log("Formating time is here :", formatingTime);
 
@@ -304,16 +388,28 @@ const Clock = () => {
   //   console.log('Failed:', errorInfo);
   // };
 
+  const handleTime = () => {
+    //   timer =date.toLocaleTimeString();
+
+    time = new Date().toLocaleTimeString();
+    setCTime(time);
+    //   // console.log("jsbdjbdsbdhvshdvfhvdshgfvh", ctime);
+  };
+  setInterval(handleTime, 1000);
+
   return (
     <>
       <div>
         <span>
           <br />
+          <h3>DATE</h3>
           {date.toLocaleDateString()}
           <br />
-          {date.toLocaleTimeString()}
           <br />
-
+          <h1>TIME</h1>
+          {ctime}
+          <br />
+          <br />
           <Row gutter={16}>
             <Col span={8} className="TimeCards">
               <Card title="CheckIn " bordered={false}>
@@ -327,7 +423,7 @@ const Clock = () => {
             </Col>
             <Col span={8} className="TimeCards">
               <Card title="Total Hours" bordered={false}>
-                {formatingTime} hours
+                {TodayAttendance} hours
               </Card>
             </Col>
           </Row>
@@ -341,29 +437,39 @@ const Clock = () => {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <TextArea rows={10} />
+        {/* <TextArea
+          name="Input"
+          label="Text"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          rows={10}
+        /> */}
+
+        <Form.Item label="EOD">
+          <TextArea rows={4} />
+        </Form.Item>
       </Modal>
 
       <div>
         <Button
-          style={{
-            color: "white",
-            backgroundColor: "Green",
-            fontWeight: "Bold",
-          }}
+          type="primary"
+          ghost
+          style={{ fontWeight: "bold", background: "#D3D3D3" }}
           onClick={() => {
             employeecheckin();
+            handleTime();
           }}
-          disabled={disableCheckin}
+          // disabled={disableCheckin}
         >
           Checkin
         </Button>
         <Button
-          style={{
-            color: "white",
-            backgroundColor: "Tomato",
-            fontWeight: "Bold",
-          }}
+          style={{ fontWeight: "bold", background: "#D3D3D3" }}
+          type="break"
+          ghost
           onClick={() => {
             employeebreak();
           }}
@@ -373,16 +479,13 @@ const Clock = () => {
         </Button>
 
         <Button
-          style={{
-            color: "white",
-            backgroundColor: "Orange",
-            fontWeight: "Bold",
-            // onClick={showModal},
-          }}
+          type="checkout"
+          style={{ fontWeight: "bold", background: "#D3D3D3" }}
+          ghost
           onClick={() => {
             showModal();
           }}
-        // disabled={disableCheckout}
+          // disabled={disableCheckout}
         >
           Checkout
         </Button>
