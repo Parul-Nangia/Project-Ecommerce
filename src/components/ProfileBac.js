@@ -24,29 +24,27 @@ const Profile = () => {
 
   const [viewingEmployee, setViewingEmployee] = useState(null);
   // const [form] = Form.useForm();
-  const [joiningDate, setJoiningDate] = useState();
+  // const [joiningDate, setJoiningDate] = useState( );
   // const[joiningDate,setJoiningdate]=useState()
-  const [fatherName, setFatherName] = useState();
-  const [motherName, setMotherName] = useState();
-  const [bloodGroup, setBloodGroup] = useState();
-  const [contactNumber, setContactNumber] = useState();
-  const [permanentAddress, setPermanentAddress] = useState();
-  const [adharNumber, setAdharNumber] = useState();
-  const [panNumber, setPanNumber] = useState();
-  const [salary, setSalary] = useState();
-  const [appraisal, setAppraisal] = useState( );
+  const [editingName, setEditingName] = useState();
+  // const [motherName, setMotherName] = useState();
+  // const [bloodGroup, setBloodGroup] = useState();
+  // const [contactNumber, setContactNumber] = useState();
+  // const [permanentAddress, setPermanentAddress] = useState();
+  // const [adharNumber, setAdharNumber] = useState();
+  // const [panNumber, setPanNumber] = useState();
+  // const [salary, setSalary] = useState();
+  // const [appraisal, setAppraisal] = useState();
   // const[appraisal,setAppraisal]=useState()
 
   useEffect(() => {
     console.log(id, "userid");
     viewEmployee(id)
-
 ;
   }, []);
 
   const viewEmployee = async (id) => {
     console.log(id)
-
 ;
 
     await axios
@@ -56,16 +54,27 @@ const Profile = () => {
         setViewingEmployee(res?.data?.myData);
         // setFatherName(res?.data?.myData);
         
-        // console.log(viewingEmployee, "viewingEmployee");
+        // console.log(setViewingEmployee, "viewingEmployee");
       });
   };
   const SelectOne = (value) => {
-    setBloodGroup(value);
+    setEditingName(value);
     console.log("Blood Group", value);
   };
   const Submithere = () => {
      // form.resetFields();
     // e.preventDefault();
+    const fatherName = editingName.fatherName;
+    const motherName = editingName.motherName;
+    const joiningDate = editingName.joiningDate;
+    const bloodGroup = editingName.bloodGroup;
+    const permanentAddress = editingName.permanentAddress;
+    const adharNumber = editingName.adharNumber;
+    const contactNumber = editingName.contactNumber;
+    const panNumber = editingName.panNumber;
+    const salary = editingName.salary;
+    const appraisal = editingName.appraisal;
+    
     console.log("hello");
     axios
       .put(`${process.env.REACT_APP_BASE_URL}/user/${id}`, {
@@ -120,7 +129,7 @@ const Profile = () => {
           <Col span={12} style={{ padding: "10px 10px" }}>
            <Form.Item 
             label="Date of Joining"
-            name="setJoiningDate"
+            name="setEditingName"
             rules={[
               {
                 required: true,
@@ -128,25 +137,22 @@ const Profile = () => {
               },
             ]}
             >
+              
               <DatePicker
                 dateFormat="dd/MM/yyyy"
-                 value={joiningDate}
-                onChange={(date) => {
-                  const d = new Date(date).toLocaleDateString("fr-FR");
-                  console.log(d);
-                  setJoiningDate(d);
+                //  value={joiningDate}
+                // onChange={(date) => {
+                //   const d = new Date(date).toLocaleDateString("fr-FR");
+                //   console.log(d);
+                onChange={(e)=>{
+                  setEditingName([e.format("dd/MM/yyyy")]);
                 }}
-                // onChange={(e) => {
-                //   // const d = new Date(date).toLocaleDateString("fr-FR");
-                //   // console.log(d);
-                //   setJoiningDate([e.format("dd/MM/yyyy")]);
-                //   console.log(e)
-                // }}
               />
+              
             </Form.Item>
             <Form.Item
               label="Father Name"
-              name="setFatherName"
+              name="setEditingName"
               rules={[
                 {
                   required: true,
@@ -164,19 +170,19 @@ const Profile = () => {
             >
               <Input
                 placeholder="Type Your Name"
-                value={fatherName}
+                value={editingName?.fatherName}
                 // value={viewingEmployee?.fatherName}
                 onChange={(e) => {
-                  setFatherName(() => {
+                  setEditingName((pre) => {
                     console.log("Father Name  " + e.target.value);
-                    return e.target.value;
+                    return { ...pre, fatherName:e.target.value};
                   });
                 }}
               ></Input>
             </Form.Item>
             <Form.Item
               label="Mother Name"
-              name="setmotherName"
+              name="setEditingName"
               rules={[
                 {
                   required: true,
@@ -194,9 +200,9 @@ const Profile = () => {
             >
               <Input
                 placeholder="Type your Name"
-                value={motherName}
+                value={editingName?.motherName}
                 onChange={(e) => {
-                  setMotherName(() => {
+                  setEditingName(() => {
                     console.log("Mother Name " + e.target.value);
                     return e.target.value;
                   });
@@ -205,7 +211,7 @@ const Profile = () => {
             </Form.Item>
             <Form.Item
              label="Blood Group"
-             name="setBloodGroup"
+             name="setEditingName"
                           rules={[{
                            required:true,
                            message:"Select a option "
@@ -215,6 +221,7 @@ const Profile = () => {
                 // defaultValue={{
                 //   value: "Select",
                 // }}
+                // value={editingName?.bloodGroup}
                 onChange={SelectOne}
               >
                 <Option value="A+">A+</Option>
@@ -229,7 +236,7 @@ const Profile = () => {
             </Form.Item>
             <Form.Item
               label="Emergency Contact Number"
-              name="setContactNumber"
+              name="setEditingName"
               rules={[
                 {
                   // type:"number",
@@ -250,11 +257,12 @@ const Profile = () => {
               ]}
             >
               <Input
+               value={editingName?.contactNumber}
                 placeholder="Type your Contact number"
                 //  min={0}
                 //  style={{width:'100%'}}
                 onChange={(e) => {
-                  setContactNumber(() => {
+                  setEditingName(() => {
                     console.log("Contact Number " + e.target.value);
                     return e.target.value;
                   });
@@ -265,7 +273,7 @@ const Profile = () => {
           <Col span={12} style={{ padding: "10px 10px" }}>
             <Form.Item
               label="Permanent Address"
-              name="setPermanentAddress"
+              name="setEditingName"
               rules={[
                 {
                   required: true,
@@ -275,9 +283,9 @@ const Profile = () => {
             >
               <TextArea
                 placeholder="Type your Address"
-                value={permanentAddress}
+                value={editingName?.permanentAddress}
                 onChange={(e) => {
-                  setPermanentAddress(() => {
+                  setEditingName(() => {
                     console.log("Permanent Address " + e.target.value);
                     return e.target.value;
                   });
@@ -286,7 +294,7 @@ const Profile = () => {
             </Form.Item>
             <Form.Item
               label="Aadhar card Number"
-              name="setAdharNumber"
+              name="setEditingName"
               rules={[
                 {
                   required: true,
@@ -305,9 +313,9 @@ const Profile = () => {
             >
               <Input
                 placeholder="Aadhar Number"
-                value={adharNumber}
+                value={editingName?.adharNumber}
                 onChange={(e) => {
-                  setAdharNumber(() => {
+                  setEditingName(() => {
                     console.log("Aadhar Number " + e.target.value);
                     return e.target.value;
                   });
@@ -316,7 +324,7 @@ const Profile = () => {
             </Form.Item>
             <Form.Item
               label="PAN card Number"
-              name="setPanNumber"
+              name="setEditingName"
               rules={[
                 {
                   required: true,
@@ -332,9 +340,9 @@ const Profile = () => {
             >
               <Input
                 placeholder="Type your pancard number"
-                value={panNumber}
+                value={editingName?.panNumber}
                 onChange={(e) => {
-                  setPanNumber(() => {
+                  setEditingName(() => {
                     console.log("Pan Number " + e.target.value);
                     return e.target.value;
                   });
@@ -343,7 +351,7 @@ const Profile = () => {
             </Form.Item>
             <Form.Item
               label="Current Salary"
-              name="setSalary"
+              name="seteditingName"
               rules={[
                 {
                   required: true,
@@ -359,9 +367,9 @@ const Profile = () => {
             >
               <Input
                 placeholder="Current Salary"
-                value={salary}
+                value={editingName?.salary}
                 onChange={(e) => {
-                  setSalary(() => {
+                  setEditingName(() => {
                     console.log("Salary" + e.target.value);
                     return e.target.value;
                   });
@@ -370,7 +378,7 @@ const Profile = () => {
             </Form.Item>
             <Form.Item 
             label="Last Appraisal Date"
-            name="setAppraisal"
+            name="setEditingName"
             rules={[
               {
                 required: true,
@@ -379,10 +387,13 @@ const Profile = () => {
             ]}>
               <DatePicker
                 dateFormat="dd/MM/yyyy"
-                onChange={(date) => {
-                  const d = new Date(date).toLocaleDateString("fr-FR");
-                  console.log(d);
-                  setAppraisal(d);
+                // onChange={(date) => {
+                //   const d = new Date(date).toLocaleDateString("fr-FR");
+                //   console.log(d);
+                //   setEditingName(d);
+                // }}
+                onChange={(e)=>{
+                  setEditingName([e.format("dd/MM/yyyy")]);
                 }}
               />
             </Form.Item>
