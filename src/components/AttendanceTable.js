@@ -24,29 +24,94 @@ const AttendanceTable = () => {
   };
 
   const expandedRowRender = () => {
+
+
     const columns = [
       {
         key: "break",
-        title: "Break",
+        title: "Breaks",
         dataIndex: "Breaks",
-        render: (_, res) => {
-          console.log("dakkjjjkjkjjkjkta", dataSource);
+        // render: (dataSource) =>{
 
-          return (
+        //           console.log("response",dataSource);
+        
+        //           return (
+        //             <>
+        //             <h1>{dataSource?.Breaks}</h1>
+        //               {/* <h1>{res?.data?.attendanceData?.Breaks}</h1> */}
+        //               {/* {item.Breaks} */}
+        //             </>
+        //           );
+                
+        //       }
+                 
+                
+       
+          
+      }
+        ]
+
+         const dataSource=[
+    {
+      breaks:[
+        {
+
+          start:{},
+          end:{}, 
+
+          render: (res) =>{
+           console.log("response",res)
+        
+          
+  return (
             <>
-              <h1>{res?.data?.attendanceData?.Breaks}</h1>
-            </>
-          );
-        },
-      },
-    ];
+             <h1>{res?.data?.attendanceData?.Breaks}</h1>
+            {dataSource.map((item)=>
+                 <div>
+            {
 
-    return (
+           (typeof(item.detail)=='object')?
+           <div>
+            {
+            item.detail.map((subitem)=>
+            <div>
+                   {"start:"+subitem.start}
+                   {"end:"+subitem.end}
+
+            </div>
+          
+            )
+            }
+            </div>
+            
+                     :
+                      null
+            }
+            {"Breaks:"+item.Breaks}
+          
+            </div>
+            )}
+
+            </>
+           )
+          }
+        }
+        ]
+      }
+      ]
+      
+
+  
+          return (
       <>
-        <Table columns={columns} dataSource={dataSource} pagination={false} />;
+
+       
+        <Table columns={columns} dataSource={dataSource} pagination={false} />
+
       </>
-    );
-  };
+    )
+
+       }
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
