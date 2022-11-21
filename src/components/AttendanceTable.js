@@ -24,18 +24,18 @@ const AttendanceTable = () => {
       });
   };
 
-  const expandedRowRender = () => {
+  const expandedRowRender = row => {
     const columns = [
       {
         key: "break",
-        title: "Breakstarttime",
-        dataIndex: "Breaks",
+        title: "Break Start time",
+        dataIndex: "Breakstarttime",
       },
 
       {
         key: "break",
-        title: "Breakendtime",
-        dataIndex: "Breaks",
+        title: "Break End Time",
+        dataIndex: "Breakendtime",
         // render: (dataSource) => {
         //   console.log("response",dataSource );
 
@@ -50,6 +50,12 @@ const AttendanceTable = () => {
         //     </>
         //   );
         // },
+      },
+
+      {
+        key: "timespent",
+        title: "Time Consumed",
+        dataIndex: "timeconsume",
       },
     ];
 
@@ -68,6 +74,8 @@ const AttendanceTable = () => {
     //       }
 
     const breaks = [];
+    console.log(row, "expandedRowRender")
+
     // {dataSource.map((value)=>{
     //   return(
     //     <>
@@ -76,17 +84,17 @@ const AttendanceTable = () => {
     // )}
     // )}
 
-    for (let i = 0; i < dataSource.length; i++) {
+    for (let i = 0; i < row.Breaks.length; i++) {
+      const timeconsume= "4"
       breaks.push({
-         Breakstarttime:dataSource[i].Breaks.start,
-         Breakendtime: dataSource[i].Breaks.end,
+         Breakstarttime:row.Breaks[i]?.start,
+         Breakendtime: row.Breaks[i]?.end,
+         timeconsume: timeconsume
        
       });
-       console.log("data", dataSource);
-       console.log("brk",dataSource[i].Breaks.start);
-       console.log("brkend",dataSource[i].Breaks.end);
+       console.log("data break", breaks);
      
-    }
+     }
     // console.log("brk", dataSource[i].Breaks);
     //   dataSource[i].map((item)=>{
     //     return(
@@ -353,7 +361,7 @@ const AttendanceTable = () => {
         columns={columns}
         expandable={{
           expandedRowRender,
-          defaultExpandedRowKeys: ["0"],
+           defaultExpandedRowKeys: ["0"],
         }}
         dataSource={dataSource}
       />
