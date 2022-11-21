@@ -26,6 +26,7 @@ const Profile = () => {
   // const [form] = Form.useForm();
   const [joiningDate, setJoiningDate] = useState();
   // const[joiningDate,setJoiningdate]=useState()
+  const [isEditing, setIsEditing] = useState(false);
   const [fatherName, setFatherName] = useState();
   const [motherName, setMotherName] = useState();
   const [bloodGroup, setBloodGroup] = useState();
@@ -45,16 +46,15 @@ const Profile = () => {
   }, []);
 
   const viewEmployee = async (id) => {
-    console.log(id)
-
-;
-
+    console.log(id);
     await axios
       .get(`${process.env.REACT_APP_BASE_URL}/user/${id}`)
       .then((res) => {
         console.log(res, "api response");
         setViewingEmployee(res?.data?.myData);
-        // setFatherName(res?.data?.myData);
+        console.log(res?.data?.myData?.fatherName,"fathername")
+        setFatherName(res?.data?.myData?.fatherName);
+        console.log(fatherName,"dgfjsghgh")
         
         // console.log(viewingEmployee, "viewingEmployee");
       });
@@ -64,7 +64,7 @@ const Profile = () => {
     console.log("Blood Group", value);
   };
   const Submithere = () => {
-     // form.resetFields();
+    //  form.resetFields();
     // e.preventDefault();
     console.log("hello");
     axios
@@ -81,6 +81,7 @@ const Profile = () => {
         appraisal,
       })
       .then((res) => {console.log(res, "response");});
+      // console.log("form values", form.getFieldsValue());
   };
   // const onFinish = (values) => {
   //   console.log('Success:', values);
@@ -88,6 +89,7 @@ const Profile = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+  
 
   return (
     <>
@@ -99,8 +101,9 @@ const Profile = () => {
         <p>Role: {viewingEmployee?.role}</p>
       </Card>
       <Form
+      
         name="basic"
-         // form={form}
+        //  form={form}
         // layout="inline"
         // labelCol={{
         //   span: 12,
@@ -146,7 +149,9 @@ const Profile = () => {
             </Form.Item>
             <Form.Item
               label="Father Name"
+              // id="setFatherName"
               name="setFatherName"
+              // name="dadyy"
               rules={[
                 {
                   required: true,
@@ -164,7 +169,10 @@ const Profile = () => {
             >
               <Input
                 placeholder="Type Your Name"
+                // value={fatherName}
+                // value={fatherName?.fatherName}
                 value={fatherName}
+                // value="prince"
                 // value={viewingEmployee?.fatherName}
                 onChange={(e) => {
                   setFatherName(() => {
@@ -185,7 +193,7 @@ const Profile = () => {
                 },
                 {
                   pattern: new RegExp(
-                    /^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+\s*[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i
+                    /^[a-zA-Z@~`!@#$%^&*()_=+';:"/?>.<,-]+\s*[a-zA-Z@~`!@#$%^&*()_=+';:"/?>.<,-]+$/i
                   ),
                   // pattern: /^([A-Z][a-z]+\s)*[A-Z][a-z]+$/,
                   message: "please Input alphabets only",
