@@ -28,7 +28,7 @@ const AttendanceTable = () => {
     const columns = [
       {
         key: "break",
-        title: "Breaksstarttime",
+        title: "Breakstarttime",
         dataIndex: "Breaks",
       },
 
@@ -78,12 +78,13 @@ const AttendanceTable = () => {
 
     for (let i = 0; i < dataSource.length; i++) {
       breaks.push({
-        starttime: dataSource[1].Breaks,
-        endtime: dataSource[1].Breaks,
+         Breakstarttime:dataSource[i].Breaks.start,
+         Breakendtime: dataSource[i].Breaks.end,
        
       });
-       console.log("breaks", dataSource);
-       console.log("brk",dataSource[1].Breaks);
+       console.log("data", dataSource);
+       console.log("brk",dataSource[i].Breaks.start);
+       console.log("brkend",dataSource[i].Breaks.end);
      
     }
     // console.log("brk", dataSource[i].Breaks);
