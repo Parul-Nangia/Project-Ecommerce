@@ -4,13 +4,13 @@ import React, { useState, useEffect } from "react";
 import Highlighter from "react-highlight-words";
 import axios from "axios";
 import moment from "moment";
-import { InsertEmoticon } from "@mui/icons-material";
 
 const AttendanceTable = () => {
   const [dataSource, setDataSource] = useState([]);
 
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
+  // const [expended, setExpended] = useState();
 
   useEffect(() => {
     getAllData();
@@ -23,8 +23,11 @@ const AttendanceTable = () => {
         console.log("Attendance All Data", res);
       });
   };
+  // const expend = (index) => {
+  //   setExpended(index);
+  // };
 
-  const expandedRowRender = row => {
+  const expandedRowRender = (row) => {
     const columns = [
       {
         key: "break",
@@ -36,20 +39,6 @@ const AttendanceTable = () => {
         key: "break",
         title: "Break End Time",
         dataIndex: "Breakendtime",
-        // render: (dataSource) => {
-        //   console.log("response",dataSource );
-
-        //   return (
-        //     <>
-        //       {dataSource.map((value) => {
-        //         return <>{value.Breaks}</>;
-        //       })}
-        //       {/* <h1>{dataSource?.Breaks}</h1>  */}
-        //       {/* <h1>{res?.data?.attendanceData?.Breaks}</h1> */}
-               
-        //     </>
-        //   );
-        // },
       },
 
       {
@@ -59,56 +48,37 @@ const AttendanceTable = () => {
       },
     ];
 
-    // render: (dataSource) =>{
-
-    //           console.log("response",dataSource);
-
-    //           return (
-    //             <>
-    //             <h1>{dataSource?.Breaks}</h1>
-    //               {/* <h1>{res?.data?.attendanceData?.Breaks}</h1> */}
-    //               {/* {item.Breaks} */}
-    //             </>
-    //           );
-
-    //       }
-
     const breaks = [];
-    console.log(row, "expandedRowRender")
-
-    // {dataSource.map((value)=>{
-    //   return(
-    //     <>
-    //     {value.Breaks}
-    //     </>
-    // )}
-    // )}
+    console.log(row, "expandedRowRender");
 
     for (let i = 0; i < row.Breaks.length; i++) {
-      const timeconsume= "4"
+      const start = moment(row.Breaks[i]?.start, "HH:mm:ss a");
+      console.log("starttime", start);
+      const end = moment(row.Breaks[i]?.end, "HH:mm:ss a");
+      console.log("endtime", end);
+      const milliSeconds = moment.duration(end.diff(start));
+      const seconds = Math.floor((milliSeconds / 1000) % 60);
+      const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
+      const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
+      console.log("mill", milliSeconds);
+
+      const formattedTime = [
+        hours.toString().padStart(2, "0"),
+        minutes.toString().padStart(2, "0"),
+        seconds.toString().padStart(2, "0"),
+      ].join(":");
+
+      console.log("formattime", formattedTime);
+      const timeconsume = formattedTime;
+
       breaks.push({
-         Breakstarttime:row.Breaks[i]?.start,
-         Breakendtime: row.Breaks[i]?.end,
-         timeconsume: timeconsume
-       
+        Breakstarttime: row.Breaks[i]?.start,
+        Breakendtime: row.Breaks[i]?.end,
+        timeconsume: formattedTime,
       });
-       console.log("data break", breaks);
-     
-     }
-    // console.log("brk", dataSource[i].Breaks);
-    //   dataSource[i].map((item)=>{
-    //     return(
-    //       <>{item.Breaks}</>
-    //     )
-    //   })
-    // }
-
-    //   // render: (res) =>{
-    // console.log("response",res)
-
-    // return (
-    //           <>
-    //            <h1>{res?.data?.attendanceData?.Breaks}</h1>
+      console.log("timeconsume", formattedTime);
+      console.log("data break", breaks);
+    }
 
     return (
       <>
@@ -361,7 +331,7 @@ const AttendanceTable = () => {
         columns={columns}
         expandable={{
           expandedRowRender,
-           defaultExpandedRowKeys: ["0"],
+          defaultExpandedRowKeys: ["0"],
         }}
         dataSource={dataSource}
       />
