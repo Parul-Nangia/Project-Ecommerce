@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Highlighter from "react-highlight-words";
 import axios from "axios";
 import moment from "moment";
+import { InsertEmoticon } from "@mui/icons-material";
 
 const AttendanceTable = () => {
   const [dataSource, setDataSource] = useState([]);
@@ -24,17 +25,24 @@ const AttendanceTable = () => {
   };
 
   const expandedRowRender = () => {
-
-
     const columns = [
       {
         key: "break",
         title: "Breaks",
         dataIndex: "Breaks",
+        
+          breaks: [
+            {
+              start: {},
+              end: {},
+            },
+          ]
+        
+        
         // render: (dataSource) =>{
 
         //           console.log("response",dataSource);
-        
+
         //           return (
         //             <>
         //             <h1>{dataSource?.Breaks}</h1>
@@ -42,76 +50,83 @@ const AttendanceTable = () => {
         //               {/* {item.Breaks} */}
         //             </>
         //           );
-                
+
         //       }
-                 
-                
-       
-          
-      }
-        ]
+      },
+    ];
 
-         const dataSource=[
-    {
-      breaks:[
-        {
-
-          start:{},
-          end:{}, 
-
-          render: (res) =>{
-           console.log("response",res)
-        
-          
-  return (
-            <>
-             <h1>{res?.data?.attendanceData?.Breaks}</h1>
-            {dataSource.map((item)=>
-                 <div>
-            {
-
-           (typeof(item.detail)=='object')?
-           <div>
-            {
-            item.detail.map((subitem)=>
-            <div>
-                   {"start:"+subitem.start}
-                   {"end:"+subitem.end}
-
-            </div>
-          
-            )
-            }
-            </div>
-            
-                     :
-                      null
-            }
-            {"Breaks:"+item.Breaks}
-          
-            </div>
-            )}
-
-            </>
-           )
-          }
-        }
-        ]
-      }
+      const dataSource = [
+      // {
+      //   breaks: [
+      //     {
+      //       start: {},
+      //       end: {},
+      //     },
+      //   ]
+      // }
       ]
-      
+    //   return(
+    //   <>
+    
 
-  
-          return (
+    // {
+    //   dataSource.map((item) => {
+    //     return (
+    //       <>{item.Breaks}</>
+    //     )
+    //   })
+    // }
+    // </>
+    //   )
+  // ]
+  // }
+  // ]
+    // render: (res) =>{
+    // console.log("response",res)
+
+    // return (
+    //           <>
+    //            <h1>{res?.data?.attendanceData?.Breaks}</h1>
+    //           {dataSource.map((item)=>
+    //                <div>
+    //           {
+
+    //          (typeof(item.detail)=='object')?
+    //          <div>
+    //           {
+    //           item.detail.map((subitem)=>
+    //           <div>
+    //                  {"start:"+subitem.start}
+    //                  {"end:"+subitem.end}
+
+    //           </div>
+
+    //           )
+    //           }
+    //           </div>
+
+    //                    :
+    //                     null
+    //           }
+    //           {"Breaks:"+item.Breaks}
+
+    //           </div>
+    //           )}
+
+    //           </>
+    //          )
+    //         }
+    //       }
+    //       ]
+    //     }
+    //     ]
+
+    return (
       <>
-
-       
         <Table columns={columns} dataSource={dataSource} pagination={false} />
-
       </>
-    )
-
-       }
+    );
+  };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
