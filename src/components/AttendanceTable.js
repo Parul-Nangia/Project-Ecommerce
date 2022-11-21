@@ -28,102 +28,82 @@ const AttendanceTable = () => {
     const columns = [
       {
         key: "break",
-        title: "Breaks",
+        title: "Breaksstarttime",
         dataIndex: "Breaks",
-        
-          breaks: [
-            {
-              start: {},
-              end: {},
-            },
-          ]
-        
-        
-        // render: (dataSource) =>{
+      },
 
-        //           console.log("response",dataSource);
+      {
+        key: "break",
+        title: "Breakendtime",
+        dataIndex: "Breaks",
+        // render: (dataSource) => {
+        //   console.log("response",dataSource );
 
-        //           return (
-        //             <>
-        //             <h1>{dataSource?.Breaks}</h1>
-        //               {/* <h1>{res?.data?.attendanceData?.Breaks}</h1> */}
-        //               {/* {item.Breaks} */}
-        //             </>
-        //           );
-
-        //       }
+        //   return (
+        //     <>
+        //       {dataSource.map((value) => {
+        //         return <>{value.Breaks}</>;
+        //       })}
+        //       {/* <h1>{dataSource?.Breaks}</h1>  */}
+        //       {/* <h1>{res?.data?.attendanceData?.Breaks}</h1> */}
+               
+        //     </>
+        //   );
+        // },
       },
     ];
 
-      const dataSource = [
-      // {
-      //   breaks: [
-      //     {
-      //       start: {},
-      //       end: {},
-      //     },
-      //   ]
-      // }
-      ]
-    //   return(
-    //   <>
-    
+    // render: (dataSource) =>{
 
-    // {
-    //   dataSource.map((item) => {
-    //     return (
+    //           console.log("response",dataSource);
+
+    //           return (
+    //             <>
+    //             <h1>{dataSource?.Breaks}</h1>
+    //               {/* <h1>{res?.data?.attendanceData?.Breaks}</h1> */}
+    //               {/* {item.Breaks} */}
+    //             </>
+    //           );
+
+    //       }
+
+    const breaks = [];
+    // {dataSource.map((value)=>{
+    //   return(
+    //     <>
+    //     {value.Breaks}
+    //     </>
+    // )}
+    // )}
+
+    for (let i = 0; i < dataSource.length; i++) {
+      breaks.push({
+        starttime: dataSource[1].Breaks,
+        endtime: dataSource[1].Breaks,
+       
+      });
+       console.log("breaks", dataSource);
+       console.log("brk",dataSource[1].Breaks);
+     
+    }
+    // console.log("brk", dataSource[i].Breaks);
+    //   dataSource[i].map((item)=>{
+    //     return(
     //       <>{item.Breaks}</>
     //     )
     //   })
     // }
-    // </>
-    //   )
-  // ]
-  // }
-  // ]
-    // render: (res) =>{
+
+    //   // render: (res) =>{
     // console.log("response",res)
 
     // return (
     //           <>
     //            <h1>{res?.data?.attendanceData?.Breaks}</h1>
-    //           {dataSource.map((item)=>
-    //                <div>
-    //           {
-
-    //          (typeof(item.detail)=='object')?
-    //          <div>
-    //           {
-    //           item.detail.map((subitem)=>
-    //           <div>
-    //                  {"start:"+subitem.start}
-    //                  {"end:"+subitem.end}
-
-    //           </div>
-
-    //           )
-    //           }
-    //           </div>
-
-    //                    :
-    //                     null
-    //           }
-    //           {"Breaks:"+item.Breaks}
-
-    //           </div>
-    //           )}
-
-    //           </>
-    //          )
-    //         }
-    //       }
-    //       ]
-    //     }
-    //     ]
 
     return (
       <>
-        <Table columns={columns} dataSource={dataSource} pagination={false} />
+        <Table columns={columns} dataSource={breaks} pagination={false} />
       </>
     );
   };
