@@ -10,6 +10,7 @@ const AttendanceTable = () => {
 
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
+  // const [expended, setExpended] = useState();
 
   useEffect(() => {
     getAllData();
@@ -22,96 +23,69 @@ const AttendanceTable = () => {
         console.log("Attendance All Data", res);
       });
   };
+  // const expend = (index) => {
+  //   setExpended(index);
+  // };
 
-  const expandedRowRender = () => {
-
-
+  const expandedRowRender = (row) => {
     const columns = [
       {
         key: "break",
-        title: "Breaks",
-        dataIndex: "Breaks",
-        // render: (dataSource) =>{
+        title: "Break Start time",
+        dataIndex: "Breakstarttime",
+      },
 
-        //           console.log("response",dataSource);
-        
-        //           return (
-        //             <>
-        //             <h1>{dataSource?.Breaks}</h1>
-        //               {/* <h1>{res?.data?.attendanceData?.Breaks}</h1> */}
-        //               {/* {item.Breaks} */}
-        //             </>
-        //           );
-                
-        //       }
-                 
-                
-       
-          
-      }
-        ]
+      {
+        key: "break",
+        title: "Break End Time",
+        dataIndex: "Breakendtime",
+      },
 
-         const dataSource=[
-    {
-      breaks:[
-        {
+      {
+        key: "timespent",
+        title: "Time Consumed",
+        dataIndex: "timeconsume",
+      },
+    ];
 
-          start:{},
-          end:{}, 
+    const breaks = [];
+    console.log(row, "expandedRowRender");
 
-          render: (res) =>{
-           console.log("response",res)
-        
-          
-  return (
-            <>
-             <h1>{res?.data?.attendanceData?.Breaks}</h1>
-            {dataSource.map((item)=>
-                 <div>
-            {
+    for (let i = 0; i < row.Breaks.length; i++) {
+      const start = moment(row.Breaks[i]?.start, "HH:mm:ss a");
+      console.log("starttime", start);
+      const end = moment(row.Breaks[i]?.end, "HH:mm:ss a");
+      console.log("endtime", end);
+      const milliSeconds = moment.duration(end.diff(start));
+      const seconds = Math.floor((milliSeconds / 1000) % 60);
+      const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
+      const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
+      console.log("mill", milliSeconds);
 
-           (typeof(item.detail)=='object')?
-           <div>
-            {
-            item.detail.map((subitem)=>
-            <div>
-                   {"start:"+subitem.start}
-                   {"end:"+subitem.end}
+      const formattedTime = [
+        hours.toString().padStart(2, "0"),
+        minutes.toString().padStart(2, "0"),
+        seconds.toString().padStart(2, "0"),
+      ].join(":");
 
-            </div>
-          
-            )
-            }
-            </div>
-            
-                     :
-                      null
-            }
-            {"Breaks:"+item.Breaks}
-          
-            </div>
-            )}
+      console.log("formattime", formattedTime);
+      const timeconsume = formattedTime;
 
-            </>
-           )
-          }
-        }
-        ]
-      }
-      ]
-      
+      breaks.push({
+        Breakstarttime: row.Breaks[i]?.start,
+        Breakendtime: row.Breaks[i]?.end,
+        timeconsume: formattedTime,
+      });
+      console.log("timeconsume", formattedTime);
+      console.log("data break", breaks);
+    }
 
-  
-          return (
+    return (
       <>
-
-       
-        <Table columns={columns} dataSource={dataSource} pagination={false} />
-
+        <Table columns={columns} dataSource={breaks} pagination={false} />
       </>
-    )
-
-       }
+    );
+  };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
