@@ -124,9 +124,9 @@ const Employees = ({ dataSource }) => {
 
   // }
 
-  const profile = (user_id) => {
-    navigate("/profile/" + user_id);
-    console.log(user_id,"User_iddddd")
+  const profile = (record) => {
+    navigate("/profile/" + record._id );
+    console.log(record,"User_iddddd")
   };
 
   const showModal = () => {
@@ -258,7 +258,7 @@ const Employees = ({ dataSource }) => {
   // const viewEmployee =()=>{
 
   // }
-
+   
   const onEditEmployee = (record) => {
     setIsEditing(true);
     setEditingEmployee({ ...record });
@@ -401,7 +401,7 @@ const Employees = ({ dataSource }) => {
             <Button
               style={{ color: "black" }}
               onClick={() => {
-                profile(record._id);
+                profile(record);
               }}
             >
               <EyeOutlined />
