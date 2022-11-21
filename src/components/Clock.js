@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "antd";
+import { Button, Dropdown, Menu, Space } from "antd";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import { useParams } from "react-router-dom";
-import { Alert } from "antd";
+import {
+  MinusCircleOutlined,
+  PlusOutlined,
+  DownOutlined,
+} from "@ant-design/icons";
+
 import moment, { duration } from "moment";
 import { Col, Row, Modal, Card, Input, Form } from "antd";
-import { Calculate } from "@mui/icons-material";
 
 const Clock = () => {
-  let time = new Date().toLocaleTimeString();
   const [date, setDate] = useState(new Date());
   const [attendance, setAttendance] = useState([]);
   const [TodayAttendance, setTodayAttendance] = useState([]);
@@ -18,33 +20,36 @@ const Clock = () => {
   const [disablebreak, setDisableBreak] = React.useState(false);
   const [EmployeeCheckIn, setEmployeeCheckIn] = useState([]);
   const [attendanceAll, setAttendanceAll] = useState([]);
-  const [ctime, setCTime] = useState([]);
+  let newTime = new Date().toLocaleTimeString();
+  const [ctime, setCTime] = useState(newTime);
+  const [eod, setEod] = useState([]);
+  console.log("EOD WORKDONE", eod);
+  const [timespend, setTimespend] = useState([]);
 
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
-  const [attendancetime, setAttendanceTime] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTimer, setIsTimer] = useState(false);
+  const [employeeeod, setEmployeeEod] = useState("");
 
   // console.log("attendance state", attendance[0].CheckIn)
   const [objects, setObjects] = useState({});
   const [show, setShow] = useState();
-  const [disableOk, setDisableOk] = React.useState(false);
   const { TextArea } = Input;
 
-  // console.log("show?", show)
-
   //-------------------------------------------- Clock---------------------------------------------------------------
-  // const showTimer = () => {
-  //   setIsTimer(true);
-  // };
 
   const showModal = () => {
     setIsModalOpen(true);
   };
 
+  const showTimer = () => {
+    setIsTimer(false);
+  };
+
   const handleOk = () => {
     setIsModalOpen(false);
     employeecheckout();
+    employeeEOD();
   };
 
   const handleCancel = () => {
@@ -151,9 +156,9 @@ const Clock = () => {
             if (minutes === 0 || hours === 0) {
               console.log("minutes", minutes);
               console.log("hours", hours);
-            
+
               // console.log("here in minutes", minutes);
-            
+
               const formatingTime = [
                 hours.toString().padStart(2, "0"),
                 minutes.toString().padStart(2, "0"),
@@ -306,6 +311,38 @@ const Clock = () => {
     setShow(!show);
   };
 
+  // const employeeEOD = async () => {
+  //   if (attendance?.CheckOut === "") {
+  //     const CheckIn = attendance?.CheckIn;
+  //     // console.log("i am here attendance checkin spread", CheckIn);
+  //     const CheckOut = new Date().toLocaleTimeString();
+  //     const Breaks = attendance?.Breaks;
+  //     const ID = attendance?._id;
+  //     const eod = "";
+  //     const timeSpend = "";
+  //     console.log("attendance id in checkout", ID);
+
+  //     // console.log("Attendance id for CheckOut", ID);
+
+  //     await axios
+  //       .put(`${process.env.REACT_APP_BASE_URL}/attendance/addon/${ID}`, {
+  //         CheckIn,
+  //         CheckOut,
+  //         Breaks,
+  //         eod,
+  //         timespend,
+  //       })
+  //       .then((res) => {
+  //         setEmployeeEod(res?.data?.updatedAttendance);
+  //         console.log("jkdsbhsnvnbsdbdc", res);
+  //         setDisableCheckout(true);
+  //         window.location.reload();
+  //       });
+  //     console.log("Today EOD data", employeeeod);
+  //   } else {
+  //     window.alert("you have already Checked-Out");
+  //   }
+  // };
   // useEffect(() => {
   //   // const timerId = setInterval(refreshClock, 1000);
   //   const timeAttendance = () => {
@@ -389,14 +426,58 @@ const Clock = () => {
   // };
 
   const handleTime = () => {
-    //   timer =date.toLocaleTimeString();
-
-    time = new Date().toLocaleTimeString();
-    setCTime(time);
-    //   // console.log("jsbdjbdsbdhvshdvfhvdshgfvh", ctime);
+    newTime = new Date().toLocaleTimeString();
+    setCTime(newTime);
   };
+
   setInterval(handleTime, 1000);
 
+  function employeeEOD() {
+    const token = localStorage.getItem("access_token1");
+    var decoded = jwt_decode(token);
+    let data = {
+      eod,
+      timespend,
+    };
+
+    fetch(`${process.env.REACT_APP_BASE_URL}/attendance`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => {
+      console.log("result", res);
+      // window.alert("EOD STORED");
+    });
+  }
+
+  const onFinish = (value) => {
+    console.log("Received values of form:", value);
+  };
+
+  const menu = (
+    <Menu style={{ overflowY: "scroll", height: "100px", marginTop: "-5px" }}>
+      <Menu.Item>15 min </Menu.Item>
+      <Menu.Item>30 min</Menu.Item>
+      <Menu.Item>1 hour</Menu.Item>
+      <Menu.Item>1:30 hour</Menu.Item>
+      <Menu.Item>2:00 hour</Menu.Item>
+      <Menu.Item>2:30 hour</Menu.Item>
+      <Menu.Item>3:00 hour </Menu.Item>
+      <Menu.Item>3:30 hour</Menu.Item>
+      <Menu.Item>4:00 hour </Menu.Item>
+      <Menu.Item>4:30 hour</Menu.Item>
+      <Menu.Item>5:00 hour </Menu.Item>
+      <Menu.Item>5:30 hour</Menu.Item>
+      <Menu.Item>6:00 hour </Menu.Item>
+      <Menu.Item>6:30 hour</Menu.Item>
+      <Menu.Item>7:00 hour </Menu.Item>
+      <Menu.Item>7:30 hour</Menu.Item>
+      <Menu.Item>8:00 hour </Menu.Item>
+    </Menu>
+  );
   return (
     <>
       <div>
@@ -434,9 +515,124 @@ const Clock = () => {
       <Modal
         title="E.O.D"
         open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
+        cancelButtonProps={{ style: { display: "none" } }}
+        okButtonProps={{ style: { display: "none" } }}
       >
+        <Form
+          id="dynamic_form_nest_item"
+          onFinish={onFinish}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="EOD"
+            id="eod"
+            rules={[{ required: true, message: "Missing Your EOD" }]}
+          >
+            <Input
+              onChange={(e) => {
+                setEod(e.target.value);
+              }}
+              style={{ display: "flex", width: "180px" }}
+              placeholder="Your's EOD"
+            />
+            <Form.Item
+              // {...restField}
+              // name={[name, "date"]}
+              label="Timespend"
+              id="timespend"
+              style={{
+                float: "right",
+                marginRight: "50px",
+                marginTop: "-30px",
+              }}
+
+              // rules={[
+              //   { required: true, message: "Missing Your  Date" },
+              // ]}
+            >
+              <Dropdown overlay={menu}>
+                <a>
+                  Select Time <DownOutlined />
+                </a>
+              </Dropdown>
+              {/* <Input placeholder="Time" /> */}
+            </Form.Item>
+          </Form.Item>
+          <Form.List id="users">
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map(({ key, id, ...restField }) => (
+                  <Space
+                    key={key}
+                    style={{
+                      display: "flex",
+                      marginBottom: 8,
+                      marginTop: "30px",
+                    }}
+                    align="baseline"
+                  >
+                    <Form.Item
+                      {...restField}
+                      label="EOD"
+                      id="eod"
+                      rules={[{ required: true, message: "Missing Your EOD" }]}
+                    >
+                      <Input
+                        onChange={(e) => {
+                          setEod(e.target.value);
+                        }}
+                        placeholder="Your's EOD"
+                      />
+                    </Form.Item>
+
+                    <Form.Item
+                      // {...restField}
+                      // name={[name, "date"]}
+                      label="Datespend"
+                      id="datespend"
+                      style={{ marginLeft: "30px" }}
+
+                      // rules={[
+                      //   { required: true, message: "Missing Your  Date" },
+                      // ]}
+                    >
+                      <Dropdown overlay={menu}>
+                        <a>Select Time</a>
+                      </Dropdown>
+                      {/* <Input placeholder="Time" /> */}
+                    </Form.Item>
+                    <MinusCircleOutlined
+                      style={{ marginLeft: "15px" }}
+                      onClick={() => remove(id)}
+                    />
+                  </Space>
+                ))}
+
+                <Form.Item>
+                  <Button
+                    type="dashed"
+                    onClick={() => add()}
+                    block
+                    icon={<PlusOutlined />}
+                  >
+                    Add field
+                  </Button>
+                </Form.Item>
+              </>
+            )}
+          </Form.List>
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              onClick={handleOk}
+              style={{ display: "flex", float: "right" }}
+            >
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+
         {/* <TextArea
           name="Input"
           label="Text"
@@ -448,9 +644,9 @@ const Clock = () => {
           rows={10}
         /> */}
 
-        <Form.Item label="EOD">
+        {/* <Form.Item label="EOD">
           <TextArea rows={4} />
-        </Form.Item>
+        </Form.Item> */}
       </Modal>
 
       <div>
@@ -459,8 +655,8 @@ const Clock = () => {
           ghost
           style={{ fontWeight: "bold", background: "#D3D3D3" }}
           onClick={() => {
-            employeecheckin();
             handleTime();
+            employeecheckin();
           }}
           // disabled={disableCheckin}
         >
