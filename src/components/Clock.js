@@ -22,9 +22,16 @@ const Clock = () => {
   const [attendanceAll, setAttendanceAll] = useState([]);
   let newTime = new Date().toLocaleTimeString();
   const [ctime, setCTime] = useState(newTime);
+
   const [eod, setEod] = useState([]);
   // console.log("EOD WORKDONE", eod);
   const [timespend, setTimespend] = useState([]);
+
+  const [iseod, setIsEod] = useState("");
+  // console.log("hiiiiiiiii", eod);
+
+  const [istimespent, setIsTimespent] = useState("");
+
 
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,7 +56,6 @@ const Clock = () => {
   const handleOk = () => {
     setIsModalOpen(false);
     employeecheckout();
-    employeeEOD();
   };
 
   const handleCancel = () => {
@@ -199,6 +205,7 @@ const Clock = () => {
     const TodayDate = MyDateString;
     const CheckOut = "";
     const Breaks = [];
+    const eodoftheday = [];
     const emp_id = decoded._id;
     await axios
       .post(`${process.env.REACT_APP_BASE_URL}/attendance/${emp_id}`, {
@@ -208,6 +215,7 @@ const Clock = () => {
         CheckIn,
         CheckOut,
         Breaks,
+        eodoftheday,
       })
       .then((res) => {
         setEmployeeCheckIn(res?.data?.newAttendance);
@@ -247,23 +255,41 @@ const Clock = () => {
   //-------------------------------------------- Attendance Checkin---------------------------------------------------------------
 
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
+  // console.log("length of array", attendance?.eodoftheday);
   const employeecheckout = async () => {
     console.log("checkout", attendance?.CheckOut);
+
     if (attendance?.CheckOut === "") {
       const CheckIn = attendance?.CheckIn;
       // console.log("i am here attendance checkin spread", CheckIn);
       const CheckOut = new Date().toLocaleTimeString();
       const Breaks = attendance?.Breaks;
+      const eodoftheday = attendance?.eodoftheday;
+      console.log("atteod", eodoftheday);
+
       const ID = attendance?._id;
       console.log("attendance id in checkout", ID);
 
       // console.log("Attendance id for CheckOut", ID);
+
+      const eodArr = {
+        eod: iseod,
+        timespent: istimespent,
+      };
+      console.log("eodArr", eodArr);
+      // attendance?.eodoftheday.push({EOD:eodArr.eod});
+      console.log("eod work", eodArr.eod);
+      attendance?.eodoftheday.push({
+        EOD: eodArr.eod,
+        TimeSpent: eodArr.timespent,
+      });
 
       await axios
         .put(`${process.env.REACT_APP_BASE_URL}/attendance/addon/${ID}`, {
           CheckIn,
           CheckOut,
           Breaks,
+          eodoftheday,
         })
         .then((res) => {
           setEmployeeCheckOut(res?.data?.updatedAttendance);
@@ -280,6 +306,7 @@ const Clock = () => {
   const employeebreak = async () => {
     let Breaks = attendance?.Breaks;
     const employ = attendance?._id;
+    const eodoftheday = [];
     console.log("attendance id in break", attendance?._id);
     const CheckIn = attendance?.CheckIn;
     const CheckOut = "";
@@ -300,6 +327,7 @@ const Clock = () => {
         CheckIn,
         Breaks,
         CheckOut,
+        eodoftheday,
       })
 
       .then((res) => {
@@ -311,147 +339,12 @@ const Clock = () => {
     setShow(!show);
   };
 
-  // const employeeEOD = async () => {
-  //   if (attendance?.CheckOut === "") {
-  //     const CheckIn = attendance?.CheckIn;
-  //     // console.log("i am here attendance checkin spread", CheckIn);
-  //     const CheckOut = new Date().toLocaleTimeString();
-  //     const Breaks = attendance?.Breaks;
-  //     const ID = attendance?._id;
-  //     const eod = "";
-  //     const timeSpend = "";
-  //     console.log("attendance id in checkout", ID);
-
-  //     // console.log("Attendance id for CheckOut", ID);
-
-  //     await axios
-  //       .put(`${process.env.REACT_APP_BASE_URL}/attendance/addon/${ID}`, {
-  //         CheckIn,
-  //         CheckOut,
-  //         Breaks,
-  //         eod,
-  //         timespend,
-  //       })
-  //       .then((res) => {
-  //         setEmployeeEod(res?.data?.updatedAttendance);
-  //         console.log("jkdsbhsnvnbsdbdc", res);
-  //         setDisableCheckout(true);
-  //         window.location.reload();
-  //       });
-  //     console.log("Today EOD data", employeeeod);
-  //   } else {
-  //     window.alert("you have already Checked-Out");
-  //   }
-  // };
-  // useEffect(() => {
-  //   // const timerId = setInterval(refreshClock, 1000);
-  //   const timeAttendance = () => {
-  //     const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
-  //     const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
-  //     const timeDifference = moment.duration(attCheckOut.diff(attCheckIn));
-  //     // setAttendanceTime(timeDifference?.Duration?._data);
-  //     setAttendanceTime(timeDifference?.Duration?.data);
-  //     // console.log();
-  //     console.log("Time Difference is here", timeDifference);
-  //   };
-  //   timeAttendance();
-  // }, []);
-
-  // const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
-  // const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
-
-  // const milliSeconds = moment.duration(attCheckOut.diff(attCheckIn));
-  // // const seconds = Math.floor((milliSeconds / 1000) % 60);
-  // const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
-  // const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
-
-  // const formatingTime = [
-  //   hours.toString().padStart(2, "0"),
-  //   minutes.toString().padStart(2, "0"),
-  //   // seconds.toString().padStart(2, "0"),
-  // ].join(":");
-  // setNewTime(formatingTime);
-  // console.log("jhvashdvhjvdhvsdhj", formatingTime);
-
-  // if (
-  //   attendance !== [] ||
-  //   attendance?.CheckIn !== "" ||
-  //   attendance?.CheckOut !== ""
-  // ) {
-  // } else {
-  //   const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
-  //   const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
-
-  //   const milliSeconds = moment.duration(attCheckOut.diff(attCheckIn));
-  //   // const seconds = Math.floor((milliSeconds / 1000) % 60);
-  //   const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
-  //   const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
-
-  //   const formatingTime = [
-  //     hours.toString().padStart(2, "0"),
-  //     minutes.toString().padStart(2, "0"),
-  //     // seconds.toString().padStart(2, "0"),
-  //   ].join(":");
-  //   setNewTime(formatingTime);
-  //   console.log("formating", newtime);
-  //   console.log("jhvashdvhjvdhvsdhj", formatingTime);
-  // }
-
-  // function getFormating(formatingTime) {
-  //   if (isNaN(formatingTime)) {
-  //     return 0;
-  //   }
-  //   return formatingTime;
-  // }
-
-  // formatingTime.replace(NaN, "0");y
-
-  // if (attendance?.CheckOut === "") {
-  //   {
-  //     formatingTime;
-  //   }
-  // } else {
-  //   ("00.00");
-  // }
-
-  // console.log("Formating time is here :", formatingTime);
-
-  // console.log("Time Difference is here", timeDifference);
-  //-------------------------------------------- Attendance Break---------------------------------------------------------------
-  // const onFinish = (values) => {
-  //   console.log('Success:', values);
-  // };
-  // const onFinishFailed = (errorInfo) => {
-  //   console.log('Failed:', errorInfo);
-  // };
-
   const handleTime = () => {
     newTime = new Date().toLocaleTimeString();
     setCTime(newTime);
   };
 
   setInterval(handleTime, 1000);
-
-  function employeeEOD() {
-    const token = localStorage.getItem("access_token1");
-    var decoded = jwt_decode(token);
-    let data = {
-      eod,
-      timespend,
-    };
-
-    fetch(`${process.env.REACT_APP_BASE_URL}/attendance`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }).then((res) => {
-      console.log("result", res);
-      // window.alert("EOD STORED");
-    });
-  }
 
   const onFinish = (value) => {
     console.log("Received values of form:", value);
@@ -519,95 +412,59 @@ const Clock = () => {
         okButtonProps={{ style: { display: "none" } }}
       >
         <Form
-          id="dynamic_form_nest_item"
+          name="dynamic_form_nest_item"
           onFinish={onFinish}
           autoComplete="off"
         >
-          <Form.Item
-            label="EOD"
-            id="eod"
-            rules={[{ required: true, message: "Missing Your EOD" }]}
-          >
-            <Input
-              onChange={(e) => {
-                setEod(e.target.value);
-              }}
-              style={{ display: "flex", width: "180px" }}
-              placeholder="Your's EOD"
-            />
-            <Form.Item
-              // {...restField}
-              // name={[name, "date"]}
-              label="Timespend"
-              id="timespend"
-              style={{
-                float: "right",
-                marginRight: "50px",
-                marginTop: "-30px",
-              }}
-
-              // rules={[
-              //   { required: true, message: "Missing Your  Date" },
-              // ]}
-            >
-              <Dropdown overlay={menu}>
-                <a>
-                  Select Time <DownOutlined />
-                </a>
-              </Dropdown>
-              {/* <Input placeholder="Time" /> */}
-            </Form.Item>
-          </Form.Item>
-          <Form.List id="users">
+          <Form.List name="users">
             {(fields, { add, remove }) => (
               <>
-                {fields.map(({ key, id, ...restField }) => (
+                {fields.map(({ key, name, ...restField }) => (
                   <Space
                     key={key}
                     style={{
                       display: "flex",
                       marginBottom: 8,
-                      marginTop: "30px",
                     }}
                     align="baseline"
                   >
                     <Form.Item
                       {...restField}
-                      label="EOD"
-                      id="eod"
-                      rules={[{ required: true, message: "Missing Your EOD" }]}
+                      name={[name, "eod"]}
+                      rules={[
+                        {
+                          required: true,
+                          message: "Missing eod",
+                        },
+                      ]}
                     >
                       <Input
                         onChange={(e) => {
-                          setEod(e.target.value);
+                          setIsEod(e.target.value);
                         }}
-                        placeholder="Your's EOD"
+                        placeholder="EOD"
                       />
                     </Form.Item>
-
                     <Form.Item
-                      // {...restField}
-                      // name={[name, "date"]}
-                      label="Datespend"
-                      id="datespend"
-                      style={{ marginLeft: "30px" }}
-
-                      // rules={[
-                      //   { required: true, message: "Missing Your  Date" },
-                      // ]}
+                      {...restField}
+                      name={[name, "time spent"]}
+                      rules={[
+                        {
+                          required: true,
+                          message: "Missing time spent",
+                        },
+                      ]}
                     >
-                      <Dropdown overlay={menu}>
-                        <a>Select Time</a>
-                      </Dropdown>
-                      {/* <Input placeholder="Time" /> */}
+                      <Input
+                        onChange={(e) => {
+                          setIsTimespent(e.target.value);
+                        }}
+                        placeholder="Time spent"
+                      />
                     </Form.Item>
-                    <MinusCircleOutlined
-                      style={{ marginLeft: "15px" }}
-                      onClick={() => remove(id)}
-                    />
+                    <MinusCircleOutlined onClick={() => remove(name)} />
                   </Space>
                 ))}
-
                 <Form.Item>
                   <Button
                     type="dashed"
@@ -622,31 +479,11 @@ const Clock = () => {
             )}
           </Form.List>
           <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              onClick={handleOk}
-              style={{ display: "flex", float: "right" }}
-            >
+            <Button type="primary" htmlType="submit" onClick={handleOk}>
               Submit
             </Button>
           </Form.Item>
         </Form>
-
-        {/* <TextArea
-          name="Input"
-          label="Text"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-          rows={10}
-        /> */}
-
-        {/* <Form.Item label="EOD">
-          <TextArea rows={4} />
-        </Form.Item> */}
       </Modal>
 
       <div>
@@ -692,3 +529,117 @@ const Clock = () => {
 };
 
 export default Clock;
+
+// const employeeEOD = async () => {
+//   if (attendance?.CheckOut === "") {
+//     const CheckIn = attendance?.CheckIn;
+//     // console.log("i am here attendance checkin spread", CheckIn);
+//     const CheckOut = new Date().toLocaleTimeString();
+//     const Breaks = attendance?.Breaks;
+//     const ID = attendance?._id;
+//     const eod = "";
+//     const timeSpend = "";
+//     console.log("attendance id in checkout", ID);
+
+//     // console.log("Attendance id for CheckOut", ID);
+
+//     await axios
+//       .put(`${process.env.REACT_APP_BASE_URL}/attendance/addon/${ID}`, {
+//         CheckIn,
+//         CheckOut,
+//         Breaks,
+//         eod,
+//         timespend,
+//       })
+//       .then((res) => {
+//         setEmployeeEod(res?.data?.updatedAttendance);
+//         console.log("jkdsbhsnvnbsdbdc", res);
+//         setDisableCheckout(true);
+//         window.location.reload();
+//       });
+//     console.log("Today EOD data", employeeeod);
+//   } else {
+//     window.alert("you have already Checked-Out");
+//   }
+// };
+// useEffect(() => {
+//   // const timerId = setInterval(refreshClock, 1000);
+//   const timeAttendance = () => {
+//     const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
+//     const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
+//     const timeDifference = moment.duration(attCheckOut.diff(attCheckIn));
+//     // setAttendanceTime(timeDifference?.Duration?._data);
+//     setAttendanceTime(timeDifference?.Duration?.data);
+//     // console.log();
+//     console.log("Time Difference is here", timeDifference);
+//   };
+//   timeAttendance();
+// }, []);
+
+// const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
+// const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
+
+// const milliSeconds = moment.duration(attCheckOut.diff(attCheckIn));
+// // const seconds = Math.floor((milliSeconds / 1000) % 60);
+// const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
+// const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
+
+// const formatingTime = [
+//   hours.toString().padStart(2, "0"),
+//   minutes.toString().padStart(2, "0"),
+//   // seconds.toString().padStart(2, "0"),
+// ].join(":");
+// setNewTime(formatingTime);
+// console.log("jhvashdvhjvdhvsdhj", formatingTime);
+
+// if (
+//   attendance !== [] ||
+//   attendance?.CheckIn !== "" ||
+//   attendance?.CheckOut !== ""
+// ) {
+// } else {
+//   const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
+//   const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
+
+//   const milliSeconds = moment.duration(attCheckOut.diff(attCheckIn));
+//   // const seconds = Math.floor((milliSeconds / 1000) % 60);
+//   const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
+//   const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
+
+//   const formatingTime = [
+//     hours.toString().padStart(2, "0"),
+//     minutes.toString().padStart(2, "0"),
+//     // seconds.toString().padStart(2, "0"),
+//   ].join(":");
+//   setNewTime(formatingTime);
+//   console.log("formating", newtime);
+//   console.log("jhvashdvhjvdhvsdhj", formatingTime);
+// }
+
+// function getFormating(formatingTime) {
+//   if (isNaN(formatingTime)) {
+//     return 0;
+//   }
+//   return formatingTime;
+// }
+
+// formatingTime.replace(NaN, "0");y
+
+// if (attendance?.CheckOut === "") {
+//   {
+//     formatingTime;
+//   }
+// } else {
+//   ("00.00");
+// }
+
+// console.log("Formating time is here :", formatingTime);
+
+// console.log("Time Difference is here", timeDifference);
+//-------------------------------------------- Attendance Break---------------------------------------------------------------
+// const onFinish = (values) => {
+//   console.log('Success:', values);
+// };
+// const onFinishFailed = (errorInfo) => {
+//   console.log('Failed:', errorInfo);
+// };
