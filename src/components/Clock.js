@@ -23,7 +23,7 @@ const Clock = () => {
   let newTime = new Date().toLocaleTimeString();
   const [ctime, setCTime] = useState(newTime);
   const [eod, setEod] = useState([]);
-  console.log("EOD WORKDONE", eod);
+  // console.log("EOD WORKDONE", eod);
   const [timespend, setTimespend] = useState([]);
 
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
