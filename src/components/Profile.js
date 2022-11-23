@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import moment from "moment"
 import {
   Form,
   Input,
@@ -26,7 +27,7 @@ const Profile = () => {
   // const [form] = Form.useForm();
   const [joiningDate, setJoiningDate] = useState();
   // const[joiningDate,setJoiningdate]=useState()
-  const [isEditing, setIsEditing] = useState(false);
+  // const [isEditing, setIsEditing] = useState(false);
   const [fatherName, setFatherName] = useState();
   const [motherName, setMotherName] = useState();
   const [bloodGroup, setBloodGroup] = useState();
@@ -54,6 +55,17 @@ const Profile = () => {
         setViewingEmployee(res?.data?.myData);
         console.log(res?.data?.myData?.fatherName,"fathername")
         setFatherName(res?.data?.myData?.fatherName);
+        setMotherName(res?.data?.myData?.motherName);
+        setBloodGroup(res?.data?.myData?.bloodGroup);
+        setContactNumber(res?.data?.myData?.contactNumber);
+        setPermanentAddress(res?.data?.myData?.permanentAddress);
+        setAdharNumber(res?.data?.myData?.adharNumber);
+        setPanNumber(res?.data?.myData?.panNumber);
+        setSalary(res?.data?.myData?.salary);
+        setAppraisal(res?.data?.myData?.appraisal);
+        
+        
+        
         console.log(fatherName,"dgfjsghgh")
         
         // console.log(viewingEmployee, "viewingEmployee");
@@ -67,8 +79,7 @@ const Profile = () => {
     //  form.resetFields();
     // e.preventDefault();
     console.log("hello");
-    axios
-      .put(`${process.env.REACT_APP_BASE_URL}/user/${id}`, {
+    axios.put(`${process.env.REACT_APP_BASE_URL}/user/${id}`, {
         fatherName,
         motherName,
         joiningDate,
@@ -90,7 +101,6 @@ const Profile = () => {
     console.log("Failed:", errorInfo);
   };
   
-
   return (
     <>
       <Card title="General Information" bordered={false} style={{ width: 300 }}>
@@ -148,9 +158,10 @@ const Profile = () => {
               />
             </Form.Item>
             <Form.Item
+            
               label="Father Name"
               // id="setFatherName"
-              name="setFatherName"
+              // name="setFatherName"
               // name="dadyy"
               rules={[
                 {
@@ -169,13 +180,13 @@ const Profile = () => {
             >
               <Input
                 placeholder="Type Your Name"
-                // value={fatherName}
-                // value={fatherName?.fatherName}
                 value={fatherName}
+                // value={fatherName?.fatherName}
+                // value={fatherName}
                 // value="prince"
                 // value={viewingEmployee?.fatherName}
                 onChange={(e) => {
-                  setFatherName(() => {
+                  setFatherName((pre) => {
                     console.log("Father Name  " + e.target.value);
                     return e.target.value;
                   });
@@ -184,7 +195,7 @@ const Profile = () => {
             </Form.Item>
             <Form.Item
               label="Mother Name"
-              name="setmotherName"
+              // name="setmotherName"
               rules={[
                 {
                   required: true,
@@ -213,7 +224,7 @@ const Profile = () => {
             </Form.Item>
             <Form.Item
              label="Blood Group"
-             name="setBloodGroup"
+            //  name="setBloodGroup"
                           rules={[{
                            required:true,
                            message:"Select a option "
@@ -223,6 +234,7 @@ const Profile = () => {
                 // defaultValue={{
                 //   value: "Select",
                 // }}
+                value={bloodGroup}
                 onChange={SelectOne}
               >
                 <Option value="A+">A+</Option>
@@ -237,7 +249,7 @@ const Profile = () => {
             </Form.Item>
             <Form.Item
               label="Emergency Contact Number"
-              name="setContactNumber"
+              // name="setContactNumber"
               rules={[
                 {
                   // type:"number",
@@ -261,6 +273,7 @@ const Profile = () => {
                 placeholder="Type your Contact number"
                 //  min={0}
                 //  style={{width:'100%'}}
+                value={contactNumber}
                 onChange={(e) => {
                   setContactNumber(() => {
                     console.log("Contact Number " + e.target.value);
@@ -273,7 +286,7 @@ const Profile = () => {
           <Col span={12} style={{ padding: "10px 10px" }}>
             <Form.Item
               label="Permanent Address"
-              name="setPermanentAddress"
+              // name="setPermanentAddress"
               rules={[
                 {
                   required: true,
@@ -294,7 +307,7 @@ const Profile = () => {
             </Form.Item>
             <Form.Item
               label="Aadhar card Number"
-              name="setAdharNumber"
+              // name="setAdharNumber"
               rules={[
                 {
                   required: true,
@@ -324,7 +337,7 @@ const Profile = () => {
             </Form.Item>
             <Form.Item
               label="PAN card Number"
-              name="setPanNumber"
+              // name="setPanNumber"
               rules={[
                 {
                   required: true,
@@ -351,7 +364,7 @@ const Profile = () => {
             </Form.Item>
             <Form.Item
               label="Current Salary"
-              name="setSalary"
+              // name="setSalary"
               rules={[
                 {
                   required: true,
@@ -387,6 +400,7 @@ const Profile = () => {
             ]}>
               <DatePicker
                 dateFormat="dd/MM/yyyy"
+                value={appraisal}
                 onChange={(date) => {
                   const d = new Date(date).toLocaleDateString("fr-FR");
                   console.log(d);

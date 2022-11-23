@@ -1,6 +1,7 @@
 import { Calendar, Badge } from "antd";
 import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
+import jwt_decode from 'jwt-decode';
 
 
 
@@ -20,22 +21,24 @@ const LeaveCalendar = () => {
 
 
   useEffect(() => {
-    const AllLeaveData = () => {
+    const employeeleavedata = () => {
 
-      fetch(`${process.env.REACT_APP_BASE_URL}/leave`)
+      const token = localStorage.getItem("access_token1");
+      var decoded = jwt_decode(token);
+      console.log("decoded", decoded._id)
+
+      fetch(`${process.env.REACT_APP_BASE_URL}/leave/${decoded._id}`)
         .then((response) => {
           return response.json();
         })
         .then((data) => {
-          if (data?.leaveData?.length > 0) {
-            setEmployeeLeaves(data?.leaveData);
-            console.log("no need to wait for data")
-            console.log("employeeLeaves", data?.leaveData)
+          if (data?.leaveByEmpID?.length > 0) {
+            setEmployeeLeaves(data?.leaveByEmpID);
+            console.log("employeeLeaves", data?.leaveByEmpID)
 
           }
 
-
-          for (let i = 0; i < data?.leaveData?.length; i++) {
+          for (let i = 0; i < data?.leaveByEmpID?.length; i++) {
             // console.log("leaves", data?.leaveData?.length)
             // console.log("leaves", data?.leaveData)
             // console.log("leaves", data?.leaveData[i])
@@ -58,23 +61,23 @@ const LeaveCalendar = () => {
                   ("0" + (MyDate.getMonth() + 1)).slice(-2) +
                   "-" +
                   ("0" + MyDate.getDate()).slice(-2);
-                dates.push({ "leavedatelist": MyDateString, "EmployeeName": data?.leaveData[i].EmployeeName, "_id": data?.leaveData[i]._id })
+                dates.push({ "leavedatelist": MyDateString, "EmployeeName": data?.leaveByEmpID[i].EmployeeName, "_id": data?.leaveByEmpID[i]._id })
                 currentDate = addDays.call(currentDate, 1)
               }
               return dates
             }
-            const dates = getDates(new Date(data?.leaveData[i]?.LeaveDate), new Date(data?.leaveData[i]?.ReturnDate))
-            // console.log("LeaveDate", LeavesDate?.leaveData[i]?.LeaveDate)
+            const dates = getDates(new Date(data?.leaveByEmpID[i]?.LeaveDate), new Date(data?.leaveByEmpID[i]?.ReturnDate))
 
+            console.log("LeaveDate", data?.leaveByEmpID[i]?.LeaveDate)
             dates.forEach(function (date) {
             })
-            data.leaveData[i].leaveDatesinRange = dates
+            data.leaveByEmpID[i].leaveDatesinRange = dates
           }
 
         });
 
     };
-    AllLeaveData();
+    employeeleavedata();
 
   }, []);
 
@@ -97,8 +100,7 @@ const LeaveCalendar = () => {
     }
     console.log("arrr", arr)
 
-    // for (let d = 0; d < employeeLeaves?.length; d++) {
-    // console.log("employeeLeavessdgv", employeeLeaves[d])
+
     var newArray = arr.filter(function (el) {
       // console.log("employeeLeavessdgv", employeeLeaves[d]?.leaveDatesinRange)
       return el.leavedatelist === stringValue
@@ -108,9 +110,8 @@ const LeaveCalendar = () => {
 
     }
     )
-
     // console.log("newArray", newArray)
-    // }
+   
 
 
 

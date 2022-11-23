@@ -334,6 +334,7 @@ const Clock = () => {
 
     setShow(!show);
   };
+  //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
   const handleTime = () => {
     newTime = new Date().toLocaleTimeString();
