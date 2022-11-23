@@ -3,6 +3,7 @@ import DashboardCards from '../components/DashboardCards';
 import { useState, useEffect } from "react";
 import jwt_decode from 'jwt-decode';
 import Error from '../components/Error';
+import LeaveCards from '../components/LeaveCards';
 
 
 
@@ -39,7 +40,8 @@ const Dashboard = () => {
   }
   if (name.role === "employee") {
     return (
-      <Error />
+      <LeaveCards />
+      
     )
 
   }
