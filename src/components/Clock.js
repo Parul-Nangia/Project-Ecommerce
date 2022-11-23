@@ -22,10 +22,10 @@ const Clock = () => {
   const [attendanceAll, setAttendanceAll] = useState([]);
   let newTime = new Date().toLocaleTimeString();
   const [ctime, setCTime] = useState(newTime);
-  const [iseod, setIsEod] = useState("");
+  const [eod, setEod] = useState("");
   // console.log("hiiiiiiiii", eod);
 
-  const [istimespent, setIsTimespent] = useState("");
+  const [timespent, setTimespent] = useState("");
 
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,6 +36,7 @@ const Clock = () => {
   const [objects, setObjects] = useState({});
   const [show, setShow] = useState();
   const { TextArea } = Input;
+  const [inputarr, setInputArr] = useState([]);
 
   //-------------------------------------------- Clock---------------------------------------------------------------
 
@@ -267,15 +268,16 @@ const Clock = () => {
       // console.log("Attendance id for CheckOut", ID);
 
       const eodArr = {
-        eod: iseod,
-        timespent: istimespent,
+        eod: eod,
+        timespent: timespent,
       };
       console.log("eodArr", eodArr);
       // attendance?.eodoftheday.push({EOD:eodArr.eod});
       console.log("eod work", eodArr.eod);
       attendance?.eodoftheday.push({
-        EOD: eodArr.eod,
-        TimeSpent: eodArr.timespent,
+        eodArr,
+        // EOD: eodArr.eod,
+        // TimeSpent: eodArr.timespent,
       });
 
       await axios
@@ -343,6 +345,11 @@ const Clock = () => {
   const onFinish = (value) => {
     console.log("Received values of form:", value);
   };
+
+  function handleAdd() {
+    setInputArr([...inputarr, { eod, timespent }]);
+    console.log("hsavshvdjsj", inputarr);
+  }
 
   const menu = (
     <Menu style={{ overflowY: "scroll", height: "100px", marginTop: "-5px" }}>
@@ -434,7 +441,7 @@ const Clock = () => {
                     >
                       <Input
                         onChange={(e) => {
-                          setIsEod(e.target.value);
+                          setEod(e.target.value);
                         }}
                         placeholder="EOD"
                       />
@@ -451,7 +458,7 @@ const Clock = () => {
                     >
                       <Input
                         onChange={(e) => {
-                          setIsTimespent(e.target.value);
+                          setTimespent(e.target.value);
                         }}
                         placeholder="Time spent"
                       />
@@ -460,6 +467,7 @@ const Clock = () => {
                   </Space>
                 ))}
                 <Form.Item>
+                  {/* <Button onClick={handleAdd}>Add</Button> */}
                   <Button
                     type="dashed"
                     onClick={() => add()}
@@ -473,7 +481,12 @@ const Clock = () => {
             )}
           </Form.List>
           <Form.Item>
-            <Button type="primary" htmlType="submit" onClick={handleOk}>
+            <Button
+              style={{ display: "flex", marginLeft: "43%" }}
+              type="primary"
+              htmlType="submit"
+              onClick={handleOk}
+            >
               Submit
             </Button>
           </Form.Item>
