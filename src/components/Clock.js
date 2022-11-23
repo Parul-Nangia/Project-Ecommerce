@@ -32,7 +32,6 @@ const Clock = () => {
 
   const [istimespent, setIsTimespent] = useState("");
 
-
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTimer, setIsTimer] = useState(false);
@@ -338,6 +337,7 @@ const Clock = () => {
 
     setShow(!show);
   };
+  //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
   const handleTime = () => {
     newTime = new Date().toLocaleTimeString();
