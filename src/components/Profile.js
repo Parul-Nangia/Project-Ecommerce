@@ -1,23 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import moment from "moment"
-import {
-  Form,
-  Input,
-  DatePicker,
-  Select,
-  Card,
-  Row,
-  Col,
-  Button,
-} from "antd";
+import { Form,Input,DatePicker,Select,Card,Row,Col,Button,} from "antd";
 import axios from "axios";
 import TextArea from "antd/lib/input/TextArea";
 // import { max } from "date-fns";
 const { Option } = Select;
 // const { Content } = Layout;
 
-const Profile = () => {
+const Profile = (props) => {
   const params = useParams();
   //  console.log(params.id, "params");
   const [id] = useState(params.id);
@@ -41,9 +32,7 @@ const Profile = () => {
 
   useEffect(() => {
     console.log(id, "userid");
-    viewEmployee(id)
-
-;
+    viewEmployee(id);
   }, []);
 
   const viewEmployee = async (id) => {
@@ -100,9 +89,15 @@ const Profile = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-  
+  const data =()=>{
+    console.log(props,"sssssssss")
+    // console.log(myData,"ffffffffffff")
+    // console.log(data,"kkkkkkkkkk")
+    console.log(props.data,"lllllllllllll")
+  }
   return (
     <>
+    <h2> {props.data} </h2>
       <Card title="General Information" bordered={false} style={{ width: 300 }}>
         <p>Name: {viewingEmployee?.name}</p>{" "}
         <p>Email: {viewingEmployee?.email}</p>
@@ -161,7 +156,7 @@ const Profile = () => {
             
               label="Father Name"
               // id="setFatherName"
-              // name="setFatherName"
+              name="setFatherName"
               // name="dadyy"
               rules={[
                 {
@@ -180,15 +175,15 @@ const Profile = () => {
             >
               <Input
                 placeholder="Type Your Name"
-                value={fatherName}
-                // value={fatherName?.fatherName}
+                // value={fatherName}
+                value={fatherName?.setFatherName}
                 // value={fatherName}
                 // value="prince"
                 // value={viewingEmployee?.fatherName}
                 onChange={(e) => {
                   setFatherName((pre) => {
                     console.log("Father Name  " + e.target.value);
-                    return e.target.value;
+                    return {...pre,fatherName:e.target.value}
                   });
                 }}
               ></Input>
@@ -415,6 +410,10 @@ const Profile = () => {
             <Button type="primary" htmlType="submit">
               submit
             </Button>
+            <Button onClick={data}>
+              showData
+            </Button>
+
           </Row>
         </Form.Item>
       </Form>
@@ -423,3 +422,4 @@ const Profile = () => {
 };
 
 export default Profile;
+

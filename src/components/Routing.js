@@ -30,6 +30,7 @@ const Routing = () => {
         <Route path="/leavecalendar" element={<LeaveCalendar />} />
 
         <Route path="/profile/:id" element={<Profile />} />
+        
 
         <Route path="/documentation/:id" element={<Documentation />} />
       </Routes>
