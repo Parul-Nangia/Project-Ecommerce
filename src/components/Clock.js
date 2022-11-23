@@ -23,7 +23,7 @@ const Clock = () => {
   let newTime = new Date().toLocaleTimeString();
   const [ctime, setCTime] = useState(newTime);
   const [eod, setEod] = useState([]);
-  console.log("EOD WORKDONE", eod);
+  // console.log("EOD WORKDONE", eod);
   const [timespend, setTimespend] = useState([]);
 
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
@@ -310,6 +310,7 @@ const Clock = () => {
 
     setShow(!show);
   };
+  //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
   // const employeeEOD = async () => {
   //   if (attendance?.CheckOut === "") {
@@ -417,7 +418,6 @@ const Clock = () => {
   // console.log("Formating time is here :", formatingTime);
 
   // console.log("Time Difference is here", timeDifference);
-  //-------------------------------------------- Attendance Break---------------------------------------------------------------
   // const onFinish = (values) => {
   //   console.log('Success:', values);
   // };
@@ -456,7 +456,7 @@ const Clock = () => {
   const onFinish = (value) => {
     console.log("Received values of form:", value);
   };
-
+ 
   const menu = (
     <Menu style={{ overflowY: "scroll", height: "100px", marginTop: "-5px" }}>
       <Menu.Item>15 min </Menu.Item>
