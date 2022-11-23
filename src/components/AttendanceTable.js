@@ -1,4 +1,8 @@
-import { SearchOutlined } from "@ant-design/icons";
+import {
+  MinusCircleTwoTone,
+  PlusCircleTwoTone,
+  SearchOutlined,
+} from "@ant-design/icons";
 import { Button, Input, Space, Table, DatePicker, Form } from "antd";
 import React, { useState, useEffect } from "react";
 import Highlighter from "react-highlight-words";
@@ -7,10 +11,12 @@ import moment from "moment";
 
 const AttendanceTable = () => {
   const [dataSource, setDataSource] = useState([]);
-
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
-  // const [expended, setExpended] = useState();
+  // const [expandedKey, setExpandedKey] = useState(null);
+
+  // const onExpand = (_, { key }) =>
+  //   expandedKey === key ? setExpandedKey(null) : setExpandedKey(key);
 
   useEffect(() => {
     getAllData();
@@ -23,9 +29,6 @@ const AttendanceTable = () => {
         console.log("Attendance All Data", res);
       });
   };
-  // const expend = (index) => {
-  //   setExpended(index);
-  // };
 
   const expandedRowRender = (row) => {
     const columns = [
@@ -49,18 +52,18 @@ const AttendanceTable = () => {
     ];
 
     const breaks = [];
-    console.log(row, "expandedRowRender");
+    // console.log(row, "expandedRowRender");
 
     for (let i = 0; i < row.Breaks.length; i++) {
       const start = moment(row.Breaks[i]?.start, "HH:mm:ss a");
-      console.log("starttime", start);
+      // console.log("starttime", start);
       const end = moment(row.Breaks[i]?.end, "HH:mm:ss a");
-      console.log("endtime", end);
+      // console.log("endtime", end);
       const milliSeconds = moment.duration(end.diff(start));
       const seconds = Math.floor((milliSeconds / 1000) % 60);
       const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
       const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
-      console.log("mill", milliSeconds);
+      // console.log("mill", milliSeconds);
 
       const formattedTime = [
         hours.toString().padStart(2, "0"),
@@ -68,15 +71,17 @@ const AttendanceTable = () => {
         seconds.toString().padStart(2, "0"),
       ].join(":");
 
-      console.log("formattime", formattedTime);
-      const timeconsume = formattedTime;
+      // console.log("formattime", formattedTime);
+      // const timeconsume = formattedTime;
 
       breaks.push({
+        key: i,
         Breakstarttime: row.Breaks[i]?.start,
         Breakendtime: row.Breaks[i]?.end,
         timeconsume: formattedTime,
       });
-      console.log("timeconsume", formattedTime);
+
+      // console.log("timeconsume", formattedTime);
       console.log("data break", breaks);
     }
 
@@ -329,11 +334,27 @@ const AttendanceTable = () => {
     <>
       <Table
         columns={columns}
+        dataSource={dataSource}
         expandable={{
           expandedRowRender,
-          defaultExpandedRowKeys: ["0"],
+          defaultExpandAllRows: false,
+          defaultExpandedRowKeys: [""],
+          expandIcon: ({ expanded, onExpand, row }) => {
+            return expanded ? (
+              <MinusCircleTwoTone
+                onClick={(e) => {
+                  onExpand(row, e);
+                }}
+              />
+            ) : (
+              <PlusCircleTwoTone
+                onClick={(e) => {
+                  onExpand(row, e);
+                }}
+              />
+            );
+          },
         }}
-        dataSource={dataSource}
       />
     </>
   );

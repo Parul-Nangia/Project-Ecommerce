@@ -32,7 +32,6 @@ const Clock = () => {
 
   const [istimespent, setIsTimespent] = useState("");
 
-
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTimer, setIsTimer] = useState(false);
