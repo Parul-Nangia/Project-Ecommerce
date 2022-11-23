@@ -116,13 +116,15 @@ const LeaveCalendar = () => {
 
     return (
       <>
-        <ul className="events">
-          {newArray.map((item) => (
-            <li key={item._id}>
-              <Badge status={"success"} text={item.EmployeeName} />
-            </li>
-          ))}
-        </ul>
+       
+      {/* <ul className="events"> */}
+        {newArray.map((item) => (
+          <li key={item._id}>
+            <Badge status="error" text={item.EmployeeName} />
+          </li>
+        ))}
+      {/* </ul> */}
+    
       </>
     )
 
