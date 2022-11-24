@@ -2,18 +2,23 @@ import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Menu, Space } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import {
-  LoginOutlined,
-  SettingTwoTone,
-  InfoCircleTwoTone,
-} from "@ant-design/icons";
-
 import jwt_decode from "jwt-decode";
 
 const Drop = () => {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
+  
+  const EmployeeProfile = (e) => {
+    e.preventDefault();
+    navigate("/employeeprofile");
+  };
+
+  const employeepassword = (e) => {
+    e.preventDefault();
+    navigate("/changepassword");
+    // <Button type="primary">Change Password</Button>
+   
+  };
 
   const logout = (e) => {
     e.preventDefault();
@@ -31,46 +36,40 @@ const Drop = () => {
   const userData = (_id) => {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token);
-    // let token = token;
     var decoded = jwt_decode(token);
     console.log("Decoded token data", decoded);
     setName(decoded);
-
-    // fetch(`http://localhost:1999/user/${_id}`).then((response) => {
-    //   return response.json();
-    // }).then((data) => {
-    //   let user = data.userData
-    //   setState(user);
-
-    //   console.log("user Api response data", user);
-
-    // })
-  };
-
-  const handleOpenChange = (flag) => {
-    setOpen(flag);
   };
 
   const menu = (
     <Menu
       style={{ marginTop: "-25px" }}
-      onClick={({ key }) => {
-        if (key === "demo") {
-        } else {
-          navigate(key);
-        }
-      }}
       items={[
         {
+          key: "0",
           label: (
-            <nav className="sb-topnav">
-              <LoginOutlined />
-
-              <Link className="drop-down" onClick={logout}>
-                {" "}
-                Logout
-              </Link>
-            </nav>
+            <Link className="drop-down" onClick={EmployeeProfile}>
+              {" "}
+              Profile
+            </Link>
+          ),
+        },
+        {
+          key: "1",
+          label: (
+            <Link className="drop-down" onClick={employeepassword} >
+              {" "}
+             ChangePassword
+            </Link>
+          ),
+        },
+        {
+          key: "2",
+          label: (
+            <Link className="drop-down" onClick={logout}>
+              {" "}
+              Logout
+            </Link>
           ),
         },
       ]}
@@ -78,18 +77,24 @@ const Drop = () => {
   );
 
   return (
-    <Dropdown overlay={menu} onOpenChange={handleOpenChange} open={open}>
-      <a href onClick={(e) => e.preventDefault()}>
-        <Space style={{ color: "White", float: "right" }}>
-          <h3 style={{ color: "white", fontStyle: "normal" }}>
-            Hii {name.name}
-          </h3>
-          <DownOutlined />
-        </Space>
-      </a>
-    </Dropdown>
+   <>
+    
+      <h3 style={{ color: "white", fontStyle: "normal" }}>Hii {name.name}</h3>
+      <Dropdown overlay={menu} trigger={["click"]}>
+        <a onClick={(e) => e.preventDefault()}>
+          <Space>
+            <DownOutlined />
+          </Space>
+        </a>
+      </Dropdown>
+    </>
   );
 };
 
 export const selectUser = (state) => state.user.user;
+
 export default Drop;
+
+// <h3 style={{ color: "white", fontStyle: "normal" }}>
+// Hii {name.name}
+// </h3>

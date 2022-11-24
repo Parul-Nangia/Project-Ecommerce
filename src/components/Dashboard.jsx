@@ -33,8 +33,11 @@ const Dashboard = () => {
   if (name.role === "admin") {
     console.log("my role is ", name.role)
     return (
+      <>
 
       <DashboardCards />
+     
+      </>
     )
   }
   if (name.role === "employee") {
@@ -57,6 +60,8 @@ const Dashboard = () => {
     <>
 
       <DashboardCards />
+      
+     
     </>
 
   )

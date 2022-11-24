@@ -16,11 +16,13 @@ const AttendanceTable = () => {
   // const [expandedKey, setExpandedKey] = useState(null);
 
   // const onExpand = (_, { key }) =>
-  //   expandedKey === key ? setExpandedKey(null) : setExpandedKey(key);
+  //   expandedKey === key ? setExpandedKey(null) : setExpandedKey(key)
+;
 
   useEffect(() => {
     getAllData();
   }, []);
+  
   const getAllData = async () => {
     await axios
       .get(`${process.env.REACT_APP_BASE_URL}/attendance`)
