@@ -27,8 +27,13 @@ const Routing = () => {
         <Route path="/leaveform" element={<LeaveForm />} />
         <Route path="/leavecalendar" element={<LeaveCalendar />} />
         <Route path="/profile/:id" element={<Profile />} />
+
         <Route path="/employeeprofile" element={<EmployeeProfile />} />
         <Route path="/changepassword" element={<ChangePassword />} />
+
+        
+
+
         <Route path="/documentation/:id" element={<Documentation />} />
       </Routes>
     </>
