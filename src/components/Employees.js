@@ -17,6 +17,7 @@ import {
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import Profile from "./Profile";
 
 const useStyles = makeStyles({
   frmItem: {
@@ -123,9 +124,12 @@ const Employees = ({ dataSource }) => {
   //   )
 
   // }
-
+  // const data = "Hello Everyone";
   const profile = (record) => {
+    // navigate("/profile/" + record._id ,data={data});
     navigate("/profile/" + record._id );
+    // navigate("/profile/" + record._id, {queryParams: record});
+    // navigate("/profile/",<Profile />)
     console.log(record,"User_iddddd")
   };
 

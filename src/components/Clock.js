@@ -64,6 +64,7 @@ const Clock = () => {
   //-------------------------------------------- Clock---------------------------------------------------------------
 
   //---------------------------------------------Employee Attendance GET by id API----------------------------------------------------------
+
   useEffect(() => {
     const LoggedAttendanceAllRecord = async () => {
       const token = localStorage.getItem("access_token1");
@@ -166,6 +167,17 @@ const Clock = () => {
             console.log("finally total hours", TodayAttendance);
             // }
           }
+
+          // if (res?.data?.attendanceDataByEmpID?.length === 0) {
+          //   console.log("attendance null", res?.data?.attendanceDataByEmpID?.length)
+          // } else if (res?.data?.attendanceDataByEmpID?.CheckIn === "") {
+          //   console.log("CheckIn null")
+          // } else if (res?.data?.attendanceDataByEmpID?.eodoftheday?.length === []) {
+
+          //   attendance?.eodoftheday.push(ar)
+          //   console.log("mystate", res?.data?.attendanceDataByEmpID?.eodoftheday)
+
+          // }
         });
     };
     LoggedAttendanceAllRecord();
@@ -250,6 +262,7 @@ const Clock = () => {
   const employeecheckout = async () => {};
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
+
   const employeebreak = async () => {
     let Breaks = attendance?.Breaks;
     const employ = attendance?._id;
@@ -263,6 +276,7 @@ const Clock = () => {
       console.log("Breaks/endTime", attendance?.Breaks[Breaks.length - 1]?.end);
     } else {
       const obj = {
+        _id: Math.floor(Math.random() * 9785874563463865),
         start: new Date().toLocaleTimeString(),
         end: "",
       };
@@ -325,6 +339,7 @@ const Clock = () => {
       window.alert("you have already Checked-Out");
     }
   };
+  // console.log("mystate", mystate)
 
   return (
     <>
