@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Dropdown, Menu, Space } from "antd";
+import { Button, Dropdown, Menu, Space, Select } from "antd";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import {
@@ -22,6 +22,7 @@ const Clock = () => {
   const [attendanceAll, setAttendanceAll] = useState([]);
   let newTime = new Date().toLocaleTimeString();
   const [ctime, setCTime] = useState(newTime);
+
   const [eod, setEod] = useState("");
   // console.log("hiiiiiiiii", eod);
 
@@ -30,13 +31,8 @@ const Clock = () => {
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTimer, setIsTimer] = useState(false);
-  const [employeeeod, setEmployeeEod] = useState("");
-
-  // console.log("attendance state", attendance[0].CheckIn)
   const [objects, setObjects] = useState({});
   const [show, setShow] = useState();
-  const { TextArea } = Input;
-  const [inputarr, setInputArr] = useState([]);
 
   //-------------------------------------------- Clock---------------------------------------------------------------
 
@@ -50,7 +46,6 @@ const Clock = () => {
 
   const handleOk = () => {
     setIsModalOpen(false);
-    employeecheckout();
   };
 
   const handleCancel = () => {
@@ -69,6 +64,7 @@ const Clock = () => {
   //-------------------------------------------- Clock---------------------------------------------------------------
 
   //---------------------------------------------Employee Attendance GET by id API----------------------------------------------------------
+
   useEffect(() => {
     const LoggedAttendanceAllRecord = async () => {
       const token = localStorage.getItem("access_token1");
@@ -154,22 +150,34 @@ const Clock = () => {
             const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
             const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
 
-            if (minutes === 0 || hours === 0) {
-              console.log("minutes", minutes);
-              console.log("hours", hours);
+            // if (minutes === 0 || hours === 0) {
+            //   console.log("minutes", minutes);
+            //   console.log("hours", hours);
+            //   setTodayAttendance("00:00");
 
-              // console.log("here in minutes", minutes);
-
-              const formatingTime = [
-                hours.toString().padStart(2, "0"),
-                minutes.toString().padStart(2, "0"),
-                // seconds.toString().padStart(2, "0"),
-              ].join(":");
-              setTodayAttendance(formatingTime);
-              console.log("Form", formatingTime);
-              console.log("finally total hours", TodayAttendance);
-            }
+            // console.log("here in minutes", minutes);
+            // } else {
+            const formatingTime = [
+              hours.toString().padStart(2, "0"),
+              minutes.toString().padStart(2, "0"),
+              // seconds.toString().padStart(2, "0"),
+            ].join(":");
+            setTodayAttendance(formatingTime);
+            console.log("Form", formatingTime);
+            console.log("finally total hours", TodayAttendance);
+            // }
           }
+
+          // if (res?.data?.attendanceDataByEmpID?.length === 0) {
+          //   console.log("attendance null", res?.data?.attendanceDataByEmpID?.length)
+          // } else if (res?.data?.attendanceDataByEmpID?.CheckIn === "") {
+          //   console.log("CheckIn null")
+          // } else if (res?.data?.attendanceDataByEmpID?.eodoftheday?.length === []) {
+
+          //   attendance?.eodoftheday.push(ar)
+          //   console.log("mystate", res?.data?.attendanceDataByEmpID?.eodoftheday)
+
+          // }
         });
     };
     LoggedAttendanceAllRecord();
@@ -251,58 +259,14 @@ const Clock = () => {
 
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   // console.log("length of array", attendance?.eodoftheday);
-  const employeecheckout = async () => {
-    console.log("checkout", attendance?.CheckOut);
-
-    if (attendance?.CheckOut === "") {
-      const CheckIn = attendance?.CheckIn;
-      // console.log("i am here attendance checkin spread", CheckIn);
-      const CheckOut = new Date().toLocaleTimeString();
-      const Breaks = attendance?.Breaks;
-      const eodoftheday = attendance?.eodoftheday;
-      console.log("atteod", eodoftheday);
-
-      const ID = attendance?._id;
-      console.log("attendance id in checkout", ID);
-
-      // console.log("Attendance id for CheckOut", ID);
-
-      const eodArr = {
-        eod: eod,
-        timespent: timespent,
-      };
-      console.log("eodArr", eodArr);
-      // attendance?.eodoftheday.push({EOD:eodArr.eod});
-      console.log("eod work", eodArr.eod);
-      attendance?.eodoftheday.push({
-        eodArr,
-        // EOD: eodArr.eod,
-        // TimeSpent: eodArr.timespent,
-      });
-
-      await axios
-        .put(`${process.env.REACT_APP_BASE_URL}/attendance/addon/${ID}`, {
-          CheckIn,
-          CheckOut,
-          Breaks,
-          eodoftheday,
-        })
-        .then((res) => {
-          setEmployeeCheckOut(res?.data?.updatedAttendance);
-          setDisableCheckout(true);
-          window.location.reload();
-        });
-      // console.log("Today CheckOut Data", EmployeeCheckOut);
-    } else {
-      window.alert("you have already Checked-Out");
-    }
-  };
+  const employeecheckout = async () => {};
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
+
   const employeebreak = async () => {
     let Breaks = attendance?.Breaks;
     const employ = attendance?._id;
-    const eodoftheday = [];
+    var eodoftheday = [];
     console.log("attendance id in break", attendance?._id);
     const CheckIn = attendance?.CheckIn;
     const CheckOut = "";
@@ -312,6 +276,7 @@ const Clock = () => {
       console.log("Breaks/endTime", attendance?.Breaks[Breaks.length - 1]?.end);
     } else {
       const obj = {
+        _id: Math.floor(Math.random() * 9785874563463865),
         start: new Date().toLocaleTimeString(),
         end: "",
       };
@@ -343,36 +308,39 @@ const Clock = () => {
 
   setInterval(handleTime, 1000);
 
-  const onFinish = (value) => {
+  const onFinish = async (value) => {
     console.log("Received values of form:", value);
+    console.log("checkout", attendance?.CheckOut);
+
+    if (attendance?.CheckOut === "") {
+      const CheckIn = attendance?.CheckIn;
+      // console.log("i am here attendance checkin spread", CheckIn);
+      const CheckOut = new Date().toLocaleTimeString();
+      const Breaks = attendance?.Breaks;
+      const eodoftheday = value.users;
+      console.log("eodoftheday", eodoftheday);
+
+      const ID = attendance?._id;
+      console.log("attendance id in checkout", ID);
+
+      await axios
+        .put(`${process.env.REACT_APP_BASE_URL}/attendance/addon/${ID}`, {
+          CheckIn,
+          CheckOut,
+          Breaks,
+          eodoftheday,
+        })
+        .then((res) => {
+          setEmployeeCheckOut(res?.data?.updatedAttendance);
+          setDisableCheckout(true);
+          window.location.reload();
+        });
+    } else {
+      window.alert("you have already Checked-Out");
+    }
   };
+  // console.log("mystate", mystate)
 
-  function handleAdd() {
-    setInputArr([...inputarr, { eod, timespent }]);
-    console.log("hsavshvdjsj", inputarr);
-  }
-
-  const menu = (
-    <Menu style={{ overflowY: "scroll", height: "100px", marginTop: "-5px" }}>
-      <Menu.Item>15 min </Menu.Item>
-      <Menu.Item>30 min</Menu.Item>
-      <Menu.Item>1 hour</Menu.Item>
-      <Menu.Item>1:30 hour</Menu.Item>
-      <Menu.Item>2:00 hour</Menu.Item>
-      <Menu.Item>2:30 hour</Menu.Item>
-      <Menu.Item>3:00 hour </Menu.Item>
-      <Menu.Item>3:30 hour</Menu.Item>
-      <Menu.Item>4:00 hour </Menu.Item>
-      <Menu.Item>4:30 hour</Menu.Item>
-      <Menu.Item>5:00 hour </Menu.Item>
-      <Menu.Item>5:30 hour</Menu.Item>
-      <Menu.Item>6:00 hour </Menu.Item>
-      <Menu.Item>6:30 hour</Menu.Item>
-      <Menu.Item>7:00 hour </Menu.Item>
-      <Menu.Item>7:30 hour</Menu.Item>
-      <Menu.Item>8:00 hour </Menu.Item>
-    </Menu>
-  );
   return (
     <>
       <div>
@@ -405,6 +373,7 @@ const Clock = () => {
           </Row>
         </span>
       </div>
+
       <br />
 
       <Modal
@@ -431,6 +400,7 @@ const Clock = () => {
                     align="baseline"
                   >
                     <Form.Item
+                      style={{ width: "160%" }}
                       {...restField}
                       name={[name, "eod"]}
                       rules={[
@@ -448,6 +418,7 @@ const Clock = () => {
                       />
                     </Form.Item>
                     <Form.Item
+                      style={{ marginLeft: "160px" }}
                       {...restField}
                       name={[name, "time spent"]}
                       rules={[
@@ -457,25 +428,86 @@ const Clock = () => {
                         },
                       ]}
                     >
-                      <Input
+                      <Select
+                        style={{
+                          display: "flex",
+                          width: "100px",
+                        }}
                         onChange={(e) => {
                           setTimespent(e.target.value);
                         }}
-                        placeholder="Time spent"
+                        placeholder="Time"
+                        options={[
+                          {
+                            value: "10 min",
+                            label: "10 MIN",
+                          },
+                          {
+                            value: "20 min",
+                            label: "20 MIN",
+                          },
+                          {
+                            value: "disable",
+                            disabled: true,
+                            label: "30 MIN",
+                          },
+                          {
+                            value: "40 min",
+                            label: "40 MIN",
+                          },
+                          {
+                            value: "50 min",
+                            label: "50 MIN",
+                          },
+                          {
+                            value: "1 hour",
+                            label: "1 Hour",
+                          },
+                          {
+                            value: "2 hour",
+
+                            label: "2 Hour",
+                          },
+                          {
+                            value: "3 hour",
+                            label: "3 Hour",
+                          },
+                          {
+                            value: "4 hour",
+                            label: "4 Hour",
+                          },
+                          {
+                            value: "5 hour",
+
+                            label: "5 Hour",
+                          },
+                          {
+                            value: "6 hour",
+                            label: "6 Hour",
+                          },
+                          {
+                            value: "7 hour",
+
+                            label: "7 Hour",
+                          },
+                          {
+                            value: "8 hour",
+                            label: "8 Hour",
+                          },
+                        ]}
                       />
                     </Form.Item>
                     <MinusCircleOutlined onClick={() => remove(name)} />
                   </Space>
                 ))}
                 <Form.Item>
-                  {/* <Button onClick={handleAdd}>Add</Button> */}
                   <Button
                     type="dashed"
                     onClick={() => add()}
                     block
                     icon={<PlusOutlined />}
                   >
-                    Add field
+                    Add Your Work
                   </Button>
                 </Form.Item>
               </>
