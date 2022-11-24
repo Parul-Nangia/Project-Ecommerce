@@ -22,6 +22,9 @@ const Clock = () => {
   const [attendanceAll, setAttendanceAll] = useState([]);
   let newTime = new Date().toLocaleTimeString();
   const [ctime, setCTime] = useState(newTime);
+  const [mystate, setmyState] = useState([]);
+  // console.log("mystate", mystate)
+
   const [eod, setEod] = useState("");
   // console.log("hiiiiiiiii", eod);
 
@@ -69,6 +72,7 @@ const Clock = () => {
   //-------------------------------------------- Clock---------------------------------------------------------------
 
   //---------------------------------------------Employee Attendance GET by id API----------------------------------------------------------
+
   useEffect(() => {
     const LoggedAttendanceAllRecord = async () => {
       const token = localStorage.getItem("access_token1");
@@ -170,10 +174,22 @@ const Clock = () => {
               console.log("finally total hours", TodayAttendance);
             }
           }
+
+          // if (res?.data?.attendanceDataByEmpID?.length === 0) {
+          //   console.log("attendance null", res?.data?.attendanceDataByEmpID?.length)
+          // } else if (res?.data?.attendanceDataByEmpID?.CheckIn === "") {
+          //   console.log("CheckIn null")
+          // } else if (res?.data?.attendanceDataByEmpID?.eodoftheday?.length === []) {
+
+          //   attendance?.eodoftheday.push(ar)
+          //   console.log("mystate", res?.data?.attendanceDataByEmpID?.eodoftheday)
+
+          // }
         });
     };
     LoggedAttendanceAllRecord();
     console.log("Today Attendance Data", attendance);
+
   }, []);
   //---------------------------------------------Employee Attendance GET by id API----------------------------------------------------------
 
@@ -259,26 +275,26 @@ const Clock = () => {
       // console.log("i am here attendance checkin spread", CheckIn);
       const CheckOut = new Date().toLocaleTimeString();
       const Breaks = attendance?.Breaks;
-      const eodoftheday = attendance?.eodoftheday;
-      console.log("atteod", eodoftheday);
+      const eodoftheday = [];
+      console.log("eodoftheday", eodoftheday);
 
       const ID = attendance?._id;
       console.log("attendance id in checkout", ID);
 
       // console.log("Attendance id for CheckOut", ID);
 
-      const eodArr = {
-        eod: eod,
-        timespent: timespent,
-      };
-      console.log("eodArr", eodArr);
-      // attendance?.eodoftheday.push({EOD:eodArr.eod});
-      console.log("eod work", eodArr.eod);
-      attendance?.eodoftheday.push({
-        eodArr,
-        // EOD: eodArr.eod,
-        // TimeSpent: eodArr.timespent,
-      });
+      // const eodArr = {
+      //   eod: eod,
+      //   timespent: timespent,
+      // };
+      // console.log("eodArr", eodArr);
+      // // attendance?.eodoftheday.push({EOD:eodArr.eod});
+      // console.log("eod work", eodArr.eod);
+      // attendance?.eodoftheday.push({
+      //   eodArr,
+      //   // EOD: eodArr.eod,
+      //   // TimeSpent: eodArr.timespent,
+      // });
 
       await axios
         .put(`${process.env.REACT_APP_BASE_URL}/attendance/addon/${ID}`, {
@@ -290,7 +306,7 @@ const Clock = () => {
         .then((res) => {
           setEmployeeCheckOut(res?.data?.updatedAttendance);
           setDisableCheckout(true);
-          window.location.reload();
+          // window.location.reload();
         });
       // console.log("Today CheckOut Data", EmployeeCheckOut);
     } else {
@@ -299,10 +315,11 @@ const Clock = () => {
   };
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
+
   const employeebreak = async () => {
     let Breaks = attendance?.Breaks;
     const employ = attendance?._id;
-    const eodoftheday = [];
+    var eodoftheday = [];
     console.log("attendance id in break", attendance?._id);
     const CheckIn = attendance?.CheckIn;
     const CheckOut = "";
@@ -312,6 +329,7 @@ const Clock = () => {
       console.log("Breaks/endTime", attendance?.Breaks[Breaks.length - 1]?.end);
     } else {
       const obj = {
+        _id: Math.floor(Math.random() * 9785874563463865),
         start: new Date().toLocaleTimeString(),
         end: "",
       };
@@ -345,7 +363,11 @@ const Clock = () => {
 
   const onFinish = (value) => {
     console.log("Received values of form:", value);
+    setmyState(value)
+    console.log("mystate", mystate)
+
   };
+  // console.log("mystate", mystate)
 
   function handleAdd() {
     setInputArr([...inputarr, { eod, timespent }]);
@@ -503,7 +525,7 @@ const Clock = () => {
             handleTime();
             employeecheckin();
           }}
-          // disabled={disableCheckin}
+        // disabled={disableCheckin}
         >
           Checkin
         </Button>
@@ -526,7 +548,7 @@ const Clock = () => {
           onClick={() => {
             showModal();
           }}
-          // disabled={disableCheckout}
+        // disabled={disableCheckout}
         >
           Checkout
         </Button>
