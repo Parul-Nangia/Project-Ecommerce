@@ -535,7 +535,7 @@ const Clock = () => {
             handleTime();
             employeecheckin();
           }}
-          // disabled={disableCheckin}
+          disabled={disableCheckin}
         >
           Checkin
         </Button>
@@ -558,7 +558,7 @@ const Clock = () => {
           onClick={() => {
             showModal();
           }}
-          // disabled={disableCheckout}
+          disabled={disableCheckout}
         >
           Checkout
         </Button>
