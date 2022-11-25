@@ -259,7 +259,7 @@ const Clock = () => {
 
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   // console.log("length of array", attendance?.eodoftheday);
-  const employeecheckout = async () => { };
+  const employeecheckout = async () => {};
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
@@ -346,14 +346,16 @@ const Clock = () => {
       <div>
         <span>
           <br />
-          <h3>DATE</h3>
-          {date.toLocaleDateString()}
+          <div style={{ display: "flex" }}>
+            <h1>DATE:</h1>
+
+            <div style={{ marginLeft: "5px" }}>{date.toLocaleDateString()}</div>
+
+            <h1 style={{ marginLeft: "15px" }}>TIME:</h1>
+            <div style={{ marginLeft: "5px" }}>{ctime}</div>
+          </div>
           <br />
-          <br />
-          <h1>TIME</h1>
-          {ctime}
-          <br />
-          <br />
+
           <Row gutter={16}>
             <Col span={8} className="TimeCards">
               <Card title="CheckIn " bordered={false}>
