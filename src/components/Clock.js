@@ -61,10 +61,18 @@ const Clock = () => {
       clearInterval(timerId);
     };
   }, []);
+
+
+  const handleTime = () => {
+    newTime = new Date().toLocaleTimeString();
+    setCTime(newTime);
+  };
+
+  setInterval(handleTime, 1000);
+
   //-------------------------------------------- Clock---------------------------------------------------------------
 
   //---------------------------------------------Employee Attendance GET by id API----------------------------------------------------------
-
   useEffect(() => {
     const LoggedAttendanceAllRecord = async () => {
       const token = localStorage.getItem("access_token1");
@@ -86,9 +94,11 @@ const Clock = () => {
 
           // Check if employee Checked-Out Today
           if (res?.data?.attendanceDataByEmpID.length === 0) {
-            setDisableCheckout(false);
-          } else if (res?.data?.attendanceDataByEmpID[0].CheckOut !== "") {
             setDisableCheckout(true);
+          } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn === "") {
+            setDisableCheckout(true);
+          } else if (res?.data?.attendanceDataByEmpID[0].CheckIn !== "") {
+            setDisableCheckout(false);
           }
 
           // Check if employee Checked-In Today then he can take breaks. Otherwise Break button will remain disabled
@@ -257,10 +267,6 @@ const Clock = () => {
   };
   //-------------------------------------------- Attendance Checkin---------------------------------------------------------------
 
-  //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
-  // console.log("length of array", attendance?.eodoftheday);
-  const employeecheckout = async () => {};
-  //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
   const employeebreak = async () => {
@@ -301,13 +307,7 @@ const Clock = () => {
   };
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
-  const handleTime = () => {
-    newTime = new Date().toLocaleTimeString();
-    setCTime(newTime);
-  };
-
-  setInterval(handleTime, 1000);
-
+  //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   const onFinish = async (value) => {
     console.log("Received values of form:", value);
     console.log("checkout", attendance?.CheckOut);
@@ -339,21 +339,24 @@ const Clock = () => {
       window.alert("you have already Checked-Out");
     }
   };
-  // console.log("mystate", mystate)
+  //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
+
 
   return (
     <>
       <div>
         <span>
           <br />
-          <h3>DATE</h3>
-          {date.toLocaleDateString()}
+          <div style={{ display: "flex" }}>
+            <h1>DATE :</h1>
+
+            <div style={{ marginLeft: "5px" }}>{date.toLocaleDateString()}</div>
+
+            <h1 style={{ marginLeft: "15px" }}>TIME :</h1>
+            <div style={{ marginLeft: "5px" }}>{ctime}</div>
+          </div>
           <br />
-          <br />
-          <h1>TIME</h1>
-          {ctime}
-          <br />
-          <br />
+
           <Row gutter={16}>
             <Col span={8} className="TimeCards">
               <Card title="CheckIn " bordered={false}>
@@ -381,6 +384,7 @@ const Clock = () => {
         open={isModalOpen}
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
+        onCancel={handleCancel}
       >
         <Form
           name="dynamic_form_nest_item"
@@ -447,8 +451,8 @@ const Clock = () => {
                             label: "20 MIN",
                           },
                           {
-                            value: "disable",
-                            disabled: true,
+                            value: "30 min",
+
                             label: "30 MIN",
                           },
                           {
@@ -528,14 +532,13 @@ const Clock = () => {
 
       <div>
         <Button
-          type="primary"
           ghost
           style={{ fontWeight: "bold", background: "#D3D3D3" }}
           onClick={() => {
             handleTime();
             employeecheckin();
           }}
-          // disabled={disableCheckin}
+          disabled={disableCheckin}
         >
           Checkin
         </Button>
@@ -558,7 +561,7 @@ const Clock = () => {
           onClick={() => {
             showModal();
           }}
-          // disabled={disableCheckout}
+          disabled={disableCheckout}
         >
           Checkout
         </Button>
@@ -569,117 +572,3 @@ const Clock = () => {
 };
 
 export default Clock;
-
-// const employeeEOD = async () => {
-//   if (attendance?.CheckOut === "") {
-//     const CheckIn = attendance?.CheckIn;
-//     // console.log("i am here attendance checkin spread", CheckIn);
-//     const CheckOut = new Date().toLocaleTimeString();
-//     const Breaks = attendance?.Breaks;
-//     const ID = attendance?._id;
-//     const eod = "";
-//     const timeSpend = "";
-//     console.log("attendance id in checkout", ID);
-
-//     // console.log("Attendance id for CheckOut", ID);
-
-//     await axios
-//       .put(`${process.env.REACT_APP_BASE_URL}/attendance/addon/${ID}`, {
-//         CheckIn,
-//         CheckOut,
-//         Breaks,
-//         eod,
-//         timespend,
-//       })
-//       .then((res) => {
-//         setEmployeeEod(res?.data?.updatedAttendance);
-//         console.log("jkdsbhsnvnbsdbdc", res);
-//         setDisableCheckout(true);
-//         window.location.reload();
-//       });
-//     console.log("Today EOD data", employeeeod);
-//   } else {
-//     window.alert("you have already Checked-Out");
-//   }
-// };
-// useEffect(() => {
-//   // const timerId = setInterval(refreshClock, 1000);
-//   const timeAttendance = () => {
-//     const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
-//     const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
-//     const timeDifference = moment.duration(attCheckOut.diff(attCheckIn));
-//     // setAttendanceTime(timeDifference?.Duration?._data);
-//     setAttendanceTime(timeDifference?.Duration?.data);
-//     // console.log();
-//     console.log("Time Difference is here", timeDifference);
-//   };
-//   timeAttendance();
-// }, []);
-
-// const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
-// const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
-
-// const milliSeconds = moment.duration(attCheckOut.diff(attCheckIn));
-// // const seconds = Math.floor((milliSeconds / 1000) % 60);
-// const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
-// const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
-
-// const formatingTime = [
-//   hours.toString().padStart(2, "0"),
-//   minutes.toString().padStart(2, "0"),
-//   // seconds.toString().padStart(2, "0"),
-// ].join(":");
-// setNewTime(formatingTime);
-// console.log("jhvashdvhjvdhvsdhj", formatingTime);
-
-// if (
-//   attendance !== [] ||
-//   attendance?.CheckIn !== "" ||
-//   attendance?.CheckOut !== ""
-// ) {
-// } else {
-//   const attCheckIn = moment(attendance?.CheckIn, "HH:mm:ss a");
-//   const attCheckOut = moment(attendance?.CheckOut, "HH:mm:ss a");
-
-//   const milliSeconds = moment.duration(attCheckOut.diff(attCheckIn));
-//   // const seconds = Math.floor((milliSeconds / 1000) % 60);
-//   const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
-//   const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
-
-//   const formatingTime = [
-//     hours.toString().padStart(2, "0"),
-//     minutes.toString().padStart(2, "0"),
-//     // seconds.toString().padStart(2, "0"),
-//   ].join(":");
-//   setNewTime(formatingTime);
-//   console.log("formating", newtime);
-//   console.log("jhvashdvhjvdhvsdhj", formatingTime);
-// }
-
-// function getFormating(formatingTime) {
-//   if (isNaN(formatingTime)) {
-//     return 0;
-//   }
-//   return formatingTime;
-// }
-
-// formatingTime.replace(NaN, "0");y
-
-// if (attendance?.CheckOut === "") {
-//   {
-//     formatingTime;
-//   }
-// } else {
-//   ("00.00");
-// }
-
-// console.log("Formating time is here :", formatingTime);
-
-// console.log("Time Difference is here", timeDifference);
-//-------------------------------------------- Attendance Break---------------------------------------------------------------
-// const onFinish = (values) => {
-//   console.log('Success:', values);
-// };
-// const onFinishFailed = (errorInfo) => {
-//   console.log('Failed:', errorInfo);
-// };
