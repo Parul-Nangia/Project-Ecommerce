@@ -69,8 +69,8 @@ const Leave = (props) => {
 
         <br />
         <h1>{calendarview}</h1>
-        <Button style={{ backgroundColor: "lightgray", color: "gray", fontWeight: "bold" }} onClick={() => setCalendarview(!calendarview)}>Calendar View</Button>
-        <Button style={{ backgroundColor: "lightgray", color: "gray", fontWeight: "bold" }} onClick={() => setCalendarview(!calendarview)}>Table View</Button>
+        <Button style={{ backgroundColor: "lightgray", color: "white", fontWeight: "bold" }} onClick={() => setCalendarview(!calendarview)}>Calendar View</Button>
+        <Button style={{ backgroundColor: "lightgray", color: "white", fontWeight: "bold" }} onClick={() => setCalendarview(!calendarview)}>Table View</Button>
         <br />
         <br />
 
