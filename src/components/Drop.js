@@ -79,7 +79,7 @@ const Drop = () => {
   return (
     <>
 
-      <h3 style={{ color: "white", fontStyle: "normal" }}>Hii {name.name}</h3>
+      <h3 style={{ color: "white", fontStyle: "normal" }}>Hi {name.name}</h3>
       <Dropdown overlay={menu} trigger={["click"]}>
         <a onClick={(e) => e.preventDefault()}>
           <Space>
