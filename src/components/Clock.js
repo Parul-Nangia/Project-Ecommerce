@@ -61,6 +61,15 @@ const Clock = () => {
       clearInterval(timerId);
     };
   }, []);
+
+
+  const handleTime = () => {
+    newTime = new Date().toLocaleTimeString();
+    setCTime(newTime);
+  };
+
+  setInterval(handleTime, 1000);
+
   //-------------------------------------------- Clock---------------------------------------------------------------
 
   //---------------------------------------------Employee Attendance GET by id API----------------------------------------------------------
@@ -86,9 +95,11 @@ const Clock = () => {
 
           // Check if employee Checked-Out Today
           if (res?.data?.attendanceDataByEmpID.length === 0) {
-            setDisableCheckout(false);
-          } else if (res?.data?.attendanceDataByEmpID[0].CheckOut !== "") {
             setDisableCheckout(true);
+          } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn === "") {
+            setDisableCheckout(true);
+          } else if (res?.data?.attendanceDataByEmpID[0].CheckIn !== "") {
+            setDisableCheckout(false);
           }
 
           // Check if employee Checked-In Today then he can take breaks. Otherwise Break button will remain disabled
@@ -257,10 +268,6 @@ const Clock = () => {
   };
   //-------------------------------------------- Attendance Checkin---------------------------------------------------------------
 
-  //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
-  // console.log("length of array", attendance?.eodoftheday);
-  const employeecheckout = async () => { };
-  //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
   const employeebreak = async () => {
@@ -301,13 +308,7 @@ const Clock = () => {
   };
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
-  const handleTime = () => {
-    newTime = new Date().toLocaleTimeString();
-    setCTime(newTime);
-  };
-
-  setInterval(handleTime, 1000);
-
+  //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   const onFinish = async (value) => {
     console.log("Received values of form:", value);
     console.log("checkout", attendance?.CheckOut);
@@ -339,21 +340,26 @@ const Clock = () => {
       window.alert("you have already Checked-Out");
     }
   };
-  // console.log("mystate", mystate)
+  //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
+
 
   return (
     <>
       <div>
         <span>
           <br />
-          <h3>DATE</h3>
-          {date.toLocaleDateString()}
+          <div style={{ display: "flex" }}>
+
+            <h1>DATE</h1>
+            {date.toLocaleDateString()}
+
+            <h1>TIME</h1>
+            {ctime}
+
+          </div>
+
           <br />
-          <br />
-          <h1>TIME</h1>
-          {ctime}
-          <br />
-          <br />
+
           <Row gutter={16}>
             <Col span={8} className="TimeCards">
               <Card title="CheckIn " bordered={false}>
