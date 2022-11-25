@@ -73,7 +73,6 @@ const Clock = () => {
   //-------------------------------------------- Clock---------------------------------------------------------------
 
   //---------------------------------------------Employee Attendance GET by id API----------------------------------------------------------
-
   useEffect(() => {
     const LoggedAttendanceAllRecord = async () => {
       const token = localStorage.getItem("access_token1");

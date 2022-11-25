@@ -17,7 +17,7 @@ const AttendanceTable = () => {
 
   // const onExpand = (_, { key }) =>
   //   expandedKey === key ? setExpandedKey(null) : setExpandedKey(key)
-;
+  ;
 
   // const onExpand = (_, { key }) =>
   //   expandedKey === key ? setExpandedKey(null) : setExpandedKey(key)
@@ -26,11 +26,19 @@ const AttendanceTable = () => {
   useEffect(() => {
     getAllData();
   }, []);
-  
+
   const getAllData = async () => {
     await axios
       .get(`${process.env.REACT_APP_BASE_URL}/attendance`)
       .then((res) => {
+        // const results = res?.data?.attendanceData?.map(org => ({
+        //   _id: org._id,
+        //   name: org.name,
+        //   CheckIn: org.CheckIn,
+        //   CheckOut: org.CheckOut,
+        //   TodayDate: org.TodayDate,
+        //   Breaks: org.Breaks
+        // }))
         setDataSource(res?.data?.attendanceData);
         console.log("AttendanceAllData", res);
       });
@@ -39,19 +47,19 @@ const AttendanceTable = () => {
   const expandedRowRender = (row) => {
     const columns = [
       {
-        key: "start",
+        key: "Breakstarttime",
         title: "Break Start time",
         dataIndex: "Breakstarttime",
       },
 
       {
-        key: "end",
+        key: "Breakendtime",
         title: "Break End Time",
         dataIndex: "Breakendtime",
       },
 
       {
-        key: "timespent",
+        key: "timeconsume",
         title: "Time Consumed",
         dataIndex: "timeconsume",
       },
@@ -93,7 +101,7 @@ const AttendanceTable = () => {
 
     return (
       <>
-        <Table columns={columns} key={breaks._id} dataSource={breaks} pagination={false} />
+        <Table columns={columns} dataSource={breaks} pagination={false} />
       </>
     );
   };
@@ -187,9 +195,9 @@ const AttendanceTable = () => {
     onFilter: (value, record) =>
       record[dataIndex]
         ? record[dataIndex]
-            .toString()
-            .toLowerCase()
-            .includes(value.toLowerCase())
+          .toString()
+          .toLowerCase()
+          .includes(value.toLowerCase())
         : false,
     render: (text) =>
       searchedColumn === dataIndex ? (
@@ -287,9 +295,9 @@ const AttendanceTable = () => {
     onFilter: (value, record) =>
       record[dataIndex]
         ? moment(record[dataIndex]).isBetween(
-            moment(value[0]),
-            moment(value[1])
-          )
+          moment(value[0]),
+          moment(value[1])
+        )
         : "",
     render: (text) =>
       searchColumnDate === dataIndex ? (
@@ -323,26 +331,28 @@ const AttendanceTable = () => {
     },
     {
       title: "CheckOut",
-      dataIndex: "CheckIn",
-      key: "CheckIn",
+      dataIndex: "CheckOut",
+      key: "CheckOut",
       width: "150px",
     },
     {
       title: "Date",
       dataIndex: "TodayDate",
-      key: "_id",
+      key: "TodayDate",
       width: "150px",
       ...columnSearch("TodayDate"),
     },
   ];
 
+
   return (
     <>
       <Table
-      key={dataSource._id}
+        // rowKey={(record) => record._id}
+        // rowKey={({ record }) => record._id}
+        // rowKey="_id"
         columns={columns}
         dataSource={dataSource}
-
         expandable={{
           expandedRowRender,
           defaultExpandAllRows: false,
