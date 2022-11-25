@@ -349,15 +349,13 @@ const Clock = () => {
         <span>
           <br />
           <div style={{ display: "flex" }}>
+            <h1>DATE :</h1>
 
-            <h1>DATE</h1>
-            {date.toLocaleDateString()}
+            <div style={{ marginLeft: "5px" }}>{date.toLocaleDateString()}</div>
 
-            <h1>TIME</h1>
-            {ctime}
-
+            <h1 style={{ marginLeft: "15px" }}>TIME :</h1>
+            <div style={{ marginLeft: "5px" }}>{ctime}</div>
           </div>
-
           <br />
 
           <Row gutter={16}>

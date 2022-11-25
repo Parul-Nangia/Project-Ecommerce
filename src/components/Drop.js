@@ -17,7 +17,6 @@ const Drop = () => {
     e.preventDefault();
     navigate("/changepassword");
     // <Button type="primary">Change Password</Button>
-
   };
 
   const logout = (e) => {
@@ -57,7 +56,7 @@ const Drop = () => {
         {
           key: "1",
           label: (
-            <Link className="drop-down" onClick={employeepassword} >
+            <Link className="drop-down" onClick={employeepassword}>
               {" "}
               Settings
             </Link>
@@ -78,7 +77,6 @@ const Drop = () => {
 
   return (
     <>
-
       <h3 style={{ color: "white", fontStyle: "normal" }}>Hi {name.name}</h3>
       <Dropdown overlay={menu} trigger={["click"]}>
         <a onClick={(e) => e.preventDefault()}>
