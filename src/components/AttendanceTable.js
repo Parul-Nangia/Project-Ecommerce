@@ -8,21 +8,16 @@ import React, { useState, useEffect } from "react";
 import Highlighter from "react-highlight-words";
 import axios from "axios";
 import moment from "moment";
-import jwt_decode from "jwt-decode";
-import ReactDOM from "react-dom";
-
 
 const AttendanceTable = () => {
   const [dataSource, setDataSource] = useState([]);
-  const [mydataSource, setmyDataSource] = useState([]);
-
-  const [attend, setAttendan] = useState([]);
-
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
-  const [show, setShow] = useState(false);
+  // const [expandedKey, setExpandedKey] = useState(null);
 
-
+  // const onExpand = (_, { key }) =>
+  //   expandedKey === key ? setExpandedKey(null) : setExpandedKey(key)
+;
 
   useEffect(() => {
     getAllData();
@@ -32,18 +27,71 @@ const AttendanceTable = () => {
       .get(`${process.env.REACT_APP_BASE_URL}/attendance`)
       .then((res) => {
         setDataSource(res?.data?.attendanceData);
-        for (let s = 0; s < res?.data?.attendanceData.length; s++) {
-          if (res?.data?.attendanceData[s]?.length === 0) {
-            console.log("NO DATA")
-          } else if (res?.data?.attendanceData[s]?.Breaks?.length === 0) {
-            console.log("NO DATA AGAIN")
-          } else if (res?.data?.attendanceData[s]?.Breaks?.length !== 0) {
-            setmyDataSource(res?.data?.attendanceData[s]?.Breaks)
-          }
-        }
+        console.log("AttendanceAllData", res);
       });
   };
 
+  const expandedRowRender = (row) => {
+    const columns = [
+      {
+        key: "start",
+        title: "Break Start time",
+        dataIndex: "Breakstarttime",
+      },
+
+      {
+        key: "end",
+        title: "Break End Time",
+        dataIndex: "Breakendtime",
+      },
+
+      {
+        key: "timespent",
+        title: "Time Consumed",
+        dataIndex: "timeconsume",
+      },
+    ];
+
+    const breaks = [];
+    // console.log(row, "expandedRowRender");
+
+    for (let i = 0; i < row.Breaks.length; i++) {
+      const start = moment(row.Breaks[i]?.start, "HH:mm:ss a");
+      // console.log("starttime", start);
+      const end = moment(row.Breaks[i]?.end, "HH:mm:ss a");
+      // console.log("endtime", end);
+      const milliSeconds = moment.duration(end.diff(start));
+      const seconds = Math.floor((milliSeconds / 1000) % 60);
+      const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
+      const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
+      // console.log("mill", milliSeconds);
+
+      const formattedTime = [
+        hours.toString().padStart(2, "0"),
+        minutes.toString().padStart(2, "0"),
+        seconds.toString().padStart(2, "0"),
+      ].join(":");
+
+      // console.log("formattime", formattedTime);
+      // const timeconsume = formattedTime;
+
+      breaks.push({
+        key: i,
+        Breakstarttime: row.Breaks[i]?.start,
+        Breakendtime: row.Breaks[i]?.end,
+        timeconsume: formattedTime,
+      });
+
+      // console.log("timeconsume", formattedTime);
+      console.log("data break", breaks);
+    }
+
+    return (
+      <>
+        <Table columns={columns} key={breaks._id} dataSource={breaks} pagination={false} />
+      </>
+    );
+  };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -134,9 +182,9 @@ const AttendanceTable = () => {
     onFilter: (value, record) =>
       record[dataIndex]
         ? record[dataIndex]
-          .toString()
-          .toLowerCase()
-          .includes(value.toLowerCase())
+            .toString()
+            .toLowerCase()
+            .includes(value.toLowerCase())
         : false,
     render: (text) =>
       searchedColumn === dataIndex ? (
@@ -234,9 +282,9 @@ const AttendanceTable = () => {
     onFilter: (value, record) =>
       record[dataIndex]
         ? moment(record[dataIndex]).isBetween(
-          moment(value[0]),
-          moment(value[1])
-        )
+            moment(value[0]),
+            moment(value[1])
+          )
         : "",
     render: (text) =>
       searchColumnDate === dataIndex ? (
@@ -277,7 +325,7 @@ const AttendanceTable = () => {
     {
       title: "Date",
       dataIndex: "TodayDate",
-      key: "TodayDate",
+      key: "_id",
       width: "150px",
       ...columnSearch("TodayDate"),
     },
@@ -286,20 +334,31 @@ const AttendanceTable = () => {
   return (
     <>
       <Table
+      key={dataSource._id}
         columns={columns}
         dataSource={dataSource}
+
         expandable={{
-          expandedRowRender: record => (
-            <p style={{ margin: 0 }}>{record._id}</p>
-          ),
-          expandIcon: ({ expanded, onExpand, record }) =>
-            expanded ? (
-              <MinusCircleTwoTone onClick={e => onExpand(record, e)} />
+          expandedRowRender,
+          defaultExpandAllRows: false,
+          defaultExpandedRowKeys: [""],
+          expandIcon: ({ expanded, onExpand, row }) => {
+            return expanded ? (
+              <MinusCircleTwoTone
+                onClick={(e) => {
+                  onExpand(row, e);
+                }}
+              />
             ) : (
-              <PlusCircleTwoTone onClick={e => onExpand(record, e)} />
-            )
+              <PlusCircleTwoTone
+                onClick={(e) => {
+                  onExpand(row, e);
+                }}
+              />
+            );
+          },
         }}
-      />,
+      />
     </>
   );
 };
