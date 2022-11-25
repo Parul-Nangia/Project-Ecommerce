@@ -28,6 +28,7 @@ const Profile = (props) => {
   const [panNumber, setPanNumber] = useState();
   const [salary, setSalary] = useState();
   const [appraisal, setAppraisal] = useState( );
+ 
   // const[appraisal,setAppraisal]=useState()
 
   useEffect(() => {
@@ -89,12 +90,7 @@ const Profile = (props) => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-  const data =()=>{
-    console.log(props,"sssssssss")
-    // console.log(myData,"ffffffffffff")
-    // console.log(data,"kkkkkkkkkk")
-    console.log(props.data,"lllllllllllll")
-  }
+ 
   return (
     <>
     <h2> {props.data} </h2>
@@ -153,10 +149,11 @@ const Profile = (props) => {
               />
             </Form.Item>
             <Form.Item
-            
+            //  value={fatherName}
+            //  defaultValue={fatherName}
               label="Father Name"
               // id="setFatherName"
-              name="setFatherName"
+              name="fatherName"
               // name="dadyy"
               rules={[
                 {
@@ -175,15 +172,16 @@ const Profile = (props) => {
             >
               <Input
                 placeholder="Type Your Name"
+                 name="fatherName"
                 // value={fatherName}
-                value={fatherName?.setFatherName}
-                // value={fatherName}
+               
+                value={fatherName?.fatherName}
                 // value="prince"
                 // value={viewingEmployee?.fatherName}
                 onChange={(e) => {
-                  setFatherName((pre) => {
+                  setFatherName(() => {
                     console.log("Father Name  " + e.target.value);
-                    return {...pre,fatherName:e.target.value}
+                    return e.target.value;
                   });
                 }}
               ></Input>
@@ -410,9 +408,7 @@ const Profile = (props) => {
             <Button type="primary" htmlType="submit">
               submit
             </Button>
-            <Button onClick={data}>
-              showData
-            </Button>
+
 
           </Row>
         </Form.Item>
