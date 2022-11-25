@@ -448,8 +448,8 @@ const Clock = () => {
                             label: "20 MIN",
                           },
                           {
-                            value: "disable",
-                            disabled: true,
+                            value: "30 min",
+
                             label: "30 MIN",
                           },
                           {
