@@ -259,7 +259,7 @@ const Clock = () => {
 
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   // console.log("length of array", attendance?.eodoftheday);
-  const employeecheckout = async () => {};
+  const employeecheckout = async () => { };
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
   //-------------------------------------------- Attendance Break---------------------------------------------------------------
 
@@ -529,7 +529,6 @@ const Clock = () => {
 
       <div>
         <Button
-          // type="primary"
           ghost
           style={{ fontWeight: "bold", background: "#D3D3D3" }}
           onClick={() => {

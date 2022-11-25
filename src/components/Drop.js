@@ -58,7 +58,7 @@ const Drop = () => {
           label: (
             <Link className="drop-down" onClick={employeepassword}>
               {" "}
-              ChangePassword
+              Settings
             </Link>
           ),
         },
