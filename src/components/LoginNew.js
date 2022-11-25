@@ -30,16 +30,6 @@ const LoginNew = () => {
     navigate("/dashboard");
   };
 
-  // if (navigate) {
-  //   return <Navigate to="/dashboard" />;
-  // }
-
-  // const onFinish = (values) => {
-  //     console.log('Success:', values);
-  // };
-  // const onFinishFailed = (errorInfo) => {
-  //     console.log('Failed:', errorInfo);
-  // };
   return (
     <>
       <Row justify="center" style={{ padding: "10%", marginTop: "20px" }}>
