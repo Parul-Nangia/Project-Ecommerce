@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 import { makeStyles } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { send } from "emailjs-com";
 
 const useStyles = makeStyles({
   frmItem: {
@@ -61,6 +62,25 @@ const LeaveForm = () => {
   function handleClick() {
     navigate("/dashboard");
   }
+  const handleEmail = () => {
+    sendEmail();
+    applyLeave();
+  };
+
+  const sendEmail = (e) => {
+    send(
+      "service_j2nsqz6",
+      "template_oe7fwzn",
+      { EmployeeName, Department, LeaveType, LeaveDate },
+      "WHjKfMGOYKK7DBceV"
+    )
+      .then((response) => {
+        console.log("Message sent succesfully", response.status, response.text);
+      })
+      .catch((err) => {
+        console.log("Failed", err);
+      });
+  };
 
   return (
     <>
@@ -158,7 +178,7 @@ const LeaveForm = () => {
             />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" size={size} onClick={applyLeave}>
+            <Button type="primary" size={size} onClick={handleEmail}>
               Submit
             </Button>
             <br />
