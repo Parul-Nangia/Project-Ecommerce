@@ -17,88 +17,99 @@ const AttendanceTable = () => {
 
   // const onExpand = (_, { key }) =>
   //   expandedKey === key ? setExpandedKey(null) : setExpandedKey(key)
-  // const onExpand = (_, { key }) =>
-  //   expandedKey === key ? setExpandedKey(null) : setExpandedKey(key)
 
   useEffect(() => {
     getAllData();
   }, []);
-
   const getAllData = async () => {
     await axios
       .get(`${process.env.REACT_APP_BASE_URL}/attendance`)
       .then((res) => {
-        setDataSource(res?.data?.attendanceData);
-        console.log("AttendanceAllData", res);
+        for (let h = 0; h < res?.data?.attendanceData?.length; h++) {
+          res.data.attendanceData[h].key = Math.floor(
+            Math.random() * 978587456
+          );
+        }
+        // if (res?.data?.attendanceData?.length !== 0) {
+        //   setDataSource(res?.data?.attendanceData);
+        // }
+        const results = res?.data?.attendanceData.map((omg) => ({
+          key: omg.key,
+          _id: omg._id,
+          name: omg.name,
+          CheckIn: omg.CheckIn,
+          CheckOut: omg.CheckOut,
+          TodayDate: omg.TodayDate,
+          Breaks: omg.Breaks,
+        }));
+        if (res?.data?.attendanceData?.length > 0) {
+          setDataSource(results);
+          console.log("AttendanceAllData", dataSource);
+        }
       });
   };
 
-  const expandedRowRender = (row) => {
-    const columns = [
-      {
-        key: "start",
-        title: "Break Start time",
-        dataIndex: "Breakstarttime",
-      },
+  // const expandedRowRender = (row) => {
+  //   const columns = [
+  //     {
+  //       key: "break",
+  //       title: "Break Start time",
+  //       dataIndex: "Breakstarttime",
+  //     },
 
-      {
-        key: "end",
-        title: "Break End Time",
-        dataIndex: "Breakendtime",
-      },
+  //     {
+  //       key: "break",
+  //       title: "Break End Time",
+  //       dataIndex: "Breakendtime",
+  //     },
 
-      {
-        key: "timespent",
-        title: "Time Consumed",
-        dataIndex: "timeconsume",
-      },
-    ];
+  //     {
+  //       key: "timespent",
+  //       title: "Time Consumed",
+  //       dataIndex: "timeconsume",
+  //     },
+  //   ];
 
-    const breaks = [];
-    // console.log(row, "expandedRowRender");
+  //   const breaks = [];
+  //   // console.log(row, "expandedRowRender");
 
-    for (let i = 0; i < row.Breaks.length; i++) {
-      const start = moment(row.Breaks[i]?.start, "HH:mm:ss a");
-      // console.log("starttime", start);
-      const end = moment(row.Breaks[i]?.end, "HH:mm:ss a");
-      // console.log("endtime", end);
-      const milliSeconds = moment.duration(end.diff(start));
-      const seconds = Math.floor((milliSeconds / 1000) % 60);
-      const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
-      const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
-      // console.log("mill", milliSeconds);
+  //   for (let i = 0; i < row.Breaks.length; i++) {
+  //     const start = moment(row.Breaks[i]?.start, "HH:mm:ss a");
+  //     // console.log("starttime", start);
+  //     const end = moment(row.Breaks[i]?.end, "HH:mm:ss a");
+  //     // console.log("endtime", end);
+  //     const milliSeconds = moment.duration(end.diff(start));
+  //     const seconds = Math.floor((milliSeconds / 1000) % 60);
+  //     const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
+  //     const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
+  //     // console.log("mill", milliSeconds);
 
-      const formattedTime = [
-        hours.toString().padStart(2, "0"),
-        minutes.toString().padStart(2, "0"),
-        seconds.toString().padStart(2, "0"),
-      ].join(":");
+  //     const formattedTime = [
+  //       hours.toString().padStart(2, "0"),
+  //       minutes.toString().padStart(2, "0"),
+  //       seconds.toString().padStart(2, "0"),
+  //     ].join(":");
 
-      // console.log("formattime", formattedTime);
-      // const timeconsume = formattedTime;
+  //     // console.log("formattime", formattedTime);
+  //     // const timeconsume = formattedTime;
 
-      breaks.push({
-        key: i,
-        Breakstarttime: row.Breaks[i]?.start,
-        Breakendtime: row.Breaks[i]?.end,
-        timeconsume: formattedTime,
-      });
+  //     breaks.push({
+  //       key: i,
+  //       Breakstarttime: row.Breaks[i]?.start,
+  //       Breakendtime: row.Breaks[i]?.end,
+  //       timeconsume: formattedTime,
+  //     });
 
-      // console.log("timeconsume", formattedTime);
-      console.log("data break", breaks);
-    }
+  //     // console.log("timeconsume", formattedTime);
+  //     console.log("data break", breaks);
+  //   }
 
-    return (
-      <>
-        <Table
-          columns={columns}
-          key={breaks._id}
-          dataSource={breaks}
-          pagination={false}
-        />
-      </>
-    );
-  };
+  //   return (
+  //     <>
+  //       <Table columns={columns} dataSource={breaks} pagination={false} />
+  //     </>
+  //   );
+  // };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -332,38 +343,70 @@ const AttendanceTable = () => {
     {
       title: "Date",
       dataIndex: "TodayDate",
-      key: "_id",
+      key: "TodayDate",
       width: "150px",
       ...columnSearch("TodayDate"),
     },
   ];
 
+  const nestedColumns = [
+    {
+      title: "Start",
+      dataIndex: "Breaks.start",
+      key: "start",
+      width: "150px",
+    },
+    {
+      title: "End",
+      dataIndex: "Breaks.end",
+      key: "end",
+      width: "150px",
+    },
+    {
+      title: "Time Consumed",
+      dataIndex: "timeconsumed",
+      key: "timeconsumed",
+      width: "150px",
+    },
+  ];
   return (
     <>
       <Table
-        key={dataSource._id}
+        rowKey="key"
         columns={columns}
         dataSource={dataSource}
         expandable={{
-          expandedRowRender,
-          defaultExpandAllRows: false,
-          defaultExpandedRowKeys: [""],
-          expandIcon: ({ expanded, onExpand, row }) => {
-            return expanded ? (
-              <MinusCircleTwoTone
-                onClick={(e) => {
-                  onExpand(row, e);
-                }}
-              />
-            ) : (
-              <PlusCircleTwoTone
-                onClick={(e) => {
-                  onExpand(row, e);
-                }}
+          rowExpandable: (record) => true,
+          expandedRowRender: (record) => {
+            return (
+              <Table
+                columns={nestedColumns}
+                dataSource={dataSource}
+                pagination={false}
               />
             );
           },
         }}
+        // expandable={{
+        //   expandedRowRender,
+        //   defaultExpandAllRows: false,
+        //   defaultExpandedRowKeys: [""],
+        //   expandIcon: ({ expanded, onExpand, row }) => {
+        //     return expanded ? (
+        //       <MinusCircleTwoTone
+        //         onClick={(e) => {
+        //           onExpand(row, e);
+        //         }}
+        //       />
+        //     ) : (
+        //       <PlusCircleTwoTone
+        //         onClick={(e) => {
+        //           onExpand(row, e);
+        //         }}
+        //       />
+        //     );
+        //   },
+        // }}
       />
     </>
   );
