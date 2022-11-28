@@ -47,8 +47,10 @@ const Leave = (props) => {
         <br />
 
         <h1>{view}</h1>
-        <Button style={{ backgroundColor: "DarkSlateGray", color: "white", fontWeight: "bold" }} onClick={() => setView(!view)}>Calendar View</Button>
-        <Button style={{ backgroundColor: "CornflowerBlue", color: "white", fontWeight: "bold" }} onClick={() => setView(!view)}>Table View</Button>
+        <div>
+          <Button style={{ backgroundColor: "DarkSlateGray", color: "white", fontWeight: "bold" }} onClick={() => setView(!view)}>Calendar View</Button>
+          <Button style={{ backgroundColor: "CornflowerBlue", color: "white", fontWeight: "bold" }} onClick={() => setView(!view)}>Table View</Button>
+        </div>
         <br />
         <br />
 

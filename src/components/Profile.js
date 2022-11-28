@@ -15,7 +15,7 @@ const Profile = (props) => {
   // console.log(id, "iduser");
 
   const [viewingEmployee, setViewingEmployee] = useState(null);
-  // const [form] = Form.useForm();
+  const [form] = Form.useForm();
   const [joiningDate, setJoiningDate] = useState();
   // const[joiningDate,setJoiningdate]=useState()
   // const [isEditing, setIsEditing] = useState(false);
@@ -44,19 +44,19 @@ const Profile = (props) => {
         console.log(res, "api response");
         setViewingEmployee(res?.data?.myData);
         console.log(res?.data?.myData?.fatherName,"fathername")
-        setFatherName(res?.data?.myData?.fatherName);
-        setMotherName(res?.data?.myData?.motherName);
-        setBloodGroup(res?.data?.myData?.bloodGroup);
-        setContactNumber(res?.data?.myData?.contactNumber);
-        setPermanentAddress(res?.data?.myData?.permanentAddress);
-        setAdharNumber(res?.data?.myData?.adharNumber);
-        setPanNumber(res?.data?.myData?.panNumber);
-        setSalary(res?.data?.myData?.salary);
-        setAppraisal(res?.data?.myData?.appraisal);
+        // setFatherName(res?.data?.myData?.fatherName);
+        // setMotherName(res?.data?.myData?.motherName);
+        // setBloodGroup(res?.data?.myData?.bloodGroup);
+        // setContactNumber(res?.data?.myData?.contactNumber);
+        // setPermanentAddress(res?.data?.myData?.permanentAddress);
+        // setAdharNumber(res?.data?.myData?.adharNumber);
+        // setPanNumber(res?.data?.myData?.panNumber);
+        // setSalary(res?.data?.myData?.salary);
+        // setAppraisal(res?.data?.myData?.appraisal);
         
         
         
-        console.log(fatherName,"dgfjsghgh")
+        // console.log(fatherName,"dgfjsghgh")
         
         // console.log(viewingEmployee, "viewingEmployee");
       });
@@ -66,7 +66,7 @@ const Profile = (props) => {
     console.log("Blood Group", value);
   };
   const Submithere = () => {
-    //  form.resetFields();
+     form.resetFields();
     // e.preventDefault();
     console.log("hello");
     axios.put(`${process.env.REACT_APP_BASE_URL}/user/${id}`, {
@@ -93,7 +93,7 @@ const Profile = (props) => {
  
   return (
     <>
-    <h2> {props.data} </h2>
+    
       <Card title="General Information" bordered={false} style={{ width: 300 }}>
         <p>Name: {viewingEmployee?.name}</p>{" "}
         <p>Email: {viewingEmployee?.email}</p>
@@ -104,7 +104,7 @@ const Profile = (props) => {
       <Form
       
         name="basic"
-        //  form={form}
+         form={form}
         // layout="inline"
         // labelCol={{
         //   span: 12,
@@ -134,7 +134,7 @@ const Profile = (props) => {
             >
               <DatePicker
                 dateFormat="dd/MM/yyyy"
-                 value={joiningDate}
+                // defaultValue={joiningDate}
                 onChange={(date) => {
                   const d = new Date(date).toLocaleDateString("fr-FR");
                   console.log(d);
@@ -152,7 +152,6 @@ const Profile = (props) => {
             //  value={fatherName}
             //  defaultValue={fatherName}
               label="Father Name"
-              // id="setFatherName"
               name="fatherName"
               // name="dadyy"
               rules={[
@@ -166,16 +165,16 @@ const Profile = (props) => {
                     /^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+\s*[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i
                   ),
                   // pattern: new RegExp(/^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i),
-                  message: "please Input alphabets only",
+                  message: "please Input fullname & alphabets only",
                 },
               ]}
             >
               <Input
                 placeholder="Type Your Name"
                  name="fatherName"
-                // value={fatherName}
+                value={fatherName}
                
-                value={fatherName?.fatherName}
+                // value={fatherName?.fatherName}
                 // value="prince"
                 // value={viewingEmployee?.fatherName}
                 onChange={(e) => {
@@ -188,7 +187,7 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item
               label="Mother Name"
-              // name="setmotherName"
+              name="motherName"
               rules={[
                 {
                   required: true,
@@ -217,7 +216,7 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item
              label="Blood Group"
-            //  name="setBloodGroup"
+             name="bloodGroup"
                           rules={[{
                            required:true,
                            message:"Select a option "
@@ -242,13 +241,13 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item
               label="Emergency Contact Number"
-              // name="setContactNumber"
+              name="contactNumber"
               rules={[
                 {
                   // type:"number",
                   required: true,
                  
-                  message: "please input your valid number",
+                  message: "Please input 10 digit number!",
                   max: 10,
                   min:10,
                 },
@@ -258,7 +257,7 @@ const Profile = (props) => {
                   // pattern:/^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/,
                   pattern:/^-?(0|[0-9][0-9]*)(\.[0-9]*)?$/,
 
-                  message: "Please input Valid Contact number!",
+                  message:"please input your valid number"
                 },
               ]}
             >
@@ -279,7 +278,7 @@ const Profile = (props) => {
           <Col span={12} style={{ padding: "10px 10px" }}>
             <Form.Item
               label="Permanent Address"
-              // name="setPermanentAddress"
+              name="permanentAddress"
               rules={[
                 {
                   required: true,
@@ -300,11 +299,11 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item
               label="Aadhar card Number"
-              // name="setAdharNumber"
+              name="adharNumber"
               rules={[
                 {
                   required: true,
-                  message: "please input your Aadhar card number",
+                  message: "please input your valid Aadhar card number",
                   whitespace: true,
                   max: 12,
                   min: 10,
@@ -330,7 +329,7 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item
               label="PAN card Number"
-              // name="setPanNumber"
+              name="panNumber"
               rules={[
                 {
                   required: true,
@@ -340,7 +339,7 @@ const Profile = (props) => {
                 {
                   pattern: new RegExp(/^[a-zA-Z0-9]*$/),
 
-                  message: "Input only string & number without space",
+                  message: "Input only string & number",
                 },
               ]}
             >
@@ -357,7 +356,7 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item
               label="Current Salary"
-              // name="setSalary"
+              name="salary"
               rules={[
                 {
                   required: true,
@@ -367,7 +366,7 @@ const Profile = (props) => {
                 {
                   // pattern: new RegExp(/^[a-zA-Z0-9]*$/),
                   pattern:/^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/,
-                  message: "Input only number without space",
+                  message: "Input only number ",
                 },
               ]}
             >
@@ -393,7 +392,7 @@ const Profile = (props) => {
             ]}>
               <DatePicker
                 dateFormat="dd/MM/yyyy"
-                value={appraisal}
+                // value={appraisal}
                 onChange={(date) => {
                   const d = new Date(date).toLocaleDateString("fr-FR");
                   console.log(d);
