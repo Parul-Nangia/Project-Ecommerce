@@ -27,6 +27,7 @@ const Clock = () => {
   // console.log("hiiiiiiiii", eod);
 
   const [timespent, setTimespent] = useState("");
+  const [timeconsumed, setTtimeconsumed] = useState("");
 
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -84,6 +85,7 @@ const Clock = () => {
         )
         .then((res) => {
           setAttendance(res?.data?.attendanceDataByEmpID[0]);
+          console.log("attendanceByEMPID", res?.data?.attendanceDataByEmpID[0])
 
           // Check if employee Checked-In Today
           if (res?.data?.attendanceDataByEmpID.length === 0) {
@@ -111,7 +113,7 @@ const Clock = () => {
           // Check if employee took Breaks Today
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setShow(true);
-            console.log("You Havn't took any Breaks", show);
+            console.log("Checkin First to take Breaks", show);
           } else if (
             res?.data?.attendanceDataByEmpID[0].Breaks[
               res?.data?.attendanceDataByEmpID[0].Breaks.length - 1
@@ -178,16 +180,6 @@ const Clock = () => {
             // }
           }
 
-          // if (res?.data?.attendanceDataByEmpID?.length === 0) {
-          //   console.log("attendance null", res?.data?.attendanceDataByEmpID?.length)
-          // } else if (res?.data?.attendanceDataByEmpID?.CheckIn === "") {
-          //   console.log("CheckIn null")
-          // } else if (res?.data?.attendanceDataByEmpID?.eodoftheday?.length === []) {
-
-          //   attendance?.eodoftheday.push(ar)
-          //   console.log("mystate", res?.data?.attendanceDataByEmpID?.eodoftheday)
-
-          // }
         });
     };
     LoggedAttendanceAllRecord();
@@ -285,6 +277,7 @@ const Clock = () => {
         _id: Math.floor(Math.random() * 9785874563463865),
         start: new Date().toLocaleTimeString(),
         end: "",
+        timeconsumed:timeconsumed
       };
       console.log("Breaks/startTime", obj.start);
       attendance?.Breaks.push(obj);
