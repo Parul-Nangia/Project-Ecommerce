@@ -17,16 +17,13 @@ const AttendanceTable = () => {
 
   // const onExpand = (_, { key }) =>
   //   expandedKey === key ? setExpandedKey(null) : setExpandedKey(key)
-;
-
   // const onExpand = (_, { key }) =>
   //   expandedKey === key ? setExpandedKey(null) : setExpandedKey(key)
-
 
   useEffect(() => {
     getAllData();
   }, []);
-  
+
   const getAllData = async () => {
     await axios
       .get(`${process.env.REACT_APP_BASE_URL}/attendance`)
@@ -93,7 +90,12 @@ const AttendanceTable = () => {
 
     return (
       <>
-        <Table columns={columns} key={breaks._id} dataSource={breaks} pagination={false} />
+        <Table
+          columns={columns}
+          key={breaks._id}
+          dataSource={breaks}
+          pagination={false}
+        />
       </>
     );
   };
@@ -339,10 +341,9 @@ const AttendanceTable = () => {
   return (
     <>
       <Table
-      key={dataSource._id}
+        key={dataSource._id}
         columns={columns}
         dataSource={dataSource}
-
         expandable={{
           expandedRowRender,
           defaultExpandAllRows: false,
