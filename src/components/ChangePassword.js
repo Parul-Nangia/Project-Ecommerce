@@ -2,28 +2,49 @@ import React from "react";
 import { Button, Form, Input, Modal } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+import axios from "axios";
 
 const ChangePassword = () => {
   const [isopenmodal, setIsOpenModal] = useState(false);
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  const [resetpassword, setResetPassword] = useState("");
+  const [confirmpassword, setConfirmPassword] = useState("");
+  const [newpassword, setNewPassword] = useState([]);
+
+  const onFinish = async () => {
+    const token = localStorage.getItem("access_token1");
+    const password = confirmpassword;
+    console.log("password value", password);
+    var decoded = jwt_decode(token);
+    const ID = decoded._id;
+
+    await axios
+      .put(`${process.env.REACT_APP_BASE_URL}/user/${ID}`, {
+        password,
+      })
+      .then((res) => {
+        setNewPassword(res?.data?.updatedAttendance);
+        console.log("Reset Password Value", newpassword);
+        // window.location.reload();
+      });
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
 
-  const showMyModal = () => {
+  const showModal = () => {
     setIsOpenModal(true);
   };
 
-  const handleMyOk = () => {
+  const handleOk = async () => {
     setIsOpenModal(false);
   };
 
-  const handleMyCancel = () => {
+  const handleCancel = () => {
     setIsOpenModal(false);
   };
+
   return (
     <>
       <Modal
@@ -31,8 +52,7 @@ const ChangePassword = () => {
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
         open={isopenmodal}
-        onOk={handleMyOk}
-        onCancel={handleMyCancel}
+        onCancel={handleCancel}
       >
         <Form
           name="basic"
@@ -41,9 +61,6 @@ const ChangePassword = () => {
           }}
           wrapperCol={{
             span: 16,
-          }}
-          initialValues={{
-            remember: true,
           }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
@@ -60,7 +77,11 @@ const ChangePassword = () => {
               },
             ]}
           >
-            <Input.Password />
+            <Input.Password
+              onChange={(e) => {
+                setResetPassword(e.target.value);
+              }}
+            />
           </Form.Item>
 
           <Form.Item
@@ -74,30 +95,29 @@ const ChangePassword = () => {
               },
             ]}
           >
-            <Input.Password />
+            <Input.Password
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+              }}
+            />
+          </Form.Item>
+
+          <Form.Item>
+            <div style={{ display: "flex", marginLeft: "105%" }}>
+              <Button
+                style={{ marginRight: "4px", backgroundColor: "red" }}
+                type="primary"
+                htmlType="cancel"
+                onClick={handleCancel}
+              >
+                Cancel
+              </Button>
+              <Button type="primary" htmlType="Done" onClick={handleOk}>
+                Done
+              </Button>
+            </div>
           </Form.Item>
         </Form>
-        <Form.Item>
-          <Button
-            style={{ display: "flex", float: "right", backgroundColor: "red" }}
-            type="primary"
-            htmlType="cancel"
-            onClick={handleMyCancel}
-          >
-            Cancel
-          </Button>
-          <Button
-            style={{
-              display: "flex",
-              marginLeft: "70%",
-            }}
-            type="primary"
-            htmlType="done"
-            onClick={handleMyOk}
-          >
-            Done
-          </Button>
-        </Form.Item>
       </Modal>
       <h1 style={{ display: "flex", justifyContent: "center" }}>
         Link to Change Password
@@ -109,7 +129,7 @@ const ChangePassword = () => {
             justifyContent: "center",
             hover: "blue",
           }}
-          onClick={showMyModal}
+          onClick={showModal}
         >
           Change Password
         </Link>

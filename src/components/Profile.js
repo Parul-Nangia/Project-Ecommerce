@@ -15,7 +15,7 @@ const Profile = (props) => {
   // console.log(id, "iduser");
 
   const [viewingEmployee, setViewingEmployee] = useState(null);
-  const [form] = Form.useForm();
+  // const [form] = Form.useForm();
   const [joiningDate, setJoiningDate] = useState();
   // const[joiningDate,setJoiningdate]=useState()
   // const [isEditing, setIsEditing] = useState(false);
@@ -44,15 +44,15 @@ const Profile = (props) => {
         console.log(res, "api response");
         setViewingEmployee(res?.data?.myData);
         console.log(res?.data?.myData?.fatherName,"fathername")
-        // setFatherName(res?.data?.myData?.fatherName);
-        // setMotherName(res?.data?.myData?.motherName);
-        // setBloodGroup(res?.data?.myData?.bloodGroup);
-        // setContactNumber(res?.data?.myData?.contactNumber);
-        // setPermanentAddress(res?.data?.myData?.permanentAddress);
-        // setAdharNumber(res?.data?.myData?.adharNumber);
-        // setPanNumber(res?.data?.myData?.panNumber);
-        // setSalary(res?.data?.myData?.salary);
-        // setAppraisal(res?.data?.myData?.appraisal);
+        setFatherName(res?.data?.myData?.fatherName);
+        setMotherName(res?.data?.myData?.motherName);
+        setBloodGroup(res?.data?.myData?.bloodGroup);
+        setContactNumber(res?.data?.myData?.contactNumber);
+        setPermanentAddress(res?.data?.myData?.permanentAddress);
+        setAdharNumber(res?.data?.myData?.adharNumber);
+        setPanNumber(res?.data?.myData?.panNumber);
+        setSalary(res?.data?.myData?.salary);
+        setAppraisal(res?.data?.myData?.appraisal);
         
         
         
@@ -66,7 +66,7 @@ const Profile = (props) => {
     console.log("Blood Group", value);
   };
   const Submithere = () => {
-     form.resetFields();
+    //  form.resetFields();
     // e.preventDefault();
     console.log("hello");
     axios.put(`${process.env.REACT_APP_BASE_URL}/user/${id}`, {
@@ -96,15 +96,15 @@ const Profile = (props) => {
     
       <Card title="General Information" bordered={false} style={{ width: 300 }}>
         <p>Name: {viewingEmployee?.name}</p>{" "}
-        <p>Email: {viewingEmployee?.email}</p>
+        <p>Email: {viewingEmployee?.email}</p>   <p>Father Name: {viewingEmployee?.fatherName}</p>
         <p>Contact: {viewingEmployee?.contact}</p>
         <p>Gender: {viewingEmployee?.gender}</p>
         <p>Role: {viewingEmployee?.role}</p>
       </Card>
       <Form
       
-        name="basic"
-         form={form}
+        // name="basic"
+        //  form={form}
         // layout="inline"
         // labelCol={{
         //   span: 12,
@@ -124,7 +124,7 @@ const Profile = (props) => {
           <Col span={12} style={{ padding: "10px 10px" }}>
            <Form.Item 
             label="Date of Joining"
-            name="setJoiningDate"
+            // name="setJoiningDate"
             rules={[
               {
                 required: true,
@@ -134,9 +134,16 @@ const Profile = (props) => {
             >
               <DatePicker
                 dateFormat="dd/MM/yyyy"
-                // defaultValue={joiningDate}
+                defaultValue={joiningDate}
+//                 <DatePicker
+//  onChange={this.onChange}
+//  defaultValue={moment("YYYY-MM-DD")}
+//  />
+
+                // value={joiningDate}
                 onChange={(date) => {
                   const d = new Date(date).toLocaleDateString("fr-FR");
+                  console.log(date,"Dateeee")
                   console.log(d);
                   setJoiningDate(d);
                 }}
@@ -152,7 +159,7 @@ const Profile = (props) => {
             //  value={fatherName}
             //  defaultValue={fatherName}
               label="Father Name"
-              name="fatherName"
+              // name="fatherName"
               // name="dadyy"
               rules={[
                 {
@@ -168,10 +175,11 @@ const Profile = (props) => {
                   message: "please Input fullname & alphabets only",
                 },
               ]}
+              // value={fatherName}
+              // initialValue={fatherName}
             >
               <Input
                 placeholder="Type Your Name"
-                 name="fatherName"
                 value={fatherName}
                
                 // value={fatherName?.fatherName}
@@ -187,7 +195,7 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item
               label="Mother Name"
-              name="motherName"
+              // name="motherName"
               rules={[
                 {
                   required: true,
@@ -216,7 +224,7 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item
              label="Blood Group"
-             name="bloodGroup"
+            //  name="bloodGroup"
                           rules={[{
                            required:true,
                            message:"Select a option "
@@ -227,8 +235,7 @@ const Profile = (props) => {
                 //   value: "Select",
                 // }}
                 value={bloodGroup}
-                onChange={SelectOne}
-              >
+                onChange={SelectOne} >
                 <Option value="A+">A+</Option>
                 <Option value="A-">A-</Option>
                 <Option value="B+">B+</Option>
@@ -241,12 +248,11 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item
               label="Emergency Contact Number"
-              name="contactNumber"
+              // name="contactNumber"
               rules={[
                 {
                   // type:"number",
                   required: true,
-                 
                   message: "Please input 10 digit number!",
                   max: 10,
                   min:10,
@@ -256,7 +262,6 @@ const Profile = (props) => {
                   // pattern: new RegExp(/\d+/g),
                   // pattern:/^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/,
                   pattern:/^-?(0|[0-9][0-9]*)(\.[0-9]*)?$/,
-
                   message:"please input your valid number"
                 },
               ]}
@@ -278,7 +283,7 @@ const Profile = (props) => {
           <Col span={12} style={{ padding: "10px 10px" }}>
             <Form.Item
               label="Permanent Address"
-              name="permanentAddress"
+              // name="permanentAddress"
               rules={[
                 {
                   required: true,
@@ -299,7 +304,7 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item
               label="Aadhar card Number"
-              name="adharNumber"
+              // name="adharNumber"
               rules={[
                 {
                   required: true,
@@ -329,7 +334,7 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item
               label="PAN card Number"
-              name="panNumber"
+              // name="panNumber"
               rules={[
                 {
                   required: true,
@@ -356,7 +361,7 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item
               label="Current Salary"
-              name="salary"
+              // name="salary"
               rules={[
                 {
                   required: true,
@@ -383,7 +388,7 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item 
             label="Last Appraisal Date"
-            name="setAppraisal"
+            // name="setAppraisal"
             rules={[
               {
                 required: true,
