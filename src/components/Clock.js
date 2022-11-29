@@ -27,6 +27,7 @@ const Clock = () => {
   // console.log("hiiiiiiiii", eod);
 
   const [timespent, setTimespent] = useState("");
+  const [timeconsumed, setTtimeconsumed] = useState("");
 
   const [EmployeeCheckOut, setEmployeeCheckOut] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -84,6 +85,7 @@ const Clock = () => {
         )
         .then((res) => {
           setAttendance(res?.data?.attendanceDataByEmpID[0]);
+          console.log("attendanceByEMPID", res?.data?.attendanceDataByEmpID[0])
 
           // Check if employee Checked-In Today
           if (res?.data?.attendanceDataByEmpID.length === 0) {
@@ -111,7 +113,7 @@ const Clock = () => {
           // Check if employee took Breaks Today
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setShow(true);
-            console.log("You Havn't took any Breaks", show);
+            console.log("Checkin First to take Breaks", show);
           } else if (
             res?.data?.attendanceDataByEmpID[0].Breaks[
               res?.data?.attendanceDataByEmpID[0].Breaks.length - 1
@@ -178,16 +180,6 @@ const Clock = () => {
             // }
           }
 
-          // if (res?.data?.attendanceDataByEmpID?.length === 0) {
-          //   console.log("attendance null", res?.data?.attendanceDataByEmpID?.length)
-          // } else if (res?.data?.attendanceDataByEmpID?.CheckIn === "") {
-          //   console.log("CheckIn null")
-          // } else if (res?.data?.attendanceDataByEmpID?.eodoftheday?.length === []) {
-
-          //   attendance?.eodoftheday.push(ar)
-          //   console.log("mystate", res?.data?.attendanceDataByEmpID?.eodoftheday)
-
-          // }
         });
     };
     LoggedAttendanceAllRecord();
@@ -282,9 +274,10 @@ const Clock = () => {
       console.log("Breaks/endTime", attendance?.Breaks[Breaks.length - 1]?.end);
     } else {
       const obj = {
-        _id: Math.floor(Math.random() * 9785874563463865),
+        key: Math.floor(Math.random() * 9785874563463865),
         start: new Date().toLocaleTimeString(),
         end: "",
+        timeconsumed: timeconsumed
       };
       console.log("Breaks/startTime", obj.start);
       attendance?.Breaks.push(obj);
@@ -366,17 +359,17 @@ const Clock = () => {
 
           <Row gutter={16}>
             <Col span={8} className="TimeCards">
-              <Card title="CheckIn " bordered={false}>
+              <Card title="Checkin " bordered={false}>
                 {attendance?.CheckIn}
               </Card>
             </Col>
             <Col span={8} className="TimeCards">
-              <Card title="CheckOut" bordered={false}>
+              <Card title="Checkout" bordered={false}>
                 {attendance?.CheckOut}
               </Card>
             </Col>
             <Col span={8} className="TimeCards">
-              <Card title="Total Hours" bordered={false}>
+              <Card title="Total hours" bordered={false}>
                 {TodayAttendance} hours
               </Card>
             </Col>
@@ -537,41 +530,43 @@ const Clock = () => {
         </Form>
       </Modal>
 
-      <div>
-        <Button
-          ghost
-          style={{ fontWeight: "bold", background: "#D3D3D3" }}
-          onClick={() => {
-            handleTime();
-            employeecheckin();
-          }}
-          disabled={disableCheckin}
-        >
-          Checkin
-        </Button>
-        <Button
-          style={{ fontWeight: "bold", background: "#D3D3D3" }}
-          type="break"
-          ghost
-          onClick={() => {
-            employeebreak();
-          }}
-          disabled={disablebreak}
-        >
-          {show ? "Break" : "Resume"}
-        </Button>
+      <div className="parent">
+        <div className="child">
+          <Button
+            className="checkinBtn"
+            onClick={() => {
+              handleTime();
+              employeecheckin();
+            }}
+            disabled={disableCheckin}
+          >
+            Checkin
+          </Button>
+        </div>
+        <div className="child">
+          <Button
+            className="breakBtn"
 
-        <Button
-          type="checkout"
-          style={{ fontWeight: "bold", background: "#D3D3D3" }}
-          ghost
-          onClick={() => {
-            showModal();
-          }}
-          disabled={disableCheckout}
-        >
-          Checkout
-        </Button>
+            onClick={() => {
+              employeebreak();
+            }}
+            disabled={disablebreak}
+          >
+            {show ? "Break" : "Resume"}
+          </Button>
+        </div>
+        <div className="child">
+          <Button
+            className="checkoutBtn"
+
+            onClick={() => {
+              showModal();
+            }}
+            disabled={disableCheckout}
+          >
+            Checkout
+          </Button>
+        </div>
       </div>
       <br />
     </>

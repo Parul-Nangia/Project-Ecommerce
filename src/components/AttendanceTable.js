@@ -13,10 +13,7 @@ const AttendanceTable = () => {
   const [dataSource, setDataSource] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
-  // const [expandedKey, setExpandedKey] = useState(null);
 
-  // const onExpand = (_, { key }) =>
-  //   expandedKey === key ? setExpandedKey(null) : setExpandedKey(key)
 
   useEffect(() => {
     getAllData();
@@ -25,91 +22,37 @@ const AttendanceTable = () => {
     await axios
       .get(`${process.env.REACT_APP_BASE_URL}/attendance`)
       .then((res) => {
-        for (let h = 0; h < res?.data?.attendanceData?.length; h++) {
-          res.data.attendanceData[h].key = Math.floor(
-            Math.random() * 978587456
-          );
-        }
-        // if (res?.data?.attendanceData?.length !== 0) {
-        //   setDataSource(res?.data?.attendanceData);
-        // }
-        const results = res?.data?.attendanceData.map((omg) => ({
-          key: omg.key,
-          _id: omg._id,
-          name: omg.name,
-          CheckIn: omg.CheckIn,
-          CheckOut: omg.CheckOut,
-          TodayDate: omg.TodayDate,
-          Breaks: omg.Breaks,
-        }));
-        if (res?.data?.attendanceData?.length > 0) {
-          setDataSource(results);
-          console.log("AttendanceAllData", dataSource);
+        setDataSource(res?.data?.attendanceData);
+        console.log("AttendanceAllData", dataSource);
+        for (let f = 0; f < res?.data?.attendanceData.length; f++) {
+
+          for (let i = 0; i < res?.data?.attendanceData[f].Breaks.length; i++) {
+            const start = moment(res?.data?.attendanceData[f].Breaks[i]?.start, "HH:mm:ss a");
+            // console.log("starttime", start);
+            const end = moment(res?.data?.attendanceData[f].Breaks[i]?.end, "HH:mm:ss a");
+            // console.log("endtime", end);
+            const milliSeconds = moment.duration(end.diff(start));
+            const seconds = Math.floor((milliSeconds / 1000) % 60);
+            const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
+            const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
+            // console.log("mill", milliSeconds);
+
+            const formattedTime = [
+              hours.toString().padStart(2, "0"),
+              minutes.toString().padStart(2, "0"),
+              seconds.toString().padStart(2, "0"),
+            ].join(":");
+
+            res.data.attendanceData[f].Breaks[i].timeconsume = formattedTime
+          }
+
+          res.data.attendanceData[f].key = Math.floor(Math.random() * 978587456)
+
         }
       });
   };
 
-  // const expandedRowRender = (row) => {
-  //   const columns = [
-  //     {
-  //       key: "break",
-  //       title: "Break Start time",
-  //       dataIndex: "Breakstarttime",
-  //     },
 
-  //     {
-  //       key: "break",
-  //       title: "Break End Time",
-  //       dataIndex: "Breakendtime",
-  //     },
-
-  //     {
-  //       key: "timespent",
-  //       title: "Time Consumed",
-  //       dataIndex: "timeconsume",
-  //     },
-  //   ];
-
-  //   const breaks = [];
-  //   // console.log(row, "expandedRowRender");
-
-  //   for (let i = 0; i < row.Breaks.length; i++) {
-  //     const start = moment(row.Breaks[i]?.start, "HH:mm:ss a");
-  //     // console.log("starttime", start);
-  //     const end = moment(row.Breaks[i]?.end, "HH:mm:ss a");
-  //     // console.log("endtime", end);
-  //     const milliSeconds = moment.duration(end.diff(start));
-  //     const seconds = Math.floor((milliSeconds / 1000) % 60);
-  //     const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
-  //     const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
-  //     // console.log("mill", milliSeconds);
-
-  //     const formattedTime = [
-  //       hours.toString().padStart(2, "0"),
-  //       minutes.toString().padStart(2, "0"),
-  //       seconds.toString().padStart(2, "0"),
-  //     ].join(":");
-
-  //     // console.log("formattime", formattedTime);
-  //     // const timeconsume = formattedTime;
-
-  //     breaks.push({
-  //       key: i,
-  //       Breakstarttime: row.Breaks[i]?.start,
-  //       Breakendtime: row.Breaks[i]?.end,
-  //       timeconsume: formattedTime,
-  //     });
-
-  //     // console.log("timeconsume", formattedTime);
-  //     console.log("data break", breaks);
-  //   }
-
-  //   return (
-  //     <>
-  //       <Table columns={columns} dataSource={breaks} pagination={false} />
-  //     </>
-  //   );
-  // };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -200,9 +143,9 @@ const AttendanceTable = () => {
     onFilter: (value, record) =>
       record[dataIndex]
         ? record[dataIndex]
-            .toString()
-            .toLowerCase()
-            .includes(value.toLowerCase())
+          .toString()
+          .toLowerCase()
+          .includes(value.toLowerCase())
         : false,
     render: (text) =>
       searchedColumn === dataIndex ? (
@@ -244,7 +187,7 @@ const AttendanceTable = () => {
     setSearchDate("");
   };
   const columnSearch = (dataIndex) => ({
-    filterDropdown: ({
+    filterDropdown: ({  
       setSelectedKeys,
       selectedKeys,
       confirm,
@@ -300,9 +243,9 @@ const AttendanceTable = () => {
     onFilter: (value, record) =>
       record[dataIndex]
         ? moment(record[dataIndex]).isBetween(
-            moment(value[0]),
-            moment(value[1])
-          )
+          moment(value[0]),
+          moment(value[1])
+        )
         : "",
     render: (text) =>
       searchColumnDate === dataIndex ? (
@@ -352,22 +295,23 @@ const AttendanceTable = () => {
   const nestedColumns = [
     {
       title: "Start",
-      dataIndex: "Breaks.start",
+      dataIndex: "start",
       key: "start",
       width: "150px",
+
     },
     {
       title: "End",
-      dataIndex: "Breaks.end",
+      dataIndex: "end",
       key: "end",
       width: "150px",
     },
     {
       title: "Time Consumed",
-      dataIndex: "timeconsumed",
-      key: "timeconsumed",
+      dataIndex: "timeconsume",
+      key: "timeconsume",
       width: "150px",
-    },
+    }
   ];
   return (
     <>
@@ -379,34 +323,11 @@ const AttendanceTable = () => {
           rowExpandable: (record) => true,
           expandedRowRender: (record) => {
             return (
-              <Table
-                columns={nestedColumns}
-                dataSource={dataSource}
-                pagination={false}
-              />
-            );
-          },
+              <Table  columns={nestedColumns}  dataSource={record?.Breaks} pagination={false}/>
+            )
+          }
         }}
-        // expandable={{
-        //   expandedRowRender,
-        //   defaultExpandAllRows: false,
-        //   defaultExpandedRowKeys: [""],
-        //   expandIcon: ({ expanded, onExpand, row }) => {
-        //     return expanded ? (
-        //       <MinusCircleTwoTone
-        //         onClick={(e) => {
-        //           onExpand(row, e);
-        //         }}
-        //       />
-        //     ) : (
-        //       <PlusCircleTwoTone
-        //         onClick={(e) => {
-        //           onExpand(row, e);
-        //         }}
-        //       />
-        //     );
-        //   },
-        // }}
+
       />
     </>
   );
