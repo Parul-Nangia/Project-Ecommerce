@@ -42,6 +42,14 @@ const Leave = (props) => {
     return (
 
       <>
+        <div style={{ display: "flex" }}>
+          <h1>DATE :</h1>
+
+          <div style={{ marginLeft: "5px" }}>{new Date().toLocaleDateString()}</div>
+
+          <h1 style={{ marginLeft: "15px" }}>TIME :</h1>
+          <div style={{ marginLeft: "5px" }}>{new Date().toLocaleTimeString()}</div>
+        </div>
 
         <Link to="/leaveform"></Link>
         <br />
@@ -64,6 +72,14 @@ const Leave = (props) => {
   if (name.role === "employee") {
     return (
       <>
+        <div style={{ display: "flex" }}>
+          <h1>DATE :</h1>
+
+          <div style={{ marginLeft: "5px" }}>{new Date().toLocaleDateString()}</div>
+
+          <h1 style={{ marginLeft: "15px" }}>TIME :</h1>
+          <div style={{ marginLeft: "5px" }}>{new Date().toLocaleTimeString()}</div>
+        </div>
 
         <Link to="/leaveform"></Link>
         <br />
@@ -71,8 +87,10 @@ const Leave = (props) => {
 
         <br />
         <h1>{calendarview}</h1>
-        <Button style={{ backgroundColor: "lightgray", color: "white", fontWeight: "bold" }} onClick={() => setCalendarview(!calendarview)}>Calendar View</Button>
-        <Button style={{ backgroundColor: "lightgray", color: "white", fontWeight: "bold" }} onClick={() => setCalendarview(!calendarview)}>Table View</Button>
+        <div>
+          <Button style={{ backgroundColor: "lightgray", color: "white", fontWeight: "bold" }} onClick={() => setCalendarview(!calendarview)}>Calendar View</Button>
+          <Button style={{ backgroundColor: "lightgray", color: "white", fontWeight: "bold" }} onClick={() => setCalendarview(!calendarview)}>Table View</Button>
+        </div>
         <br />
         <br />
 

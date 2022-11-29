@@ -187,7 +187,7 @@ const AttendanceTable = () => {
     setSearchDate("");
   };
   const columnSearch = (dataIndex) => ({
-    filterDropdown: ({
+    filterDropdown: ({  
       setSelectedKeys,
       selectedKeys,
       confirm,
@@ -292,6 +292,27 @@ const AttendanceTable = () => {
     },
   ];
 
+  const nestedColumns = [
+    {
+      title: "Start",
+      dataIndex: "start",
+      key: "start",
+      width: "150px",
+
+    },
+    {
+      title: "End",
+      dataIndex: "end",
+      key: "end",
+      width: "150px",
+    },
+    {
+      title: "Time Consumed",
+      dataIndex: "timeconsume",
+      key: "timeconsume",
+      width: "150px",
+    }
+  ];
   return (
     <>
       <Table
@@ -301,26 +322,8 @@ const AttendanceTable = () => {
         expandable={{
           rowExpandable: (record) => true,
           expandedRowRender: (record) => {
-
-
             return (
-              record?.Breaks?.map((item) => (
-
-                <table>
-                  <tr>
-                    <th>Start</th>
-                    <th>End</th>
-                    <th>Time Consumed</th>
-                  </tr>
-                  <tr>
-                    <td>{item.start}</td>
-                    <td>{item.end}</td>
-                    <td>{item.timeconsume}</td>
-                  </tr>
-                </table>
-              ))
-
-
+              <Table  columns={nestedColumns}  dataSource={record?.Breaks} pagination={false}/>
             )
           }
         }}

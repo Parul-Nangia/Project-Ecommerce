@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import jwt_decode from 'jwt-decode';
 import Error from '../components/Error';
 import LeaveCards from '../components/LeaveCards';
+import Clock from './Clock';
+import { Layout } from 'antd';
 
 
 
@@ -35,16 +37,29 @@ const Dashboard = () => {
     console.log("my role is ", name.role)
     return (
       <>
+        <Layout>
+          <Clock />
+        </Layout>
+        <br />
 
-      <DashboardCards />
-     
+
+        <DashboardCards />
       </>
+
     )
   }
   if (name.role === "employee") {
     return (
-      <LeaveCards />
-      
+      <>
+        <Clock />
+        <br />
+
+        <div style={{ marginTop: "70 px" }}>
+          <LeaveCards />
+        </div>
+
+      </>
+
     )
 
   }
@@ -62,8 +77,8 @@ const Dashboard = () => {
     <>
 
       <DashboardCards />
-      
-     
+
+
     </>
 
   )
