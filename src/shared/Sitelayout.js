@@ -22,7 +22,6 @@ const SiteLayout = (isLogin) => {
             <Layout>
               <Sidebar />
               <Layout style={{ padding: "0 24px 24px" }}>
-                <Clock />
                 <Middle />
                 <Content
                   className="site-layout-background"

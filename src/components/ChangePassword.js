@@ -1,9 +1,11 @@
 import React from "react";
-import { Button, Form, Input, Modal } from "antd";
+import { Button, Card, Col, Form, Input, Modal, Space } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import { Avatar, Badge } from "antd";
+import { SettingOutlined, UserOutlined } from "@ant-design/icons";
 
 const ChangePassword = () => {
   const [isopenmodal, setIsOpenModal] = useState(false);
@@ -119,7 +121,30 @@ const ChangePassword = () => {
           </Form.Item>
         </Form>
       </Modal>
-      <h1 style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ display: "flex" }}>
+        <h1>DATE :</h1>
+
+        <div style={{ marginLeft: "5px" }}>
+          {new Date().toLocaleDateString()}
+        </div>
+
+        <h1 style={{ marginLeft: "15px" }}>TIME :</h1>
+        <div style={{ marginLeft: "5px" }}>
+          {new Date().toLocaleTimeString()}
+        </div>
+      </div>
+
+      {/* <span>
+        <Badge dot>
+          <Avatar
+            style={{ display: "flex", width: "300px", height: "300px" }}
+            shape="square"
+            icon={<UserOutlined />}
+          />
+        </Badge>
+      </span> */}
+
+      {/* <h1 style={{ display: "flex", justifyContent: "center" }}>
         Link to Change Password
       </h1>
       <div>
@@ -129,6 +154,34 @@ const ChangePassword = () => {
             justifyContent: "center",
             hover: "blue",
           }}
+          onClick={showModal}
+        >
+          Change Password
+        </Link>
+      </div> */}
+
+      <div
+        style={{
+          marginTop: "85px",
+          width: "200px",
+          height: "230px",
+          padding: "10px",
+          border: "2px solid gray",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            width: "198px",
+            height: "198px",
+            marginLeft: "-10px",
+            marginTop: "-10px",
+          }}
+        >
+          <img className="settingimage" src="172985.png" />
+        </div>
+        <Link
+          style={{ display: "flex", marginLeft: "30px", marginTop: "1px" }}
           onClick={showModal}
         >
           Change Password

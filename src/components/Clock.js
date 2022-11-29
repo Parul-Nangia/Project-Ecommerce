@@ -34,6 +34,7 @@ const Clock = () => {
   const [isTimer, setIsTimer] = useState(false);
   const [objects, setObjects] = useState({});
   const [show, setShow] = useState();
+  const [name, setName] = useState("");
 
   //-------------------------------------------- Clock---------------------------------------------------------------
 
@@ -62,7 +63,6 @@ const Clock = () => {
       clearInterval(timerId);
     };
   }, []);
-
 
   const handleTime = () => {
     newTime = new Date().toLocaleTimeString();
@@ -274,10 +274,10 @@ const Clock = () => {
       console.log("Breaks/endTime", attendance?.Breaks[Breaks.length - 1]?.end);
     } else {
       const obj = {
-        _id: Math.floor(Math.random() * 9785874563463865),
+        key: Math.floor(Math.random() * 9785874563463865),
         start: new Date().toLocaleTimeString(),
         end: "",
-        timeconsumed:timeconsumed
+        timeconsumed: timeconsumed
       };
       console.log("Breaks/startTime", obj.start);
       attendance?.Breaks.push(obj);
@@ -333,7 +333,14 @@ const Clock = () => {
     }
   };
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
-
+  const userData = () => {
+    const token = localStorage.getItem("access_token1");
+    console.log("token from local storage:", token);
+    // let token = token;
+    var decoded = jwt_decode(token);
+    console.log("Decoded token data", decoded);
+    setName(decoded);
+  };
 
   return (
     <>
@@ -352,17 +359,17 @@ const Clock = () => {
 
           <Row gutter={16}>
             <Col span={8} className="TimeCards">
-              <Card title="CheckIn " bordered={false}>
+              <Card title="Checkin " bordered={false}>
                 {attendance?.CheckIn}
               </Card>
             </Col>
             <Col span={8} className="TimeCards">
-              <Card title="CheckOut" bordered={false}>
+              <Card title="Checkout" bordered={false}>
                 {attendance?.CheckOut}
               </Card>
             </Col>
             <Col span={8} className="TimeCards">
-              <Card title="Total Hours" bordered={false}>
+              <Card title="Total hours" bordered={false}>
                 {TodayAttendance} hours
               </Card>
             </Col>
@@ -523,41 +530,43 @@ const Clock = () => {
         </Form>
       </Modal>
 
-      <div>
-        <Button
-          ghost
-          style={{ fontWeight: "bold", background: "#D3D3D3" }}
-          onClick={() => {
-            handleTime();
-            employeecheckin();
-          }}
-          disabled={disableCheckin}
-        >
-          Checkin
-        </Button>
-        <Button
-          style={{ fontWeight: "bold", background: "#D3D3D3" }}
-          type="break"
-          ghost
-          onClick={() => {
-            employeebreak();
-          }}
-          disabled={disablebreak}
-        >
-          {show ? "Break" : "Resume"}
-        </Button>
+      <div className="parent">
+        <div className="child">
+          <Button
+            className="checkinBtn"
+            onClick={() => {
+              handleTime();
+              employeecheckin();
+            }}
+            disabled={disableCheckin}
+          >
+            Checkin
+          </Button>
+        </div>
+        <div className="child">
+          <Button
+            className="breakBtn"
 
-        <Button
-          type="checkout"
-          style={{ fontWeight: "bold", background: "#D3D3D3" }}
-          ghost
-          onClick={() => {
-            showModal();
-          }}
-          disabled={disableCheckout}
-        >
-          Checkout
-        </Button>
+            onClick={() => {
+              employeebreak();
+            }}
+            disabled={disablebreak}
+          >
+            {show ? "Break" : "Resume"}
+          </Button>
+        </div>
+        <div className="child">
+          <Button
+            className="checkoutBtn"
+
+            onClick={() => {
+              showModal();
+            }}
+            disabled={disableCheckout}
+          >
+            Checkout
+          </Button>
+        </div>
       </div>
       <br />
     </>
