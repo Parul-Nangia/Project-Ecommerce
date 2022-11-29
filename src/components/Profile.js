@@ -8,7 +8,7 @@ import TextArea from "antd/lib/input/TextArea";
 const { Option } = Select;
 // const { Content } = Layout;
 
-const Profile = (props) => {
+const Profile = ({user}) => {
   const params = useParams();
   //  console.log(params.id, "params");
   const [id] = useState(params.id);
@@ -90,13 +90,17 @@ const Profile = (props) => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+  // const showData =()=>{
+  //   console.log({...user},"kljhgfdsattty")
+  // }
  
   return (
     <>
     
       <Card title="General Information" bordered={false} style={{ width: 300 }}>
         <p>Name: {viewingEmployee?.name}</p>{" "}
-        <p>Email: {viewingEmployee?.email}</p>   <p>Father Name: {viewingEmployee?.fatherName}</p>
+        <p>Email: {viewingEmployee?.email}</p> 
+        <p>Father Name: {viewingEmployee?.fatherName}</p>
         <p>Contact: {viewingEmployee?.contact}</p>
         <p>Gender: {viewingEmployee?.gender}</p>
         <p>Role: {viewingEmployee?.role}</p>
@@ -156,10 +160,10 @@ const Profile = (props) => {
               />
             </Form.Item>
             <Form.Item
-            //  value={fatherName}
-            //  defaultValue={fatherName}
+               value={fatherName}
+              defaultValue={fatherName}
               label="Father Name"
-              // name="fatherName"
+               name="fatherName"
               // name="dadyy"
               rules={[
                 {
@@ -395,6 +399,7 @@ const Profile = (props) => {
                 message: "Select Your Date!",
               },
             ]}>
+              
               <DatePicker
                 dateFormat="dd/MM/yyyy"
                 // value={appraisal}
@@ -412,6 +417,9 @@ const Profile = (props) => {
             <Button type="primary" htmlType="submit">
               submit
             </Button>
+            {/* <Button type="primary" onClick={showData}>
+              click Here
+            </Button> */}
 
 
           </Row>
