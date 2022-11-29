@@ -323,7 +323,7 @@ const AttendanceTable = () => {
           rowExpandable: (record) => true,
           expandedRowRender: (record) => {
             return (
-              <Table  columns={nestedColumns}  dataSource={record?.Breaks}/>
+              <Table  columns={nestedColumns}  dataSource={record?.Breaks} pagination={false}/>
             )
           }
         }}
