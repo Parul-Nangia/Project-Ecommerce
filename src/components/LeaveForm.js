@@ -1,11 +1,13 @@
 import React from "react";
-import { Form, Input, Button, Row } from "antd";
+import { Form, Input, Button, Row, DatePicker } from "antd";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { makeStyles } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { send } from "emailjs-com";
+import { Select } from "antd";
+import { Option } from "antd/lib/mentions";
 
 const useStyles = makeStyles({
   frmItem: {
@@ -23,9 +25,13 @@ const LeaveForm = () => {
   const [EmployeeName, setEmployeeName] = useState("");
   const [SupervisorName, setSupervisorName] = useState("");
   const [Department, setDepartment] = useState("");
+  console.log("Department", Department);
   const [LeaveType, setLeaveType] = useState("");
+  console.log("LeaveType", LeaveType);
   const [LeaveDate, setLeaveDate] = useState("");
+  console.log("LeaveDate", LeaveDate);
   const [ReturnDate, setReturnDate] = useState("");
+  console.log("ReturnDate", ReturnDate);
   const [TotalHoursRequested, setTotalHoursRequested] = useState("");
   const [TotalDaysRequested, setTotalDaysRequested] = useState("");
   const [status, setStatus] = useState("");
@@ -55,15 +61,15 @@ const LeaveForm = () => {
       body: JSON.stringify(data),
     }).then((Leave) => {
       console.log("result", Leave);
-      window.alert("Leave Applied");
+      // window.alert("Leave Applied");
     });
   }
 
   function handleClick() {
-    navigate("/dashboard");
+    navigate("/Leave");
   }
   const handleEmail = () => {
-    sendEmail();
+    // sendEmail();
     applyLeave();
   };
 
@@ -82,114 +88,206 @@ const LeaveForm = () => {
       });
   };
 
+  const selectthis = (value) => {
+    setLeaveType(value);
+  };
+
+  const selectme = (value) => {
+    setDepartment(value);
+  };
+
+  const handledate = (value) => {
+    setLeaveDate(value.format("YYYY-MM-DD"));
+  };
+
+  const handlereturn = (value) => {
+    setReturnDate(value.format("YYYY-MM-DD"));
+  };
+
+  const selecthours = (value) => {
+    setTotalHoursRequested(value);
+  };
+
+
   return (
     <>
-      <Row justify="center" style={{ padding: "10%", marginLeft: "120px" }}>
-        <Form>
-          <Form.Item rules={[{ required: true }]}>
-            <Input
-              onChange={(e) => {
-                setEmployeeName(e.target.value);
-              }}
-              id="EmployeeName"
-              className={classes.frmItem}
-              placeholder="Employee Name"
-            />
-          </Form.Item>
+      <div style={{ display: "flex" }}>
+        <h1>DATE :</h1>
 
-          <Form.Item rules={[{ required: true }]}>
-            <Input
-              onChange={(e) => {
-                setSupervisorName(e.target.value);
-              }}
-              id="SupervisorName"
-              className={classes.frmItem}
-              placeholder="Supervisor Name"
-            />
-          </Form.Item>
+        <div style={{ marginLeft: "5px" }}>
+          {new Date().toLocaleDateString()}
+        </div>
 
-          <Form.Item rules={[{ required: true }]}>
-            <Input
-              onChange={(e) => {
-                setDepartment(e.target.value);
-              }}
-              id="Department"
-              className={classes.frmItem}
-              placeholder="Department"
-            />
-          </Form.Item>
+        <h1 style={{ marginLeft: "15px" }}>TIME :</h1>
+        <div style={{ marginLeft: "5px" }}>
+          {new Date().toLocaleTimeString()}
+        </div>
+      </div>
 
-          <Form.Item rules={[{ required: true }]}>
-            <Input
-              onChange={(e) => {
-                setLeaveType(e.target.value);
-              }}
-              id="LeaveType"
-              className={classes.frmItem}
-              placeholder="Leave Type"
-            />
-          </Form.Item>
+      <Form
+        name="basic"
+        labelCol={{
+          span: 8,
+        }}
+        wrapperCol={{
+          span: 8,
+        }}
+        initialValues={{
+          remember: true,
+        }}
+        autoComplete="off"
+        style={{ marginTop: "60px" }}
+      >
+        <Form.Item
+          label="Employee Name"
+          name="employee name"
+          rules={[
+            {
+              required: true,
+              message: "please input Your Name",
+            },
+          ]}
+        >
+          <Input
+            onChange={(e) => {
+              setEmployeeName(e.target.value);
+            }}
+            placeholder="Employee Name"
+          />
+        </Form.Item>
 
-          <Form.Item rules={[{ required: true }]}>
-            <Input
-              onChange={(e) => {
-                setLeaveDate(e.target.value);
-              }}
-              id="LeaveDate"
-              className={classes.frmItem}
-              type="calendar"
-              placeholder="Leave Date"
-            />
-          </Form.Item>
+        <Form.Item
+          label="Supervisor Name"
+          name="supervisor name"
+          rules={[
+            {
+              required: true,
+              message: "please input Your's Supervisor Name",
+            },
+          ]}
+        >
+          <Input
+            onChange={(e) => {
+              setSupervisorName(e.target.value);
+            }}
+            placeholder="Supervisor Name"
+          />
+        </Form.Item>
 
-          <Form.Item rules={[{ required: true }]}>
-            <Input
-              onChange={(e) => {
-                setReturnDate(e.target.value);
-              }}
-              id="ReturnDate"
-              className={classes.frmItem}
-              type="calendar"
-              placeholder="Return Date"
-            />
-          </Form.Item>
+        <Form.Item
+          label="Department"
+          name="department"
+          rules={[
+            {
+              required: true,
+              message: "please input Your Department Name",
+            },
+          ]}
+        >
+          <Select
+            defaultValue={{
+              value: "Select",
+            }}
+            onChange={selectme}
+          >
+            <Option value="Reactjs">Reactjs</Option>
+            <Option value="Php">Php</Option>
+            <Option value="Python">Python</Option>
+          </Select>
+        </Form.Item>
 
-          <Form.Item rules={[{ required: true }]}>
-            <Input
-              onChange={(e) => {
-                setTotalHoursRequested(e.target.value);
-              }}
-              className={classes.frmItem}
-              id="TotalHoursRequested"
-              type="number"
-              placeholder="Total Hours Requested"
-            />
-          </Form.Item>
+        <Form.Item
+          label="Leave Type"
+          name="leave type"
+          rules={[
+            {
+              required: true,
+              message: "please select Leave type",
+            },
+          ]}
+        >
+          <Select
+            defaultValue={{
+              value: "Select",
+            }}
+            onChange={selectthis}
+          >
+            <Option value="Priviliege">Priviliege</Option>
+            <Option value="Sick">Sick</Option>
+            <Option value="Casual">Casual</Option>
+          </Select>
+        </Form.Item>
 
-          <Form.Item rules={[{ required: true }]}>
-            <Input
-              onChange={(e) => {
-                setTotalDaysRequested(e.target.value);
-              }}
-              className={classes.frmItem}
-              id="TotalDaysRequested"
-              type="number"
-              placeholder="Total Days Requested"
-            />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" size={size} onClick={handleEmail}>
-              Submit
-            </Button>
-            <br />
-            <br />
-            <Button type="primary" size={size} onClick={handleClick}>
-              Back
-            </Button>
-            <br />
-          </Form.Item>
-        </Form>
-      </Row>
+        <Form.Item
+          label="Leave Date"
+          name="leave date"
+          rules={[
+            {
+              required: true,
+              message: "please select Date",
+            },
+          ]}
+        >
+          <DatePicker onChange={handledate} placeholder="Leave Date" />
+        </Form.Item>
+
+        <Form.Item
+          label="Return Date"
+          name="return date"
+          rules={[
+            {
+              required: true,
+              message: "please select Date",
+            },
+          ]}
+        >
+          <DatePicker onChange={handlereturn} placeholder="Leave Date" />
+        </Form.Item>
+
+        <Form.Item
+          label="Total Hours Requested"
+          name="total hours requested"
+          rules={[
+            {
+              required: true,
+              message: "please select Date",
+            },
+          ]}
+        >
+          <Select
+            defaultValue={{
+              value: "Select",
+            }}
+            onChange={selecthours}
+          >
+            <Option value="1">1</Option>
+            <Option value="2">2</Option>
+            <Option value="3">3</Option>
+            <Option value="4">4</Option>
+            <Option value="Half Day">Half Day</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item style={{ display: "flex", marginLeft: "40%" }}>
+          <Button type="primary" size={size} onClick={handleEmail}>
+            Apply
+          </Button>
+          <br />
+          <br />
+          <Button
+            style={{
+              display: "flex",
+              marginLeft: "2.5px",
+            }}
+            type="danger"
+            size={size}
+            onClick={handleClick}
+          >
+            Back
+          </Button>
+          <br />
+        </Form.Item>
+      </Form>
     </>
   );
 };

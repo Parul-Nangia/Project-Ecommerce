@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import jwt_decode from 'jwt-decode';
 import Error from '../components/Error';
 import LeaveCards from '../components/LeaveCards';
+import Clock from './Clock';
 
 
 
@@ -35,16 +36,26 @@ const Dashboard = () => {
     console.log("my role is ", name.role)
     return (
       <>
+        <Clock />
 
-      <DashboardCards />
-     
+
+        <DashboardCards />
       </>
+
     )
   }
   if (name.role === "employee") {
     return (
-      <LeaveCards />
-      
+      <>
+        <Clock />
+        <br />
+
+        <div style={{ marginTop: "70 px" }}>
+          <LeaveCards />
+        </div>
+
+      </>
+
     )
 
   }
@@ -62,8 +73,8 @@ const Dashboard = () => {
     <>
 
       <DashboardCards />
-      
-     
+
+
     </>
 
   )

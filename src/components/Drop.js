@@ -81,7 +81,9 @@ const Drop = () => {
       <Dropdown overlay={menu} trigger={["click"]}>
         <a onClick={(e) => e.preventDefault()}>
           <Space>
-            <DownOutlined />
+            <DownOutlined
+              style={{ width: "2em", height: "2em", marginTop: "30px" }}
+            />
           </Space>
         </a>
       </Dropdown>

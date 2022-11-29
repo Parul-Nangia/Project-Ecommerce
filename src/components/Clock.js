@@ -33,6 +33,7 @@ const Clock = () => {
   const [isTimer, setIsTimer] = useState(false);
   const [objects, setObjects] = useState({});
   const [show, setShow] = useState();
+  const [name, setName] = useState("");
 
   //-------------------------------------------- Clock---------------------------------------------------------------
 
@@ -61,7 +62,6 @@ const Clock = () => {
       clearInterval(timerId);
     };
   }, []);
-
 
   const handleTime = () => {
     newTime = new Date().toLocaleTimeString();
@@ -340,7 +340,14 @@ const Clock = () => {
     }
   };
   //-------------------------------------------- Attendance Checkout---------------------------------------------------------------
-
+  const userData = () => {
+    const token = localStorage.getItem("access_token1");
+    console.log("token from local storage:", token);
+    // let token = token;
+    var decoded = jwt_decode(token);
+    console.log("Decoded token data", decoded);
+    setName(decoded);
+  };
 
   return (
     <>
