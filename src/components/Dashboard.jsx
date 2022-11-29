@@ -5,6 +5,7 @@ import jwt_decode from 'jwt-decode';
 import Error from '../components/Error';
 import LeaveCards from '../components/LeaveCards';
 import Clock from './Clock';
+import { Layout } from 'antd';
 
 
 
@@ -36,7 +37,10 @@ const Dashboard = () => {
     console.log("my role is ", name.role)
     return (
       <>
-        <Clock />
+        <Layout>
+          <Clock />
+        </Layout>
+        <br />
 
 
         <DashboardCards />
