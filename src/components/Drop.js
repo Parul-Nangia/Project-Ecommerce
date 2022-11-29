@@ -1,4 +1,4 @@
-import { DownOutlined } from "@ant-design/icons";
+import { MenuOutlined  ,UserOutlined, SettingOutlined , PoweroffOutlined } from "@ant-design/icons";
 import { Dropdown, Menu, Space } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
@@ -46,6 +46,7 @@ const Drop = () => {
       items={[
         {
           key: "0",
+          icon:<UserOutlined />,
           label: (
             <Link className="drop-down" onClick={EmployeeProfile}>
               {" "}
@@ -55,6 +56,7 @@ const Drop = () => {
         },
         {
           key: "1",
+          icon:<SettingOutlined />,
           label: (
             <Link className="drop-down" onClick={employeepassword}>
               {" "}
@@ -64,6 +66,7 @@ const Drop = () => {
         },
         {
           key: "2",
+          icon:<PoweroffOutlined />,
           label: (
             <Link className="drop-down" onClick={logout}>
               {" "}
@@ -81,7 +84,8 @@ const Drop = () => {
       <Dropdown overlay={menu} trigger={["click"]}>
         <a onClick={(e) => e.preventDefault()}>
           <Space>
-            <DownOutlined />
+          <MenuOutlined className="btnset">
+          </MenuOutlined>
           </Space>
         </a>
       </Dropdown>

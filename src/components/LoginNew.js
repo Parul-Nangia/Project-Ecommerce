@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./LoginNew.css";
+
 
 const LoginNew = () => {
   const navigate = useNavigate();
