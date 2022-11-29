@@ -187,7 +187,7 @@ const AttendanceTable = () => {
     setSearchDate("");
   };
   const columnSearch = (dataIndex) => ({
-    filterDropdown: ({
+    filterDropdown: ({  
       setSelectedKeys,
       selectedKeys,
       confirm,

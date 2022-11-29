@@ -24,7 +24,6 @@ const LoginNew = () => {
     );
 
     axios.defaults.headers.common["Authorization"] = `Bearer ${data["token"]}`;
-
     localStorage.setItem("access_token1", JSON.stringify(data.token));
     window.location.reload();
     navigate("/dashboard");
@@ -40,7 +39,7 @@ const LoginNew = () => {
             rules={[{ required: true, message: "Please input your Username!" }]}
           >
             <Input
-              prefix={<UserOutlined className="site-form-item-icon" />}
+              prefix={<UserOutlined />}
               placeholder="Username"
               onChange={(e) => setName(e.target.value)}
             />
@@ -51,7 +50,7 @@ const LoginNew = () => {
           >
             <Input
               type="password"
-              prefix={<LockOutlined className="site-form-item-icon" />}
+              prefix={<LockOutlined />}
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
