@@ -99,21 +99,66 @@ const Clock = () => {
           }
 
           // Check if employee Checked-Out Today
+          // if (res?.data?.attendanceDataByEmpID.length === 0) {
+          //   setDisableCheckout(true);
+          // } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn === "") {
+          //   console.warn("here 11")
+          //   setDisableCheckout(true);
+          // }
+          // if (res?.data?.attendanceDataByEmpID.length === 0) {
+          //   console.warn("here 12")
+          //   setDisableCheckout(true);
+
+          //checkout time calculation 
           if (res?.data?.attendanceDataByEmpID.length === 0) {
+            console.warn("Need Attendance")
             setDisableCheckout(true);
-          } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn === "") {
-            console.warn("here 11")
+          } else if (res?.data?.attendanceDataByEmpID[0].CheckIn === "") {
+            console.warn("Need Checkin")
             setDisableCheckout(true);
-          } else if (res?.data?.attendanceDataByEmpID[0].CheckIn !== "") {
-            console.warn("here 12")
-            setDisableCheckout(false);
+          } else if (res?.data?.attendanceDataByEmpID[0].CheckOut === "") {
+            console.warn("Need CheckOut")
+            setDisableCheckout(true);
+          } else {
+            const todayCheckIn = moment(
+              res?.data?.attendanceDataByEmpID[0].CheckIn,
+              "HH:mm:ss a"
+            );
+            const todayCheckOut = moment(
+              res?.data?.attendanceDataByEmpID[0].CheckOut,
+              "HH:mm:ss a"
+            );
+            const milliSeconds = moment.duration(todayCheckOut.diff(todayCheckIn));
+            // const seconds = Math.floor((milliSeconds / 1000) % 60);
+            const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
+            const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
+            console.warn("hours", hours)
+            if (hours < 8) {
+              console.warn("am in hours", hours)
+              console.warn("you haven't worked till 8 hours. After 8 hours Checkout Btn Will Enable")
+              setDisableCheckout(true);
+            } else {
+              setDisableCheckout(false);
+              console.warn("success worked till 8 hours")
+            }
+            // if (minutes === 0 || hours === 0) {
+            //   console.log("minutes", minutes);
+            //   console.log("hours", hours);
+            //   setTodayAttendance("00:00");
+
+            // console.log("here in minutes", minutes);
+            // } else {
+            const formatingTime = [
+              hours.toString().padStart(2, "0"),
+              minutes.toString().padStart(2, "0"),
+              // seconds.toString().padStart(2, "0"),
+            ].join(":");
+            // }
           }
-          if (res?.data?.attendanceDataByEmpID.length === 0) {
+          if (res?.data?.attendanceDataByEmpID[0].CheckOut !== "") {
+            console.warn("Good Bye. Leave Office Now. CheckOut Disabled")
             setDisableCheckout(true);
-          } else if (res?.data?.attendanceDataByEmpID[0].CheckOut !== "") {
-            console.warn("here 13")
-            setDisableCheckout(true);
-          } 
+          }
 
           // Check if employee Checked-In Today then he can take breaks. Otherwise Break button will remain disabled
           if (res?.data?.attendanceDataByEmpID.length === 0) {
@@ -137,7 +182,7 @@ const Clock = () => {
             ]?.end === ""
           ) {
             setShow(false);
-            
+
             console.log("Please Resume Your Break", show);
           } else if (
             res?.data?.attendanceDataByEmpID[0].Breaks[
@@ -154,27 +199,17 @@ const Clock = () => {
             console.log("nothing found");
           }
 
-          // if (res?.data?.attendanceDataByEmpID.length === 0) {
-          //   setDisableCheckout(true);
-          // } else if (res?.data?.attendanceDataByEmpID[0].Breaks.length === 0){
-          //   setDisableCheckout(true);
-          // } else if (res?.data?.attendanceDataByEmpID[0].Breaks[
-          //   res?.data?.attendanceDataByEmpID[0].Breaks.length - 1
-          // ]?.end === "") {
-          //   setDisableCheckout(true);
-
-          // }
 
 
-           if (res?.data?.attendanceDataByEmpID.length === 0) {
+          if (res?.data?.attendanceDataByEmpID.length === 0) {
             setTodayAttendance("");
-            console.log("1 am here", TodayAttendance);
+            console.warn("1 am here", TodayAttendance);
           } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn === "") {
             setTodayAttendance("");
-            console.log("2 am here", TodayAttendance);
+            console.warn("2 am here", TodayAttendance);
           } else if (res?.data?.attendanceDataByEmpID[0]?.CheckOut === "") {
             setTodayAttendance("");
-            console.log("3 am here", TodayAttendance);
+            console.warn("3 am here", TodayAttendance);
           } else {
             const attCheckIn = moment(
               res?.data?.attendanceDataByEmpID[0].CheckIn,
@@ -397,7 +432,7 @@ const Clock = () => {
             </Col>
             <Col span={8} className="dashboardcards">
               <Card title="Total hours" bordered={false}>
-                {TodayAttendance} 
+                {TodayAttendance}
               </Card>
             </Col>
           </Row>
