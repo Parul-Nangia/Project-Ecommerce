@@ -51,7 +51,7 @@ const Documentation = () => {
     await axios
       .get(`${process.env.REACT_APP_BASE_URL}/document`)
       .then((res) => {
-        console.log("Reaponse getttttttt", res);
+        console.log("Response getttttttt", res);
 
         setDataSource(res?.data?.documentData);
         // console.log("Attendance All Data", dataSource);
@@ -69,6 +69,7 @@ const Documentation = () => {
         message.success("Yes File is Upload ")
       }
       setDocumentFile(file)
+      console.log("aaaaa",file)
       // return false
       // return isfile
       // return false || Upload.LIST_IGNORE ;
@@ -119,6 +120,7 @@ const Documentation = () => {
     formData.append("documentname", documentname);
     formData.append("documenttype", documenttype);
     formData.append("emp_id", emp_id);
+    console.log("hellonnnnnnnnnn",formData)
 
     axios
       .post(

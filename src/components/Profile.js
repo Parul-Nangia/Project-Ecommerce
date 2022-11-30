@@ -1,21 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import moment from "moment";
-import {
-  Form,
-  Input,
-  DatePicker,
-  Select,
-  Card,
-  Row,
-  Col,
-  Button,
-  Modal,
-} from "antd";
+import { Form, Input, DatePicker, Select, Card, Row, Col, Button } from "antd";
 import axios from "axios";
 import TextArea from "antd/lib/input/TextArea";
-import jwt_decode from "jwt-decode";
-
 // import { max } from "date-fns";
 const { Option } = Select;
 // const { Content } = Layout;
@@ -40,10 +28,6 @@ const Profile = (props) => {
   const [panNumber, setPanNumber] = useState();
   const [salary, setSalary] = useState();
   const [appraisal, setAppraisal] = useState();
-  const [isopenmodal, setIsOpenModal] = useState(false);
-  const [resetpassword, setResetPassword] = useState("");
-  const [confirmpassword, setConfirmPassword] = useState("");
-  const [newpassword, setNewPassword] = useState([]);
 
   // const[appraisal,setAppraisal]=useState()
 
@@ -51,24 +35,6 @@ const Profile = (props) => {
     console.log(id, "userid");
     viewEmployee(id);
   }, []);
-
-  const onFinish = async () => {
-    const token = localStorage.getItem("access_token1");
-    const password = confirmpassword;
-    console.log("password value", password);
-    var decoded = jwt_decode(token);
-    const ID = decoded._id;
-
-    await axios
-      .put(`${process.env.REACT_APP_BASE_URL}/user/${ID}`, {
-        password,
-      })
-      .then((res) => {
-        setNewPassword(res?.data?.updatedAttendance);
-        console.log("Reset Password Value", newpassword);
-        // window.location.reload();
-      });
-  };
 
   const viewEmployee = async (id) => {
     console.log(id);
@@ -126,92 +92,8 @@ const Profile = (props) => {
     console.log("Failed:", errorInfo);
   };
 
-  const showModal = () => {
-    setIsOpenModal(true);
-  };
-
-  const handleOk = async () => {
-    setIsOpenModal(false);
-  };
-
-  const handleCancel = () => {
-    setIsOpenModal(false);
-  };
-
   return (
     <>
-      <Modal
-        title="Password Reset"
-        cancelButtonProps={{ style: { display: "none" } }}
-        okButtonProps={{ style: { display: "none" } }}
-        open={isopenmodal}
-        onCancel={handleCancel}
-      >
-        <Form
-          name="basic"
-          labelCol={{
-            span: 8,
-          }}
-          wrapperCol={{
-            span: 16,
-          }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
-          <Form.Item
-            style={{ fontWeight: "bold" }}
-            label="Set Password"
-            name="SetPassword"
-            rules={[
-              {
-                required: true,
-                message: "set your password!",
-              },
-            ]}
-          >
-            <Input.Password
-              onChange={(e) => {
-                setResetPassword(e.target.value);
-              }}
-            />
-          </Form.Item>
-
-          <Form.Item
-            style={{ fontWeight: "bold" }}
-            label="Confirm Password"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "confirm  your password!",
-              },
-            ]}
-          >
-            <Input.Password
-              onChange={(e) => {
-                setConfirmPassword(e.target.value);
-              }}
-            />
-          </Form.Item>
-
-          <Form.Item>
-            <div style={{ display: "flex", marginLeft: "105%" }}>
-              <Button
-                style={{ marginRight: "4px", backgroundColor: "red" }}
-                type="primary"
-                htmlType="cancel"
-                onClick={handleCancel}
-              >
-                Cancel
-              </Button>
-              <Button type="primary" htmlType="Done" onClick={handleOk}>
-                Done
-              </Button>
-            </div>
-          </Form.Item>
-        </Form>
-      </Modal>
       <Card title="General Information" bordered={false} style={{ width: 300 }}>
         <p>Name: {viewingEmployee?.name}</p>{" "}
         <p>Email: {viewingEmployee?.email}</p>{" "}
@@ -219,12 +101,6 @@ const Profile = (props) => {
         <p>Contact: {viewingEmployee?.contact}</p>
         <p>Gender: {viewingEmployee?.gender}</p>
         <p>Role: {viewingEmployee?.role}</p>
-        <Link
-          style={{ display: "flex", marginLeft: "30px", marginTop: "1px" }}
-          onClick={showModal}
-        >
-          Change Password
-        </Link>
       </Card>
       <Form
         // name="basic"
@@ -283,7 +159,7 @@ const Profile = (props) => {
               //  value={fatherName}
               //  defaultValue={fatherName}
               label="Father Name"
-              name="fatherName"
+              // name="fatherName"
               // name="dadyy"
               rules={[
                 {

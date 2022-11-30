@@ -26,7 +26,7 @@ const Routing = () => {
         <Route path="/view/:_id" element={<View />} />
         <Route path="/leaveform" element={<LeaveForm />} />
         <Route path="/leavecalendar" element={<LeaveCalendar />} />
-        <Route path="/profile/:id" element={<Profile />} />
+        <Route path="/profile/:id" element={<Profile/>} />
 
         <Route path="/employeeprofile" element={<EmployeeProfile />} />
         <Route path="/changepassword" element={<ChangePassword />} />
