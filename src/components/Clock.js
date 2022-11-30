@@ -6,6 +6,8 @@ import {
   MinusCircleOutlined,
   PlusOutlined,
   DownOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined
 } from "@ant-design/icons";
 
 import moment, { duration } from "moment";
@@ -164,7 +166,7 @@ const Clock = () => {
           // }
 
 
-          if (res?.data?.attendanceDataByEmpID.length === 0) {
+           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setTodayAttendance("00:00");
             console.log("1 am here", TodayAttendance);
           } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn === "") {
@@ -383,17 +385,17 @@ const Clock = () => {
           <br />
 
           <Row gutter={16}>
-            <Col span={8} className="TimeCards">
+            <Col span={8} className="dashboardcards">
               <Card title="Checkin " bordered={false}>
                 {attendance?.CheckIn}
               </Card>
             </Col>
-            <Col span={8} className="TimeCards">
+            <Col span={8} className="dashboardcards">
               <Card title="Checkout" bordered={false}>
                 {attendance?.CheckOut}
               </Card>
             </Col>
-            <Col span={8} className="TimeCards">
+            <Col span={8} className="dashboardcards">
               <Card title="Total hours" bordered={false}>
                 {TodayAttendance} hours
               </Card>

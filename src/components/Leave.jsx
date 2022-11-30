@@ -83,13 +83,13 @@ const Leave = (props) => {
 
         <Link to="/leaveform"></Link>
         <br />
-        <Button style={{ backgroundColor: "Coral", color: "white", fontWeight: "bold" }} onClick={() => navigate('/leaveform')}>Apply Leave</Button>
+        <Button style={{ backgroundColor: "#da3939", color: "white", fontWeight: "bold" }} onClick={() => navigate('/leaveform')}>Apply Leave</Button>
 
         <br />
         <h1>{calendarview}</h1>
         <div>
-          <Button style={{ backgroundColor: "lightgray", color: "white", fontWeight: "bold" }} onClick={() => setCalendarview(!calendarview)}>Calendar View</Button>
-          <Button style={{ backgroundColor: "lightgray", color: "white", fontWeight: "bold" }} onClick={() => setCalendarview(!calendarview)}>Table View</Button>
+          <Button  className='calendarbtn' onClick={() => setCalendarview(!calendarview)}>Calendar View</Button>
+          <Button className='calendarbtn' onClick={() => setCalendarview(!calendarview)}>Table View</Button>
         </div>
         <br />
         <br />

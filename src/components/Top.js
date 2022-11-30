@@ -1,5 +1,7 @@
 import { message } from "antd";
 import React from "react";
+import { useState, useEffect } from "react";
+
 import { Layout } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
@@ -12,6 +14,9 @@ const Top = () => {
   let user = JSON.parse(localStorage.getItem("user-info"));
 
   const navigate = useNavigate();
+  const [collapsed, setCollapsed] = useState(false);
+
+
   function logOut() {
     localStorage.clear();
     navigate("/");
@@ -71,6 +76,7 @@ const Top = () => {
                 <Drop />
               </div>
             </Menu>
+            
           </Header>
         </Layout>
       </div>

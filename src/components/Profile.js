@@ -147,24 +147,24 @@ const Profile = (props) => {
                   console.log(d);
                   setJoiningDate(d);
                 }}
-                // onChange={(e) => {
-                //   // const d = new Date(date).toLocaleDateString("fr-FR");
-                //   // console.log(d);
-                //   setJoiningDate([e.format("dd/MM/yyyy")]);
-                //   console.log(e)
-                // }}
+              // onChange={(e) => {
+              //   // const d = new Date(date).toLocaleDateString("fr-FR");
+              //   // console.log(d);
+              //   setJoiningDate([e.format("dd/MM/yyyy")]);
+              //   console.log(e)
+              // }}
               />
             </Form.Item>
             <Form.Item
               //  value={fatherName}
               //  defaultValue={fatherName}
               label="Father Name"
-              // name="fatherName"
+              name="fatherName"
               // name="dadyy"
               rules={[
                 {
                   required: true,
-                  message: "Please Input Your Name!",
+               
                   whitespace: true,
                 },
                 {
@@ -175,8 +175,8 @@ const Profile = (props) => {
                   message: "please Input fullname & alphabets only",
                 },
               ]}
-              // value={fatherName}
-              // initialValue={fatherName}
+            // value={fatherName}
+            // initialValue={fatherName}
             >
               <Input
                 placeholder="Type Your Name"
