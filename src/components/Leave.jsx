@@ -51,13 +51,12 @@ const Leave = (props) => {
           <div style={{ marginLeft: "5px" }}>{new Date().toLocaleTimeString()}</div>
         </div>
 
-        <Link to="/leaveform"></Link>
         <br />
 
         <h1>{view}</h1>
         <div>
-          <Button style={{ backgroundColor: "DarkSlateGray", color: "white", fontWeight: "bold" }} onClick={() => setView(!view)}>Calendar View</Button>
-          <Button style={{ backgroundColor: "CornflowerBlue", color: "white", fontWeight: "bold" }} onClick={() => setView(!view)}>Table View</Button>
+          <Button className='calendarbtn' onClick={() => setView(!view)}>Calendar View</Button>
+          <Button className='calendarbtn' onClick={() => setView(!view)}>Table View</Button>
         </div>
         <br />
         <br />
@@ -80,19 +79,23 @@ const Leave = (props) => {
           <h1 style={{ marginLeft: "15px" }}>TIME :</h1>
           <div style={{ marginLeft: "5px" }}>{new Date().toLocaleTimeString()}</div>
         </div>
+        <br/>
 
-        <Link to="/leaveform"></Link>
+      
         <br />
-        <Button style={{ backgroundColor: "#da3939", color: "white", fontWeight: "bold" }} onClick={() => navigate('/leaveform')}>Apply Leave</Button>
+        
 
         <br />
         <h1>{calendarview}</h1>
         <div>
+        <Button className='leavebtn' onClick={() => navigate('/leaveform')}>Apply Leave</Button>
+
           <Button  className='calendarbtn' onClick={() => setCalendarview(!calendarview)}>Calendar View</Button>
           <Button className='calendarbtn' onClick={() => setCalendarview(!calendarview)}>Table View</Button>
         </div>
         <br />
         <br />
+        <br/>
 
         {calendarview ? <EmployeeLeaveTable /> : <EmployeeLeaveCalendar />}
 

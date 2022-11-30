@@ -49,9 +49,9 @@ const Dashboard = () => {
   if (name.role === "employee") {
     return (
       <>
-        <Layout>
+        
           <Clock />
-        </Layout>
+      
 
 
         <LeaveCards />
