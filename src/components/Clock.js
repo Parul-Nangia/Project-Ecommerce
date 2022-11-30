@@ -15,9 +15,9 @@ const Clock = () => {
   const [date, setDate] = useState(new Date());
   const [attendance, setAttendance] = useState([]);
   const [TodayAttendance, setTodayAttendance] = useState([]);
-  const [disableCheckin, setDisableCheckin] = React.useState(false);
-  const [disableCheckout, setDisableCheckout] = React.useState(false);
-  const [disablebreak, setDisableBreak] = React.useState(false);
+  const [disableCheckin, setDisableCheckin] = React.useState();
+  const [disableCheckout, setDisableCheckout] = React.useState();
+  const [disablebreak, setDisableBreak] = React.useState();
   const [EmployeeCheckIn, setEmployeeCheckIn] = useState([]);
   const [attendanceAll, setAttendanceAll] = useState([]);
   let newTime = new Date().toLocaleTimeString();
@@ -48,7 +48,7 @@ const Clock = () => {
 
   const handleOk = () => {
     setIsModalOpen(false);
-    setDisableCheckout(true);
+    // setDisableCheckout(true);
 
   };
 
@@ -100,12 +100,18 @@ const Clock = () => {
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setDisableCheckout(true);
           } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn === "") {
+            console.warn("here 11")
             setDisableCheckout(true);
           } else if (res?.data?.attendanceDataByEmpID[0].CheckIn !== "") {
+            console.warn("here 12")
             setDisableCheckout(false);
-          } else if (res?.data?.attendanceDataByEmpID[0].CheckOut !== "") {
-            setDisableCheckout(true);
           }
+          if (res?.data?.attendanceDataByEmpID.length === 0) {
+            setDisableCheckout(true);
+          } else if (res?.data?.attendanceDataByEmpID[0].CheckOut !== "") {
+            console.warn("here 13")
+            setDisableCheckout(true);
+          } 
 
           // Check if employee Checked-In Today then he can take breaks. Otherwise Break button will remain disabled
           if (res?.data?.attendanceDataByEmpID.length === 0) {
@@ -129,6 +135,7 @@ const Clock = () => {
             ]?.end === ""
           ) {
             setShow(false);
+            
             console.log("Please Resume Your Break", show);
           } else if (
             res?.data?.attendanceDataByEmpID[0].Breaks[
@@ -144,6 +151,18 @@ const Clock = () => {
             setShow(true);
             console.log("nothing found");
           }
+
+          // if (res?.data?.attendanceDataByEmpID.length === 0) {
+          //   setDisableCheckout(true);
+          // } else if (res?.data?.attendanceDataByEmpID[0].Breaks.length === 0){
+          //   setDisableCheckout(true);
+          // } else if (res?.data?.attendanceDataByEmpID[0].Breaks[
+          //   res?.data?.attendanceDataByEmpID[0].Breaks.length - 1
+          // ]?.end === "") {
+          //   setDisableCheckout(true);
+
+          // }
+
 
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setTodayAttendance("00:00");
@@ -567,7 +586,6 @@ const Clock = () => {
 
             onClick={() => {
               showModal();
-              setDisableCheckout(true);
 
             }}
             disabled={disableCheckout}
