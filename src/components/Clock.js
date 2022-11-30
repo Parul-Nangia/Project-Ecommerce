@@ -48,6 +48,8 @@ const Clock = () => {
 
   const handleOk = () => {
     setIsModalOpen(false);
+    setDisableCheckout(true);
+
   };
 
   const handleCancel = () => {
@@ -101,10 +103,14 @@ const Clock = () => {
             setDisableCheckout(true);
           } else if (res?.data?.attendanceDataByEmpID[0].CheckIn !== "") {
             setDisableCheckout(false);
+          } else if (res?.data?.attendanceDataByEmpID[0].CheckOut !== "") {
+            setDisableCheckout(true);
           }
 
           // Check if employee Checked-In Today then he can take breaks. Otherwise Break button will remain disabled
           if (res?.data?.attendanceDataByEmpID.length === 0) {
+            setDisableBreak(true);
+          } else if (res?.data?.attendanceDataByEmpID[0].CheckOut !== "") {
             setDisableBreak(true);
           } else {
             setDisableBreak(false);
@@ -325,8 +331,8 @@ const Clock = () => {
         })
         .then((res) => {
           setEmployeeCheckOut(res?.data?.updatedAttendance);
-          setDisableCheckout(true);
           window.location.reload();
+          setDisableCheckout(true);
         });
     } else {
       window.alert("you have already Checked-Out");
@@ -561,6 +567,8 @@ const Clock = () => {
 
             onClick={() => {
               showModal();
+              setDisableCheckout(true);
+
             }}
             disabled={disableCheckout}
           >

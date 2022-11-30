@@ -82,16 +82,16 @@
   color: white;
 }
 
-.breakBtn:active {
+/* .breakBtn:active {
   font-weight: bold;
   background: #d22d2d;
   color: white;
-}
+} */
 
 
 .checkoutBtn:hover {
   font-weight: bold;
-  background: #d22d2d;
+  background: #da3939;
   border-color: blanchedalmond;
   color: white;
 }
@@ -147,7 +147,31 @@
   width: 200px;
 } */
 
-.btnset{
+.btnset {
   color: white;
-  margin:5px;
+  margin: 5px;
+}
+
+.addEmpBtn:hover {
+
+  background: #da3939;
+  border-color: blanchedalmond;
+  color: white;
+  transform: scale(1, 1);
+  -webkit-transform: scale(1.1, 1.1);
+  -moz-transform: scale(1, 1);
+
+}
+
+.addEmpBtn {
+  background: white;
+  border-color: lightgrey;
+  color: black;
+  float: right;
+  margin: 10px;
+
+  /* background: #d22d2d; */
+  /* border-color: black; */
+  /* color: black; */
+
 }

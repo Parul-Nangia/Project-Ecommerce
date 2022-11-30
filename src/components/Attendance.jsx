@@ -44,7 +44,7 @@ const Attendance = () => {
           <div style={{ marginLeft: "5px" }}>{new Date().toLocaleTimeString()}</div>
         </div>
 
-
+        <br />
         <AttendanceCards />
         <br />
         <AttendanceTable />
