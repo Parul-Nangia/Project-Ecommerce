@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import moment from "moment"
-import { Form,Input,DatePicker,Select,Card,Row,Col,Button,} from "antd";
+import { Link, useParams } from "react-router-dom";
+import moment from "moment";
+import {
+  Form,
+  Input,
+  DatePicker,
+  Select,
+  Card,
+  Row,
+  Col,
+  Button,
+  Modal,
+} from "antd";
 import axios from "axios";
 import TextArea from "antd/lib/input/TextArea";
+import jwt_decode from "jwt-decode";
+
 // import { max } from "date-fns";
 const { Option } = Select;
 // const { Content } = Layout;
@@ -27,14 +39,36 @@ const Profile = (props) => {
   const [adharNumber, setAdharNumber] = useState();
   const [panNumber, setPanNumber] = useState();
   const [salary, setSalary] = useState();
-  const [appraisal, setAppraisal] = useState( );
- 
+  const [appraisal, setAppraisal] = useState();
+  const [isopenmodal, setIsOpenModal] = useState(false);
+  const [resetpassword, setResetPassword] = useState("");
+  const [confirmpassword, setConfirmPassword] = useState("");
+  const [newpassword, setNewPassword] = useState([]);
+
   // const[appraisal,setAppraisal]=useState()
 
   useEffect(() => {
     console.log(id, "userid");
     viewEmployee(id);
   }, []);
+
+  const onFinish = async () => {
+    const token = localStorage.getItem("access_token1");
+    const password = confirmpassword;
+    console.log("password value", password);
+    var decoded = jwt_decode(token);
+    const ID = decoded._id;
+
+    await axios
+      .put(`${process.env.REACT_APP_BASE_URL}/user/${ID}`, {
+        password,
+      })
+      .then((res) => {
+        setNewPassword(res?.data?.updatedAttendance);
+        console.log("Reset Password Value", newpassword);
+        // window.location.reload();
+      });
+  };
 
   const viewEmployee = async (id) => {
     console.log(id);
@@ -43,7 +77,7 @@ const Profile = (props) => {
       .then((res) => {
         console.log(res, "api response");
         setViewingEmployee(res?.data?.myData);
-        console.log(res?.data?.myData?.fatherName,"fathername")
+        console.log(res?.data?.myData?.fatherName, "fathername");
         setFatherName(res?.data?.myData?.fatherName);
         setMotherName(res?.data?.myData?.motherName);
         setBloodGroup(res?.data?.myData?.bloodGroup);
@@ -53,11 +87,9 @@ const Profile = (props) => {
         setPanNumber(res?.data?.myData?.panNumber);
         setSalary(res?.data?.myData?.salary);
         setAppraisal(res?.data?.myData?.appraisal);
-        
-        
-        
+
         // console.log(fatherName,"dgfjsghgh")
-        
+
         // console.log(viewingEmployee, "viewingEmployee");
       });
   };
@@ -69,7 +101,8 @@ const Profile = (props) => {
     //  form.resetFields();
     // e.preventDefault();
     console.log("hello");
-    axios.put(`${process.env.REACT_APP_BASE_URL}/user/${id}`, {
+    axios
+      .put(`${process.env.REACT_APP_BASE_URL}/user/${id}`, {
         fatherName,
         motherName,
         joiningDate,
@@ -81,8 +114,10 @@ const Profile = (props) => {
         salary,
         appraisal,
       })
-      .then((res) => {console.log(res, "response");});
-      // console.log("form values", form.getFieldsValue());
+      .then((res) => {
+        console.log(res, "response");
+      });
+    // console.log("form values", form.getFieldsValue());
   };
   // const onFinish = (values) => {
   //   console.log('Success:', values);
@@ -90,19 +125,108 @@ const Profile = (props) => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
- 
+
+  const showModal = () => {
+    setIsOpenModal(true);
+  };
+
+  const handleOk = async () => {
+    setIsOpenModal(false);
+  };
+
+  const handleCancel = () => {
+    setIsOpenModal(false);
+  };
+
   return (
     <>
-    
+      <Modal
+        title="Password Reset"
+        cancelButtonProps={{ style: { display: "none" } }}
+        okButtonProps={{ style: { display: "none" } }}
+        open={isopenmodal}
+        onCancel={handleCancel}
+      >
+        <Form
+          name="basic"
+          labelCol={{
+            span: 8,
+          }}
+          wrapperCol={{
+            span: 16,
+          }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
+        >
+          <Form.Item
+            style={{ fontWeight: "bold" }}
+            label="Set Password"
+            name="SetPassword"
+            rules={[
+              {
+                required: true,
+                message: "set your password!",
+              },
+            ]}
+          >
+            <Input.Password
+              onChange={(e) => {
+                setResetPassword(e.target.value);
+              }}
+            />
+          </Form.Item>
+
+          <Form.Item
+            style={{ fontWeight: "bold" }}
+            label="Confirm Password"
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "confirm  your password!",
+              },
+            ]}
+          >
+            <Input.Password
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+              }}
+            />
+          </Form.Item>
+
+          <Form.Item>
+            <div style={{ display: "flex", marginLeft: "105%" }}>
+              <Button
+                style={{ marginRight: "4px", backgroundColor: "red" }}
+                type="primary"
+                htmlType="cancel"
+                onClick={handleCancel}
+              >
+                Cancel
+              </Button>
+              <Button type="primary" htmlType="Done" onClick={handleOk}>
+                Done
+              </Button>
+            </div>
+          </Form.Item>
+        </Form>
+      </Modal>
       <Card title="General Information" bordered={false} style={{ width: 300 }}>
         <p>Name: {viewingEmployee?.name}</p>{" "}
-        <p>Email: {viewingEmployee?.email}</p>   <p>Father Name: {viewingEmployee?.fatherName}</p>
+        <p>Email: {viewingEmployee?.email}</p>{" "}
+        <p>Father Name: {viewingEmployee?.fatherName}</p>
         <p>Contact: {viewingEmployee?.contact}</p>
         <p>Gender: {viewingEmployee?.gender}</p>
         <p>Role: {viewingEmployee?.role}</p>
+        <Link
+          style={{ display: "flex", marginLeft: "30px", marginTop: "1px" }}
+          onClick={showModal}
+        >
+          Change Password
+        </Link>
       </Card>
       <Form
-      
         // name="basic"
         //  form={form}
         // layout="inline"
@@ -122,28 +246,28 @@ const Profile = (props) => {
       >
         <Row>
           <Col span={12} style={{ padding: "10px 10px" }}>
-           <Form.Item 
-            label="Date of Joining"
-            // name="setJoiningDate"
-            rules={[
-              {
-                required: true,
-                message: "Select Your Date!",
-              },
-            ]}
+            <Form.Item
+              label="Date of Joining"
+              // name="setJoiningDate"
+              rules={[
+                {
+                  required: true,
+                  message: "Select Your Date!",
+                },
+              ]}
             >
               <DatePicker
                 dateFormat="dd/MM/yyyy"
                 defaultValue={joiningDate}
-//                 <DatePicker
-//  onChange={this.onChange}
-//  defaultValue={moment("YYYY-MM-DD")}
-//  />
+                //                 <DatePicker
+                //  onChange={this.onChange}
+                //  defaultValue={moment("YYYY-MM-DD")}
+                //  />
 
                 // value={joiningDate}
                 onChange={(date) => {
                   const d = new Date(date).toLocaleDateString("fr-FR");
-                  console.log(date,"Dateeee")
+                  console.log(date, "Dateeee");
                   console.log(d);
                   setJoiningDate(d);
                 }}
@@ -156,10 +280,10 @@ const Profile = (props) => {
               />
             </Form.Item>
             <Form.Item
-            //  value={fatherName}
-            //  defaultValue={fatherName}
+              //  value={fatherName}
+              //  defaultValue={fatherName}
               label="Father Name"
-              // name="fatherName"
+              name="fatherName"
               // name="dadyy"
               rules={[
                 {
@@ -181,7 +305,6 @@ const Profile = (props) => {
               <Input
                 placeholder="Type Your Name"
                 value={fatherName}
-               
                 // value={fatherName?.fatherName}
                 // value="prince"
                 // value={viewingEmployee?.fatherName}
@@ -223,19 +346,23 @@ const Profile = (props) => {
               ></Input>
             </Form.Item>
             <Form.Item
-             label="Blood Group"
-            //  name="bloodGroup"
-                          rules={[{
-                           required:true,
-                           message:"Select a option "
-                          }]}>
+              label="Blood Group"
+              //  name="bloodGroup"
+              rules={[
+                {
+                  required: true,
+                  message: "Select a option ",
+                },
+              ]}
+            >
               <Select
-              placeholder="Select"
+                placeholder="Select"
                 // defaultValue={{
                 //   value: "Select",
                 // }}
                 value={bloodGroup}
-                onChange={SelectOne} >
+                onChange={SelectOne}
+              >
                 <Option value="A+">A+</Option>
                 <Option value="A-">A-</Option>
                 <Option value="B+">B+</Option>
@@ -255,14 +382,14 @@ const Profile = (props) => {
                   required: true,
                   message: "Please input 10 digit number!",
                   max: 10,
-                  min:10,
+                  min: 10,
                 },
                 {
                   // pattern:/^[2-9]{2}[0-9]{8}$/,
                   // pattern: new RegExp(/\d+/g),
                   // pattern:/^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/,
-                  pattern:/^-?(0|[0-9][0-9]*)(\.[0-9]*)?$/,
-                  message:"please input your valid number"
+                  pattern: /^-?(0|[0-9][0-9]*)(\.[0-9]*)?$/,
+                  message: "please input your valid number",
                 },
               ]}
             >
@@ -316,7 +443,7 @@ const Profile = (props) => {
                 {
                   // pattern: new RegExp(/\d+/g),
                   // pattern:/^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/,
-                  pattern:/^-?(0|[0-9][0-9]*)(\.[0-9]*)?$/,
+                  pattern: /^-?(0|[0-9][0-9]*)(\.[0-9]*)?$/,
                   message: " Input only number!",
                 },
               ]}
@@ -370,7 +497,7 @@ const Profile = (props) => {
                 },
                 {
                   // pattern: new RegExp(/^[a-zA-Z0-9]*$/),
-                  pattern:/^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/,
+                  pattern: /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/,
                   message: "Input only number ",
                 },
               ]}
@@ -386,15 +513,16 @@ const Profile = (props) => {
                 }}
               ></Input>
             </Form.Item>
-            <Form.Item 
-            label="Last Appraisal Date"
-            // name="setAppraisal"
-            rules={[
-              {
-                required: true,
-                message: "Select Your Date!",
-              },
-            ]}>
+            <Form.Item
+              label="Last Appraisal Date"
+              // name="setAppraisal"
+              rules={[
+                {
+                  required: true,
+                  message: "Select Your Date!",
+                },
+              ]}
+            >
               <DatePicker
                 dateFormat="dd/MM/yyyy"
                 // value={appraisal}
@@ -412,8 +540,6 @@ const Profile = (props) => {
             <Button type="primary" htmlType="submit">
               submit
             </Button>
-
-
           </Row>
         </Form.Item>
       </Form>
@@ -422,4 +548,3 @@ const Profile = (props) => {
 };
 
 export default Profile;
-
