@@ -167,13 +167,13 @@ const Clock = () => {
 
 
            if (res?.data?.attendanceDataByEmpID.length === 0) {
-            setTodayAttendance("00:00");
+            setTodayAttendance("");
             console.log("1 am here", TodayAttendance);
           } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn === "") {
-            setTodayAttendance("00:00");
+            setTodayAttendance("");
             console.log("2 am here", TodayAttendance);
           } else if (res?.data?.attendanceDataByEmpID[0]?.CheckOut === "") {
-            setTodayAttendance("00:00");
+            setTodayAttendance("");
             console.log("3 am here", TodayAttendance);
           } else {
             const attCheckIn = moment(
@@ -397,7 +397,7 @@ const Clock = () => {
             </Col>
             <Col span={8} className="dashboardcards">
               <Card title="Total hours" bordered={false}>
-                {TodayAttendance} hours
+                {TodayAttendance} 
               </Card>
             </Col>
           </Row>
