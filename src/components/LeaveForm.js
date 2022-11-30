@@ -61,7 +61,7 @@ const LeaveForm = () => {
       body: JSON.stringify(data),
     }).then((Leave) => {
       console.log("result", Leave);
-      // window.alert("Leave Applied");
+      window.alert("Leave Applied");
     });
   }
 
@@ -107,7 +107,6 @@ const LeaveForm = () => {
   const selecthours = (value) => {
     setTotalHoursRequested(value);
   };
-
 
   return (
     <>

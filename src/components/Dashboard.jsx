@@ -40,7 +40,7 @@ const Dashboard = () => {
         <Layout>
           <Clock />
         </Layout>
-        <br />
+
 
 
         <DashboardCards />
@@ -51,12 +51,13 @@ const Dashboard = () => {
   if (name.role === "employee") {
     return (
       <>
-        <Clock />
-        <br />
+        <Layout>
+          <Clock />
+        </Layout>
 
-        <div style={{ marginTop: "70 px" }}>
-          <LeaveCards />
-        </div>
+
+        <LeaveCards />
+
 
       </>
 

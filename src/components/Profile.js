@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import moment from "moment"
-import { Form, Input, DatePicker, Select, Card, Row, Col, Button, } from "antd";
+import moment from "moment";
+import { Form, Input, DatePicker, Select, Card, Row, Col, Button } from "antd";
 import axios from "axios";
 import TextArea from "antd/lib/input/TextArea";
 // import { max } from "date-fns";
 const { Option } = Select;
 // const { Content } = Layout;
 
-const Profile = ({ user }) => {
+const Profile = (props) => {
   const params = useParams();
   //  console.log(params.id, "params");
   const [id] = useState(params.id);
@@ -43,7 +43,7 @@ const Profile = ({ user }) => {
       .then((res) => {
         console.log(res, "api response");
         setViewingEmployee(res?.data?.myData);
-        console.log(res?.data?.myData?.fatherName, "fathername")
+        console.log(res?.data?.myData?.fatherName, "fathername");
         setFatherName(res?.data?.myData?.fatherName);
         setMotherName(res?.data?.myData?.motherName);
         setBloodGroup(res?.data?.myData?.bloodGroup);
@@ -53,8 +53,6 @@ const Profile = ({ user }) => {
         setPanNumber(res?.data?.myData?.panNumber);
         setSalary(res?.data?.myData?.salary);
         setAppraisal(res?.data?.myData?.appraisal);
-
-
 
         // console.log(fatherName,"dgfjsghgh")
 
@@ -69,19 +67,22 @@ const Profile = ({ user }) => {
     //  form.resetFields();
     // e.preventDefault();
     console.log("hello");
-    axios.put(`${process.env.REACT_APP_BASE_URL}/user/${id}`, {
-      fatherName,
-      motherName,
-      joiningDate,
-      bloodGroup,
-      permanentAddress,
-      adharNumber,
-      contactNumber,
-      panNumber,
-      salary,
-      appraisal,
-    })
-      .then((res) => { console.log(res, "response"); });
+    axios
+      .put(`${process.env.REACT_APP_BASE_URL}/user/${id}`, {
+        fatherName,
+        motherName,
+        joiningDate,
+        bloodGroup,
+        permanentAddress,
+        adharNumber,
+        contactNumber,
+        panNumber,
+        salary,
+        appraisal,
+      })
+      .then((res) => {
+        console.log(res, "response");
+      });
     // console.log("form values", form.getFieldsValue());
   };
   // const onFinish = (values) => {
@@ -90,23 +91,18 @@ const Profile = ({ user }) => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-  // const showData =()=>{
-  //   console.log({...user},"kljhgfdsattty")
-  // }
 
   return (
     <>
-
       <Card title="General Information" bordered={false} style={{ width: 300 }}>
         <p>Name: {viewingEmployee?.name}</p>{" "}
-        <p>Email: {viewingEmployee?.email}</p>
+        <p>Email: {viewingEmployee?.email}</p>{" "}
         <p>Father Name: {viewingEmployee?.fatherName}</p>
         <p>Contact: {viewingEmployee?.contact}</p>
         <p>Gender: {viewingEmployee?.gender}</p>
         <p>Role: {viewingEmployee?.role}</p>
       </Card>
       <Form
-
         // name="basic"
         //  form={form}
         // layout="inline"
@@ -147,23 +143,23 @@ const Profile = ({ user }) => {
                 // value={joiningDate}
                 onChange={(date) => {
                   const d = new Date(date).toLocaleDateString("fr-FR");
-                  console.log(date, "Dateeee")
+                  console.log(date, "Dateeee");
                   console.log(d);
                   setJoiningDate(d);
                 }}
-              // onChange={(e) => {
-              //   // const d = new Date(date).toLocaleDateString("fr-FR");
-              //   // console.log(d);
-              //   setJoiningDate([e.format("dd/MM/yyyy")]);
-              //   console.log(e)
-              // }}
+                // onChange={(e) => {
+                //   // const d = new Date(date).toLocaleDateString("fr-FR");
+                //   // console.log(d);
+                //   setJoiningDate([e.format("dd/MM/yyyy")]);
+                //   console.log(e)
+                // }}
               />
             </Form.Item>
             <Form.Item
-              value={fatherName}
-              defaultValue={fatherName}
+              //  value={fatherName}
+              //  defaultValue={fatherName}
               label="Father Name"
-              name="fatherName"
+              // name="fatherName"
               // name="dadyy"
               rules={[
                 {
@@ -179,13 +175,12 @@ const Profile = ({ user }) => {
                   message: "please Input fullname & alphabets only",
                 },
               ]}
-            // value={fatherName}
-            // initialValue={fatherName}
+              // value={fatherName}
+              // initialValue={fatherName}
             >
               <Input
                 placeholder="Type Your Name"
                 value={fatherName}
-
                 // value={fatherName?.fatherName}
                 // value="prince"
                 // value={viewingEmployee?.fatherName}
@@ -229,17 +224,21 @@ const Profile = ({ user }) => {
             <Form.Item
               label="Blood Group"
               //  name="bloodGroup"
-              rules={[{
-                required: true,
-                message: "Select a option "
-              }]}>
+              rules={[
+                {
+                  required: true,
+                  message: "Select a option ",
+                },
+              ]}
+            >
               <Select
                 placeholder="Select"
                 // defaultValue={{
                 //   value: "Select",
                 // }}
                 value={bloodGroup}
-                onChange={SelectOne} >
+                onChange={SelectOne}
+              >
                 <Option value="A+">A+</Option>
                 <Option value="A-">A-</Option>
                 <Option value="B+">B+</Option>
@@ -266,7 +265,7 @@ const Profile = ({ user }) => {
                   // pattern: new RegExp(/\d+/g),
                   // pattern:/^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/,
                   pattern: /^-?(0|[0-9][0-9]*)(\.[0-9]*)?$/,
-                  message: "please input your valid number"
+                  message: "please input your valid number",
                 },
               ]}
             >
@@ -398,8 +397,8 @@ const Profile = ({ user }) => {
                   required: true,
                   message: "Select Your Date!",
                 },
-              ]}>
-
+              ]}
+            >
               <DatePicker
                 dateFormat="dd/MM/yyyy"
                 // value={appraisal}
@@ -417,11 +416,6 @@ const Profile = ({ user }) => {
             <Button type="primary" htmlType="submit">
               submit
             </Button>
-            {/* <Button type="primary" onClick={showData}>
-              click Here
-            </Button> */}
-
-
           </Row>
         </Form.Item>
       </Form>
@@ -430,4 +424,3 @@ const Profile = ({ user }) => {
 };
 
 export default Profile;
-
