@@ -201,7 +201,7 @@ const Clock = () => {
               minutes.toString().padStart(2, "0"),
               // seconds.toString().padStart(2, "0"),
             ].join(":");
-            setTodayAttendance(formatingTime);
+            setTodayAttendance(formatingTime + "hours");
             console.log("Form", formatingTime);
             console.log("finally total hours", TodayAttendance);
             // }
