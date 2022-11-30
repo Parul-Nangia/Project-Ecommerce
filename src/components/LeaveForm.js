@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Row, DatePicker } from "antd";
+import { Form, Input, Button, Row, DatePicker, Col } from "antd";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { makeStyles } from "@material-ui/core";
@@ -61,7 +61,6 @@ const LeaveForm = () => {
       body: JSON.stringify(data),
     }).then((Leave) => {
       console.log("result", Leave);
-      window.alert("Leave Applied");
     });
   }
 
@@ -123,170 +122,196 @@ const LeaveForm = () => {
         </div>
       </div>
 
-      <Form
-        name="basic"
-        labelCol={{
-          span: 8,
+      <div
+        style={{
+          display: "flex",
+          boxShadow: "2px 4px 10px 1px rgba(201,201,201,0.47)",
+          marginTop: "50px",
         }}
-        wrapperCol={{
-          span: 8,
-        }}
-        initialValues={{
-          remember: true,
-        }}
-        autoComplete="off"
-        style={{ marginTop: "60px" }}
       >
-        <Form.Item
-          label="Employee Name"
-          name="employee name"
-          rules={[
-            {
-              required: true,
-              message: "please input Your Name",
-            },
-          ]}
+        <Form
+          name="basic"
+          labelCol={{
+            span: 8,
+          }}
+          wrapperCol={{
+            span: 8,
+          }}
+          autoComplete="off"
+          style={{
+            marginTop: "25px",
+            marginBottom: "25px",
+            marginLeft: "10%",
+          }}
         >
-          <Input
-            onChange={(e) => {
-              setEmployeeName(e.target.value);
-            }}
-            placeholder="Employee Name"
-          />
-        </Form.Item>
+          <Row style={{ display: "flex", marginTop: "20px" }}>
+            <Col span={12}>
+              <Form.Item
+                label="Employee Name"
+                name="employee name"
+                rules={[
+                  {
+                    required: true,
+                    message: "Enter Your Name ",
+                  },
+                  {
+                    pattern: new RegExp(
+                      /^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+\s*[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i
+                    ),
 
-        <Form.Item
-          label="Supervisor Name"
-          name="supervisor name"
-          rules={[
-            {
-              required: true,
-              message: "please input Your's Supervisor Name",
-            },
-          ]}
-        >
-          <Input
-            onChange={(e) => {
-              setSupervisorName(e.target.value);
-            }}
-            placeholder="Supervisor Name"
-          />
-        </Form.Item>
+                    message: "Please Enter Only Aplhabets",
+                  },
+                ]}
+              >
+                <Input
+                  onChange={(e) => {
+                    setEmployeeName(e.target.value);
+                  }}
+                  placeholder="Employee Name"
+                />
+              </Form.Item>
 
-        <Form.Item
-          label="Department"
-          name="department"
-          rules={[
-            {
-              required: true,
-              message: "please input Your Department Name",
-            },
-          ]}
-        >
-          <Select
-            defaultValue={{
-              value: "Select",
-            }}
-            onChange={selectme}
-          >
-            <Option value="Reactjs">Reactjs</Option>
-            <Option value="Php">Php</Option>
-            <Option value="Python">Python</Option>
-          </Select>
-        </Form.Item>
+              <Form.Item
+                label="Supervisor Name"
+                name="supervisor name"
+                rules={[
+                  {
+                    required: true,
+                    message: "please input Your's Supervisor Name",
+                  },
+                  {
+                    pattern: new RegExp(
+                      /^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+\s*[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i
+                    ),
 
-        <Form.Item
-          label="Leave Type"
-          name="leave type"
-          rules={[
-            {
-              required: true,
-              message: "please select Leave type",
-            },
-          ]}
-        >
-          <Select
-            defaultValue={{
-              value: "Select",
-            }}
-            onChange={selectthis}
-          >
-            <Option value="Priviliege">Priviliege</Option>
-            <Option value="Sick">Sick</Option>
-            <Option value="Casual">Casual</Option>
-          </Select>
-        </Form.Item>
+                    message: "Please Enter Only Aplhabets",
+                  },
+                ]}
+              >
+                <Input
+                  onChange={(e) => {
+                    setSupervisorName(e.target.value);
+                  }}
+                  placeholder="Supervisor Name"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="Department"
+                name="department"
+                rules={[
+                  {
+                    required: true,
+                    message: "please Select Department Name",
+                  },
+                ]}
+              >
+                <Select
+                  defaultValue={{
+                    value: "Select",
+                  }}
+                  onChange={selectme}
+                >
+                  <Option value="Reactjs">Reactjs</Option>
+                  <Option value="Php">Php</Option>
+                  <Option value="Python">Python</Option>
+                </Select>
+              </Form.Item>
 
-        <Form.Item
-          label="Leave Date"
-          name="leave date"
-          rules={[
-            {
-              required: true,
-              message: "please select Date",
-            },
-          ]}
-        >
-          <DatePicker onChange={handledate} placeholder="Leave Date" />
-        </Form.Item>
+              <Form.Item
+                label="Leave Type"
+                name="leave type"
+                rules={[
+                  {
+                    required: true,
+                    message: "please select Leave type",
+                  },
+                ]}
+              >
+                <Select
+                  defaultValue={{
+                    value: "Select",
+                  }}
+                  onChange={selectthis}
+                >
+                  <Option value="Priviliege">Priviliege</Option>
+                  <Option value="Sick">Sick</Option>
+                  <Option value="Casual">Casual</Option>
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="Leave Date"
+                name="leave date"
+                rules={[
+                  {
+                    required: true,
+                    message: "please select Date",
+                  },
+                ]}
+              >
+                <DatePicker onChange={handledate} placeholder="Leave Date" />
+              </Form.Item>
 
-        <Form.Item
-          label="Return Date"
-          name="return date"
-          rules={[
-            {
-              required: true,
-              message: "please select Date",
-            },
-          ]}
-        >
-          <DatePicker onChange={handlereturn} placeholder="Leave Date" />
-        </Form.Item>
+              <Form.Item
+                label="Return Date"
+                name="return date"
+                rules={[
+                  {
+                    required: true,
+                    message: "please select Date",
+                  },
+                ]}
+              >
+                <DatePicker onChange={handlereturn} placeholder="Leave Date" />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="Total Hours Requested"
+                name="total hours requested"
+                rules={[
+                  {
+                    required: true,
+                    message: "please select Date",
+                  },
+                ]}
+              >
+                <Select
+                  defaultValue={{
+                    value: "Select",
+                  }}
+                  onChange={selecthours}
+                >
+                  <Option value="1">1</Option>
+                  <Option value="2">2</Option>
+                  <Option value="3">3</Option>
+                  <Option value="4">4</Option>
+                  <Option value="Half Day">Half Day</Option>
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
 
-        <Form.Item
-          label="Total Hours Requested"
-          name="total hours requested"
-          rules={[
-            {
-              required: true,
-              message: "please select Date",
-            },
-          ]}
-        >
-          <Select
-            defaultValue={{
-              value: "Select",
-            }}
-            onChange={selecthours}
-          >
-            <Option value="1">1</Option>
-            <Option value="2">2</Option>
-            <Option value="3">3</Option>
-            <Option value="4">4</Option>
-            <Option value="Half Day">Half Day</Option>
-          </Select>
-        </Form.Item>
+          <Form.Item style={{ marginLeft: "40%", marginTop: "30px" }}>
+            <Button type="primary" size={size} onClick={handleEmail}>
+              Apply
+            </Button>
 
-        <Form.Item style={{ display: "flex", marginLeft: "40%" }}>
-          <Button type="primary" size={size} onClick={handleEmail}>
-            Apply
-          </Button>
-          <br />
-          <br />
-          <Button
-            style={{
-              display: "flex",
-              marginLeft: "2.5px",
-            }}
-            type="danger"
-            size={size}
-            onClick={handleClick}
-          >
-            Back
-          </Button>
-          <br />
-        </Form.Item>
-      </Form>
+            <Button
+              style={{ marginLeft: "5px" }}
+              type="danger"
+              size={size}
+              onClick={handleClick}
+            >
+              Back
+            </Button>
+            <br />
+          </Form.Item>
+        </Form>
+      </div>
     </>
   );
 };
