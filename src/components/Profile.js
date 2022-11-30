@@ -289,7 +289,7 @@ const Profile = (props) => {
               //  value={fatherName}
               //  defaultValue={fatherName}
               label="Father Name"
-              // name="fatherName"
+              name="fatherName"
               // name="dadyy"
               rules={[
                 {

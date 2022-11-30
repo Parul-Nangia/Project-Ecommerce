@@ -13,6 +13,7 @@ import {
   EyeOutlined,
   EditOutlined,
   DeleteOutlined,
+  UserAddOutlined 
 } from "@ant-design/icons";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -127,10 +128,10 @@ const Employees = ({ dataSource }) => {
   // const data = "Hello Everyone";
   const profile = (record) => {
     // navigate("/profile/" + record._id ,data={data});
-    navigate("/profile/" + record._id );
+    navigate("/profile/" + record._id);
     // navigate("/profile/" + record._id, {queryParams: record});
     // navigate("/profile/",<Profile />)
-    console.log(record,"User_iddddd")
+    console.log(record, "User_iddddd")
   };
 
   const showModal = () => {
@@ -236,7 +237,7 @@ const Employees = ({ dataSource }) => {
         contact,
         role,
       })
-      .then((res) => {});
+      .then((res) => { });
     setIsEditing(false);
   };
   // ----------------------------------------fetch method (PUT api)
@@ -262,7 +263,7 @@ const Employees = ({ dataSource }) => {
   // const viewEmployee =()=>{
 
   // }
-   
+
   const onEditEmployee = (record) => {
     setIsEditing(true);
     setEditingEmployee({ ...record });
@@ -437,9 +438,11 @@ const Employees = ({ dataSource }) => {
 
     return (
       <>
-        <Button style={{ float: "right", margin: "10px" }} onClick={showModal}>
-          Add New Employee
+        <Button className="addEmpBtn" onClick={showModal}>
+         New Employee<UserAddOutlined />
         </Button>
+        <br />
+
         <Table columns={columns} dataSource={employeeData} />
 
         <Modal

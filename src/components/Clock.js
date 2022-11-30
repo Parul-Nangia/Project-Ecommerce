@@ -6,6 +6,8 @@ import {
   MinusCircleOutlined,
   PlusOutlined,
   DownOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined
 } from "@ant-design/icons";
 
 import moment, { duration } from "moment";
@@ -15,9 +17,9 @@ const Clock = () => {
   const [date, setDate] = useState(new Date());
   const [attendance, setAttendance] = useState([]);
   const [TodayAttendance, setTodayAttendance] = useState([]);
-  const [disableCheckin, setDisableCheckin] = React.useState(false);
-  const [disableCheckout, setDisableCheckout] = React.useState(false);
-  const [disablebreak, setDisableBreak] = React.useState(false);
+  const [disableCheckin, setDisableCheckin] = React.useState();
+  const [disableCheckout, setDisableCheckout] = React.useState();
+  const [disablebreak, setDisableBreak] = React.useState();
   const [EmployeeCheckIn, setEmployeeCheckIn] = useState([]);
   const [attendanceAll, setAttendanceAll] = useState([]);
   let newTime = new Date().toLocaleTimeString();
@@ -48,6 +50,8 @@ const Clock = () => {
 
   const handleOk = () => {
     setIsModalOpen(false);
+    // setDisableCheckout(true);
+
   };
 
   const handleCancel = () => {
@@ -98,13 +102,23 @@ const Clock = () => {
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setDisableCheckout(true);
           } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn === "") {
+            console.warn("here 11")
             setDisableCheckout(true);
           } else if (res?.data?.attendanceDataByEmpID[0].CheckIn !== "") {
+            console.warn("here 12")
             setDisableCheckout(false);
           }
+          if (res?.data?.attendanceDataByEmpID.length === 0) {
+            setDisableCheckout(true);
+          } else if (res?.data?.attendanceDataByEmpID[0].CheckOut !== "") {
+            console.warn("here 13")
+            setDisableCheckout(true);
+          } 
 
           // Check if employee Checked-In Today then he can take breaks. Otherwise Break button will remain disabled
           if (res?.data?.attendanceDataByEmpID.length === 0) {
+            setDisableBreak(true);
+          } else if (res?.data?.attendanceDataByEmpID[0].CheckOut !== "") {
             setDisableBreak(true);
           } else {
             setDisableBreak(false);
@@ -123,6 +137,7 @@ const Clock = () => {
             ]?.end === ""
           ) {
             setShow(false);
+            
             console.log("Please Resume Your Break", show);
           } else if (
             res?.data?.attendanceDataByEmpID[0].Breaks[
@@ -139,7 +154,19 @@ const Clock = () => {
             console.log("nothing found");
           }
 
-          if (res?.data?.attendanceDataByEmpID.length === 0) {
+          // if (res?.data?.attendanceDataByEmpID.length === 0) {
+          //   setDisableCheckout(true);
+          // } else if (res?.data?.attendanceDataByEmpID[0].Breaks.length === 0){
+          //   setDisableCheckout(true);
+          // } else if (res?.data?.attendanceDataByEmpID[0].Breaks[
+          //   res?.data?.attendanceDataByEmpID[0].Breaks.length - 1
+          // ]?.end === "") {
+          //   setDisableCheckout(true);
+
+          // }
+
+
+           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setTodayAttendance("00:00");
             console.log("1 am here", TodayAttendance);
           } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn === "") {
@@ -325,8 +352,8 @@ const Clock = () => {
         })
         .then((res) => {
           setEmployeeCheckOut(res?.data?.updatedAttendance);
-          setDisableCheckout(true);
           window.location.reload();
+          setDisableCheckout(true);
         });
     } else {
       window.alert("you have already Checked-Out");
@@ -358,17 +385,17 @@ const Clock = () => {
           <br />
 
           <Row gutter={16}>
-            <Col span={8} className="TimeCards">
+            <Col span={8} className="dashboardcards">
               <Card title="Checkin " bordered={false}>
                 {attendance?.CheckIn}
               </Card>
             </Col>
-            <Col span={8} className="TimeCards">
+            <Col span={8} className="dashboardcards">
               <Card title="Checkout" bordered={false}>
                 {attendance?.CheckOut}
               </Card>
             </Col>
-            <Col span={8} className="TimeCards">
+            <Col span={8} className="dashboardcards">
               <Card title="Total hours" bordered={false}>
                 {TodayAttendance} hours
               </Card>
@@ -561,6 +588,7 @@ const Clock = () => {
 
             onClick={() => {
               showModal();
+
             }}
             disabled={disableCheckout}
           >

@@ -37,11 +37,9 @@ const Dashboard = () => {
     console.log("my role is ", name.role)
     return (
       <>
-        <Layout>
+        
           <Clock />
-        </Layout>
-
-
+      
 
         <DashboardCards />
       </>
