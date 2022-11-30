@@ -187,7 +187,7 @@ const AttendanceTable = () => {
     setSearchDate("");
   };
   const columnSearch = (dataIndex) => ({
-    filterDropdown: ({  
+    filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
       confirm,
@@ -279,8 +279,8 @@ const AttendanceTable = () => {
     },
     {
       title: "CheckOut",
-      dataIndex: "CheckIn",
-      key: "CheckIn",
+      dataIndex: "CheckOut",
+      key: "CheckOut",
       width: "150px",
     },
     {
@@ -323,7 +323,7 @@ const AttendanceTable = () => {
           rowExpandable: (record) => true,
           expandedRowRender: (record) => {
             return (
-              <Table  columns={nestedColumns}  dataSource={record?.Breaks} pagination={false}/>
+              <Table columns={nestedColumns} dataSource={record?.Breaks} pagination={false} />
             )
           }
         }}

@@ -134,32 +134,6 @@ const ChangePassword = () => {
         </div>
       </div>
 
-      {/* <span>
-        <Badge dot>
-          <Avatar
-            style={{ display: "flex", width: "300px", height: "300px" }}
-            shape="square"
-            icon={<UserOutlined />}
-          />
-        </Badge>
-      </span> */}
-
-      {/* <h1 style={{ display: "flex", justifyContent: "center" }}>
-        Link to Change Password
-      </h1>
-      <div>
-        <Link
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            hover: "blue",
-          }}
-          onClick={showModal}
-        >
-          Change Password
-        </Link>
-      </div> */}
-
       <div
         style={{
           marginTop: "85px",

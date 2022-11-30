@@ -37,11 +37,9 @@ const Dashboard = () => {
     console.log("my role is ", name.role)
     return (
       <>
-        <Layout>
+        
           <Clock />
-        </Layout>
-        <br />
-
+      
 
         <DashboardCards />
       </>
@@ -51,12 +49,13 @@ const Dashboard = () => {
   if (name.role === "employee") {
     return (
       <>
-        <Clock />
-        <br />
+        
+          <Clock />
+      
 
-        <div style={{ marginTop: "70 px" }}>
-          <LeaveCards />
-        </div>
+
+        <LeaveCards />
+
 
       </>
 
