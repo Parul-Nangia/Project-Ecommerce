@@ -18,12 +18,11 @@ const { Sider } = Layout;
 const Sidebar = () => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
-
-
-
   const token = localStorage.getItem("access_token1");
   var decoded = jwt_decode(token);
 
+
+  
   if (decoded.role === "admin") {
     return (
       <Sider trigger={null} collapsible collapsed={collapsed} width={200} className="site-layout-background">
@@ -84,6 +83,7 @@ const Sidebar = () => {
               label: "DASHBOARD",
               key: "/dashboard",
               icon: <HomeOutlined />
+              
             },
             {
               label: "ATTENDANCE",

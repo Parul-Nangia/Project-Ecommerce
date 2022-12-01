@@ -168,8 +168,8 @@ const Profile = (props) => {
           autoComplete="off"
         >
           <Form.Item
-            style={{ fontWeight: "bold" }}
-            label="Set Password"
+            // style={{ fontWeight: "bold" }}
+            label="New password"
             name="SetPassword"
             rules={[
               {
@@ -186,8 +186,8 @@ const Profile = (props) => {
           </Form.Item>
 
           <Form.Item
-            style={{ fontWeight: "bold" }}
-            label="Confirm Password"
+            // style={{ fontWeight: "bold" }}
+            label="Confirm password"
             name="password"
             rules={[
               {
@@ -206,7 +206,7 @@ const Profile = (props) => {
           <Form.Item>
             <div style={{ display: "flex", marginLeft: "105%" }}>
               <Button
-                style={{ marginRight: "4px", backgroundColor: "red" }}
+                style={{ marginRight: "4px", backgroundColor: "#d22d2d", borderColor: "blanchedalmond" }}
                 type="primary"
                 htmlType="cancel"
                 onClick={handleCancel}

@@ -52,6 +52,8 @@
 }
 
 
+
+
 .Headermenu {
   background-color: #d22d2d;
   font-weight: bold;
@@ -204,8 +206,9 @@
   float: right;
   margin: 10px;
 }
+
 .calendarbtn {
-  
+
   border-color: lightgray;
   margin-top: 20px;
   color: black;
@@ -214,7 +217,7 @@
 }
 
 
-.leavebtn{
+.leavebtn {
   background: #da3939;
   border-color: blanchedalmond;
   color: white;
@@ -223,7 +226,7 @@
   margin: 10px;
 }
 
-.leavebtn:hover{
+.leavebtn:hover {
   background: #da3939;
   border-color: blanchedalmond;
   color: white;
