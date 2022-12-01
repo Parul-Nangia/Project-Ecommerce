@@ -58,13 +58,10 @@ const Leave = (props) => {
         <div>
           <Button className='calendarbtn' onClick={() => setView(!view)}>Calendar View</Button>
           <Button className='calendarbtn' onClick={() => setView(!view)}>Table View</Button>
-          <br/>
-        </div>
-        <br />
-        <br />
-
+       
+    
         {view ? <LeaveTable /> : <LeaveCalendar />}
-
+        </div>
       </>
 
 
@@ -81,13 +78,7 @@ const Leave = (props) => {
           <h1 style={{ marginLeft: "15px" }}>TIME :</h1>
           <div style={{ marginLeft: "5px" }}>{new Date().toLocaleTimeString()}</div>
         </div>
-        <br/>
 
-      
-        <br />
-        
-
-        <br />
         <h1>{calendarview}</h1>
         <div>
         <Button className='leavebtn' onClick={() => navigate('/leaveform')}>Apply Leave</Button>
@@ -95,9 +86,7 @@ const Leave = (props) => {
           <Button  className='calendarbtn' onClick={() => setCalendarview(!calendarview)}>Calendar View</Button>
           <Button className='calendarbtn' onClick={() => setCalendarview(!calendarview)}>Table View</Button>
         </div>
-        <br />
-        <br />
-        <br/>
+    
 
         {calendarview ? <EmployeeLeaveTable /> : <EmployeeLeaveCalendar />}
 
