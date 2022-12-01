@@ -50,7 +50,7 @@ const Drop = () => {
           label: (
             <Link className="drop-down" onClick={EmployeeProfile}>
               {" "}
-              Profile
+            Upload Profile Picture
             </Link>
           ),
         },
@@ -84,14 +84,8 @@ const Drop = () => {
       <Dropdown overlay={menu} trigger={["click"]}>
         <a onClick={(e) => e.preventDefault()}>
           <Space>
-<<<<<<< HEAD
-            <DownOutlined
-              style={{ width: "2em", height: "2em", marginTop: "30px" }}
-            />
-=======
           <MenuOutlined className="btnset">
           </MenuOutlined>
->>>>>>> 3bebf05e74195d2d277ca586b64fb26a0d88e89e
           </Space>
         </a>
       </Dropdown>
