@@ -233,15 +233,6 @@ const Profile = (props) => {
         </Link>
       </Card>
       <Form
-        // name="basic"
-        //  form={form}
-        // layout="inline"
-        // labelCol={{
-        //   span: 12,
-        // }}
-        // wrapperCol={{
-        //   span: 12,
-        // }}
         name="basic"
         initialValues={{
           remember: true,

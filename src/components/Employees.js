@@ -13,7 +13,7 @@ import {
   EyeOutlined,
   EditOutlined,
   DeleteOutlined,
-  UserAddOutlined 
+  UserAddOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -131,7 +131,7 @@ const Employees = ({ dataSource }) => {
     navigate("/profile/" + record._id);
     // navigate("/profile/" + record._id, {queryParams: record});
     // navigate("/profile/",<Profile />)
-    console.log(record, "User_iddddd")
+    console.log(record, "User_iddddd");
   };
 
   const showModal = () => {
@@ -237,7 +237,7 @@ const Employees = ({ dataSource }) => {
         contact,
         role,
       })
-      .then((res) => { });
+      .then((res) => {});
     setIsEditing(false);
   };
   // ----------------------------------------fetch method (PUT api)
@@ -438,8 +438,22 @@ const Employees = ({ dataSource }) => {
 
     return (
       <>
+        <div style={{ display: "flex" }}>
+          <h1>DATE :</h1>
+
+          <div style={{ marginLeft: "5px" }}>
+            {new Date().toLocaleDateString()}
+          </div>
+
+          <h1 style={{ marginLeft: "15px" }}>TIME :</h1>
+          <div style={{ marginLeft: "5px" }}>
+            {new Date().toLocaleTimeString()}
+          </div>
+        </div>
+
         <Button className="addEmpBtn" onClick={showModal}>
-         New Employee<UserAddOutlined />
+          New Employee
+          <UserAddOutlined />
         </Button>
         <br />
 
