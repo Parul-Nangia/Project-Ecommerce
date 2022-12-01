@@ -174,7 +174,7 @@ const Profile = (props) => {
             rules={[
               {
                 required: true,
-                message: "set your password!",
+                message: "Enter new password!",
               },
             ]}
           >
@@ -192,7 +192,7 @@ const Profile = (props) => {
             rules={[
               {
                 required: true,
-                message: "confirm  your password!",
+                message: "Please confirm new password!",
               },
             ]}
           >
@@ -289,8 +289,8 @@ const Profile = (props) => {
                   message: "please Input fullname & alphabets only",
                 },
               ]}
-              // value={fatherName}
-              // initialValue={fatherName}
+            // value={fatherName}
+            // initialValue={fatherName}
             >
               <Input
                 placeholder="Type Your Name"

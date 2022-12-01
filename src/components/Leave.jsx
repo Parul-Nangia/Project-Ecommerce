@@ -54,9 +54,11 @@ const Leave = (props) => {
         <br />
 
         <h1>{view}</h1>
+        
         <div>
           <Button className='calendarbtn' onClick={() => setView(!view)}>Calendar View</Button>
           <Button className='calendarbtn' onClick={() => setView(!view)}>Table View</Button>
+          <br/>
         </div>
         <br />
         <br />

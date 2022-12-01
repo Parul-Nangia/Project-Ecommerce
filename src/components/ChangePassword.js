@@ -75,7 +75,7 @@ const ChangePassword = () => {
             rules={[
               {
                 required: true,
-                message: "set your password!",
+                message: "Enter new password!",
               },
             ]}
           >
@@ -93,7 +93,7 @@ const ChangePassword = () => {
             rules={[
               {
                 required: true,
-                message: "confirm  your password!",
+                message: "Please confirm new password!",
               },
             ]}
           >
