@@ -261,7 +261,7 @@ const EmployeeProfile = () => {
         <p>Contact: {viewProfile?.contact}</p>
         <p>Gender: {viewProfile?.gender}</p>
         <p>Role: {viewProfile?.role}</p>
-        <p>LinkedinProfileLink: {viewProfile?.linkedinprofilelink}</p>
+        <p>Linkedin Profile: {viewProfile?.linkedinprofilelink}</p>
       </Card>
     </>
   );

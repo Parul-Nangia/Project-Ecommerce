@@ -6,6 +6,10 @@ import EmployeeLeaveCalendar from '../components/EmployeeLeaveCalendar';
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from 'antd';
 import jwt_decode from 'jwt-decode';
+import {
+  EyeOutlined 
+} from "@ant-design/icons";
+
 
 
 
@@ -51,19 +55,17 @@ const Leave = (props) => {
           <div style={{ marginLeft: "5px" }}>{new Date().toLocaleTimeString()}</div>
         </div>
 
-        <Link to="/leaveform"></Link>
         <br />
 
         <h1>{view}</h1>
+        
         <div>
-          <Button style={{ backgroundColor: "DarkSlateGray", color: "white", fontWeight: "bold" }} onClick={() => setView(!view)}>Calendar View</Button>
-          <Button style={{ backgroundColor: "CornflowerBlue", color: "white", fontWeight: "bold" }} onClick={() => setView(!view)}>Table View</Button>
-        </div>
-        <br />
-        <br />
-
+          <Button className='calendarbtn' onClick={() => setView(!view)}>Calendar {<EyeOutlined />}</Button>
+          <Button className='calendarbtn' onClick={() => setView(!view)}>Table {<EyeOutlined />}</Button>
+       
+    
         {view ? <LeaveTable /> : <LeaveCalendar />}
-
+        </div>
       </>
 
 
@@ -81,18 +83,14 @@ const Leave = (props) => {
           <div style={{ marginLeft: "5px" }}>{new Date().toLocaleTimeString()}</div>
         </div>
 
-        <Link to="/leaveform"></Link>
-        <br />
-        <Button style={{ backgroundColor: "Coral", color: "white", fontWeight: "bold" }} onClick={() => navigate('/leaveform')}>Apply Leave</Button>
-
-        <br />
         <h1>{calendarview}</h1>
         <div>
-          <Button style={{ backgroundColor: "lightgray", color: "white", fontWeight: "bold" }} onClick={() => setCalendarview(!calendarview)}>Calendar View</Button>
-          <Button style={{ backgroundColor: "lightgray", color: "white", fontWeight: "bold" }} onClick={() => setCalendarview(!calendarview)}>Table View</Button>
+        <Button className='leavebtn' onClick={() => navigate('/leaveform')}>Apply Leave</Button>
+
+          <Button  className='calendarbtn' onClick={() => setCalendarview(!calendarview)}>Calendar {<EyeOutlined />}</Button>
+          <Button className='calendarbtn' onClick={() => setCalendarview(!calendarview)}>Table {<EyeOutlined />}</Button>
         </div>
-        <br />
-        <br />
+    
 
         {calendarview ? <EmployeeLeaveTable /> : <EmployeeLeaveCalendar />}
 

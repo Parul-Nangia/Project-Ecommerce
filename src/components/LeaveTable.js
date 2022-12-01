@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Select, Table } from "antd";
 import axios from "axios";
-
-
+import { FcHighPriority, FcApproval, FcCancel, FcInfo, } from "react-icons/fc";
+import {
+  EllipsisOutlined
+} from "@ant-design/icons";
 const { Option } = Select;
 
 
 const LeaveTable = () => {
   const [dataSource, setDataSource] = useState([]);
-  
+
   const [leavestatus, setLeaveStatus] = useState("");
 
-  
+
+
+
 
   useEffect(() => {
     getData();
@@ -27,17 +31,18 @@ const LeaveTable = () => {
 
   const columns = [
     {
-      title: "Employee Name",
+      title: "Name",
       dataIndex: "EmployeeName",
     },
     {
       title: "Supervisor Name",
       dataIndex: "SupervisorName",
+      width: "160px",
     },
-    {
-      title: "Department",
-      dataIndex: "Department",
-    },
+    // {
+    //   title: "Department",
+    //   dataIndex: "Department",
+    // },
     {
       title: "Reason",
       dataIndex: "LeaveType",
@@ -55,29 +60,27 @@ const LeaveTable = () => {
       dataIndex: "Hours",
     },
     {
-      title: "Days",
-      dataIndex: "Days",
-    },
-    {
       title: "Status",
       dataIndex: "inddata",
+      width: "100px",
+
       render: (_, dataSource) => {
-        
-       
+
+
         return (
           <>
-          
-            <Select 
+
+            <Select
+              suffixIcon={<EllipsisOutlined />}
               defaultValue={{
-                value: "Pending",
+                value: <h>Pending {<FcInfo />}</h>,
               }}
-              
-               onChange={(value) => leaveapproval(dataSource._id,value)}
-              
+              onChange={(value) => leaveapproval(dataSource._id, value)}
+
             >
-              <Option value="Approved">Approved</Option>
-              <Option value="Denied">Denied</Option>
-             
+              <Option prfixicon="" value="Approved"><h>Approved {<FcApproval />}</h></Option>
+              <Option suffixIcon="" value="Denied"><h>Denied {<FcHighPriority />}</h></Option>
+
 
             </Select>
           </>
@@ -86,14 +89,14 @@ const LeaveTable = () => {
     },
   ];
 
- 
 
-  const leaveapproval = async (value,optValue) => {
-     console.log("id", value);
-     console.log("optionvalue", optValue)
 
-     const ApprovalStatus = optValue
-    
+  const leaveapproval = async (value, optValue) => {
+    console.log("id", value);
+    console.log("optionvalue", optValue)
+
+    const ApprovalStatus = optValue
+
 
     await axios
       .put(`${process.env.REACT_APP_BASE_URL}/leave/${value}`, {

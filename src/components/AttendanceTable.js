@@ -23,29 +23,40 @@ const AttendanceTable = () => {
       .get(`${process.env.REACT_APP_BASE_URL}/attendance`)
       .then((res) => {
         setDataSource(res?.data?.attendanceData);
-        console.log("AttendanceAllData", dataSource);
+        console.log("AttendanceAllData", res?.data?.attendanceData);
         for (let f = 0; f < res?.data?.attendanceData.length; f++) {
+          if (res?.data?.attendanceData[f].Breaks.length === 0) {
+            console.warn("any of the breaks are null");
+          } else if (res?.data?.attendanceData[f].Breaks.length !== "") {
+            for (let i = 0; i < res?.data?.attendanceData[f].Breaks.length; i++) {
+              if (res?.data?.attendanceData[f].Breaks[i]?.start === "") {
+                console.warn("click break first");
+              } else if (res?.data?.attendanceData[f].Breaks[i]?.end === "") {
+                console.warn("resume first");
 
-          for (let i = 0; i < res?.data?.attendanceData[f].Breaks.length; i++) {
-            const start = moment(res?.data?.attendanceData[f].Breaks[i]?.start, "HH:mm:ss a");
-            // console.log("starttime", start);
-            const end = moment(res?.data?.attendanceData[f].Breaks[i]?.end, "HH:mm:ss a");
-            // console.log("endtime", end);
-            const milliSeconds = moment.duration(end.diff(start));
-            const seconds = Math.floor((milliSeconds / 1000) % 60);
-            const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
-            const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
-            // console.log("mill", milliSeconds);
+              } else {
+                console.warn("success start/end not null")
+                const start = moment(res?.data?.attendanceData[f].Breaks[i]?.start, "HH:mm:ss a");
+                // console.log("starttime", start);
+                const end = moment(res?.data?.attendanceData[f].Breaks[i]?.end, "HH:mm:ss a");
+                // console.log("endtime", end);
+                const milliSeconds = moment.duration(end.diff(start));
+                const seconds = Math.floor((milliSeconds / 1000) % 60);
+                const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
+                const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
+                // console.log("mill", milliSeconds);
 
-            const formattedTime = [
-              hours.toString().padStart(2, "0"),
-              minutes.toString().padStart(2, "0"),
-              seconds.toString().padStart(2, "0"),
-            ].join(":");
+                const formattedTime = [
+                  hours.toString().padStart(2, "0"),
+                  minutes.toString().padStart(2, "0"),
+                  seconds.toString().padStart(2, "0"),
+                ].join(":");
 
-            res.data.attendanceData[f].Breaks[i].timeconsume = formattedTime
+                res.data.attendanceData[f].Breaks[i].timeconsume = formattedTime
+
+              }
+            }
           }
-
           res.data.attendanceData[f].key = Math.floor(Math.random() * 978587456)
 
         }
@@ -187,7 +198,7 @@ const AttendanceTable = () => {
     setSearchDate("");
   };
   const columnSearch = (dataIndex) => ({
-    filterDropdown: ({  
+    filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
       confirm,
@@ -279,8 +290,8 @@ const AttendanceTable = () => {
     },
     {
       title: "CheckOut",
-      dataIndex: "CheckIn",
-      key: "CheckIn",
+      dataIndex: "CheckOut",
+      key: "CheckOut",
       width: "150px",
     },
     {
@@ -294,23 +305,31 @@ const AttendanceTable = () => {
 
   const nestedColumns = [
     {
+      title: 'No.',
+      key: 'index',
+      render : (text, record, index) => index + 1,
+      width:"20px"
+    },  
+    {
       title: "Start",
       dataIndex: "start",
       key: "start",
-      width: "150px",
+      width: "30px",
 
     },
     {
       title: "End",
       dataIndex: "end",
       key: "end",
-      width: "150px",
+      width: "30px",
+
     },
     {
       title: "Time Consumed",
       dataIndex: "timeconsume",
       key: "timeconsume",
-      width: "150px",
+      width: "30px",
+
     }
   ];
   return (
@@ -323,7 +342,7 @@ const AttendanceTable = () => {
           rowExpandable: (record) => true,
           expandedRowRender: (record) => {
             return (
-              <Table  columns={nestedColumns}  dataSource={record?.Breaks} pagination={false}/>
+              <Table columns={nestedColumns} dataSource={record?.Breaks} pagination={false}  />
             )
           }
         }}
