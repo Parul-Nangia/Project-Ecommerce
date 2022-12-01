@@ -233,15 +233,7 @@ const Profile = (props) => {
         </Link>
       </Card>
       <Form
-        // name="basic"
-        //  form={form}
-        // layout="inline"
-        // labelCol={{
-        //   span: 12,
-        // }}
-        // wrapperCol={{
-        //   span: 12,
-        // }}
+        name="basic"
         initialValues={{
           remember: true,
         }}
@@ -277,19 +269,11 @@ const Profile = (props) => {
                   console.log(d);
                   setJoiningDate(d);
                 }}
-                // onChange={(e) => {
-                //   // const d = new Date(date).toLocaleDateString("fr-FR");
-                //   // console.log(d);
-                //   setJoiningDate([e.format("dd/MM/yyyy")]);
-                //   console.log(e)
-                // }}
               />
             </Form.Item>
             <Form.Item
-              //  value={fatherName}
-              //  defaultValue={fatherName}
               label="Father Name"
-              name="fatherName"
+              // name="fatherName"
               // name="dadyy"
               rules={[
                 {
@@ -323,7 +307,7 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item
               label="Mother Name"
-              name="mother name"
+              // name="mother name"
               rules={[
                 {
                   required: true,
