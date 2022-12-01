@@ -155,11 +155,7 @@ const Clock = () => {
             ].join(":");
             // }
           }
-          if (res?.data?.attendanceDataByEmpID[0].CheckOut !== "") {
-            console.warn("Good Bye. Leave Office Now. CheckOut Disabled")
-            setDisableCheckout(true);
-          }
-
+        
           // Check if employee Checked-In Today then he can take breaks. Otherwise Break button will remain disabled
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setDisableBreak(true);
@@ -203,13 +199,13 @@ const Clock = () => {
 
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setTodayAttendance("");
-            console.warn("1 am here", TodayAttendance);
+            console.warn("TodayAttendance 0", TodayAttendance);
           } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn === "") {
             setTodayAttendance("");
-            console.warn("2 am here", TodayAttendance);
+            console.warn("CheckIn null", TodayAttendance);
           } else if (res?.data?.attendanceDataByEmpID[0]?.CheckOut === "") {
             setTodayAttendance("");
-            console.warn("3 am here", TodayAttendance);
+            console.warn("CheckOut null", TodayAttendance);
           } else {
             const attCheckIn = moment(
               res?.data?.attendanceDataByEmpID[0].CheckIn,
