@@ -20,64 +20,6 @@ import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Profile from "./Profile";
 
-const useStyles = makeStyles({
-  frmItem: {
-    padding: "10px",
-    width: "50vh",
-  },
-  headingColor: {
-    backgroundColor: "#87CEEB",
-    color: "#000000",
-    marginBottom: "20px",
-    textAlign: "center",
-    fontWeight: "bold",
-  },
-  addEmpColor: {
-    backgroundColor: "#87CEEB",
-    textAlign: "center",
-    marginBottom: "5px",
-    color: "#000000",
-    marginTop: "30px",
-    fontWeight: "bold",
-    paddingTop: "1px",
-  },
-  empListColor: {
-    backgroundColor: "#87CEEB",
-    color: "#000000",
-    textAlign: "center",
-    marginTop: "30px",
-    fontWeight: "bold",
-  },
-  tableHeadCell: {
-    color: "#000000",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
-  empListColor: {
-    backgroundColor: "#87CEEB",
-    color: "#000000",
-    textAlign: "center",
-    marginTop: "30px",
-    fontWeight: "bold",
-  },
-  tableHeadCell: {
-    color: "#000000",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
-  btnCenter: {
-    padding: "10px",
-    width: "50vh",
-    height: "60px",
-    fontWeight: "bold",
-    backgroundColor: "#FF4500",
-    "&:hover": {
-      borderRadius: 4,
-      backgroundColor: "white",
-      color: "black",
-    },
-  },
-});
 
 const Employees = ({ dataSource }) => {
   // const [ignored, forceUpdate] = useReducer(x=>x+1, 0);
@@ -87,7 +29,7 @@ const Employees = ({ dataSource }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
 
-  const classes = useStyles();
+
   const [state, setState] = useState([]);
   // const [view, setView] = useState([]);
   const [employeeData, setEmployeeData] = useState([]);
@@ -237,7 +179,7 @@ const Employees = ({ dataSource }) => {
         contact,
         role,
       })
-      .then((res) => {});
+      .then((res) => { });
     setIsEditing(false);
   };
   // ----------------------------------------fetch method (PUT api)
@@ -532,13 +474,13 @@ const Employees = ({ dataSource }) => {
           onCancel={handleCancel}
         >
           <Row justify="center" style={{ padding: "10%" }}>
-            <Form>
+            <Form style={{ width: "300px" }} autoComplete="off">
               <Form.Item rules={[{ required: true }]}>
                 <Input
                   type="name"
                   prefix={<UserOutlined className="site-form-item-icon" />}
                   placeholder="Name"
-                  className={classes.frmItem}
+
                   onChange={(e) => {
                     setName(e.target.value);
                   }}
@@ -550,7 +492,7 @@ const Employees = ({ dataSource }) => {
                   type="password"
                   prefix={<LockOutlined className="site-form-item-icon" />}
                   placeholder="Password"
-                  className={classes.frmItem}
+
                   onChange={(e) => {
                     setPassword(e.target.value);
                   }}
@@ -561,7 +503,7 @@ const Employees = ({ dataSource }) => {
                 <Input
                   prefix={<MailOutlined className="site-form-item-icon" />}
                   placeholder="Email Address"
-                  className={classes.frmItem}
+
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
@@ -573,7 +515,7 @@ const Employees = ({ dataSource }) => {
                   type="number"
                   prefix={<PhoneOutlined className="site-form-item-icon" />}
                   placeholder="Contact"
-                  className={classes.frmItem}
+
                   onChange={(e) => {
                     setContact(e.target.value);
                   }}
@@ -586,7 +528,7 @@ const Employees = ({ dataSource }) => {
                     <UserSwitchOutlined className="site-form-item-icon" />
                   }
                   placeholder="Gender"
-                  className={classes.frmItem}
+
                   onChange={(e) => {
                     setGender(e.target.value);
                   }}
@@ -598,7 +540,7 @@ const Employees = ({ dataSource }) => {
                     <UserSwitchOutlined className="site-form-item-icon" />
                   }
                   placeholder="Role"
-                  className={classes.frmItem}
+
                   onChange={(e) => {
                     setRole(e.target.value);
                   }}
@@ -606,13 +548,7 @@ const Employees = ({ dataSource }) => {
               </Form.Item>
 
               <Form.Item>
-                <Button
-                  htmlType="submit"
-                  className={classes.btnCenter}
-                  onClick={() => {
-                    saveEmployee();
-                  }}
-                >
+                <Button className="addEmpFormBtn" htmlType="submit" onClick={() => { saveEmployee() }}>
                   Add
                 </Button>
                 <br />

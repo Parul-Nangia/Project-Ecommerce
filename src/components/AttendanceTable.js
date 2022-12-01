@@ -304,25 +304,32 @@ const AttendanceTable = () => {
   ];
 
   const nestedColumns = [
-    
+    {
+      title: 'No.',
+      key: 'index',
+      render : (text, record, index) => index + 1,
+      width:"20px"
+    },  
     {
       title: "Start",
       dataIndex: "start",
       key: "start",
-      width: "100px",
+      width: "30px",
 
     },
     {
       title: "End",
       dataIndex: "end",
       key: "end",
-      width: "100px",
+      width: "30px",
+
     },
     {
       title: "Time Consumed",
       dataIndex: "timeconsume",
       key: "timeconsume",
-      width: "100px",
+      width: "30px",
+
     }
   ];
   return (
@@ -335,7 +342,7 @@ const AttendanceTable = () => {
           rowExpandable: (record) => true,
           expandedRowRender: (record) => {
             return (
-              <Table columns={nestedColumns} dataSource={record?.Breaks} pagination={false} />
+              <Table columns={nestedColumns} dataSource={record?.Breaks} pagination={false}  />
             )
           }
         }}

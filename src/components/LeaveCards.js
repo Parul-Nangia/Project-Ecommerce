@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Col, Row } from "antd";
 import { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
+import axios from "axios";
 
 const LeaveCards = () => {
   const [priviliege, setPriviliege] = useState([]);
@@ -10,31 +11,32 @@ const LeaveCards = () => {
   const [holiday, setHoliday] = useState([]);
 
   //============================================================== Start Casual Leave====================================================================================
-
-  const EmployeeCasualLeave = () => {
+  useEffect(() => {
+  const EmployeeCasualLeave = async () => {
     const token = localStorage.getItem("access_token1");
 
     var decoded = jwt_decode(token);
     console.log("Employee Casual Decoded token data", decoded);
-    let emp_id = decoded._id;
-    console.log("Please help ", emp_id);
+ 
+    await axios.get(`${process.env.REACT_APP_BASE_URL}/leave/casual/${decoded._id}`)
+    .then((res) => {
+      console.log("CasualLeaveData", res);
+      if (res?.data?.length === 0) {
+        console.warn("Casual not taken yet")
+        setCasual(7 - res?.data?.length);
+      } else if (res?.data?.length > 7) {
+        console.warn("Casual greater 7")
 
-    fetch(
-      `${process.env.REACT_APP_BASE_URL}/leave/casual/${decoded._id}`,
-      console.log("hello emp_id here", decoded._id)
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        let empCasualLeave = data;
-
-        console.log("Casual Leave Data", empCasualLeave);
-
-        setCasual(empCasualLeave);
-      });
+        setCasual("0");
+      } else if (res?.data?.length < 7) {
+        console.warn("Casual less 7")
+        setCasual(7 - res?.data?.length);
+      }
+    });
+       
+    
   };
-  useEffect(() => {
+ 
     EmployeeCasualLeave();
   }, []);
 
@@ -42,31 +44,30 @@ const LeaveCards = () => {
   //============================================================== End Casual Leave====================================================================================
 
   //============================================================== Start Sick Leave====================================================================================
-
-  const EmployeeSickLeave = () => {
-    const token = localStorage.getItem("access_token1");
-
-    var decoded = jwt_decode(token);
-    console.log("Employee Sick Decoded token data", decoded);
-    let emp_id = decoded._id;
-    console.log("Please help ", emp_id);
-
-    fetch(
-      `${process.env.REACT_APP_BASE_URL}/leave/sick/${decoded._id}`,
-      console.log("hello emp_id here", decoded._id)
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        let empSickLeave = data;
-
-        console.log("Sick Leave Data", empSickLeave);
-
-        setSick(empSickLeave);
-      });
-  };
   useEffect(() => {
+
+  const EmployeeSickLeave = async () => {
+    const token = localStorage.getItem("access_token1");
+    var decoded = jwt_decode(token);
+  
+
+    await axios.get(`${process.env.REACT_APP_BASE_URL}/leave/sick/${decoded._id}`)
+        .then((res) => {
+          console.log("SickLeaveData", res);
+          if (res?.data?.length === 0) {
+            console.warn("Sick not taken yet")
+            setSick(7 - res?.data?.length);
+
+          } else if (res?.data?.length > 7) {
+            console.warn("Sick greater 7")
+
+            setSick("0");
+          } else if (res?.data?.length < 7) {
+            console.warn("Sick less 7")
+            setSick(7 - res?.data?.length);
+          }
+        });
+  };
     EmployeeSickLeave();
   }, []);
 
@@ -74,31 +75,35 @@ const LeaveCards = () => {
   //============================================================== End Sick Leave====================================================================================
 
   //============================================================== Start Priviliege Leave====================================================================================
-
-  const EmployeePriviliegeLeave = () => {
-    const token = localStorage.getItem("access_token1");
-
-    var decoded = jwt_decode(token);
-    console.log("Employee Priviliege Decoded token data", decoded);
-    let emp_id = decoded._id;
-    console.log("Please help ", emp_id);
-
-    fetch(
-      `${process.env.REACT_APP_BASE_URL}/leave/priviliege/${decoded._id}`,
-      console.log("hello emp_id here", decoded._id)
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        let empPriviliegeLeave = data;
-
-        console.log("Priviledge Leave Data", empPriviliegeLeave);
-
-        setPriviliege(empPriviliegeLeave);
-      });
-  };
   useEffect(() => {
+    const EmployeePriviliegeLeave = async () => {
+      const token = localStorage.getItem("access_token1");
+
+      var decoded = jwt_decode(token);
+      console.log("Employee Priviliege Decoded token data", decoded);
+      let emp_id = decoded._id;
+      console.log("Please help ", emp_id);
+
+      await axios.get(`${process.env.REACT_APP_BASE_URL}/leave/priviliege/${decoded._id}`)
+        .then((res) => {
+          console.log("PriviledgeLeaveData", res);
+          if (res?.data?.length === 0) {
+            console.warn("Priviliege not taken yet")
+            setPriviliege(11- res?.data?.length);
+
+          } else if (res?.data?.length > 11) {
+            console.warn("Priviliege greater than 11")
+
+            setPriviliege("0");
+          } else if (res?.data?.length < 11) {
+            console.warn("Priviliege less than 11")
+            setPriviliege(11- res?.data?.length);
+          }
+
+        });
+
+    };
+
     EmployeePriviliegeLeave();
   }, []);
 
@@ -106,7 +111,7 @@ const LeaveCards = () => {
   //============================================================== End Priviliege Leave====================================================================================
 
   //============================================================== Start Holiday API====================================================================================
-
+  useEffect(() => {
   const holidayList = () => {
     fetch(`${process.env.REACT_APP_BASE_URL}/holiday`)
       .then((response) => {
@@ -119,7 +124,7 @@ const LeaveCards = () => {
         console.log("Holidays Pending", userHolidays);
       });
   };
-  useEffect(() => {
+
     holidayList();
   }, []);
 
@@ -132,17 +137,17 @@ const LeaveCards = () => {
         <Row gutter={16}>
           <Col span={6} className="dashboardcards">
             <Card title="Priviliege Pending" bordered={false}>
-              {11 - priviliege.length}
+              {priviliege}
             </Card>
           </Col>
           <Col span={6} className="dashboardcards">
             <Card title="Sick Pending" bordered={false}>
-              {7 - sick.length}
+              {sick}
             </Card>
           </Col>
           <Col span={6} className="dashboardcards">
             <Card title="Casual Pending" bordered={false}>
-              {7 - casual.length}
+              {casual}
             </Card>
           </Col>
           <Col span={6} className="dashboardcards">

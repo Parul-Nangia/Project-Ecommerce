@@ -526,7 +526,7 @@ const Profile = (props) => {
         </Row>
         <Form.Item>
           <Row justify="center">
-            <Button type="primary" htmlType="submit">
+            <Button className="breakBtn" htmlType="submit">
               submit
             </Button>
           </Row>
