@@ -20,7 +20,6 @@ import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Profile from "./Profile";
 
-
 const Employees = ({ dataSource }) => {
   // const [ignored, forceUpdate] = useReducer(x=>x+1, 0);
 
@@ -28,7 +27,6 @@ const Employees = ({ dataSource }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
-
 
   const [state, setState] = useState([]);
   // const [view, setView] = useState([]);
@@ -39,18 +37,17 @@ const Employees = ({ dataSource }) => {
   const [contact, setContact] = useState("");
   const [gender, setGender] = useState("");
   const [role, setRole] = useState("");
+  const [linkedinprofilelink, setLinkedinProfileLink] = useState("");
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  console.log("emo name", name);
+  // console.log("emp name", name);
   const [employeename, setEmployeeName] = useState("");
 
   useEffect(() => {
     LoggedInEmployeeRole();
   }, []);
 
-  useEffect(() => {
-    employeelist();
-  }, []);
+  
 
   const LoggedInEmployeeRole = () => {
     const token = localStorage.getItem("access_token1");
@@ -80,7 +77,22 @@ const Employees = ({ dataSource }) => {
     setIsModalOpen(true);
   };
 
-  const handleOk = () => {
+  const handleOk = async () => {
+    // console.log(handleOk,"hhhhh")
+    await axios
+      .post(`${process.env.REACT_APP_BASE_URL}/user/signup`, {
+        name,
+        password,
+        email,
+        contact,
+        gender,
+        role,
+        linkedinprofilelink,
+      })
+      .then((res) => {
+        console.log("response", res);
+      });
+
     setIsModalOpen(false);
   };
 
@@ -139,22 +151,36 @@ const Employees = ({ dataSource }) => {
   // };
 
   // //================================================= START employee post (POST API)
-  function saveEmployee() {
-    console.warn({ name, password, email, contact, gender, role });
-    let data = { name, password, email, contact, gender, role };
+  // function saveEmployee() {
+  //   console.warn({ name, password, email, contact, gender, role, linkedinprofilelink
+  //    });
+  //   let data = { name, password, email, contact, gender, role, linkedinprofilelink };
 
-    fetch(`${process.env.REACT_APP_BASE_URL}/user/signup`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }).then((Employee) => {
-      console.log("result", Employee);
-      window.alert("New Employee added successfully");
-    });
-  }
+  //   fetch(`${process.env.REACT_APP_BASE_URL}/user/signup`, {
+  //     method: "POST",
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(data),
+  //   }).then((Employee) => {
+  //     console.log("result", Employee);
+  //     window.alert("New Employee added successfully");
+  //   });
+  // }
+  // const saveEmployee =async () =>{
+
+  //   await axios
+  //   .post(`${process.env.REACT_APP_BASE_URL}/user/signup`, {
+  //     name, password, email, contact, gender, role, linkedinprofilelink
+
+  //   })
+  //   .then((result) => {
+
+  //     console.log("user data", result);
+
+  //   });
+  // }
 
   // //================================================= END employee post (POST API)
 
@@ -179,7 +205,7 @@ const Employees = ({ dataSource }) => {
         contact,
         role,
       })
-      .then((res) => { });
+      .then((res) => {});
     setIsEditing(false);
   };
   // ----------------------------------------fetch method (PUT api)
@@ -217,6 +243,11 @@ const Employees = ({ dataSource }) => {
   // //================================================= END employee put (PUT API)
 
   // //================================================= START employee GET (GET API)
+  useEffect(() => {
+    employeelist();
+  }, []);
+
+
 
   const employeelist = () => {
     fetch(`${process.env.REACT_APP_BASE_URL}/user`)
@@ -230,7 +261,7 @@ const Employees = ({ dataSource }) => {
         console.log("list response", emp);
       });
   };
-  console.log(state, "hh");
+      
 
   // //================================================= END employee GET (GET API)
 
@@ -334,7 +365,7 @@ const Employees = ({ dataSource }) => {
     {
       title: "Actions",
       render: (record) => {
-        console.log(record, "record id");
+        
         return (
           <>
             <Button
@@ -394,7 +425,7 @@ const Employees = ({ dataSource }) => {
         </div>
 
         <Button className="addEmpBtn" onClick={showModal}>
-          New Employee
+          Add New Employee
           <UserAddOutlined />
         </Button>
         <br />
@@ -480,7 +511,6 @@ const Employees = ({ dataSource }) => {
                   type="name"
                   prefix={<UserOutlined className="site-form-item-icon" />}
                   placeholder="Name"
-
                   onChange={(e) => {
                     setName(e.target.value);
                   }}
@@ -492,7 +522,6 @@ const Employees = ({ dataSource }) => {
                   type="password"
                   prefix={<LockOutlined className="site-form-item-icon" />}
                   placeholder="Password"
-
                   onChange={(e) => {
                     setPassword(e.target.value);
                   }}
@@ -503,7 +532,6 @@ const Employees = ({ dataSource }) => {
                 <Input
                   prefix={<MailOutlined className="site-form-item-icon" />}
                   placeholder="Email Address"
-
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
@@ -515,7 +543,6 @@ const Employees = ({ dataSource }) => {
                   type="number"
                   prefix={<PhoneOutlined className="site-form-item-icon" />}
                   placeholder="Contact"
-
                   onChange={(e) => {
                     setContact(e.target.value);
                   }}
@@ -528,7 +555,6 @@ const Employees = ({ dataSource }) => {
                     <UserSwitchOutlined className="site-form-item-icon" />
                   }
                   placeholder="Gender"
-
                   onChange={(e) => {
                     setGender(e.target.value);
                   }}
@@ -540,18 +566,21 @@ const Employees = ({ dataSource }) => {
                     <UserSwitchOutlined className="site-form-item-icon" />
                   }
                   placeholder="Role"
-
                   onChange={(e) => {
                     setRole(e.target.value);
                   }}
                 />
               </Form.Item>
-
-              <Form.Item>
-                <Button className="addEmpFormBtn" htmlType="submit" onClick={() => { saveEmployee() }}>
-                  Add
-                </Button>
-                <br />
+              <Form.Item rules={[{ required: true }]}>
+                <Input
+                  prefix={
+                    <UserSwitchOutlined className="site-form-item-icon" />
+                  }
+                  placeholder="LinkedinProfileLink"
+                  onChange={(e) => {
+                    setLinkedinProfileLink(e.target.value);
+                  }}
+                />
               </Form.Item>
             </Form>
           </Row>

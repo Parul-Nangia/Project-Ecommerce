@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Row, DatePicker, Col } from "antd";
+import { Form, Input, Button, Row, DatePicker, Col, message } from "antd";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { makeStyles } from "@material-ui/core";
@@ -37,54 +37,71 @@ const LeaveForm = () => {
   const [status, setStatus] = useState("");
 
   function applyLeave() {
-    const token = localStorage.getItem("access_token1");
-    var decoded = jwt_decode(token);
-    let data = {
-      emp_id: decoded._id,
-      EmployeeName,
-      SupervisorName,
-      Department,
-      LeaveType,
-      LeaveDate,
-      ReturnDate,
-      TotalHoursRequested,
-      TotalDaysRequested,
-      status,
-    };
+    try {
+      const token = localStorage.getItem("access_token1");
+      var decoded = jwt_decode(token);
+      let data = {
+        emp_id: decoded._id,
+        EmployeeName,
+        SupervisorName,
+        Department,
+        LeaveType,
+        LeaveDate,
+        ReturnDate,
+        TotalHoursRequested,
+        TotalDaysRequested,
+        status,
+      };
 
-    fetch(`${process.env.REACT_APP_BASE_URL}/leave`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }).then((Leave) => {
-      console.log("result", Leave);
-    });
+      fetch(`${process.env.REACT_APP_BASE_URL}/leave`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }).then((Leave) => {
+        console.log("result", Leave);
+        message.success("Leave Applied");
+      });
+    } catch (error) {
+      if (EmployeeName === "" && LeaveDate === "") {
+        message.error("Fill all the Fields");
+      } else {
+        message.error("Leave Not Apply");
+      }
+    }
   }
 
   function handleClick() {
     navigate("/Leave");
   }
   const handleEmail = () => {
-    // sendEmail();
+    sendEmail();
     applyLeave();
   };
 
   const sendEmail = (e) => {
-    send(
-      "service_j2nsqz6",
-      "template_oe7fwzn",
-      { EmployeeName, Department, LeaveType, LeaveDate },
-      "WHjKfMGOYKK7DBceV"
-    )
-      .then((response) => {
-        console.log("Message sent succesfully", response.status, response.text);
-      })
-      .catch((err) => {
-        console.log("Failed", err);
-      });
+    if (LeaveDate !== "" && EmployeeName !== "") {
+      send(
+        "service_j2nsqz6",
+        "template_oe7fwzn",
+        { EmployeeName, Department, LeaveType, LeaveDate },
+        "WHjKfMGOYKK7DBceV"
+      )
+        .then((response) => {
+          console.log(
+            "Message sent succesfully",
+            response.status,
+            response.text
+          );
+        })
+        .catch((err) => {
+          console.log("Failed", err);
+        });
+    } else {
+      message.error("Invalid Input or Empty Input");
+    }
   };
 
   const selectthis = (value) => {
