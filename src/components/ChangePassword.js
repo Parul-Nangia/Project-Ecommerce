@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, Col, Form, Input, Modal, Space } from "antd";
+import { Button, Card, Col, Form, Input, message, Modal, Space } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
@@ -14,21 +14,29 @@ const ChangePassword = () => {
   const [newpassword, setNewPassword] = useState([]);
 
   const onFinish = async () => {
-    const token = localStorage.getItem("access_token1");
-    const password = confirmpassword;
-    console.log("password value", password);
-    var decoded = jwt_decode(token);
-    const ID = decoded._id;
+    try {
+      const token = localStorage.getItem("access_token1");
+      const password = confirmpassword;
+      console.log("password value", password);
+      var decoded = jwt_decode(token);
+      const ID = decoded._id;
 
-    await axios
-      .put(`${process.env.REACT_APP_BASE_URL}/user/${ID}`, {
-        password,
-      })
-      .then((res) => {
-        setNewPassword(res?.data?.updatedAttendance);
-        console.log("Reset Password Value", newpassword);
-        // window.location.reload();
-      });
+      await axios
+        .put(`${process.env.REACT_APP_BASE_URL}/user/${ID}`, {
+          password,
+        })
+        .then((res) => {
+          setNewPassword(res?.data?.updatedAttendance);
+          console.log("Reset Password Value", newpassword);
+          message.success("Password Change Successfully!!!!");
+        });
+    } catch (error) {
+      if (confirmpassword === "") {
+        message.error("Please Confirm Your Password");
+      } else {
+        message.error("Password Doesn't Change");
+      }
+    }
   };
 
   const onFinishFailed = (errorInfo) => {

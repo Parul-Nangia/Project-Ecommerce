@@ -11,6 +11,7 @@ import {
   Col,
   Button,
   Modal,
+  message,
 } from "antd";
 import axios from "axios";
 import TextArea from "antd/lib/input/TextArea";
@@ -48,19 +49,28 @@ const Profile = (props) => {
   const [newpassword, setNewPassword] = useState([]);
 
   const onMyFinish = async () => {
-    console.log("emp id", id);
-    const password = confirmpassword;
-    console.log("password value", password);
+    try {
+      console.log("emp id", id);
+      const password = confirmpassword;
+      console.log("password value", password);
 
-    await axios
-      .put(`${process.env.REACT_APP_BASE_URL}/user/${id}`, {
-        password,
-      })
-      .then((res) => {
-        setNewPassword(res?.data?.updatedAttendance);
-        console.log("Reset Password Value", newpassword);
-        // window.location.reload();
-      });
+      await axios
+        .put(`${process.env.REACT_APP_BASE_URL}/user/${id}`, {
+          password,
+        })
+        .then((res) => {
+          setNewPassword(res?.data?.updatedAttendance);
+          console.log("Reset Password Value", newpassword);
+          // window.location.reload();
+          message.success("Password Change Successfully!!!!");
+        });
+    } catch (error) {
+      if (confirmpassword === "") {
+        message.error("Please Type Confirm Password");
+      } else {
+        message.error("Invalid Password");
+      }
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -233,10 +243,17 @@ const Profile = (props) => {
         </Link>
       </Card>
       <Form
-        name="basic"
-        initialValues={{
-          remember: true,
-        }}
+        // name="basic"
+        //  form={form}
+        // layout="inline"
+        // labelCol={{
+        //   span: 12,
+        // }}
+        // wrapperCol={{
+        //   span: 12,
+        // }}
+        // name="basic"
+
         onFinish={Submithere}
         // onSubmit={Submithere}
         onFinishFailed={onFinishFailed}
@@ -245,41 +262,15 @@ const Profile = (props) => {
         <Row>
           <Col span={12} style={{ padding: "10px 10px" }}>
             <Form.Item
-              label="Date of Joining"
-              // name="setJoiningDate"
-              rules={[
-                {
-                  required: true,
-                  message: "Select Your Date!",
-                },
-              ]}
-            >
-              <DatePicker
-                dateFormat="dd/MM/yyyy"
-                defaultValue={joiningDate}
-                //                 <DatePicker
-                //  onChange={this.onChange}
-                //  defaultValue={moment("YYYY-MM-DD")}
-                //  />
-
-                // value={joiningDate}
-                onChange={(date) => {
-                  const d = new Date(date).toLocaleDateString("fr-FR");
-                  console.log(date, "Dateeee");
-                  console.log(d);
-                  setJoiningDate(d);
-                }}
-              />
-            </Form.Item>
-            <Form.Item
               label="Father Name"
-              // name="fatherName"
+              name="fatherName"
+              defaultValue={viewingEmployee?.fatherName}
               // name="dadyy"
               rules={[
                 {
                   required: true,
 
-                  whitespace: true,
+                  // whitespace: true,
                 },
                 {
                   pattern: new RegExp(
@@ -294,18 +285,33 @@ const Profile = (props) => {
             >
               <Input
                 placeholder="Type Your Name"
-                value={fatherName}
-                // value="prince"
-                // value={viewingEmployee?.fatherName}
                 onChange={(e) => {
-                  setFatherName(() => {
-                    console.log("Father Name  " + e.target.value);
+                  setFatherName(e.target.value);
+                }}
+              ></Input>
+            </Form.Item>
+
+            <Form.Item
+              // name={["user", "motherName"]}
+              label="Mother Name"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <Input
+                placeholder="Type your Name"
+                value={motherName}
+                onChange={(e) => {
+                  setMotherName(() => {
+                    console.log("Mother Name " + e.target.value);
                     return e.target.value;
                   });
                 }}
               ></Input>
             </Form.Item>
-            <Form.Item
+            {/* <Form.Item
               label="Mother Name"
               // name="mother name"
               rules={[
@@ -333,7 +339,7 @@ const Profile = (props) => {
                   });
                 }}
               ></Input>
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item
               label="Blood Group"
               //  name="bloodGroup"
@@ -395,7 +401,28 @@ const Profile = (props) => {
                 }}
               ></Input>
             </Form.Item>
+            <Form.Item
+              label="Date of Joining"
+              // name="setJoiningDate"
+              rules={[
+                {
+                  required: true,
+                  message: "Select Your Date!",
+                },
+              ]}
+            >
+              <DatePicker
+                dateFormat="dd/MM/yyyy"
+                onChange={(date) => {
+                  const d = new Date(date).toLocaleDateString("fr-FR");
+                  console.log(date, "Dateeee");
+                  console.log(d);
+                  setJoiningDate(d);
+                }}
+              />
+            </Form.Item>
           </Col>
+
           <Col span={12} style={{ padding: "10px 10px" }}>
             <Form.Item
               label="Permanent Address"
@@ -502,6 +529,7 @@ const Profile = (props) => {
                 }}
               ></Input>
             </Form.Item>
+
             <Form.Item
               label="Last Appraisal Date"
               // name="setAppraisal"
