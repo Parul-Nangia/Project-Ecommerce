@@ -17,10 +17,6 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-
-
-
-
 }
 
 .App-link {
@@ -52,6 +48,8 @@
 }
 
 
+
+
 .Headermenu {
   background-color: #d22d2d;
   font-weight: bold;
@@ -65,6 +63,7 @@
   font-size: large;
   float: right;
   margin: 10px;
+  color: gray;
 }
 
 .dashboardcards {
@@ -82,6 +81,24 @@
   -webkit-transform: scale(1.1, 1.1);
   -moz-transform: scale(1, 1.3);
 }
+
+.backbtn {
+  background-color: lightgray;
+  color: darkgrey;
+  margin-left: 20px;
+
+}
+
+.backbtn:hover {
+  background-color: lightgray;
+  color: darkgrey;
+  border-color: grey;
+  margin-left: 20px;
+  transform: scale(1, 1);
+  -webkit-transform: scale(1.1, 1.1);
+  -moz-transform: scale(1, 1.3);
+}
+
 
 
 .breakBtn {
@@ -194,6 +211,25 @@
   /* color: black; */
 }
 
+.addEmpFormBtn {
+  background: #da3939;
+  border-color: blanchedalmond;
+  color: white;
+  margin-left: 120px;
+}
+
+.addEmpFormBtn:hover {
+  background: #da3939;
+  border-color: blanchedalmond;
+  color: white;
+  margin-left: 120px;
+  transform: scale(1, 1);
+  -webkit-transform: scale(1.1, 1.1);
+  -moz-transform: scale(1, 1.3);
+}
+
+
+
 .calendarbtn:hover {
   background: #da3939;
   border-color: blanchedalmond;
@@ -201,20 +237,24 @@
   transform: scale(1, 1);
   -webkit-transform: scale(1.1, 1.1);
   -moz-transform: scale(1, 1.3);
-  float: right;
+  /* float: right; */
   margin: 10px;
 }
+
 .calendarbtn {
-  
+
   border-color: lightgray;
   margin-top: 20px;
   color: black;
-  float: right;
+  /* float: right; */
   margin: 10px;
+  margin-bottom: 10px;
+
 }
 
 
-.leavebtn{
+
+.leavebtn {
   background: #da3939;
   border-color: blanchedalmond;
   color: white;
@@ -223,7 +263,7 @@
   margin: 10px;
 }
 
-.leavebtn:hover{
+.leavebtn:hover {
   background: #da3939;
   border-color: blanchedalmond;
   color: white;

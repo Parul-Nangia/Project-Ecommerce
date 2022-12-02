@@ -50,7 +50,7 @@ const Drop = () => {
           label: (
             <Link className="drop-down" onClick={EmployeeProfile}>
               {" "}
-              Profile
+            Upload Profile Picture
             </Link>
           ),
         },

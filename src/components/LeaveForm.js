@@ -164,7 +164,7 @@ const LeaveForm = () => {
           <Row style={{ display: "flex", marginTop: "20px" }}>
             <Col span={12}>
               <Form.Item
-                label="Employee Name"
+                // label="Name"
                 name="employee name"
                 rules={[
                   {
@@ -181,6 +181,7 @@ const LeaveForm = () => {
                 ]}
               >
                 <Input
+                style ={{width:"350px"}}
                   onChange={(e) => {
                     setEmployeeName(e.target.value);
                   }}
@@ -189,7 +190,7 @@ const LeaveForm = () => {
               </Form.Item>
 
               <Form.Item
-                label="Supervisor Name"
+                // label="Supervisor Name"
                 name="supervisor name"
                 rules={[
                   {
@@ -206,6 +207,7 @@ const LeaveForm = () => {
                 ]}
               >
                 <Input
+                style ={{width:"350px"}}
                   onChange={(e) => {
                     setSupervisorName(e.target.value);
                   }}
@@ -215,7 +217,8 @@ const LeaveForm = () => {
             </Col>
             <Col span={12}>
               <Form.Item
-                label="Department"
+             
+                // label="Department"
                 name="department"
                 rules={[
                   {
@@ -225,8 +228,9 @@ const LeaveForm = () => {
                 ]}
               >
                 <Select
+                style ={{width:"350px"}}
                   defaultValue={{
-                    value: "Select",
+                    value: "Department",
                   }}
                   onChange={selectme}
                 >
@@ -237,7 +241,8 @@ const LeaveForm = () => {
               </Form.Item>
 
               <Form.Item
-                label="Leave Type"
+              
+                // label="Leave Type"
                 name="leave type"
                 rules={[
                   {
@@ -247,8 +252,9 @@ const LeaveForm = () => {
                 ]}
               >
                 <Select
+                style ={{width:"350px"}}
                   defaultValue={{
-                    value: "Select",
+                    value: "Leave type",
                   }}
                   onChange={selectthis}
                 >
@@ -260,7 +266,8 @@ const LeaveForm = () => {
             </Col>
             <Col span={12}>
               <Form.Item
-                label="Leave Date"
+                // label="Leave Date"
+
                 name="leave date"
                 rules={[
                   {
@@ -269,11 +276,11 @@ const LeaveForm = () => {
                   },
                 ]}
               >
-                <DatePicker onChange={handledate} placeholder="Leave Date" />
+                <DatePicker onChange={handledate} placeholder="Leave Date" style ={{width:"350px"}}/>
               </Form.Item>
 
               <Form.Item
-                label="Return Date"
+                // label="Return Date"
                 name="return date"
                 rules={[
                   {
@@ -282,26 +289,28 @@ const LeaveForm = () => {
                   },
                 ]}
               >
-                <DatePicker onChange={handlereturn} placeholder="Leave Date" />
+                <DatePicker onChange={handlereturn} placeholder="Return Date" style ={{width:"350px"}}/>
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
-                label="Total Hours Requested"
+                // label="Total Hours"
                 name="total hours requested"
                 rules={[
                   {
-                    required: true,
+                    // required: true,
                     message: "please select Date",
                   },
                 ]}
               >
                 <Select
+                style ={{width:"350px"}}
                   defaultValue={{
-                    value: "Select",
+                    value: "Total hours requested",
                   }}
                   onChange={selecthours}
                 >
+                  <Option value="0">0</Option>
                   <Option value="1">1</Option>
                   <Option value="2">2</Option>
                   <Option value="3">3</Option>
@@ -313,13 +322,13 @@ const LeaveForm = () => {
           </Row>
 
           <Form.Item style={{ marginLeft: "40%", marginTop: "30px" }}>
-            <Button type="primary" size={size} onClick={handleEmail}>
+            <Button className="breakBtn" size={size} onClick={handleEmail}>
               Apply
             </Button>
 
             <Button
-              style={{ marginLeft: "5px" }}
-              type="danger"
+              
+              className="backbtn"
               size={size}
               onClick={handleClick}
             >

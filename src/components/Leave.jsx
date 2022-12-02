@@ -6,6 +6,10 @@ import EmployeeLeaveCalendar from '../components/EmployeeLeaveCalendar';
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from 'antd';
 import jwt_decode from 'jwt-decode';
+import {
+  EyeOutlined 
+} from "@ant-design/icons";
+
 
 
 
@@ -54,15 +58,14 @@ const Leave = (props) => {
         <br />
 
         <h1>{view}</h1>
+        
         <div>
-          <Button className='calendarbtn' onClick={() => setView(!view)}>Calendar View</Button>
-          <Button className='calendarbtn' onClick={() => setView(!view)}>Table View</Button>
-        </div>
-        <br />
-        <br />
-
+          <Button className='calendarbtn' onClick={() => setView(!view)}>Calendar {<EyeOutlined />}</Button>
+          <Button className='calendarbtn' onClick={() => setView(!view)}>Table {<EyeOutlined />}</Button>
+       
+    
         {view ? <LeaveTable /> : <LeaveCalendar />}
-
+        </div>
       </>
 
 
@@ -79,23 +82,15 @@ const Leave = (props) => {
           <h1 style={{ marginLeft: "15px" }}>TIME :</h1>
           <div style={{ marginLeft: "5px" }}>{new Date().toLocaleTimeString()}</div>
         </div>
-        <br/>
 
-      
-        <br />
-        
-
-        <br />
         <h1>{calendarview}</h1>
         <div>
         <Button className='leavebtn' onClick={() => navigate('/leaveform')}>Apply Leave</Button>
 
-          <Button  className='calendarbtn' onClick={() => setCalendarview(!calendarview)}>Calendar View</Button>
-          <Button className='calendarbtn' onClick={() => setCalendarview(!calendarview)}>Table View</Button>
+          <Button  className='calendarbtn' onClick={() => setCalendarview(!calendarview)}>Calendar {<EyeOutlined />}</Button>
+          <Button className='calendarbtn' onClick={() => setCalendarview(!calendarview)}>Table {<EyeOutlined />}</Button>
         </div>
-        <br />
-        <br />
-        <br/>
+    
 
         {calendarview ? <EmployeeLeaveTable /> : <EmployeeLeaveCalendar />}
 
