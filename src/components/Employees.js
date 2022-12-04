@@ -312,7 +312,7 @@ const Employees = ({ dataSource }) => {
       onFilter: (value, record) => {
         return record.name.toLowerCase().includes(value.toLowerCase());
       },
-      width: "30%",
+      width: "200px",
     },
     {
       title: "Email",
