@@ -121,7 +121,7 @@ const LeaveCards = () => {
         let userHolidays = data.HolidaysPending;
         setHoliday(userHolidays);
 
-        console.log("Holidays Pending", userHolidays);
+        console.log("HolidaysPending", userHolidays);
       });
   };
 
