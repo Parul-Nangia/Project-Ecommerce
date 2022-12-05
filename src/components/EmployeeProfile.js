@@ -73,6 +73,9 @@ const EmployeeProfile = () => {
   // }
 
   const beforeUpload = (file) => {
+    // e.preventDefault();
+
+
     const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
     if (!isJpgOrPng) {
       message.error("You can only upload JPG/PNG file!");
@@ -246,9 +249,9 @@ const EmployeeProfile = () => {
           uploadButton
         )}
       </Upload>
-      {viewimage.map((item) => {
-        return <>{item?.image}</>;
-      })}
+      {/* {viewimage.map((item) => {
+        return <>{item?.image[0]}</>;
+      })} */}
       {/* <Button onClick={beforeUpload}>Upload Picture</Button> */}
 
       {/* <input type="file" name="file" onChange={handleImage} />

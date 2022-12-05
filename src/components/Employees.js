@@ -47,8 +47,6 @@ const Employees = ({ dataSource }) => {
     LoggedInEmployeeRole();
   }, []);
 
-  
-
   const LoggedInEmployeeRole = () => {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token);
@@ -247,8 +245,6 @@ const Employees = ({ dataSource }) => {
     employeelist();
   }, []);
 
-
-
   const employeelist = () => {
     fetch(`${process.env.REACT_APP_BASE_URL}/user`)
       .then((response) => {
@@ -261,7 +257,6 @@ const Employees = ({ dataSource }) => {
         console.log("list response", emp);
       });
   };
-      
 
   // //================================================= END employee GET (GET API)
 
@@ -365,7 +360,6 @@ const Employees = ({ dataSource }) => {
     {
       title: "Actions",
       render: (record) => {
-        
         return (
           <>
             <Button
@@ -502,6 +496,7 @@ const Employees = ({ dataSource }) => {
           title="Employee Form"
           open={isModalOpen}
           onOk={handleOk}
+          okText="Save Employee"
           onCancel={handleCancel}
         >
           <Row justify="center" style={{ padding: "10%" }}>
