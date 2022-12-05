@@ -65,7 +65,6 @@ const Employeeleavetable = () => {
       title: "Status",
       dataIndex: "ApprovalStatus",
       width: "150px",
-      render: (_, record) => record?.ApprovalStatus === "Approved" ? <h>Approved <FcApproval /></h> : record?.ApprovalStatus === "Denied" ? <h>Denied <FcHighPriority /></h> : record?.ApprovalStatus === "Pending" ? <h>Pending <FcInfo /></h> : <QuestionOutlined />
     },
   ];
 

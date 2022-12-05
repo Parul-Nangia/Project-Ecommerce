@@ -116,25 +116,24 @@ const Clock = () => {
           } else if (res?.data?.attendanceDataByEmpID[0].CheckIn === "") {
             console.warn("Need Checkin")
             setDisableCheckout(true);
-          } else if (res?.data?.attendanceDataByEmpID[0].CheckOut === "") {
-            console.warn("Need CheckOut")
-            setDisableCheckout(true);
           } else {
             const todayCheckIn = moment(
               res?.data?.attendanceDataByEmpID[0].CheckIn,
               "HH:mm:ss a"
             );
             const todayCheckOut = moment(
-              res?.data?.attendanceDataByEmpID[0].CheckOut,
+              new Date().toLocaleTimeString(),
               "HH:mm:ss a"
             );
+            // console.warn("todayCheckOut", todayCheckOut)
+
             const milliSeconds = moment.duration(todayCheckOut.diff(todayCheckIn));
             // const seconds = Math.floor((milliSeconds / 1000) % 60);
             const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
             const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
-            console.warn("hours", hours)
+            // console.warn("hours", hours)
             if (hours < 8) {
-              console.warn("am in hours", hours)
+              console.warn("hours less than 8 =>", hours)
               console.warn("you haven't worked till 8 hours. After 8 hours Checkout Btn Will Enable")
               setDisableCheckout(true);
             } else {
@@ -155,7 +154,7 @@ const Clock = () => {
             ].join(":");
             // }
           }
-        
+
           // Check if employee Checked-In Today then he can take breaks. Otherwise Break button will remain disabled
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setDisableBreak(true);
@@ -169,6 +168,9 @@ const Clock = () => {
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setShow(true);
             console.log("Checkin First to take Breaks", show);
+          } else if(res?.data?.attendanceDataByEmpID[0].Breaks.length === 0){
+            setShow(true);
+            console.log("Click to take your first Break", show);
           } else if (
             res?.data?.attendanceDataByEmpID[0].Breaks[
               res?.data?.attendanceDataByEmpID[0].Breaks.length - 1
@@ -178,7 +180,6 @@ const Clock = () => {
             ]?.end === ""
           ) {
             setShow(false);
-
             console.log("Please Resume Your Break", show);
           } else if (
             res?.data?.attendanceDataByEmpID[0].Breaks[
@@ -189,7 +190,7 @@ const Clock = () => {
             ]?.end !== ""
           ) {
             setShow(true);
-            console.log("Click To take a Break", show);
+            console.warn("Click To take Break again", show);
           } else {
             setShow(true);
             console.log("nothing found");
@@ -203,18 +204,16 @@ const Clock = () => {
           } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn === "") {
             setTodayAttendance("");
             console.warn("CheckIn null", TodayAttendance);
-          } else if (res?.data?.attendanceDataByEmpID[0]?.CheckOut === "") {
-            setTodayAttendance("");
-            console.warn("CheckOut null", TodayAttendance);
           } else {
             const attCheckIn = moment(
               res?.data?.attendanceDataByEmpID[0].CheckIn,
               "HH:mm:ss a"
             );
             const attCheckOut = moment(
-              res?.data?.attendanceDataByEmpID[0].CheckOut,
+              new Date().toLocaleTimeString(),
               "HH:mm:ss a"
             );
+            // console.log("attCheckOut", attCheckOut)
             const milliSeconds = moment.duration(attCheckOut.diff(attCheckIn));
             // const seconds = Math.floor((milliSeconds / 1000) % 60);
             const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
@@ -232,8 +231,8 @@ const Clock = () => {
               minutes.toString().padStart(2, "0"),
               // seconds.toString().padStart(2, "0"),
             ].join(":");
-            setTodayAttendance(formatingTime + "hours");
-            console.log("Form", formatingTime);
+            setTodayAttendance(formatingTime + " hours");
+            console.log("formatingTime", formatingTime);
             console.log("finally total hours", TodayAttendance);
             // }
           }
