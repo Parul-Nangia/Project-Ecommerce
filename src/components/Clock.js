@@ -7,7 +7,7 @@ import {
   PlusOutlined,
   DownOutlined,
   MenuUnfoldOutlined,
-  MenuFoldOutlined
+  MenuFoldOutlined,
 } from "@ant-design/icons";
 
 import moment, { duration } from "moment";
@@ -51,7 +51,6 @@ const Clock = () => {
   const handleOk = () => {
     setIsModalOpen(false);
     // setDisableCheckout(true);
-
   };
 
   const handleCancel = () => {
@@ -89,7 +88,7 @@ const Clock = () => {
         )
         .then((res) => {
           setAttendance(res?.data?.attendanceDataByEmpID[0]);
-          console.log("attendanceByEMPID", res?.data?.attendanceDataByEmpID[0])
+          console.log("attendanceByEMPID", res?.data?.attendanceDataByEmpID[0]);
 
           // Check if employee Checked-In Today
           if (res?.data?.attendanceDataByEmpID.length === 0) {
@@ -109,12 +108,12 @@ const Clock = () => {
           //   console.warn("here 12")
           //   setDisableCheckout(true);
 
-          //checkout time calculation 
+          //checkout time calculation
           if (res?.data?.attendanceDataByEmpID.length === 0) {
-            console.warn("Need Attendance")
+            console.warn("Need Attendance");
             setDisableCheckout(true);
           } else if (res?.data?.attendanceDataByEmpID[0].CheckIn === "") {
-            console.warn("Need Checkin")
+            console.warn("Need Checkin");
             setDisableCheckout(true);
           } else {
             const todayCheckIn = moment(
@@ -127,23 +126,23 @@ const Clock = () => {
             );
             // console.warn("todayCheckOut", todayCheckOut)
 
-            const milliSeconds = moment.duration(todayCheckOut.diff(todayCheckIn));
+            const milliSeconds = moment.duration(
+              todayCheckOut.diff(todayCheckIn)
+            );
             // const seconds = Math.floor((milliSeconds / 1000) % 60);
             const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
             const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
             // console.warn("hours", hours)
             if (hours < 8) {
-              console.warn("hours less than 8 =>", hours)
-              console.warn("you haven't worked till 8 hours. After 8 hours Checkout Btn Will Enable")
+              console.warn("hours less than 8 =>", hours);
+              console.warn(
+                "you haven't worked till 8 hours. After 8 hours Checkout Btn Will Enable"
+              );
               setDisableCheckout(true);
             } else {
               setDisableCheckout(false);
-              console.warn("success worked till 8 hours")
+              console.warn("success worked till 8 hours");
             }
-            // if (minutes === 0 || hours === 0) {
-            //   console.log("minutes", minutes);
-            //   console.log("hours", hours);
-            //   setTodayAttendance("00:00");
 
             // console.log("here in minutes", minutes);
             // } else {
@@ -155,7 +154,6 @@ const Clock = () => {
             // }
           }
 
-          // Check if employee Checked-In Today then he can take breaks. Otherwise Break button will remain disabled
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setDisableBreak(true);
           } else if (res?.data?.attendanceDataByEmpID[0].CheckOut !== "") {
@@ -168,7 +166,7 @@ const Clock = () => {
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setShow(true);
             console.log("Checkin First to take Breaks", show);
-          } else if(res?.data?.attendanceDataByEmpID[0].Breaks.length === 0){
+          } else if (res?.data?.attendanceDataByEmpID[0].Breaks.length === 0) {
             setShow(true);
             console.log("Click to take your first Break", show);
           } else if (
@@ -196,15 +194,13 @@ const Clock = () => {
             console.log("nothing found");
           }
 
-
-
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setTodayAttendance("");
             console.warn("TodayAttendance 0", TodayAttendance);
           } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn === "") {
             setTodayAttendance("");
             console.warn("CheckIn null", TodayAttendance);
-          } else {
+          } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn !== "") {
             const attCheckIn = moment(
               res?.data?.attendanceDataByEmpID[0].CheckIn,
               "HH:mm:ss a"
@@ -234,9 +230,9 @@ const Clock = () => {
             setTodayAttendance(formatingTime + " hours");
             console.log("formatingTime", formatingTime);
             console.log("finally total hours", TodayAttendance);
+
             // }
           }
-
         });
     };
     LoggedAttendanceAllRecord();
@@ -334,7 +330,7 @@ const Clock = () => {
         key: Math.floor(Math.random() * 9785874563463865),
         start: new Date().toLocaleTimeString(),
         end: "",
-        timeconsumed: timeconsumed
+        timeconsumed: timeconsumed,
       };
       console.log("Breaks/startTime", obj.start);
       attendance?.Breaks.push(obj);
@@ -603,7 +599,6 @@ const Clock = () => {
         <div className="child">
           <Button
             className="breakBtn"
-
             onClick={() => {
               employeebreak();
             }}
@@ -615,10 +610,8 @@ const Clock = () => {
         <div className="child">
           <Button
             className="checkoutBtn"
-
             onClick={() => {
               showModal();
-
             }}
             disabled={disableCheckout}
           >

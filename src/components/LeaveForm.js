@@ -33,7 +33,9 @@ const LeaveForm = () => {
   const [ReturnDate, setReturnDate] = useState("");
   console.log("ReturnDate", ReturnDate);
   const [TotalHoursRequested, setTotalHoursRequested] = useState("");
+  console.log("Total Hours ", TotalHoursRequested);
   const [TotalDaysRequested, setTotalDaysRequested] = useState("");
+
   const [status, setStatus] = useState("");
 
   function applyLeave() {
@@ -43,7 +45,7 @@ const LeaveForm = () => {
       let data = {
         emp_id: decoded._id,
         EmployeeName,
-        SupervisorName,
+        // SupervisorName,
         Department,
         LeaveType,
         LeaveDate,
@@ -101,7 +103,7 @@ const LeaveForm = () => {
           console.log("Failed", err);
         });
     } else {
-      message.error("Invalid Input or Empty Input");
+      message.error("Please fill all the fields !!!!");
     }
   };
 
@@ -121,7 +123,7 @@ const LeaveForm = () => {
     setReturnDate(value.format("DD-MM-YYYY"));
   };
 
-  const selecthours = (value) => {
+  const selectLeave = (value) => {
     setTotalHoursRequested(value);
   };
 
@@ -190,7 +192,7 @@ const LeaveForm = () => {
                 />
               </Form.Item>
 
-              <Form.Item
+              {/* <Form.Item
                 // label="Supervisor Name"
                 name="supervisor name"
                 rules={[
@@ -214,56 +216,8 @@ const LeaveForm = () => {
                   }}
                   placeholder="Supervisor Name"
                 />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                // label="Department"
-                name="department"
-                rules={[
-                  {
-                    required: true,
-                    message: "please Select Department Name",
-                  },
-                ]}
-              >
-                <Select
-                  style={{ width: "350px" }}
-                  defaultValue={{
-                    value: "Department",
-                  }}
-                  onChange={selectme}
-                >
-                  <Option value="Reactjs">Reactjs</Option>
-                  <Option value="Php">Php</Option>
-                  <Option value="Python">Python</Option>
-                </Select>
-              </Form.Item>
+              </Form.Item> */}
 
-              <Form.Item
-                // label="Leave Type"
-                name="leave type"
-                rules={[
-                  {
-                    required: true,
-                    message: "please select Leave type",
-                  },
-                ]}
-              >
-                <Select
-                  style={{ width: "350px" }}
-                  defaultValue={{
-                    value: "Leave type",
-                  }}
-                  onChange={selectthis}
-                >
-                  <Option value="Priviliege">Priviliege</Option>
-                  <Option value="Sick">Sick</Option>
-                  <Option value="Casual">Casual</Option>
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
               <Form.Item
                 // label="Leave Date"
 
@@ -301,8 +255,56 @@ const LeaveForm = () => {
             </Col>
             <Col span={12}>
               <Form.Item
+                // label="Department"
+                style={{ marginLeft: "20px" }}
+                name="department"
+                rules={[
+                  {
+                    required: true,
+                    message: "please Select Department Name",
+                  },
+                ]}
+              >
+                <Select
+                  style={{ width: "350px" }}
+                  defaultValue={{
+                    value: "Department",
+                  }}
+                  onChange={selectme}
+                >
+                  <Option value="Reactjs">Reactjs</Option>
+                  <Option value="Php">Php</Option>
+                  <Option value="Python">Python</Option>
+                </Select>
+              </Form.Item>
+
+              <Form.Item
+                style={{ marginLeft: "20px" }}
+                // label="Leave Type"
+                name="leave type"
+                rules={[
+                  {
+                    required: true,
+                    message: "please select Leave type",
+                  },
+                ]}
+              >
+                <Select
+                  style={{ width: "350px" }}
+                  defaultValue={{
+                    value: "Leave type",
+                  }}
+                  onChange={selectthis}
+                >
+                  <Option value="Priviliege">Priviliege</Option>
+                  <Option value="Sick">Sick</Option>
+                  <Option value="Casual">Casual</Option>
+                </Select>
+              </Form.Item>
+              <Form.Item
                 // label="Total Hours"
-                name="total hours requested"
+                name="Leave Requested For"
+                style={{ marginLeft: "20px" }}
                 rules={[
                   {
                     // required: true,
@@ -310,34 +312,70 @@ const LeaveForm = () => {
                   },
                 ]}
               >
-                <Select
+                {/* <Select
                   style={{ width: "350px" }}
                   defaultValue={{
-                    value: "Total hours requested",
+                    value: "Leave Requested For",
                   }}
-                  onChange={selecthours}
+                  onChange={selectLeave}
                 >
-                  <Option value="0">0</Option>
-                  <Option value="1">1</Option>
-                  <Option value="2">2</Option>
-                  <Option value="3">3</Option>
-                  <Option value="4">4</Option>
-                  <Option value="Half Day">Half Day</Option>
-                </Select>
+                  <Option value="Full Day">Full Day</Option>
+                  <Option value="Short Leave">Short Leave</Option>
+                </Select> */}
+                <Select
+                  defaultValue="Leave Requested For"
+                  style={{
+                    width: 200,
+                  }}
+                  onChange={selectLeave}
+                  options={[
+                    {
+                      label: "Full Day ",
+                      value: "full day",
+                    },
+                    {
+                      label: "Half Day",
+                      options: [
+                        {
+                          label: "1st Half",
+                          value: "1st half",
+                        },
+                        {
+                          label: "2nd Half",
+                          value: "2nd half",
+                        },
+                      ],
+                    },
+                    {
+                      label: "Short Leave",
+                      options: [
+                        {
+                          label: "1 Hour",
+                          value: "1 hour",
+                        },
+                        {
+                          label: "2 hour",
+                          value: "2 hour",
+                        },
+                      ],
+                    },
+                  ]}
+                />
               </Form.Item>
             </Col>
           </Row>
-
-          <Form.Item style={{ marginLeft: "40%", marginTop: "30px" }}>
-            <Button className="breakBtn" size={size} onClick={handleEmail}>
-              Apply
-            </Button>
-
-            <Button className="backbtn" size={size} onClick={handleClick}>
-              Back
-            </Button>
-            <br />
-          </Form.Item>
+          <div style={{ marginTop: "10%" }}>
+            <Form.Item style={{ marginLeft: "40%" }}>
+              <Button className="breakBtn" size={size} onClick={handleEmail}>
+                Apply
+              </Button>
+            </Form.Item>
+            <Form.Item style={{ marginLeft: "50%", marginTop: "-56px" }}>
+              <Button className="backbtn" size={size} onClick={handleClick}>
+                Back
+              </Button>
+            </Form.Item>
+          </div>
         </Form>
       </div>
     </>

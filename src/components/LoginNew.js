@@ -16,9 +16,9 @@ const LoginNew = () => {
     axios.get(`${process.env.REACT_APP_BASE_URL}/user`).then((res) => {
       console.log(res, "Response");
       console.log(res?.data?.userData, "Response");
-      const apnatime = res?.data?.userData;
-      console.log(apnatime);
-      setCorrectData(apnatime);
+      const showData = res?.data?.userData;
+      console.log(showData);
+      setCorrectData(showData);
     });
   };
   const submit = async (e) => {
@@ -43,9 +43,9 @@ const LoginNew = () => {
       ] = `Bearer ${data["token"]}`;
       localStorage.setItem("access_token1", JSON.stringify(data.token));
       console.log(localStorage, "localStorage");
-      message.success("!Login ");
+      message.success("Login ");
       window.location.reload();
-      navigate("/dashboard");
+      navigate("/");
     } catch (error) {
       console.log(correctData, "show data catch");
       // const text =(item)=>{
@@ -76,17 +76,7 @@ const LoginNew = () => {
         message.warning("valid username and password here");
       }
 
-      // else{
-      //   console.log("Incorrect Password")
-      // }
-      // message.open({
-      //   type: 'error',
-      //   content: 'unauthorized',
-      //   duration: 5,
-      //   style: {
-      //     marginTop: '10vh',
-      //   },
-      // });
+    
     }
   };
 
