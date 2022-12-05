@@ -25,7 +25,7 @@ const Profile = (props) => {
   const [id] = useState(params.id);
   console.log(id, "iduser");
 
-  const [viewingEmployee, setViewingEmployee] = useState(null);
+  const [viewingEmployee, setViewingEmployee] = useState("null");
   // const [form] = Form.useForm();
 
   // const[joiningDate,setJoiningdate]=useState()
@@ -47,6 +47,11 @@ const Profile = (props) => {
   const [resetpassword, setResetPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [newpassword, setNewPassword] = useState([]);
+
+  const customValue = {
+    fatherName: { fatherName },
+    motherName: { motherName },
+  };
 
   const onMyFinish = async () => {
     try {
@@ -129,7 +134,6 @@ const Profile = (props) => {
     //  form.resetFields();
     // e.preventDefault();
 
-    console.log("hello");
     axios
       .put(`${process.env.REACT_APP_BASE_URL}/user/${id}`, {
         fatherName,
@@ -156,6 +160,9 @@ const Profile = (props) => {
     setJoiningDate(value.format("YYYY-MM-DD"));
   };
 
+  const onFinish = (values) => {
+    console.log(values, "13312321312");
+  };
   return (
     <>
       <Modal
@@ -178,13 +185,13 @@ const Profile = (props) => {
           autoComplete="off"
         >
           <Form.Item
-            // style={{ fontWeight: "bold" }}
-            label="New password"
+            style={{ fontWeight: "bold" }}
+            label="Set Password"
             name="SetPassword"
             rules={[
               {
                 required: true,
-                message: "Enter new password!",
+                message: "set your password!",
               },
             ]}
           >
@@ -196,13 +203,13 @@ const Profile = (props) => {
           </Form.Item>
 
           <Form.Item
-            // style={{ fontWeight: "bold" }}
-            label="Confirm password"
+            style={{ fontWeight: "bold" }}
+            label="Confirm Password"
             name="password"
             rules={[
               {
                 required: true,
-                message: "Please confirm new password!",
+                message: "confirm  your password!",
               },
             ]}
           >
@@ -216,7 +223,7 @@ const Profile = (props) => {
           <Form.Item>
             <div style={{ display: "flex", marginLeft: "105%" }}>
               <Button
-                style={{ marginRight: "4px", backgroundColor: "#d22d2d", borderColor: "blanchedalmond" }}
+                style={{ marginRight: "4px", backgroundColor: "red" }}
                 type="primary"
                 htmlType="cancel"
                 onClick={handleCancel}
@@ -242,19 +249,15 @@ const Profile = (props) => {
           Change Password
         </Link>
       </Card>
-      <Form
-        // name="basic"
-        //  form={form}
-        // layout="inline"
-        // labelCol={{
-        //   span: 12,
-        // }}
-        // wrapperCol={{
-        //   span: 12,
-        // }}
-        // name="basic"
 
+      <Form
+        name="pro"
         onFinish={Submithere}
+        rules={[
+          {
+            required: "true",
+          },
+        ]}
         // onSubmit={Submithere}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
@@ -263,8 +266,8 @@ const Profile = (props) => {
           <Col span={12} style={{ padding: "10px 10px" }}>
             <Form.Item
               label="Father Name"
-              name="fatherName"
-              defaultValue={viewingEmployee?.fatherName}
+              name="fathername"
+              // defaultValue={viewingEmployee?.fatherName}
               // name="dadyy"
               rules={[
                 {
@@ -280,11 +283,12 @@ const Profile = (props) => {
                   message: "please Input fullname & alphabets only",
                 },
               ]}
-            // value={fatherName}
-            // initialValue={fatherName}
+              // value={fatherName}
+              // initialValue={fatherName}
             >
               <Input
-                placeholder="Type Your Name"
+                value={fatherName}
+                placeholder="Type Father Name "
                 onChange={(e) => {
                   setFatherName(e.target.value);
                 }}
@@ -292,28 +296,8 @@ const Profile = (props) => {
             </Form.Item>
 
             <Form.Item
-              // name={["user", "motherName"]}
               label="Mother Name"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input
-                placeholder="Type your Name"
-                value={motherName}
-                onChange={(e) => {
-                  setMotherName(() => {
-                    console.log("Mother Name " + e.target.value);
-                    return e.target.value;
-                  });
-                }}
-              ></Input>
-            </Form.Item>
-            {/* <Form.Item
-              label="Mother Name"
-              // name="mother name"
+              name="mother name"
               rules={[
                 {
                   required: true,
@@ -331,7 +315,6 @@ const Profile = (props) => {
             >
               <Input
                 placeholder="Type your Name"
-                value={motherName}
                 onChange={(e) => {
                   setMotherName(() => {
                     console.log("Mother Name " + e.target.value);
@@ -339,10 +322,10 @@ const Profile = (props) => {
                   });
                 }}
               ></Input>
-            </Form.Item> */}
+            </Form.Item>
             <Form.Item
               label="Blood Group"
-              //  name="bloodGroup"
+              name="bloodGroup"
               rules={[
                 {
                   required: true,
@@ -350,14 +333,7 @@ const Profile = (props) => {
                 },
               ]}
             >
-              <Select
-                placeholder="Select"
-                // defaultValue={{
-                //   value: "Select",
-                // }}
-                value={bloodGroup}
-                onChange={SelectOne}
-              >
+              <Select placeholder="Select" onChange={SelectOne}>
                 <Option value="A+">A+</Option>
                 <Option value="A-">A-</Option>
                 <Option value="B+">B+</Option>
@@ -370,7 +346,7 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item
               label="Emergency Contact Number"
-              // name="contactNumber"
+              name="contactNumber"
               rules={[
                 {
                   // type:"number",
@@ -392,7 +368,7 @@ const Profile = (props) => {
                 placeholder="Type your Contact number"
                 //  min={0}
                 //  style={{width:'100%'}}
-                value={contactNumber}
+
                 onChange={(e) => {
                   setContactNumber(() => {
                     console.log("Contact Number " + e.target.value);
@@ -403,7 +379,7 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item
               label="Date of Joining"
-              // name="setJoiningDate"
+              name="setJoiningDate"
               rules={[
                 {
                   required: true,
@@ -426,7 +402,7 @@ const Profile = (props) => {
           <Col span={12} style={{ padding: "10px 10px" }}>
             <Form.Item
               label="Permanent Address"
-              // name="permanentAddress"
+              name="permanentAddress"
               rules={[
                 {
                   required: true,
@@ -436,7 +412,6 @@ const Profile = (props) => {
             >
               <TextArea
                 placeholder="Type your Address"
-                value={permanentAddress}
                 onChange={(e) => {
                   setPermanentAddress(() => {
                     console.log("Permanent Address " + e.target.value);
@@ -447,7 +422,7 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item
               label="Aadhar card Number"
-              // name="adharNumber"
+              name="adharNumber"
               rules={[
                 {
                   required: true,
@@ -457,8 +432,6 @@ const Profile = (props) => {
                   min: 10,
                 },
                 {
-                  // pattern: new RegExp(/\d+/g),
-                  // pattern:/^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/,
                   pattern: /^-?(0|[0-9][0-9]*)(\.[0-9]*)?$/,
                   message: " Input only number!",
                 },
@@ -466,7 +439,6 @@ const Profile = (props) => {
             >
               <Input
                 placeholder="Aadhar Number"
-                value={adharNumber}
                 onChange={(e) => {
                   setAdharNumber(() => {
                     console.log("Aadhar Number " + e.target.value);
@@ -477,7 +449,7 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item
               label="PAN card Number"
-              // name="panNumber"
+              name="panNumber"
               rules={[
                 {
                   required: true,
@@ -493,7 +465,6 @@ const Profile = (props) => {
             >
               <Input
                 placeholder="Type your pancard number"
-                value={panNumber}
                 onChange={(e) => {
                   setPanNumber(() => {
                     console.log("Pan Number " + e.target.value);
@@ -504,7 +475,7 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item
               label="Current Salary"
-              // name="salary"
+              name="salary"
               rules={[
                 {
                   required: true,
@@ -520,7 +491,6 @@ const Profile = (props) => {
             >
               <Input
                 placeholder="Current Salary"
-                value={salary}
                 onChange={(e) => {
                   setSalary(() => {
                     console.log("Salary" + e.target.value);
@@ -532,7 +502,7 @@ const Profile = (props) => {
 
             <Form.Item
               label="Last Appraisal Date"
-              // name="setAppraisal"
+              name="setAppraisal"
               rules={[
                 {
                   required: true,
@@ -542,7 +512,6 @@ const Profile = (props) => {
             >
               <DatePicker
                 dateFormat="dd/MM/yyyy"
-                // value={appraisal}
                 onChange={(date) => {
                   const d = new Date(date).toLocaleDateString("fr-FR");
                   console.log(d);
@@ -554,7 +523,7 @@ const Profile = (props) => {
         </Row>
         <Form.Item>
           <Row justify="center">
-            <Button className="breakBtn" htmlType="submit">
+            <Button type="primary" htmlType="submit">
               submit
             </Button>
           </Row>
