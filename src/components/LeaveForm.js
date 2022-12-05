@@ -114,11 +114,11 @@ const LeaveForm = () => {
   };
 
   const handledate = (value) => {
-    setLeaveDate(value.format("YYYY-MM-DD"));
+    setLeaveDate(value.format("DD-MM-YYYY"));
   };
 
   const handlereturn = (value) => {
-    setReturnDate(value.format("YYYY-MM-DD"));
+    setReturnDate(value.format("DD-MM-YYYY"));
   };
 
   const selecthours = (value) => {

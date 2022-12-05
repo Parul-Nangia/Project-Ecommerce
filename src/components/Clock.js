@@ -7,7 +7,7 @@ import {
   PlusOutlined,
   DownOutlined,
   MenuUnfoldOutlined,
-  MenuFoldOutlined,
+  MenuFoldOutlined
 } from "@ant-design/icons";
 
 import moment, { duration } from "moment";
@@ -50,8 +50,8 @@ const Clock = () => {
 
   const handleOk = () => {
     setIsModalOpen(false);
-
     // setDisableCheckout(true);
+
   };
 
   const handleCancel = () => {
@@ -89,7 +89,7 @@ const Clock = () => {
         )
         .then((res) => {
           setAttendance(res?.data?.attendanceDataByEmpID[0]);
-          console.log("attendanceByEMPID", res?.data?.attendanceDataByEmpID[0]);
+          console.log("attendanceByEMPID", res?.data?.attendanceDataByEmpID[0])
 
           // Check if employee Checked-In Today
           if (res?.data?.attendanceDataByEmpID.length === 0) {
@@ -98,12 +98,23 @@ const Clock = () => {
             setDisableCheckin(true);
           }
 
-          //checkout time calculation
+          // Check if employee Checked-Out Today
+          // if (res?.data?.attendanceDataByEmpID.length === 0) {
+          //   setDisableCheckout(true);
+          // } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn === "") {
+          //   console.warn("here 11")
+          //   setDisableCheckout(true);
+          // }
+          // if (res?.data?.attendanceDataByEmpID.length === 0) {
+          //   console.warn("here 12")
+          //   setDisableCheckout(true);
+
+          //checkout time calculation 
           if (res?.data?.attendanceDataByEmpID.length === 0) {
-            console.warn("Need Attendance");
+            console.warn("Need Attendance")
             setDisableCheckout(true);
           } else if (res?.data?.attendanceDataByEmpID[0].CheckIn === "") {
-            console.warn("Need Checkin");
+            console.warn("Need Checkin")
             setDisableCheckout(true);
           } else {
             const todayCheckIn = moment(
@@ -116,24 +127,26 @@ const Clock = () => {
             );
             // console.warn("todayCheckOut", todayCheckOut)
 
-            const milliSeconds = moment.duration(
-              todayCheckOut.diff(todayCheckIn)
-            );
+            const milliSeconds = moment.duration(todayCheckOut.diff(todayCheckIn));
             // const seconds = Math.floor((milliSeconds / 1000) % 60);
             const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
             const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
             // console.warn("hours", hours)
             if (hours < 8) {
-              console.warn("hours less than 8 =>", hours);
-              console.warn(
-                "you haven't worked till 8 hours. After 8 hours Checkout Btn Will Enable"
-              );
+              console.warn("hours less than 8 =>", hours)
+              console.warn("you haven't worked till 8 hours. After 8 hours Checkout Btn Will Enable")
               setDisableCheckout(true);
             } else {
               setDisableCheckout(false);
-              console.warn("success worked till 8 hours");
+              console.warn("success worked till 8 hours")
             }
+            // if (minutes === 0 || hours === 0) {
+            //   console.log("minutes", minutes);
+            //   console.log("hours", hours);
+            //   setTodayAttendance("00:00");
 
+            // console.log("here in minutes", minutes);
+            // } else {
             const formatingTime = [
               hours.toString().padStart(2, "0"),
               minutes.toString().padStart(2, "0"),
@@ -155,7 +168,7 @@ const Clock = () => {
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setShow(true);
             console.log("Checkin First to take Breaks", show);
-          } else if (res?.data?.attendanceDataByEmpID[0].Breaks.length === 0) {
+          } else if(res?.data?.attendanceDataByEmpID[0].Breaks.length === 0){
             setShow(true);
             console.log("Click to take your first Break", show);
           } else if (
@@ -183,6 +196,8 @@ const Clock = () => {
             console.log("nothing found");
           }
 
+
+
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setTodayAttendance("");
             console.warn("TodayAttendance 0", TodayAttendance);
@@ -204,6 +219,13 @@ const Clock = () => {
             const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
             const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
 
+            // if (minutes === 0 || hours === 0) {
+            //   console.log("minutes", minutes);
+            //   console.log("hours", hours);
+            //   setTodayAttendance("00:00");
+
+            // console.log("here in minutes", minutes);
+            // } else {
             const formatingTime = [
               hours.toString().padStart(2, "0"),
               minutes.toString().padStart(2, "0"),
@@ -214,6 +236,7 @@ const Clock = () => {
             console.log("finally total hours", TodayAttendance);
             // }
           }
+
         });
     };
     LoggedAttendanceAllRecord();
@@ -311,7 +334,7 @@ const Clock = () => {
         key: Math.floor(Math.random() * 9785874563463865),
         start: new Date().toLocaleTimeString(),
         end: "",
-        timeconsumed: timeconsumed,
+        timeconsumed: timeconsumed
       };
       console.log("Breaks/startTime", obj.start);
       attendance?.Breaks.push(obj);
@@ -359,9 +382,8 @@ const Clock = () => {
         })
         .then((res) => {
           setEmployeeCheckOut(res?.data?.updatedAttendance);
-
-          setDisableCheckout(true);
           window.location.reload();
+          setDisableCheckout(true);
         });
     } else {
       window.alert("you have already Checked-Out");
@@ -581,6 +603,7 @@ const Clock = () => {
         <div className="child">
           <Button
             className="breakBtn"
+
             onClick={() => {
               employeebreak();
             }}
@@ -592,8 +615,10 @@ const Clock = () => {
         <div className="child">
           <Button
             className="checkoutBtn"
+
             onClick={() => {
               showModal();
+
             }}
             disabled={disableCheckout}
           >
