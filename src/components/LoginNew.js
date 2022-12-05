@@ -16,9 +16,9 @@ const LoginNew = () => {
     axios.get(`${process.env.REACT_APP_BASE_URL}/user`).then((res) => {
       console.log(res, "Response");
       console.log(res?.data?.userData, "Response");
-      const apnatime = res?.data?.userData;
-      console.log(apnatime);
-      setCorrectData(apnatime);
+      const showData = res?.data?.userData;
+      console.log(showData);
+      setCorrectData(showData);
     });
   };
   const submit = async (e) => {
