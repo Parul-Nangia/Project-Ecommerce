@@ -93,8 +93,8 @@ const LeaveCards = () => {
 
           } else if (res?.data?.length > 11) {
             console.warn("Priviliege greater than 11")
-
             setPriviliege("0");
+            
           } else if (res?.data?.length < 11) {
             console.warn("Priviliege less than 11")
             setPriviliege(11- res?.data?.length);

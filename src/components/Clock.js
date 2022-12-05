@@ -140,19 +140,7 @@ const Clock = () => {
               setDisableCheckout(false);
               console.warn("success worked till 8 hours")
             }
-            // if (minutes === 0 || hours === 0) {
-            //   console.log("minutes", minutes);
-            //   console.log("hours", hours);
-            //   setTodayAttendance("00:00");
 
-            // console.log("here in minutes", minutes);
-            // } else {
-            const formatingTime = [
-              hours.toString().padStart(2, "0"),
-              minutes.toString().padStart(2, "0"),
-              // seconds.toString().padStart(2, "0"),
-            ].join(":");
-            // }
           }
 
           // Check if employee Checked-In Today then he can take breaks. Otherwise Break button will remain disabled
@@ -168,7 +156,7 @@ const Clock = () => {
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setShow(true);
             console.log("Checkin First to take Breaks", show);
-          } else if(res?.data?.attendanceDataByEmpID[0].Breaks.length === 0){
+          } else if (res?.data?.attendanceDataByEmpID[0].Breaks.length === 0) {
             setShow(true);
             console.log("Click to take your first Break", show);
           } else if (
@@ -204,7 +192,7 @@ const Clock = () => {
           } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn === "") {
             setTodayAttendance("");
             console.warn("CheckIn null", TodayAttendance);
-          } else {
+          } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn !== "") {
             const attCheckIn = moment(
               res?.data?.attendanceDataByEmpID[0].CheckIn,
               "HH:mm:ss a"
@@ -234,6 +222,7 @@ const Clock = () => {
             setTodayAttendance(formatingTime + " hours");
             console.log("formatingTime", formatingTime);
             console.log("finally total hours", TodayAttendance);
+
             // }
           }
 
