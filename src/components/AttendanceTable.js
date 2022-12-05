@@ -14,7 +14,6 @@ const AttendanceTable = () => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
 
-
   useEffect(() => {
     getAllData();
   }, []);
@@ -28,17 +27,26 @@ const AttendanceTable = () => {
           if (res?.data?.attendanceData[f].Breaks.length === 0) {
             console.warn("any of the breaks are null");
           } else if (res?.data?.attendanceData[f].Breaks.length !== "") {
-            for (let i = 0; i < res?.data?.attendanceData[f].Breaks.length; i++) {
+            for (
+              let i = 0;
+              i < res?.data?.attendanceData[f].Breaks.length;
+              i++
+            ) {
               if (res?.data?.attendanceData[f].Breaks[i]?.start === "") {
                 console.warn("click break first");
               } else if (res?.data?.attendanceData[f].Breaks[i]?.end === "") {
                 console.warn("resume first");
-
               } else {
-                console.warn("success start/end not null")
-                const start = moment(res?.data?.attendanceData[f].Breaks[i]?.start, "HH:mm:ss a");
+                console.warn("success start/end not null");
+                const start = moment(
+                  res?.data?.attendanceData[f].Breaks[i]?.start,
+                  "HH:mm:ss a"
+                );
                 // console.log("starttime", start);
-                const end = moment(res?.data?.attendanceData[f].Breaks[i]?.end, "HH:mm:ss a");
+                const end = moment(
+                  res?.data?.attendanceData[f].Breaks[i]?.end,
+                  "HH:mm:ss a"
+                );
                 // console.log("endtime", end);
                 const milliSeconds = moment.duration(end.diff(start));
                 const seconds = Math.floor((milliSeconds / 1000) % 60);
@@ -52,18 +60,17 @@ const AttendanceTable = () => {
                   seconds.toString().padStart(2, "0"),
                 ].join(":");
 
-                res.data.attendanceData[f].Breaks[i].timeconsume = formattedTime
-
+                res.data.attendanceData[f].Breaks[i].timeconsume =
+                  formattedTime;
               }
             }
           }
-          res.data.attendanceData[f].key = Math.floor(Math.random() * 978587456)
-
+          res.data.attendanceData[f].key = Math.floor(
+            Math.random() * 978587456
+          );
         }
       });
   };
-
-
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -154,9 +161,9 @@ const AttendanceTable = () => {
     onFilter: (value, record) =>
       record[dataIndex]
         ? record[dataIndex]
-          .toString()
-          .toLowerCase()
-          .includes(value.toLowerCase())
+            .toString()
+            .toLowerCase()
+            .includes(value.toLowerCase())
         : false,
     render: (text) =>
       searchedColumn === dataIndex ? (
@@ -254,9 +261,9 @@ const AttendanceTable = () => {
     onFilter: (value, record) =>
       record[dataIndex]
         ? moment(record[dataIndex]).isBetween(
-          moment(value[0]),
-          moment(value[1])
-        )
+            moment(value[0]),
+            moment(value[1])
+          )
         : "",
     render: (text) =>
       searchColumnDate === dataIndex ? (
@@ -305,32 +312,29 @@ const AttendanceTable = () => {
 
   const nestedColumns = [
     {
-      title: 'No.',
-      key: 'index',
-      render : (text, record, index) => index + 1,
-      width:"20px"
-    },  
+      title: "No.",
+      key: "index",
+      render: (text, record, index) => index + 1,
+      width: "20px",
+    },
     {
       title: "Start",
       dataIndex: "start",
       key: "start",
       width: "30px",
-
     },
     {
       title: "End",
       dataIndex: "end",
       key: "end",
       width: "30px",
-
     },
     {
       title: "Time Consumed",
       dataIndex: "timeconsume",
       key: "timeconsume",
       width: "30px",
-
-    }
+    },
   ];
   return (
     <>
@@ -342,11 +346,14 @@ const AttendanceTable = () => {
           rowExpandable: (record) => true,
           expandedRowRender: (record) => {
             return (
-              <Table columns={nestedColumns} dataSource={record?.Breaks} pagination={false}  />
-            )
-          }
+              <Table
+                columns={nestedColumns}
+                dataSource={record?.Breaks}
+                pagination={false}
+              />
+            );
+          },
         }}
-
       />
     </>
   );
