@@ -34,9 +34,9 @@ const Drop = () => {
 
   const userData = (_id) => {
     const token = localStorage.getItem("access_token1");
-    console.log("token from local storage:", token);
+
     var decoded = jwt_decode(token);
-    console.log("Decoded token data", decoded);
+
     setName(decoded);
   };
 
