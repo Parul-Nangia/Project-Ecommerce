@@ -20,26 +20,27 @@ const { Option } = Select;
 // const { Content } = Layout;
 
 const Profile = (props) => {
+  const [form] = Form.useForm();
   const params = useParams();
   //  console.log(params.id, "params");
   const [id] = useState(params.id);
   console.log(id, "iduser");
 
-  const [viewingEmployee, setViewingEmployee] = useState(null);
+  const [viewingEmployee, setViewingEmployee] = useState([]);
   // const [form] = Form.useForm();
 
   // const[joiningDate,setJoiningdate]=useState()
   // const [isEditing, setIsEditing] = useState(false);
-  const [fatherName, setFatherName] = useState("");
-  const [motherName, setMotherName] = useState("");
-  const [bloodGroup, setBloodGroup] = useState("");
-  const [contactNumber, setContactNumber] = useState("");
-  const [permanentAddress, setPermanentAddress] = useState("");
-  const [adharNumber, setAdharNumber] = useState("");
-  const [panNumber, setPanNumber] = useState("");
-  const [salary, setSalary] = useState("");
-  const [appraisal, setAppraisal] = useState("");
-  const [joiningDate, setJoiningDate] = useState("");
+  const [fatherName, setFatherName] = useState();
+  const [motherName, setMotherName] = useState();
+  const [bloodGroup, setBloodGroup] = useState();
+  const [contactNumber, setContactNumber] = useState();
+  const [permanentAddress, setPermanentAddress] = useState();
+  const [adharNumber, setAdharNumber] = useState();
+  const [panNumber, setPanNumber] = useState();
+  const [salary, setSalary] = useState();
+  const [appraisal, setAppraisal] = useState();
+  const [joiningDate, setJoiningDate] = useState();
 
   // const[appraisal,setAppraisal]=useState()
 
@@ -102,23 +103,20 @@ const Profile = (props) => {
     await axios
       .get(`${process.env.REACT_APP_BASE_URL}/user/${id}`)
       .then((res) => {
-        console.log(res, "api response");
+        console.log("employeeDetails", res?.data?.myData);
         setViewingEmployee(res?.data?.myData);
-        console.log(res?.data?.myData?.fatherName, "fathername");
-        setFatherName(res?.data?.myData?.fatherName);
-        setMotherName(res?.data?.myData?.motherName);
-        setBloodGroup(res?.data?.myData?.bloodGroup);
-        setContactNumber(res?.data?.myData?.contactNumber);
-        setPermanentAddress(res?.data?.myData?.permanentAddress);
-        setAdharNumber(res?.data?.myData?.adharNumber);
-        setPanNumber(res?.data?.myData?.panNumber);
-        setSalary(res?.data?.myData?.salary);
-        setJoiningDate(res?.data?.myData?.joiningDate);
-        setAppraisal(res?.data?.myData?.appraisal);
-
-        // console.log(fatherName,"dgfjsghgh")
-
-        // console.log(viewingEmployee, "viewingEmployee");
+        form.setFieldsValue({
+          fatherName: res?.data?.myData?.fatherName,
+          motherName: res?.data?.myData?.motherName,
+          bloodGroup: res?.data?.myData?.bloodGroup,
+          joiningDate: res?.data?.myData?.joiningDate,
+          contactNumber: res?.data?.myData?.contactNumber,
+          permanentAddress: res?.data?.myData?.permanentAddress,
+          adharNumber: res?.data?.myData?.adharNumber,
+          panNumber: res?.data?.myData?.panNumber,
+          salary: res?.data?.myData?.salary,
+          appraisal: res?.data?.myData?.appraisal,
+        });
       });
   };
   const SelectOne = (value) => {
@@ -127,25 +125,31 @@ const Profile = (props) => {
   };
   const Submithere = () => {
     //  form.resetFields();
-    // e.preventDefault();
-
-    console.log("hello");
-    axios
-      .put(`${process.env.REACT_APP_BASE_URL}/user/${id}`, {
-        fatherName,
-        motherName,
-        joiningDate,
-        bloodGroup,
-        permanentAddress,
-        adharNumber,
-        contactNumber,
-        panNumber,
-        salary,
-        appraisal,
-      })
-      .then((res) => {
-        console.log(res, "response");
-      });
+    try {
+      axios
+        .put(`${process.env.REACT_APP_BASE_URL}/user/${id}`, {
+          fatherName,
+          motherName,
+          joiningDate,
+          bloodGroup,
+          permanentAddress,
+          adharNumber,
+          contactNumber,
+          panNumber,
+          salary,
+          appraisal,
+        })
+        .then((res) => {
+          console.log(res, "response");
+          message.success("Submission Successfully Done !!!!!");
+        });
+    } catch (error) {
+      if (fatherName === "" && motherName === "") {
+        message.error("Please Fill Empty field !!!!!");
+      } else {
+        message.error("Submission Failed !!!");
+      }
+    }
     // console.log("form values", form.getFieldsValue());
   };
   // const onFinish = (values) => {
@@ -216,14 +220,13 @@ const Profile = (props) => {
           <Form.Item>
             <div style={{ display: "flex", marginLeft: "105%" }}>
               <Button
-                style={{ marginRight: "4px", backgroundColor: "#d22d2d", borderColor: "blanchedalmond" }}
-                type="primary"
+                className="cancelpassBtn"
                 htmlType="cancel"
                 onClick={handleCancel}
               >
                 Cancel
               </Button>
-              <Button type="primary" htmlType="Done" onClick={handleOk}>
+              <Button className="okpassBtn" htmlType="Done" onClick={handleOk}>
                 Done
               </Button>
             </div>
@@ -231,46 +234,41 @@ const Profile = (props) => {
         </Form>
       </Modal>
 
-      <Card title="General Information" bordered={false} style={{ width: 300 }}>
-        <p>Name: {viewingEmployee?.name}</p>{" "}
-        <p>Email: {viewingEmployee?.email}</p>{" "}
-        <p>Father Name: {viewingEmployee?.fatherName}</p>
-        <p>Contact: {viewingEmployee?.contact}</p>
-        <p>Gender: {viewingEmployee?.gender}</p>
-        <p>Role: {viewingEmployee?.role}</p>
-        <Link style={{ display: "flex", marginTop: "1px" }} onClick={showModal}>
-          Change Password
-        </Link>
+      <Card
+        title="General Information"
+        bordered={false}
+        style={{ width: 300, fontWeight: "bold" }}
+      >
+        <div className="employeeBio">
+          <p>Name: {viewingEmployee?.name}</p>{" "}
+          <p>Email: {viewingEmployee?.email}</p>{" "}
+          <p>Father Name: {viewingEmployee?.fatherName}</p>
+          <p>Contact: {viewingEmployee?.contact}</p>
+          <p>Gender: {viewingEmployee?.gender}</p>
+          <p>Role: {viewingEmployee?.role}</p>
+          <p>Date Of Joining: {viewingEmployee?.joiningDate}</p>
+          <Link
+            style={{ display: "flex", marginTop: "1px" }}
+            onClick={showModal}
+          >
+            Change Password
+          </Link>
+        </div>
       </Card>
       <Form
-        // name="basic"
-        //  form={form}
-        // layout="inline"
-        // labelCol={{
-        //   span: 12,
-        // }}
-        // wrapperCol={{
-        //   span: 12,
-        // }}
-        // name="basic"
-
+        form={form}
         onFinish={Submithere}
-        // onSubmit={Submithere}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
         <Row>
           <Col span={12} style={{ padding: "10px 10px" }}>
             <Form.Item
-              label="Father Name"
+              label="Father name"
               name="fatherName"
-              defaultValue={viewingEmployee?.fatherName}
-              // name="dadyy"
               rules={[
                 {
                   required: true,
-
-                  // whitespace: true,
                 },
                 {
                   pattern: new RegExp(
@@ -280,11 +278,9 @@ const Profile = (props) => {
                   message: "please Input fullname & alphabets only",
                 },
               ]}
-            // value={fatherName}
-            // initialValue={fatherName}
             >
               <Input
-                placeholder="Type Your Name"
+                placeholder="Type your name"
                 onChange={(e) => {
                   setFatherName(e.target.value);
                 }}
@@ -292,32 +288,12 @@ const Profile = (props) => {
             </Form.Item>
 
             <Form.Item
-              // name={["user", "motherName"]}
-              label="Mother Name"
+              label="Mother name"
+              name="motherName"
               rules={[
                 {
                   required: true,
-                },
-              ]}
-            >
-              <Input
-                placeholder="Type your Name"
-                value={motherName}
-                onChange={(e) => {
-                  setMotherName(() => {
-                    console.log("Mother Name " + e.target.value);
-                    return e.target.value;
-                  });
-                }}
-              ></Input>
-            </Form.Item>
-            {/* <Form.Item
-              label="Mother Name"
-              // name="mother name"
-              rules={[
-                {
-                  required: true,
-                  message: "Please Input Your Name!",
+                  message: "Please input mother name!",
                   whitespace: true,
                 },
                 {
@@ -325,24 +301,20 @@ const Profile = (props) => {
                     /^[a-zA-Z@~`!@#$%^&*()_=+';:"/?>.<,-]+\s*[a-zA-Z@~`!@#$%^&*()_=+';:"/?>.<,-]+$/i
                   ),
                   // pattern: /^([A-Z][a-z]+\s)*[A-Z][a-z]+$/,
-                  message: "please Input alphabets only",
+                  message: "please input alphabets only",
                 },
               ]}
             >
               <Input
-                placeholder="Type your Name"
-                value={motherName}
+                placeholder="Enter your name"
                 onChange={(e) => {
-                  setMotherName(() => {
-                    console.log("Mother Name " + e.target.value);
-                    return e.target.value;
-                  });
+                  setMotherName(e.target.value);
                 }}
               ></Input>
-            </Form.Item> */}
+            </Form.Item>
             <Form.Item
               label="Blood Group"
-              //  name="bloodGroup"
+              name="bloodGroup"
               rules={[
                 {
                   required: true,
@@ -350,14 +322,7 @@ const Profile = (props) => {
                 },
               ]}
             >
-              <Select
-                placeholder="Select"
-                // defaultValue={{
-                //   value: "Select",
-                // }}
-                value={bloodGroup}
-                onChange={SelectOne}
-              >
+              <Select placeholder="Select" onChange={SelectOne}>
                 <Option value="A+">A+</Option>
                 <Option value="A-">A-</Option>
                 <Option value="B+">B+</Option>
@@ -369,30 +334,23 @@ const Profile = (props) => {
               </Select>
             </Form.Item>
             <Form.Item
-              label="Emergency Contact Number"
-              // name="contactNumber"
+              label="Emergency contact number"
+              name="contactNumber"
               rules={[
                 {
-                  // type:"number",
                   required: true,
                   message: "Please input 10 digit number!",
                   max: 10,
                   min: 10,
                 },
                 {
-                  // pattern:/^[2-9]{2}[0-9]{8}$/,
-                  // pattern: new RegExp(/\d+/g),
-                  // pattern:/^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/,
                   pattern: /^-?(0|[0-9][0-9]*)(\.[0-9]*)?$/,
                   message: "please input your valid number",
                 },
               ]}
             >
               <Input
-                placeholder="Type your Contact number"
-                //  min={0}
-                //  style={{width:'100%'}}
-                value={contactNumber}
+                placeholder="Type your contact number"
                 onChange={(e) => {
                   setContactNumber(() => {
                     console.log("Contact Number " + e.target.value);
@@ -403,11 +361,11 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item
               label="Date of Joining"
-              // name="setJoiningDate"
+              // name="joiningDate"
               rules={[
                 {
                   required: true,
-                  message: "Select Your Date!",
+                  message: "Select your date!",
                 },
               ]}
             >
@@ -426,7 +384,7 @@ const Profile = (props) => {
           <Col span={12} style={{ padding: "10px 10px" }}>
             <Form.Item
               label="Permanent Address"
-              // name="permanentAddress"
+              name="permanentAddress"
               rules={[
                 {
                   required: true,
@@ -436,7 +394,6 @@ const Profile = (props) => {
             >
               <TextArea
                 placeholder="Type your Address"
-                value={permanentAddress}
                 onChange={(e) => {
                   setPermanentAddress(() => {
                     console.log("Permanent Address " + e.target.value);
@@ -447,7 +404,7 @@ const Profile = (props) => {
             </Form.Item>
             <Form.Item
               label="Aadhar card Number"
-              // name="adharNumber"
+              name="adharNumber"
               rules={[
                 {
                   required: true,
@@ -457,16 +414,13 @@ const Profile = (props) => {
                   min: 10,
                 },
                 {
-                  // pattern: new RegExp(/\d+/g),
-                  // pattern:/^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/,
                   pattern: /^-?(0|[0-9][0-9]*)(\.[0-9]*)?$/,
                   message: " Input only number!",
                 },
               ]}
             >
               <Input
-                placeholder="Aadhar Number"
-                value={adharNumber}
+                placeholder="Aadhar number"
                 onChange={(e) => {
                   setAdharNumber(() => {
                     console.log("Aadhar Number " + e.target.value);
@@ -476,12 +430,12 @@ const Profile = (props) => {
               ></Input>
             </Form.Item>
             <Form.Item
-              label="PAN card Number"
-              // name="panNumber"
+              label="PAN card number"
+              name="panNumber"
               rules={[
                 {
                   required: true,
-                  message: "Please Input Your pancard Number!",
+                  message: "Please input your PAN card number!",
                   whitespace: true,
                 },
                 {
@@ -492,8 +446,7 @@ const Profile = (props) => {
               ]}
             >
               <Input
-                placeholder="Type your pancard number"
-                value={panNumber}
+                placeholder="Type your pan card number"
                 onChange={(e) => {
                   setPanNumber(() => {
                     console.log("Pan Number " + e.target.value);
@@ -503,8 +456,8 @@ const Profile = (props) => {
               ></Input>
             </Form.Item>
             <Form.Item
-              label="Current Salary"
-              // name="salary"
+              label="Current salary"
+              name="salary"
               rules={[
                 {
                   required: true,
@@ -512,15 +465,13 @@ const Profile = (props) => {
                   whitespace: true,
                 },
                 {
-                  // pattern: new RegExp(/^[a-zA-Z0-9]*$/),
                   pattern: /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/,
-                  message: "Input only number ",
+                  message: "Input only numbers!]",
                 },
               ]}
             >
               <Input
                 placeholder="Current Salary"
-                value={salary}
                 onChange={(e) => {
                   setSalary(() => {
                     console.log("Salary" + e.target.value);
@@ -532,17 +483,17 @@ const Profile = (props) => {
 
             <Form.Item
               label="Last Appraisal Date"
-              // name="setAppraisal"
+              // name="appraisal"
               rules={[
                 {
                   required: true,
-                  message: "Select Your Date!",
+                  message: "Select your date!",
                 },
               ]}
             >
               <DatePicker
+                defaultValue={moment()}
                 dateFormat="dd/MM/yyyy"
-                // value={appraisal}
                 onChange={(date) => {
                   const d = new Date(date).toLocaleDateString("fr-FR");
                   console.log(d);

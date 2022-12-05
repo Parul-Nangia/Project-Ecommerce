@@ -115,7 +115,11 @@ const ChangePassword = () => {
           <Form.Item>
             <div style={{ display: "flex", marginLeft: "105%" }}>
               <Button
-                style={{ marginRight: "4px", backgroundColor: "#d22d2d", borderColor: "blanchedalmond" }}
+                style={{
+                  marginRight: "4px",
+                  backgroundColor: "#d22d2d",
+                  borderColor: "blanchedalmond",
+                }}
                 type="primary"
                 htmlType="cancel"
                 onClick={handleCancel}
@@ -141,12 +145,23 @@ const ChangePassword = () => {
           {new Date().toLocaleTimeString()}
         </div>
       </div>
+      <br />
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          textDecoration: "underline",
+        }}
+      >
+        <h3>General Settings </h3>
+      </div>
 
       <div
         style={{
           marginTop: "85px",
-          width: "200px",
-          height: "230px",
+          width: "180px",
+          height: "210px",
           padding: "10px",
           border: "2px solid gray",
         }}
@@ -154,8 +169,8 @@ const ChangePassword = () => {
         <div
           style={{
             display: "flex",
-            width: "198px",
-            height: "198px",
+            width: "178px",
+            height: "178px",
             marginLeft: "-10px",
             marginTop: "-10px",
           }}
