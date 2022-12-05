@@ -62,7 +62,7 @@ const LeaveForm = () => {
         body: JSON.stringify(data),
       }).then((Leave) => {
         console.log("result", Leave);
-        message.success("Leave Applied");
+        // message.success("Leave Applied");
       });
     } catch (error) {
       if (EmployeeName === "" && LeaveDate === "") {
@@ -95,6 +95,7 @@ const LeaveForm = () => {
             response.status,
             response.text
           );
+          message.success("Leave Applied");
         })
         .catch((err) => {
           console.log("Failed", err);
@@ -181,7 +182,7 @@ const LeaveForm = () => {
                 ]}
               >
                 <Input
-                style ={{width:"350px"}}
+                  style={{ width: "350px" }}
                   onChange={(e) => {
                     setEmployeeName(e.target.value);
                   }}
@@ -207,7 +208,7 @@ const LeaveForm = () => {
                 ]}
               >
                 <Input
-                style ={{width:"350px"}}
+                  style={{ width: "350px" }}
                   onChange={(e) => {
                     setSupervisorName(e.target.value);
                   }}
@@ -217,7 +218,6 @@ const LeaveForm = () => {
             </Col>
             <Col span={12}>
               <Form.Item
-             
                 // label="Department"
                 name="department"
                 rules={[
@@ -228,7 +228,7 @@ const LeaveForm = () => {
                 ]}
               >
                 <Select
-                style ={{width:"350px"}}
+                  style={{ width: "350px" }}
                   defaultValue={{
                     value: "Department",
                   }}
@@ -241,7 +241,6 @@ const LeaveForm = () => {
               </Form.Item>
 
               <Form.Item
-              
                 // label="Leave Type"
                 name="leave type"
                 rules={[
@@ -252,7 +251,7 @@ const LeaveForm = () => {
                 ]}
               >
                 <Select
-                style ={{width:"350px"}}
+                  style={{ width: "350px" }}
                   defaultValue={{
                     value: "Leave type",
                   }}
@@ -276,7 +275,11 @@ const LeaveForm = () => {
                   },
                 ]}
               >
-                <DatePicker onChange={handledate} placeholder="Leave Date" style ={{width:"350px"}}/>
+                <DatePicker
+                  onChange={handledate}
+                  placeholder="Leave Date"
+                  style={{ width: "350px" }}
+                />
               </Form.Item>
 
               <Form.Item
@@ -289,7 +292,11 @@ const LeaveForm = () => {
                   },
                 ]}
               >
-                <DatePicker onChange={handlereturn} placeholder="Return Date" style ={{width:"350px"}}/>
+                <DatePicker
+                  onChange={handlereturn}
+                  placeholder="Return Date"
+                  style={{ width: "350px" }}
+                />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -304,7 +311,7 @@ const LeaveForm = () => {
                 ]}
               >
                 <Select
-                style ={{width:"350px"}}
+                  style={{ width: "350px" }}
                   defaultValue={{
                     value: "Total hours requested",
                   }}
@@ -326,12 +333,7 @@ const LeaveForm = () => {
               Apply
             </Button>
 
-            <Button
-              
-              className="backbtn"
-              size={size}
-              onClick={handleClick}
-            >
+            <Button className="backbtn" size={size} onClick={handleClick}>
               Back
             </Button>
             <br />
