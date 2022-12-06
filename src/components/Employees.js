@@ -78,6 +78,7 @@ const Employees = ({ dataSource }) => {
 
   const handleOk = async () => {
     // console.log(handleOk,"hhhhh")
+    const profilepicture = "";
     await axios
       .post(`${process.env.REACT_APP_BASE_URL}/user/signup`, {
         name,
@@ -87,6 +88,7 @@ const Employees = ({ dataSource }) => {
         gender,
         role,
         linkedinprofilelink,
+        profilepicture,
       })
       .then((res) => {
         console.log("response", res);

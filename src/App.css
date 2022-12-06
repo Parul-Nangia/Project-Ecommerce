@@ -72,6 +72,17 @@
 }
 
 
+.calendarcell{
+  background-color: #C3FDB8;
+  padding: 30px;
+  padding-left: 80px;
+  padding-top: 50px;
+  /* padding-bottom: 50px; */
+
+  /* margin-top: 0px; */
+}
+
+
 .checkinBtn:hover {
   /* font-weight: bold; */
   background: #da3939;
