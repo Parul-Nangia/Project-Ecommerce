@@ -511,19 +511,34 @@ const Employees = ({ dataSource }) => {
         >
           <Row justify="center" style={{ padding: "10%" }}>
             <Form style={{ width: "300px" }} autoComplete="off">
-              <Form.Item rules={[{ required: true }]}>
+              <Form.Item 
+              name="name"
+              rules={
+                [{ required: true },
+                  {
+                    pattern: new RegExp(
+                      /^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+\s*[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i
+                    ),
+                    // pattern: new RegExp(/^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i),
+                    message: "please Input in alphabets only",
+                  },
+                ]
+                }>
                 <Input
-                  type="name"
                   prefix={<UserOutlined className="site-form-item-icon" />}
-                  placeholder="Name"
+                  placeholder=" Full Name"
                   onChange={(e) => {
                     setName(e.target.value);
                   }}
                 />
               </Form.Item>
 
-              <Form.Item rules={[{ required: true }]}>
-                <Input
+              <Form.Item
+              name="password"
+              rules={[
+                { required: true }
+                ]}>
+                <Input.Password
                   type="password"
                   prefix={<LockOutlined className="site-form-item-icon" />}
                   placeholder="Password"
@@ -533,7 +548,11 @@ const Employees = ({ dataSource }) => {
                 />
               </Form.Item>
 
-              <Form.Item rules={[{ required: true }]}>
+              <Form.Item
+              name="email"
+               rules={[{ required: true,
+                message:"Please enter your email"
+                },{type:'email'}]}>
                 <Input
                   prefix={<MailOutlined className="site-form-item-icon" />}
                   placeholder="Email Address"
@@ -543,7 +562,10 @@ const Employees = ({ dataSource }) => {
                 />
               </Form.Item>
 
-              <Form.Item rules={[{ required: true }]}>
+              <Form.Item 
+              name="contact"
+              rules={[{ required: true , message:"Please enter your valid contact number",max: 10,
+              min: 10,}]}>
                 <Input
                   type="number"
                   prefix={<PhoneOutlined className="site-form-item-icon" />}
@@ -566,12 +588,12 @@ const Employees = ({ dataSource }) => {
                 /> */}
               {/* </Form.Item> */}
               <Form.Item
-                name="role"
+                name="gender"
                 // defaultValue="Employee"
                 rules={[
                   {
                     required: true,
-                    message: "Select a option ",
+                    message: "Select your Gender ",
                   },
                 ]}
               >
@@ -579,14 +601,15 @@ const Employees = ({ dataSource }) => {
                   prefix={
                     <UserSwitchOutlined className="site-form-item-icon" />
                   }
-                  placeholder="Gender"
+                  placeholder=" Select your Gender"
                   onChange={SelectGender}
                 >
                   <Option value="Male">Male</Option>
                   <Option value="Female">Female</Option>
                 </Select>
               </Form.Item>
-              <Form.Item rules={[{ required: true }]}>
+              <Form.Item 
+              name="role" rules={[{ required: true,  message: "Select your Role "}]}>
                 {/* <Input
                   // defaultValue="Employee"
                   // disabled="true"
@@ -604,14 +627,17 @@ const Employees = ({ dataSource }) => {
                   prefix={
                     <UserSwitchOutlined className="site-form-item-icon" />
                   }
-                  placeholder="Select Role"
+                  placeholder="Select your Role"
                   onChange={SelectRole}
                 >
                   <Option value="Employee">Employee</Option>
                   <Option value="Supervisor">Supervisor</Option>
                 </Select>
               </Form.Item>
-              <Form.Item rules={[{ required: true }]}>
+              <Form.Item 
+              label="Id"
+              requiredMark="optional"
+              >
                 <Input
                   prefix={
                     <UserSwitchOutlined className="site-form-item-icon" />
