@@ -14,10 +14,12 @@ const getBase64 = (img, callback) => {
 
 const EmployeeProfile = () => {
   const [viewProfile, setViewProfile] = useState([]);
-  const [empid, setEmpID] = useState("");
+
+  const [viewEmployeeProfile, setViewEmployeeProfile] = useState([]);
+  // const [empid, setEmpID] = useState("");
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState();
-  const [myprofilepict, setMyprofilepict] = useState("");
+  // const [myprofilepic, setMyprofilepic] = useState("");
 
   // const [preview,setPreview] = useState(null)
 
@@ -25,7 +27,7 @@ const EmployeeProfile = () => {
     // console.log("file", file)
     const token = localStorage.getItem("access_token1");
     var decoded = jwt_decode(token);
-   
+
     // e.preventDefault();
 
     // const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
@@ -54,40 +56,42 @@ const EmployeeProfile = () => {
 
     // const image = file
     // console.log("image", image)
+
     const formData = new FormData();
     // const image = formData
     formData.append("image", file);
     formData.append("documenttype", "Picture");
     formData.append("documentname", "Profile Picture");
     formData.append("emp_id", decoded._id);
-    console.log("formData", formData)
-
-
+    console.log("formData", formData);
 
     await axios
-      .post(`${process.env.REACT_APP_BASE_URL}/document/add/${decoded._id}`, 
-      formData
-
+      .post(
+        `${process.env.REACT_APP_BASE_URL}/document/add/${decoded._id}`,
+        formData
       )
 
       .then((res) => {
         console.log("doc response", res);
-        // setViewProfile(res?.data?.profilepic);
+        setViewProfile(res?.data?.documentRecord?.image);
+        console.log("image", res?.data?.documentRecord?.image);
+       
+      });
+
+
+
+    const profilepicture = viewProfile?.image;
+    console.log("imageee", profilepicture);
+
+    axios
+      .put(`${process.env.REACT_APP_BASE_URL}/user/${decoded._id}`, {
+        profilepicture,
+      })
+      .then((res) => {
+        console.log("user pofile pic Response", res);
+        console.log("pic uploaded");
       });
   };
-
-  
-
-  //   axios
-  //     .put(`${process.env.REACT_APP_BASE_URL}/user/${decoded._id}`, {
-  //       profilepicture,
-  //     })
-  //     .then((res) => {
-  //       console.log("user pofile pic Response", res);
-  //       console.log("pic uploaded")
-  //     });
-  //   ;
-  // };
 
   //     // axios
   //     //   .post(
@@ -111,15 +115,15 @@ const EmployeeProfile = () => {
   console.log("Decoded token data", decoded);
 
   useEffect(() => {
-    viewEmployeeProfile(decoded._id);
+    getprofile(decoded._id);
   }, []);
 
-  const viewEmployeeProfile = async () => {
+  const getprofile = async () => {
     await axios
       .get(`${process.env.REACT_APP_BASE_URL}/user/${decoded._id}`)
       .then((res) => {
         console.log(res, "api response");
-        setViewProfile(res?.data?.myData);
+        setViewEmployeeProfile(res?.data?.myData);
       });
   };
 
@@ -186,14 +190,15 @@ const EmployeeProfile = () => {
           uploadButton
         )}
       </Upload>
+      {/* {viewProfile?.image} */}
 
       <Card title="General Information" bordered={false} style={{ width: 300 }}>
-        <p>Name: {viewProfile?.name}</p>
-        <p>Email: {viewProfile?.email}</p>
-        <p>Contact: {viewProfile?.contact}</p>
-        <p>Gender: {viewProfile?.gender}</p>
-        <p>Role: {viewProfile?.role}</p>
-        <p>Linkedin Profile: {viewProfile?.linkedinprofilelink}</p>
+        <p>Name: {viewEmployeeProfile?.name}</p>
+        <p>Email: {viewEmployeeProfile?.email}</p>
+        <p>Contact: {viewEmployeeProfile?.contact}</p>
+        <p>Gender: {viewEmployeeProfile?.gender}</p>
+        <p>Role: {viewEmployeeProfile?.role}</p>
+        <p>Linkedin Profile: {viewEmployeeProfile?.linkedinprofilelink}</p>
       </Card>
     </>
   );
