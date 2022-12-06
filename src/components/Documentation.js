@@ -206,6 +206,7 @@ const Documentation = () => {
               <Option value="Education">Education</Option>
               <Option value="Experience">Experience</Option>
               <Option value="Certificate">Certificate</Option>
+              <Option value="Picture">Picture</Option>
             </Select>
           </Form.Item>
           <Form.Item>
