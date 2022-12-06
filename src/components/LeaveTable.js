@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Select, Table } from "antd";
+
 import axios from "axios";
 import { FcHighPriority, FcApproval, FcCancel, FcInfo } from "react-icons/fc";
 import { EllipsisOutlined } from "@ant-design/icons";
@@ -16,10 +17,12 @@ const LeaveTable = () => {
 
   const getData = async () => {
     await axios.get(`${process.env.REACT_APP_BASE_URL}/leave`).then((res) => {
-      console.log(res, "bhvhv");
+      console.log(res, "data");
 
       setDataSource(res?.data?.leaveData);
-      console.log(dataSource, "dataSource");
+
+      console.log("abc", res?.data?.leaveData);
+     
     });
   };
 
@@ -63,15 +66,18 @@ const LeaveTable = () => {
             <Select
               suffixIcon={<EllipsisOutlined />}
               defaultValue={{
-                value: <h>Pending {<FcInfo />}</h>,
+                value: dataSource.ApprovalStatus,
               }}
               onChange={(value) => leaveapproval(dataSource._id, value)}
             >
+              <Option prfixicon="" value="Pending">
+                Pending
+              </Option>
               <Option prfixicon="" value="Approved">
-                <h>Approved {<FcApproval />}</h>
+                Approved
               </Option>
               <Option suffixIcon="" value="Denied">
-                <h>Denied {<FcHighPriority />}</h>
+                Denied
               </Option>
             </Select>
           </>
@@ -80,21 +86,38 @@ const LeaveTable = () => {
     },
   ];
 
+  // const leaveapproval = async (value, optValue) => {
+  //   console.log("id", value);
+  //   console.log("optionvalue", optValue);
+
+  //   const ApprovalStatus = optValue;
+
+  //   await axios
+  //     .put(`${process.env.REACT_APP_BASE_URL}/leave/${value}`, {
+  //       _id: value,
+  //       ApprovalStatus,
+  //     })
+
+  //     .then((res) => {
+  //       // setLeaveStatus(res?.data?.updated_leave);
+  //       console.log("status", res);
+  //     });
+  // };
+
   const leaveapproval = async (value, optValue) => {
     console.log("id", value);
-    console.log("optionvalue", optValue);
 
     const ApprovalStatus = optValue;
-
+    console.log("optionvalue", ApprovalStatus);
+    
     await axios
       .put(`${process.env.REACT_APP_BASE_URL}/leave/${value}`, {
-        _id: value,
         ApprovalStatus,
       })
 
       .then((res) => {
-        // setLeaveStatus(res?.data?.updated_leave);
-        console.log("status", res);
+       
+        console.log(res, "response");
       });
   };
 
