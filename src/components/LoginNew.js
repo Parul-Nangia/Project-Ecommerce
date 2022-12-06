@@ -43,9 +43,9 @@ const LoginNew = () => {
       ] = `Bearer ${data["token"]}`;
       localStorage.setItem("access_token1", JSON.stringify(data.token));
       console.log(localStorage, "localStorage");
-      message.success("!Login ");
+      message.success("Login ");
       window.location.reload();
-      navigate("/dashboard");
+      navigate("/");
     } catch (error) {
       console.log(correctData, "show data catch");
       // const text =(item)=>{
@@ -76,17 +76,7 @@ const LoginNew = () => {
         message.warning("valid username and password here");
       }
 
-      // else{
-      //   console.log("Incorrect Password")
-      // }
-      // message.open({
-      //   type: 'error',
-      //   content: 'unauthorized',
-      //   duration: 5,
-      //   style: {
-      //     marginTop: '10vh',
-      //   },
-      // });
+    
     }
   };
 

@@ -92,10 +92,12 @@ const Profile = () => {
 
   useEffect(() => {
     console.log(id, "userid");
-    viewEmployee(id);
+    viewEmployee(id)
+;
   }, []);
 
-  const viewEmployee = async (id) => {
+  const viewEmployee = async (id)
+ => {
     console.log("hhhhhhhhhhh", id);
     await axios
       .get(`${process.env.REACT_APP_BASE_URL}/user/${id}`)
@@ -138,7 +140,7 @@ const Profile = () => {
         })
         .then((res) => {
           console.log(res, "response");
-          message.success("Submission Successfully Done !!!!!");
+          message.success("Information Submit");
         });
     } catch (error) {
       if (fatherName === "" && motherName === "") {
@@ -272,12 +274,12 @@ const Profile = () => {
                     /^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+\s*[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i
                   ),
                   // pattern: new RegExp(/^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i),
-                  message: "please Input fullname & alphabets only",
+                  message: "please Input in alphabets only",
                 },
               ]}
             >
               <Input
-                placeholder="Type your name"
+                placeholder="father's name"
                 onChange={(e) => {
                   setFatherName(e.target.value);
                 }}
@@ -290,7 +292,7 @@ const Profile = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please input mother name!",
+                  message: "Please type your  mother's name!",
                   whitespace: true,
                 },
                 {
@@ -303,7 +305,7 @@ const Profile = () => {
               ]}
             >
               <Input
-                placeholder="Enter your name"
+                placeholder="mother's name"
                 onChange={(e) => {
                   setMotherName(e.target.value);
                 }}
@@ -336,18 +338,18 @@ const Profile = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please input 10 digit number!",
+                  message: "Please input 10 digit contact number!",
                   max: 10,
                   min: 10,
                 },
                 {
                   pattern: /^-?(0|[0-9][0-9]*)(\.[0-9]*)?$/,
-                  message: "please input your valid number",
+                  message: "please input your valid contact number",
                 },
               ]}
             >
               <Input
-                placeholder="Type your contact number"
+                placeholder="contact number"
                 onChange={(e) => {
                   setContactNumber(() => {
                     console.log("Contact Number " + e.target.value);
@@ -370,8 +372,7 @@ const Profile = () => {
                 dateFormat="dd/MM/yyyy"
                 onChange={(date) => {
                   const d = new Date(date).toLocaleDateString("fr-FR");
-                  console.log(date, "Dateeee");
-                  console.log(d);
+
                   setJoiningDate(d);
                 }}
               />
@@ -385,12 +386,12 @@ const Profile = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please Fill Your Address!",
+                  message: "Please type Your Permanent Address!",
                 },
               ]}
             >
               <TextArea
-                placeholder="Type your Address"
+                placeholder="Permanent Address"
                 onChange={(e) => {
                   setPermanentAddress(() => {
                     console.log("Permanent Address " + e.target.value);

@@ -58,7 +58,7 @@ const ChangePassword = () => {
   return (
     <>
       <Modal
-        title="Password Reset"
+        title="Change Password"
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
         open={isopenmodal}
@@ -113,7 +113,7 @@ const ChangePassword = () => {
           </Form.Item>
 
           <Form.Item>
-            <div style={{ display: "flex", marginLeft: "105%" }}>
+            <div style={{ display: "flex", marginLeft: "100%" }}>
               <Button
                 style={{
                   marginRight: "4px",
@@ -127,7 +127,7 @@ const ChangePassword = () => {
                 Cancel
               </Button>
               <Button type="primary" htmlType="Done" onClick={handleOk}>
-                Done
+                Change
               </Button>
             </div>
           </Form.Item>

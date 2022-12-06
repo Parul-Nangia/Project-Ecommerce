@@ -50,7 +50,6 @@ const Clock = () => {
 
   const handleOk = () => {
     setIsModalOpen(false);
-
     // setDisableCheckout(true);
   };
 
@@ -98,6 +97,17 @@ const Clock = () => {
             setDisableCheckin(true);
           }
 
+          // Check if employee Checked-Out Today
+          // if (res?.data?.attendanceDataByEmpID.length === 0) {
+          //   setDisableCheckout(true);
+          // } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn === "") {
+          //   console.warn("here 11")
+          //   setDisableCheckout(true);
+          // }
+          // if (res?.data?.attendanceDataByEmpID.length === 0) {
+          //   console.warn("here 12")
+          //   setDisableCheckout(true);
+
           //checkout time calculation
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             console.warn("Need Attendance");
@@ -134,6 +144,8 @@ const Clock = () => {
               console.warn("success worked till 8 hours");
             }
 
+            // console.log("here in minutes", minutes);
+            // } else {
             const formatingTime = [
               hours.toString().padStart(2, "0"),
               minutes.toString().padStart(2, "0"),
@@ -142,7 +154,6 @@ const Clock = () => {
             // }
           }
 
-          // Check if employee Checked-In Today then he can take breaks. Otherwise Break button will remain disabled
           if (res?.data?.attendanceDataByEmpID.length === 0) {
             setDisableBreak(true);
           } else if (res?.data?.attendanceDataByEmpID[0].CheckOut !== "") {
@@ -189,7 +200,7 @@ const Clock = () => {
           } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn === "") {
             setTodayAttendance("");
             console.warn("CheckIn null", TodayAttendance);
-          } else {
+          } else if (res?.data?.attendanceDataByEmpID[0]?.CheckIn !== "") {
             const attCheckIn = moment(
               res?.data?.attendanceDataByEmpID[0].CheckIn,
               "HH:mm:ss a"
@@ -204,6 +215,13 @@ const Clock = () => {
             const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
             const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
 
+            // if (minutes === 0 || hours === 0) {
+            //   console.log("minutes", minutes);
+            //   console.log("hours", hours);
+            //   setTodayAttendance("00:00");
+
+            // console.log("here in minutes", minutes);
+            // } else {
             const formatingTime = [
               hours.toString().padStart(2, "0"),
               minutes.toString().padStart(2, "0"),
@@ -212,6 +230,7 @@ const Clock = () => {
             setTodayAttendance(formatingTime + " hours");
             console.log("formatingTime", formatingTime);
             console.log("finally total hours", TodayAttendance);
+
             // }
           }
         });
@@ -359,9 +378,8 @@ const Clock = () => {
         })
         .then((res) => {
           setEmployeeCheckOut(res?.data?.updatedAttendance);
-
-          setDisableCheckout(true);
           window.location.reload();
+          setDisableCheckout(true);
         });
     } else {
       window.alert("you have already Checked-Out");

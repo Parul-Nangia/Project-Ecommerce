@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 import React from "react";
 import { useState, useEffect } from "react";
 import { Table } from "antd";
-import { Button, Modal, Form, Input, Row } from "antd";
+import { Button, Modal, Form, Input, Row, Select } from "antd";
 import {
   FileAddOutlined,
   LockOutlined,
@@ -42,12 +42,11 @@ const Employees = ({ dataSource }) => {
   const [name, setName] = useState("");
   // console.log("emp name", name);
   const [employeename, setEmployeeName] = useState("");
+  const { Option } = Select;
 
   useEffect(() => {
     LoggedInEmployeeRole();
   }, []);
-
-  
 
   const LoggedInEmployeeRole = () => {
     const token = localStorage.getItem("access_token1");
@@ -232,6 +231,14 @@ const Employees = ({ dataSource }) => {
 
   // }
 
+  const SelectGender = (value) => {
+    setGender(value);
+  };
+
+  const SelectRole = (value) => {
+    setRole(value);
+  };
+
   const onEditEmployee = (record) => {
     setIsEditing(true);
     setEditingEmployee({ ...record });
@@ -247,8 +254,6 @@ const Employees = ({ dataSource }) => {
     employeelist();
   }, []);
 
-
-
   const employeelist = () => {
     fetch(`${process.env.REACT_APP_BASE_URL}/user`)
       .then((response) => {
@@ -261,7 +266,6 @@ const Employees = ({ dataSource }) => {
         console.log("list response", emp);
       });
   };
-      
 
   // //================================================= END employee GET (GET API)
 
@@ -365,7 +369,6 @@ const Employees = ({ dataSource }) => {
     {
       title: "Actions",
       render: (record) => {
-        
         return (
           <>
             <Button
@@ -502,6 +505,8 @@ const Employees = ({ dataSource }) => {
           title="Employee Form"
           open={isModalOpen}
           onOk={handleOk}
+          okButtonProps={{ style: { display: "none" } }}
+          cancelButtonProps={{ style: { display: "none" } }}
           onCancel={handleCancel}
         >
           <Row justify="center" style={{ padding: "10%" }}>
@@ -549,8 +554,8 @@ const Employees = ({ dataSource }) => {
                 />
               </Form.Item>
 
-              <Form.Item rules={[{ required: true }]}>
-                <Input
+              {/* <Form.Item rules={[{ required: true }]}> */}
+              {/* <Input
                   prefix={
                     <UserSwitchOutlined className="site-form-item-icon" />
                   }
@@ -558,18 +563,53 @@ const Employees = ({ dataSource }) => {
                   onChange={(e) => {
                     setGender(e.target.value);
                   }}
-                />
-              </Form.Item>
-              <Form.Item rules={[{ required: true }]}>
-                <Input
+                /> */}
+              {/* </Form.Item> */}
+              <Form.Item
+                name="role"
+                // defaultValue="Employee"
+                rules={[
+                  {
+                    required: true,
+                    message: "Select a option ",
+                  },
+                ]}
+              >
+                <Select
                   prefix={
                     <UserSwitchOutlined className="site-form-item-icon" />
                   }
+                  placeholder="Gender"
+                  onChange={SelectGender}
+                >
+                  <Option value="Male">Male</Option>
+                  <Option value="Female">Female</Option>
+                </Select>
+              </Form.Item>
+              <Form.Item rules={[{ required: true }]}>
+                {/* <Input
+                  // defaultValue="Employee"
+                  // disabled="true"
+                  prefix={
+                    <UserSwitchOutlined className="site-form-item-icon" />
+                  }
+                  // placeholder="Employee"
+                  // value="Employee"
                   placeholder="Role"
                   onChange={(e) => {
                     setRole(e.target.value);
                   }}
-                />
+                /> */}
+                <Select
+                  prefix={
+                    <UserSwitchOutlined className="site-form-item-icon" />
+                  }
+                  placeholder="Select Role"
+                  onChange={SelectRole}
+                >
+                  <Option value="Employee">Employee</Option>
+                  <Option value="Supervisor">Supervisor</Option>
+                </Select>
               </Form.Item>
               <Form.Item rules={[{ required: true }]}>
                 <Input
@@ -581,6 +621,35 @@ const Employees = ({ dataSource }) => {
                     setLinkedinProfileLink(e.target.value);
                   }}
                 />
+              </Form.Item>
+              <Form.Item style={{ marginTop: "20%" }}>
+                <Button
+                  style={{
+                    display: "flex",
+                    marginLeft: "43%",
+                  }}
+                  type="primary"
+                  htmlType="submit"
+                  onClick={handleOk}
+                >
+                  Submit
+                </Button>
+              </Form.Item>
+              <Form.Item style={{ marginLeft: "60%", marginTop: "-19%" }}>
+                <Button
+                  style={{
+                    display: "flex",
+                    marginLeft: "43%",
+                    background: "red",
+                    height: "34px",
+                  }}
+                  ghost
+                  type="secondary"
+                  htmlType="cancel"
+                  onClick={handleCancel}
+                >
+                  Cancel
+                </Button>
               </Form.Item>
             </Form>
           </Row>
