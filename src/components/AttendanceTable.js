@@ -2,21 +2,71 @@ import {
   MinusCircleTwoTone,
   PlusCircleTwoTone,
   SearchOutlined,
+  CalendarOutlined
 } from "@ant-design/icons";
-import { Button, Input, Space, Table, DatePicker, Form } from "antd";
+import { Button, Input, Space, Table, DatePicker, Form, Modal } from "antd";
 import React, { useState, useEffect } from "react";
 import Highlighter from "react-highlight-words";
 import axios from "axios";
 import moment from "moment";
+import { FcCalendar } from "react-icons/fc";
+import { Calendar, Badge } from "antd";
+import jwt_decode from 'jwt-decode';
 
 const AttendanceTable = () => {
   const [dataSource, setDataSource] = useState([]);
+  const [attendancesingle, setAttendanceSingle] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
+  const [isEmployeeCalendarModal, setIsEmployeeCalendarModal] = useState(false);
+  const [EmployeeCalendar, setEmployeeCalendar] = useState(false);
+
+
+
+
+  const onViewEmployee = (record) => {
+    setIsEmployeeCalendarModal(true);
+    
+    setEmployeeCalendar({ ...record });
+  };
+
+  const handleCancel = () => {
+    setIsEmployeeCalendarModal(false);
+  };
+
+
+
+  const dateCellRender = (value) => {
+    // console.log("value", value)
+    const stringValue = value.format("YYYY-MM-DD");
+    var newArray = dataSource?.filter(function (el) {
+
+      return el.TodayDate === stringValue
+
+      //  el.EmployeeName &&
+      //  el._id;
+
+    }
+    )
+    console.warn("dataSource", dataSource)
+
+    return (
+      <>
+
+        {/* <ul className="events"> */}
+        {newArray.map((item) => (
+          <li key={item._id}>
+            <Badge status="success" text={item.name}/>
+          </li>
+        ))}
+        {/* </ul> */}
+
+      </>
+    )
+
+  };
 
   useEffect(() => {
-    getAllData();
-  }, []);
   const getAllData = async () => {
     await axios
       .get(`${process.env.REACT_APP_BASE_URL}/attendance`)
@@ -71,6 +121,8 @@ const AttendanceTable = () => {
         }
       });
   };
+  getAllData();
+}, []);
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -161,9 +213,9 @@ const AttendanceTable = () => {
     onFilter: (value, record) =>
       record[dataIndex]
         ? record[dataIndex]
-            .toString()
-            .toLowerCase()
-            .includes(value.toLowerCase())
+          .toString()
+          .toLowerCase()
+          .includes(value.toLowerCase())
         : false,
     render: (text) =>
       searchedColumn === dataIndex ? (
@@ -261,9 +313,9 @@ const AttendanceTable = () => {
     onFilter: (value, record) =>
       record[dataIndex]
         ? moment(record[dataIndex]).isBetween(
-            moment(value[0]),
-            moment(value[1])
-          )
+          moment(value[0]),
+          moment(value[1])
+        )
         : "",
     render: (text) =>
       searchColumnDate === dataIndex ? (
@@ -290,13 +342,13 @@ const AttendanceTable = () => {
       ...getColumnSearchProps("name"),
     },
     {
-      title: "CheckIn",
+      title: "Check-in",
       dataIndex: "CheckIn",
       key: "CheckIn",
       width: "150px",
     },
     {
-      title: "CheckOut",
+      title: "Check-out",
       dataIndex: "CheckOut",
       key: "CheckOut",
       width: "150px",
@@ -307,6 +359,24 @@ const AttendanceTable = () => {
       key: "TodayDate",
       width: "150px",
       ...columnSearch("TodayDate"),
+    },
+    {
+      title: "View",
+      width: "100px",
+      render: (record) => {
+
+        return (
+          <>
+            <Button
+              style={{ color: "black", borderColor: 'white' }}
+            >
+              <FcCalendar className="calendarviewattendancebtn" onClick={() => {
+              onViewEmployee(record);
+            }}></FcCalendar>
+            </Button>
+          </>
+        )
+      }
     },
   ];
 
@@ -355,6 +425,16 @@ const AttendanceTable = () => {
           },
         }}
       />
+      <Modal
+        visible={isEmployeeCalendarModal}
+        title="fdbd"
+        cancelButtonProps={{ style: { display: "none" } }}
+        okButtonProps={{ style: { display: "none" } }}
+        onCancel={handleCancel}
+        width={1000}
+      >
+        <Calendar dateCellRender={dateCellRender} />
+      </Modal>
     </>
   );
 };
