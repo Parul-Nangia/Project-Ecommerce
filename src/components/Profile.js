@@ -96,8 +96,7 @@ const Profile = () => {
 ;
   }, []);
 
-  const viewEmployee = async (id)
- => {
+  const viewEmployee = async (id) => {
     console.log("hhhhhhhhhhh", id);
     await axios
       .get(`${process.env.REACT_APP_BASE_URL}/user/${id}`)
