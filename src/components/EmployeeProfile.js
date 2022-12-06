@@ -18,66 +18,12 @@ const EmployeeProfile = () => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState();
   // const [preview,setPreview] = useState(null)
-  const [viewimage, setViewImage] = useState([]);
-  const [userInfo, setuserInfo] = useState({ file: [], filepreview: null });
-  const [isSuccess, setSuccess] = useState(null);
-
-  // const handleInputChange = (e) =>{
-  //   setuserInfo({
-  //     ...userInfo,
-  //     file:e.target.files[0],
-
-  //     filepreview:URL.createObjectURL(e.target.files[0])
-  //   })
-  // }
-
-  // const submit= async()=>{
-  //   const token = localStorage.getItem("access_token1");
-  //     console.log("token from local storage:", token);
-  //     var decoded = jwt_decode(token);
-  //     console.log("Decoded token data", decoded);
-  //     setEmpID(decoded._id);
-  //     const emp_id = decoded._id;
-
-  //     const formData = new FormData();
-
-  //     formData.append("avatar", userInfo.file);
-  //     console.log("fileeee",  userInfo.file);
-
-  //     formData.append("emp_id", emp_id);
-  //     // console.log("hello", formData);
-
-  //     axios
-  //       .post(
-  //         `${process.env.REACT_APP_BASE_URL}/document/add/${emp_id}`,
-  //         formData
-  //       )
-  //       .then((res) => {
-  //         console.log("Document Response", res);
-  //         //  if(res.data.success === 1){
-  //         //   setSuccess("Image upload successfully")
-  //         // }
-  //       });
-
-  // }
-  // function handleImage(e) {
-  //   console.log(e.target.files)
-  //   setImage(e.target.files[0])
-  // }
-
-  // const reader = new FileReader();
-  // reader.readAsDataURL(file)
-
-  // reader.onload = ()=>{
-  //   setPreview(reader.result)
-  // }
 
   const beforeUpload = async (file) => {
     const token = localStorage.getItem("access_token1");
     console.log("token from local storage:", token);
     var decoded = jwt_decode(token);
     console.log("Decoded token data", decoded);
-    // e.preventDefault();
 
     // const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
     // if (!isJpgOrPng) {
@@ -103,30 +49,28 @@ const EmployeeProfile = () => {
     // const profilepicture = file.name;
     // console.log("profilepicture", profilepicture);
 
-    const image = file.name
+    const image = file.name;
 
-    console.log("image",image)
+    console.log("image", image);
 
-    const documenttype ="Picture";
+    const documenttype = "Picture";
     const documentname = "Profile Picture";
-    const emp_id = decoded._id
+    const emp_id = decoded._id;
 
     await axios
-      .post(`${process.env.REACT_APP_BASE_URL}/document/add/${decoded._id}`,{
+      .post(`${process.env.REACT_APP_BASE_URL}/document/add/${decoded._id}`, {
         image,
         documenttype,
         documentname,
         emp_id,
-
       })
 
       .then((res) => {
-        console.log( "doc response", res);
+        console.log("doc response", res);
         // setViewProfile(res?.data?.profilepic);
       });
+  };
 
-    }
- 
   //   axios
   //     .put(`${process.env.REACT_APP_BASE_URL}/user/${decoded._id}`, {
   //       profilepicture,
@@ -137,31 +81,6 @@ const EmployeeProfile = () => {
   //     });
   //   ;
   // };
-
-  //   const uploadImage = async (e) => {
-  //     const files=e.target.files
-  //     const token = localStorage.getItem("access_token1");
-  //     console.log("token from local storage:", token);
-  //     var decoded = jwt_decode(token);
-  //     console.log("Decoded token data", decoded);
-  //     setEmpID(decoded._id);
-  //     const emp_id = decoded._id;
-
-  //     const formData = new FormData();
-
-  //     formData.append("file", files[0]);
-
-  //     setLoading(true)
-
-  //     formData.append("emp_id", emp_id);
-  //     console.log("hello", formData);
-  // const res = await fetch(
-  //   `${process.env.REACT_APP_BASE_URL}/document/add/${emp_id}`,
-  //   {
-  //     method:'POST',
-  //     body:formData
-  //   }
-  // )
 
   //     // axios
   //     //   .post(
@@ -179,23 +98,23 @@ const EmployeeProfile = () => {
 
   //   };
 
-  // const token = localStorage.getItem("access_token1");
-  // console.log("token from local storage:", token);
-  // var decoded = jwt_decode(token);
-  // console.log("Decoded token data", decoded);
+  const token = localStorage.getItem("access_token1");
+  console.log("token from local storage:", token);
+  var decoded = jwt_decode(token);
+  console.log("Decoded token data", decoded);
 
-  // useEffect(() => {
-  //   viewEmployeeProfile(decoded._id);
-  // }, []);
+  useEffect(() => {
+    viewEmployeeProfile(decoded._id);
+  }, []);
 
-  // const viewEmployeeProfile = async () => {
-  //   await axios
-  //     .get(`${process.env.REACT_APP_BASE_URL}/document/pic/${decoded._id}`)
-  //     .then((res) => {
-  //       console.log(res, "api response");
-  //       setViewProfile(res?.data?.profilepic);
-  //     });
-  // };
+  const viewEmployeeProfile = async () => {
+    await axios
+      .get(`${process.env.REACT_APP_BASE_URL}/user/${decoded._id}`)
+      .then((res) => {
+        console.log(res, "api response");
+        setViewProfile(res?.data?.myData);
+      });
+  };
 
   // useEffect(() => {
   //   updateprofile(decoded._id);
@@ -239,21 +158,6 @@ const EmployeeProfile = () => {
 
   return (
     <>
-      {/* {isSuccess !==null ? <h4>{isSuccess}</h4>:null} */}
-
-      {/* <input type="file" name="upload_file" onChange={ handleInputChange}/>
-<Button type="submit" onClick={()=>submit()}>save</Button>
-{userInfo.filepreview !==null ?<img className="previewing" src={userInfo.filepreview}alt="Uploadimage"/>:null} */}
-
-      {/* <h1>upload image</h1>
-    <input type="file" name="file" placholder="upload image" onChange={uploadImage}/>
-    
-    {loading ? (<h3>Loading...</h3>
-    ):(
-      <img src={image} style={{ width:'300px'}} />
-
-      )} */}
-
       <Upload
         name="avatar"
         listType="picture-card"
@@ -275,22 +179,14 @@ const EmployeeProfile = () => {
           uploadButton
         )}
       </Upload>
-      {/* {viewProfile?.profilepic} */}
-      {/* {viewimage.map((item) => {
-        return <>{item?.image[0]}</>;
-      })} */}
-      {/* <Button onClick={beforeUpload}>Upload Picture</Button> */}
-
-      {/* <input type="file" name="file" onChange={handleImage} />
-     <Button onClick={uploadprofile}>submit</Button> */}
 
       <Card title="General Information" bordered={false} style={{ width: 300 }}>
-        {/* <p>Name: {viewProfile?.name}</p>
+        <p>Name: {viewProfile?.name}</p>
         <p>Email: {viewProfile?.email}</p>
         <p>Contact: {viewProfile?.contact}</p>
         <p>Gender: {viewProfile?.gender}</p>
         <p>Role: {viewProfile?.role}</p>
-        <p>Linkedin Profile: {viewProfile?.linkedinprofilelink}</p> */}
+        <p>Linkedin Profile: {viewProfile?.linkedinprofilelink}</p>
       </Card>
     </>
   );
