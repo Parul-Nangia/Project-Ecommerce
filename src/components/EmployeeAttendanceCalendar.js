@@ -46,7 +46,7 @@ const AttendanceCalendar = () => {
         {/* <ul className="events"> */}
         {newArray.map((item) => (
           <li key={item._id}>
-            <Badge status="success" text={item.name}/>
+            <Badge status="success" text={item.name} className="calendarcell"/>
           </li>
         ))}
         {/* </ul> */}

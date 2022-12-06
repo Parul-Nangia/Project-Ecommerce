@@ -18,20 +18,33 @@ const AttendanceTable = () => {
   const [attendancesingle, setAttendanceSingle] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
-  const [isEmployeeCalendarModal, setIsEmployeeCalendarModal] = useState(false);
-  const [EmployeeCalendar, setEmployeeCalendar] = useState(false);
+  const [isopenmodal, setIsOpenModal] = useState(false);
+  const [EmployeeCalendar, setEmployeeCalendar] = useState([]);
+  const [state, setState] = useState([]);
 
 
 
+  const getCalendarSingleRowData = async (record) => {
+    console.log("record", record._id)
+    console.log("record", record)
+    // setEmployeeCalendar({ ...record })
+    // console.log("EmployeeCalendar", EmployeeCalendar)
+    // console.log("dataSource", dataSource)
+    // console.log("i am in getCalendarSingleRowData")
 
-  const onViewEmployee = (record) => {
-    setIsEmployeeCalendarModal(true);
-    
-    setEmployeeCalendar({ ...record });
+    await axios
+      .get(`${process.env.REACT_APP_BASE_URL}/attendance/single/${record._id}`)
+      .then((res) => {
+        setEmployeeCalendar(res?.data?.SingleAttendance)
+        // setDataSource(res?.data?.SingleEmployeeAllAttendance);
+        console.log("res", EmployeeCalendar);
+      });
+
+    setIsOpenModal(true);
   };
 
   const handleCancel = () => {
-    setIsEmployeeCalendarModal(false);
+    setIsOpenModal(false);
   };
 
 
@@ -39,7 +52,7 @@ const AttendanceTable = () => {
   const dateCellRender = (value) => {
     // console.log("value", value)
     const stringValue = value.format("YYYY-MM-DD");
-    var newArray = dataSource?.filter(function (el) {
+    var newArray = EmployeeCalendar?.filter(function (el) {
 
       return el.TodayDate === stringValue
 
@@ -48,7 +61,7 @@ const AttendanceTable = () => {
 
     }
     )
-    console.warn("dataSource", dataSource)
+    // console.warn("dataSource", dataSource)
 
     return (
       <>
@@ -56,7 +69,7 @@ const AttendanceTable = () => {
         {/* <ul className="events"> */}
         {newArray.map((item) => (
           <li key={item._id}>
-            <Badge status="success" text={item.name}/>
+            <Badge status="success" text={item.name} />
           </li>
         ))}
         {/* </ul> */}
@@ -67,62 +80,62 @@ const AttendanceTable = () => {
   };
 
   useEffect(() => {
-  const getAllData = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_BASE_URL}/attendance`)
-      .then((res) => {
-        setDataSource(res?.data?.attendanceData);
-        console.log("AttendanceAllData", res?.data?.attendanceData);
-        for (let f = 0; f < res?.data?.attendanceData.length; f++) {
-          if (res?.data?.attendanceData[f].Breaks.length === 0) {
-            console.warn("any of the breaks are null");
-          } else if (res?.data?.attendanceData[f].Breaks.length !== "") {
-            for (
-              let i = 0;
-              i < res?.data?.attendanceData[f].Breaks.length;
-              i++
-            ) {
-              if (res?.data?.attendanceData[f].Breaks[i]?.start === "") {
-                console.warn("click break first");
-              } else if (res?.data?.attendanceData[f].Breaks[i]?.end === "") {
-                console.warn("resume first");
-              } else {
-                console.warn("success start/end not null");
-                const start = moment(
-                  res?.data?.attendanceData[f].Breaks[i]?.start,
-                  "HH:mm:ss a"
-                );
-                // console.log("starttime", start);
-                const end = moment(
-                  res?.data?.attendanceData[f].Breaks[i]?.end,
-                  "HH:mm:ss a"
-                );
-                // console.log("endtime", end);
-                const milliSeconds = moment.duration(end.diff(start));
-                const seconds = Math.floor((milliSeconds / 1000) % 60);
-                const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
-                const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
-                // console.log("mill", milliSeconds);
+    const getAllData = async () => {
+      await axios
+        .get(`${process.env.REACT_APP_BASE_URL}/attendance`)
+        .then((res) => {
+          setDataSource(res?.data?.attendanceData);
+          console.log("AttendanceAllData", res?.data?.attendanceData);
+          for (let f = 0; f < res?.data?.attendanceData.length; f++) {
+            if (res?.data?.attendanceData[f].Breaks.length === 0) {
+              console.warn("any of the breaks are null");
+            } else if (res?.data?.attendanceData[f].Breaks.length !== "") {
+              for (
+                let i = 0;
+                i < res?.data?.attendanceData[f].Breaks.length;
+                i++
+              ) {
+                if (res?.data?.attendanceData[f].Breaks[i]?.start === "") {
+                  console.warn("click break first");
+                } else if (res?.data?.attendanceData[f].Breaks[i]?.end === "") {
+                  console.warn("resume first");
+                } else {
+                  console.warn("success start/end not null");
+                  const start = moment(
+                    res?.data?.attendanceData[f].Breaks[i]?.start,
+                    "HH:mm:ss a"
+                  );
+                  // console.log("starttime", start);
+                  const end = moment(
+                    res?.data?.attendanceData[f].Breaks[i]?.end,
+                    "HH:mm:ss a"
+                  );
+                  // console.log("endtime", end);
+                  const milliSeconds = moment.duration(end.diff(start));
+                  const seconds = Math.floor((milliSeconds / 1000) % 60);
+                  const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
+                  const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
+                  // console.log("mill", milliSeconds);
 
-                const formattedTime = [
-                  hours.toString().padStart(2, "0"),
-                  minutes.toString().padStart(2, "0"),
-                  seconds.toString().padStart(2, "0"),
-                ].join(":");
+                  const formattedTime = [
+                    hours.toString().padStart(2, "0"),
+                    minutes.toString().padStart(2, "0"),
+                    seconds.toString().padStart(2, "0"),
+                  ].join(":");
 
-                res.data.attendanceData[f].Breaks[i].timeconsume =
-                  formattedTime;
+                  res.data.attendanceData[f].Breaks[i].timeconsume =
+                    formattedTime;
+                }
               }
             }
+            res.data.attendanceData[f].key = Math.floor(
+              Math.random() * 978587456
+            );
           }
-          res.data.attendanceData[f].key = Math.floor(
-            Math.random() * 978587456
-          );
-        }
-      });
-  };
-  getAllData();
-}, []);
+        });
+    };
+    getAllData();
+  }, []);
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -367,12 +380,10 @@ const AttendanceTable = () => {
 
         return (
           <>
-            <Button
-              style={{ color: "black", borderColor: 'white' }}
-            >
-              <FcCalendar className="calendarviewattendancebtn" onClick={() => {
-              onViewEmployee(record);
-            }}></FcCalendar>
+            <Button style={{ color: "black", borderColor: 'white' }} >
+              <FcCalendar className="calendarviewattendancebtn"
+                onClick={() => { getCalendarSingleRowData(record) }}>
+              </FcCalendar>
             </Button>
           </>
         )
@@ -426,11 +437,11 @@ const AttendanceTable = () => {
         }}
       />
       <Modal
-        visible={isEmployeeCalendarModal}
         title="fdbd"
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
         onCancel={handleCancel}
+        open={isopenmodal}
         width={1000}
       >
         <Calendar dateCellRender={dateCellRender} />
