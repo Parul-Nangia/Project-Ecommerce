@@ -56,9 +56,8 @@ const LeaveTable = () => {
       width: "100px",
 
       render: (_, dataSource) => {
+        console.log("data", dataSource);
 
-        console.log("data",dataSource)
-       
         return (
           <>
             <Select
@@ -87,21 +86,17 @@ const LeaveTable = () => {
 
     const ApprovalStatus = optValue;
 
-   
+    await axios
+      .put(`${process.env.REACT_APP_BASE_URL}/leave/${value}`, {
+        _id: value,
+        ApprovalStatus,
+      })
 
-      await axios
-        .put(`${process.env.REACT_APP_BASE_URL}/leave/${value}`, {
-          _id: value,
-          ApprovalStatus,
-        })
-
-        .then((res) => {
-          // setLeaveStatus(res?.data?.updated_leave);
-          console.log("status", res);
-        });
-    } 
-   
-  
+      .then((res) => {
+        // setLeaveStatus(res?.data?.updated_leave);
+        console.log("status", res);
+      });
+  };
 
   return (
     <>

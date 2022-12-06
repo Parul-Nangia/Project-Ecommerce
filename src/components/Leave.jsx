@@ -43,6 +43,10 @@ const Leave = (props) => {
 
   if (name.role === "admin") {
     console.log("my role is ", name.role)
+    
+    const changefunction=()=>{
+      setView(!view)
+    }
     return (
 
       <>
@@ -60,8 +64,8 @@ const Leave = (props) => {
         <h1>{view}</h1>
         
         <div>
-          <Button className='calendarbtn' onClick={() => setView(!view)}>Calendar {<EyeOutlined />}</Button>
-          <Button className='calendarbtn' onClick={() => setView(!view)}>Table {<EyeOutlined />}</Button>
+          <Button className='calendarbtn' onClick={() => changefunction()}>Calendar {<EyeOutlined />}</Button>
+          <Button className='calendarbtn' onClick={() => changefunction()}>Table {<EyeOutlined />}</Button>
        
     
         {view ? <LeaveTable /> : <LeaveCalendar />}
