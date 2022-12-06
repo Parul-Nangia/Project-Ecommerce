@@ -18,17 +18,14 @@ import TextArea from "antd/lib/input/TextArea";
 // import { max } from "date-fns";
 const { Option } = Select;
 // const { Content } = Layout;
-
-const Profile = (props) => {
+const Profile = () => {
   const [form] = Form.useForm();
   const params = useParams();
   //  console.log(params.id, "params");
   const [id] = useState(params.id);
   console.log(id, "iduser");
-
   const [viewingEmployee, setViewingEmployee] = useState([]);
   // const [form] = Form.useForm();
-
   // const[joiningDate,setJoiningdate]=useState()
   // const [isEditing, setIsEditing] = useState(false);
   const [fatherName, setFatherName] = useState();
