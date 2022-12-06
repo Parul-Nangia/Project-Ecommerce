@@ -72,44 +72,71 @@ const EmployeeProfile = () => {
   //   setPreview(reader.result)
   // }
 
-  const beforeUpload = (file) => {
+  const beforeUpload = async (file) => {
+    const token = localStorage.getItem("access_token1");
+    console.log("token from local storage:", token);
+    var decoded = jwt_decode(token);
+    console.log("Decoded token data", decoded);
     // e.preventDefault();
 
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-    if (!isJpgOrPng) {
-      message.error("You can only upload JPG/PNG file!");
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-      message.error("Image must smaller than 2MB!");
-    }
+    // const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    // if (!isJpgOrPng) {
+    //   message.error("You can only upload JPG/PNG file!");
+    // }
+    // const isLt2M = file.size / 1024 / 1024 < 2;
+    // if (!isLt2M) {
+    //   message.error("Image must smaller than 2MB!");
+    // }
     // const token = localStorage.getItem("access_token1");
     // console.log("token from local storage:", token);
     // var decoded = jwt_decode(token);
     // console.log("Decoded token data", decoded);
     // setEmpID(decoded._id);
     // const emp_id = decoded._id;
-    // const formData = new FormData();
+    //  const formData = new FormData();
 
-    // formData.append("image", file);
-    // console.log("fileeee", file);
+    //  formData.append("profilepicture", file);
+    //  console.log("fileeee", file);
 
     // formData.append("emp_id", emp_id);
     // console.log("hello", formData);
-    const profilepicture=""
+    // const profilepicture = file.name;
+    // console.log("profilepicture", profilepicture);
 
-    axios
-      .post(
-        `${process.env.REACT_APP_BASE_URL}/user/signup`,{
-         profilepicture
-        }
+    const image = file.name
 
-      )
+    console.log("image",image)
+
+    const documenttype ="Picture";
+    const documentname = "Profile Picture";
+    const emp_id = decoded._id
+
+    await axios
+      .post(`${process.env.REACT_APP_BASE_URL}/document/add/${decoded._id}`,{
+        image,
+        documenttype,
+        documentname,
+        emp_id,
+
+      })
+
       .then((res) => {
-        console.log("Response", res);
+        console.log( "doc response", res);
+        // setViewProfile(res?.data?.profilepic);
       });
-    return isJpgOrPng && isLt2M;
-  };
+
+    }
+ 
+  //   axios
+  //     .put(`${process.env.REACT_APP_BASE_URL}/user/${decoded._id}`, {
+  //       profilepicture,
+  //     })
+  //     .then((res) => {
+  //       console.log("user pofile pic Response", res);
+  //       console.log("pic uploaded")
+  //     });
+  //   ;
+  // };
 
   //   const uploadImage = async (e) => {
   //     const files=e.target.files
@@ -152,23 +179,23 @@ const EmployeeProfile = () => {
 
   //   };
 
-  const token = localStorage.getItem("access_token1");
-  console.log("token from local storage:", token);
-  var decoded = jwt_decode(token);
-  console.log("Decoded token data", decoded);
+  // const token = localStorage.getItem("access_token1");
+  // console.log("token from local storage:", token);
+  // var decoded = jwt_decode(token);
+  // console.log("Decoded token data", decoded);
 
-  useEffect(() => {
-    viewEmployeeProfile(decoded._id);
-  }, []);
+  // useEffect(() => {
+  //   viewEmployeeProfile(decoded._id);
+  // }, []);
 
-  const viewEmployeeProfile = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_BASE_URL}/document/pic/${decoded._id}`)
-      .then((res) => {
-        console.log(res, "api response");
-        setViewProfile(res?.data?.profilepic);
-      });
-  };
+  // const viewEmployeeProfile = async () => {
+  //   await axios
+  //     .get(`${process.env.REACT_APP_BASE_URL}/document/pic/${decoded._id}`)
+  //     .then((res) => {
+  //       console.log(res, "api response");
+  //       setViewProfile(res?.data?.profilepic);
+  //     });
+  // };
 
   // useEffect(() => {
   //   updateprofile(decoded._id);
@@ -248,6 +275,7 @@ const EmployeeProfile = () => {
           uploadButton
         )}
       </Upload>
+      {/* {viewProfile?.profilepic} */}
       {/* {viewimage.map((item) => {
         return <>{item?.image[0]}</>;
       })} */}
@@ -257,12 +285,12 @@ const EmployeeProfile = () => {
      <Button onClick={uploadprofile}>submit</Button> */}
 
       <Card title="General Information" bordered={false} style={{ width: 300 }}>
-        <p>Name: {viewProfile?.name}</p>
+        {/* <p>Name: {viewProfile?.name}</p>
         <p>Email: {viewProfile?.email}</p>
         <p>Contact: {viewProfile?.contact}</p>
         <p>Gender: {viewProfile?.gender}</p>
         <p>Role: {viewProfile?.role}</p>
-        <p>Linkedin Profile: {viewProfile?.linkedinprofilelink}</p>
+        <p>Linkedin Profile: {viewProfile?.linkedinprofilelink}</p> */}
       </Card>
     </>
   );
