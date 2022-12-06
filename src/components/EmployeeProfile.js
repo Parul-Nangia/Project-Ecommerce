@@ -17,6 +17,8 @@ const EmployeeProfile = () => {
   const [empid, setEmpID] = useState("");
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState();
+  const [myprofilepict, setMyprofilepict] = useState("");
+
   // const [preview,setPreview] = useState(null)
   const [viewimage, setViewImage] = useState([]);
   const [userInfo, setuserInfo] = useState({ file: [], filepreview: null });
@@ -73,10 +75,10 @@ const EmployeeProfile = () => {
   // }
 
   const beforeUpload = async (file) => {
+    // console.log("file", file)
     const token = localStorage.getItem("access_token1");
-    console.log("token from local storage:", token);
     var decoded = jwt_decode(token);
-    console.log("Decoded token data", decoded);
+   
     // e.preventDefault();
 
     // const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
@@ -103,30 +105,31 @@ const EmployeeProfile = () => {
     // const profilepicture = file.name;
     // console.log("profilepicture", profilepicture);
 
-    const image = file.name
+    // const image = file
+    // console.log("image", image)
+    const formData = new FormData();
+    // const image = formData
+    formData.append("image", file);
+    formData.append("documenttype", "Picture");
+    formData.append("documentname", "Profile Picture");
+    formData.append("emp_id", decoded._id);
+    console.log("formData", formData)
 
-    console.log("image",image)
 
-    const documenttype ="Picture";
-    const documentname = "Profile Picture";
-    const emp_id = decoded._id
 
     await axios
-      .post(`${process.env.REACT_APP_BASE_URL}/document/add/${decoded._id}`,{
-        image,
-        documenttype,
-        documentname,
-        emp_id,
+      .post(`${process.env.REACT_APP_BASE_URL}/document/add/${decoded._id}`, 
+      formData
 
-      })
+      )
 
       .then((res) => {
-        console.log( "doc response", res);
+        console.log("doc response", res);
         // setViewProfile(res?.data?.profilepic);
       });
 
-    }
- 
+  }
+
   //   axios
   //     .put(`${process.env.REACT_APP_BASE_URL}/user/${decoded._id}`, {
   //       profilepicture,
