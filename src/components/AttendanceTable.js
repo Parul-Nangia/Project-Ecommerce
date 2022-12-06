@@ -20,12 +20,30 @@ const AttendanceTable = () => {
   const [searchedColumn, setSearchedColumn] = useState("");
   const [isopenmodal, setIsOpenModal] = useState(false);
   const [EmployeeCalendar, setEmployeeCalendar] = useState([]);
+  const [singleAttendance, setSingleAttendance] = useState([]);
   const [state, setState] = useState([]);
+  console.log("state", state)
+  
 
 
+  // useEffect(() => {
+  //   const getSingleAttendance = async (record) => {
+  //     // console.log("record", record._id)
+  //     console.log("record???", record)
+
+  //     await axios
+  //       .get(`${process.env.REACT_APP_BASE_URL}/attendance/single/${record._id}`)
+  //       .then((res) => {
+  //         setSingleAttendance(res?.data?.SingleAttendance)
+  //         console.log("singleAttendance", res?.data?.SingleAttendance);
+  //       });
+  //   };
+  //   getSingleAttendance()
+  // }, [])
 
   const getCalendarSingleRowData = async (record) => {
     console.log("record", record._id)
+    setState(record.name.toUpperCase() + "'s" + " " + "ATTENDANCE RECORD")
     console.log("record", record)
     // setEmployeeCalendar({ ...record })
     // console.log("EmployeeCalendar", EmployeeCalendar)
@@ -37,7 +55,7 @@ const AttendanceTable = () => {
       .then((res) => {
         setEmployeeCalendar(res?.data?.SingleAttendance)
         // setDataSource(res?.data?.SingleEmployeeAllAttendance);
-        console.log("res", EmployeeCalendar);
+        console.log("EmployeeCalendar", EmployeeCalendar);
       });
 
     setIsOpenModal(true);
@@ -69,7 +87,7 @@ const AttendanceTable = () => {
         {/* <ul className="events"> */}
         {newArray.map((item) => (
           <li key={item._id}>
-            <Badge status="success" text={item.name} />
+            <Badge className="calendarcell" />
           </li>
         ))}
         {/* </ul> */}
@@ -437,14 +455,16 @@ const AttendanceTable = () => {
         }}
       />
       <Modal
-        title="fdbd"
+        title = {state}
         cancelButtonProps={{ style: { display: "none" } }}
-        okButtonProps={{ style: { display: "none" } }}
         onCancel={handleCancel}
         open={isopenmodal}
         width={1000}
       >
+        {/* <h>{EmployeeCalendar?.name}</h> */}
+        <br/>
         <Calendar dateCellRender={dateCellRender} />
+
       </Modal>
     </>
   );
