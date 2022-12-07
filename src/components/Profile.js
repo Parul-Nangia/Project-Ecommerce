@@ -92,8 +92,7 @@ const Profile = () => {
 
   useEffect(() => {
     console.log(id, "userid");
-    viewEmployee(id)
-;
+    viewEmployee(id);
   }, []);
 
   const viewEmployee = async (id) => {
