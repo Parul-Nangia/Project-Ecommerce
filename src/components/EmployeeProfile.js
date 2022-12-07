@@ -78,7 +78,7 @@ const EmployeeProfile = () => {
     // console.log("file", file)
     const token = localStorage.getItem("access_token1");
     var decoded = jwt_decode(token);
-   
+
     // e.preventDefault();
 
     // const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
@@ -118,16 +118,13 @@ const EmployeeProfile = () => {
 
 
     await axios
-      .post(`${process.env.REACT_APP_BASE_URL}/document/add/${decoded._id}`, 
-      formData
-
+      .post(`${process.env.REACT_APP_BASE_URL}/document/add/${decoded._id}`,
+        formData
       )
-
       .then((res) => {
         console.log("doc response", res);
         // setViewProfile(res?.data?.profilepic);
       });
-
   }
 
   //   axios
