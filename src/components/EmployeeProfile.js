@@ -23,7 +23,7 @@ const EmployeeProfile = () => {
   // const [empid, setEmpID] = useState("");
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState();
-  // const [myprofilepic, setMyprofilepic] = useState("");
+  const [myprofilepic, setMyprofilepic] = useState("");
 
   // const [preview,setPreview] = useState(null)
 
@@ -65,6 +65,18 @@ const EmployeeProfile = () => {
         }
       });
   };
+  useEffect(() => {
+    getimage(decoded._id);
+  }, []);
+
+  const getimage = async () => {
+    await axios
+      .get(`${process.env.REACT_APP_BASE_URL}/document/pic/${decoded._id}`)
+      .then((res) => {
+        console.log(res, "picture response");
+        setMyprofilepic(res?.data?.profilepic);
+      });
+  };
 
   const token = localStorage.getItem("access_token1");
   console.log("token from local storage:", token);
@@ -98,7 +110,7 @@ const EmployeeProfile = () => {
         console.log(info.file.originFileObj, "obj");
 
         setLoading(false);
-        console.log(url, "urlllll");
+        // console.log(url, "urlllll");
 
         setImageUrl(url);
         console.log("imageUrl", imageUrl);
@@ -129,9 +141,12 @@ const EmployeeProfile = () => {
         beforeUpload={beforeUpload}
         onChange={handleChange}
       >
-        {viewProfile? (
+      
+        {imageUrl ? (
+          
           <img
-            src={viewProfile?.name}
+        
+            src={imageUrl}
             alt="avatar"
             style={{
               width: "100%",
@@ -144,6 +159,10 @@ const EmployeeProfile = () => {
       {/* <Button >Submit</Button> */}
       {/* {viewProfile?.image} */}
 
+      {/* {myprofilepic.map ((val) => {
+            return val.image;
+      })} */}
+      
       <Card title="General Information" bordered={false} style={{ width: 300 }}>
         <p>Name: {viewEmployeeProfile?.name}</p>
         <p>Email: {viewEmployeeProfile?.email}</p>
