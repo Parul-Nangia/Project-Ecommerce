@@ -48,12 +48,7 @@ const LoginNew = () => {
       navigate("/");
     } catch (error) {
       console.log(correctData, "show data catch");
-      // const text =(item)=>{
-      // return [item.name].join(" ");
-      // }
-      // const text1 =(item)=>{
-      //   return [item.password].join(" ");
-      //   }
+    
       const UserName = correctData.map((text) => {
         return text.name;
       });
