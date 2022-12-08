@@ -9,11 +9,12 @@ import { message, Upload, Button } from "antd";
 const getBase64 = (img, callback) => {
   const reader = new FileReader();
   // console.log("reader",reader)
-  console.log("img", img);
+  // console.log("img", img);
   // console.log("callback",callback)
 
   reader.addEventListener("load", () => callback(reader.result));
   reader.readAsDataURL(img);
+  console.log("get64")
 };
 
 const EmployeeProfile = () => {
@@ -28,6 +29,8 @@ const EmployeeProfile = () => {
   // const [preview,setPreview] = useState(null)
 
   const beforeUpload = async (file) => {
+    console.log("beforeUpload")
+
     const token = localStorage.getItem("access_token1");
     var decoded = jwt_decode(token);
     const formData = new FormData();
@@ -42,47 +45,44 @@ const EmployeeProfile = () => {
         `${process.env.REACT_APP_BASE_URL}/document/add/${decoded._id}`,
         formData
       )
-
       .then((res) => {
         console.log("doc response", res);
         setViewProfile(res?.data?.documentRecord?.image);
-        console.log("image", res?.data?.documentRecord?.image);
+        // console.log("image", res?.data?.documentRecord?.image);
 
-        if (res?.data?.documentRecord?.length === 0) {
-          console.log("image not found");
-        } else {
+        // if (res?.data?.documentRecord?.length === 0) {
+        //   console.log("image not found");
+        // } else {
+        const profilepicture = res?.data?.documentRecord?.image;
+        console.log("profilepicture", profilepicture);
 
-          const profilepicture = res?.data?.documentRecord?.image;
-          console.log("imageee", profilepicture);
-
-          axios
-            .put(`${process.env.REACT_APP_BASE_URL}/user/${decoded._id}`, {
-              profilepicture,
-            })
-            .then((res) => {
-              console.log("user pofile pic Response", res);
-            });
-          console.log("image uploaded");
-        }
+        axios
+          .put(`${process.env.REACT_APP_BASE_URL}/user/${decoded._id}`, {
+            profilepicture,
+          })
+          .then((res) => {
+            console.log("user pofile pic Response", res);
+          });
+        console.log("image uploaded");
+        // }
       });
   };
 
 
   useEffect(() => {
-    getimage(decoded._id);
+    const getimage = async () => {
+      await axios
+        .get(`${process.env.REACT_APP_BASE_URL}/document/pic/${decoded._id}`)
+        .then((res) => {
+          console.log(res, "picture response");
+          setMyprofilepic(res?.data?.profilepic);
+        });
+    };
+    getimage();
   }, []);
 
-  const getimage = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_BASE_URL}/document/pic/${decoded._id}`)
-      .then((res) => {
-        console.log(res, "picture response");
-        setMyprofilepic(res?.data?.profilepic);
-      });
-  };
-
   const token = localStorage.getItem("access_token1");
-  console.log("token from local storage:", token);
+  // console.log("token from local storage:", token);
   var decoded = jwt_decode(token);
   console.log("Decoded token data", decoded);
 
@@ -100,6 +100,8 @@ const EmployeeProfile = () => {
   };
 
   const handleChange = (info) => {
+    console.log("handleChange")
+
     // console.log("info", info);
     // console.log("info.file", info.file);
     if (info.file.status === "uploading") {
@@ -116,11 +118,12 @@ const EmployeeProfile = () => {
         // console.log(url, "urlllll");
 
         setImageUrl(url);
-        console.log("imageUrl", imageUrl);
+        // console.log("imageUrl", imageUrl);
       });
     }
   };
   const uploadButton = (
+
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
       <div
@@ -131,6 +134,7 @@ const EmployeeProfile = () => {
         Upload
       </div>
     </div>
+
   );
 
   return (
@@ -140,13 +144,13 @@ const EmployeeProfile = () => {
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={true}
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
         beforeUpload={beforeUpload}
         onChange={handleChange}
       >
 
         {imageUrl ? (
-          
+
           <img
             src={imageUrl}
             alt="avatar"
@@ -164,7 +168,7 @@ const EmployeeProfile = () => {
       {/* {myprofilepic.map ((val) => {
             return val.image;
       })} */}
-      
+
       <Card title="General Information" bordered={false} style={{ width: 300 }}>
         <p>Name: {viewEmployeeProfile?.name}</p>
         <p>Email: {viewEmployeeProfile?.email}</p>
