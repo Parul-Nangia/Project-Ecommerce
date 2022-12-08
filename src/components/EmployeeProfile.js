@@ -51,6 +51,7 @@ const EmployeeProfile = () => {
         if (res?.data?.documentRecord?.length === 0) {
           console.log("image not found");
         } else {
+
           const profilepicture = res?.data?.documentRecord?.image;
           console.log("imageee", profilepicture);
 
@@ -65,6 +66,8 @@ const EmployeeProfile = () => {
         }
       });
   };
+
+
   useEffect(() => {
     getimage(decoded._id);
   }, []);
@@ -97,8 +100,8 @@ const EmployeeProfile = () => {
   };
 
   const handleChange = (info) => {
-    console.log("info", info);
-    console.log("info.file", info.file);
+    // console.log("info", info);
+    // console.log("info.file", info.file);
     if (info.file.status === "uploading") {
       setLoading(true);
       return;
@@ -136,16 +139,15 @@ const EmployeeProfile = () => {
         name="avatar"
         listType="picture-card"
         className="avatar-uploader"
-        showUploadList={false}
+        showUploadList={true}
         action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
         beforeUpload={beforeUpload}
         onChange={handleChange}
       >
-      
+
         {imageUrl ? (
           
           <img
-        
             src={imageUrl}
             alt="avatar"
             style={{
