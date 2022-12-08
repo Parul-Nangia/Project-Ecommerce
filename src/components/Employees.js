@@ -77,7 +77,8 @@ const Employees = ({ dataSource }) => {
   };
 
   const handleOk = async () => {
-    // console.log(handleOk,"hhhhh")
+    console.log(handleOk,"hhhhh")
+    try{
     const profilepicture = "";
     await axios
       .post(`${process.env.REACT_APP_BASE_URL}/user/signup`, {
@@ -102,7 +103,18 @@ const Employees = ({ dataSource }) => {
     message.success("!Submit Successfully")
     // window.location.reload();
     setIsModalOpen(false);
-    
+    }
+    catch(error){
+      message.open({
+        type: 'error',
+        content: 'email already added',
+        duration: 2,
+        style: {
+          marginTop: '11vh',
+          
+        },
+      });
+    }
   };
                
   const handleCancel = () => {
@@ -121,7 +133,7 @@ const Employees = ({ dataSource }) => {
   };
 
   //================================================= START employee delete ( API==================================================
-
+  
   //   fetch(`${process.env.REACT_APP_BASE_URL}/user/${_id}`, {
   //     method: "DELETE",
   //     headers: {
@@ -379,7 +391,6 @@ const Employees = ({ dataSource }) => {
       title: "Role",
       dataIndex: "role",
     },
-
     {
       title: "Actions",
       render: (record) => {
@@ -546,7 +557,6 @@ const Employees = ({ dataSource }) => {
                   }}
                 />
               </Form.Item>
-
               <Form.Item
               name="password"
               rules={[

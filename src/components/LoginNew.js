@@ -47,7 +47,7 @@ const LoginNew = () => {
       message.open({
         type: 'success',
         content: 'Login Successfully!!',
-        duration: 5,
+        duration: 2,
         style: {
           marginTop: '11vh',
           
