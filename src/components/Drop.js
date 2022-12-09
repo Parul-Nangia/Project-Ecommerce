@@ -1,4 +1,9 @@
-import { MenuOutlined  ,UserOutlined, SettingOutlined , PoweroffOutlined } from "@ant-design/icons";
+import {
+  MenuOutlined,
+  UserOutlined,
+  SettingOutlined,
+  PoweroffOutlined,
+} from "@ant-design/icons";
 import { Dropdown, Menu, Space } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
@@ -8,9 +13,9 @@ const Drop = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
 
-  const EmployeeProfile = (e) => {
+  const ProfileEmployee = (e) => {
     e.preventDefault();
-    navigate("/employeeprofile");
+    navigate("/profileemployee");
   };
 
   const employeepassword = (e) => {
@@ -46,17 +51,17 @@ const Drop = () => {
       items={[
         {
           key: "0",
-          icon:<UserOutlined />,
+          icon: <UserOutlined />,
           label: (
-            <Link className="drop-down" onClick={EmployeeProfile}>
+            <Link className="drop-down" onClick={ProfileEmployee}>
               {" "}
-            Upload Profile Picture
+              Upload Profile Picture
             </Link>
           ),
         },
         {
           key: "1",
-          icon:<SettingOutlined />,
+          icon: <SettingOutlined />,
           label: (
             <Link className="drop-down" onClick={employeepassword}>
               {" "}
@@ -66,7 +71,7 @@ const Drop = () => {
         },
         {
           key: "2",
-          icon:<PoweroffOutlined />,
+          icon: <PoweroffOutlined />,
           label: (
             <Link className="drop-down" onClick={logout}>
               {" "}
@@ -84,8 +89,7 @@ const Drop = () => {
       <Dropdown overlay={menu} trigger={["click"]}>
         <a onClick={(e) => e.preventDefault()}>
           <Space>
-          <MenuOutlined className="btnset">
-          </MenuOutlined>
+            <MenuOutlined className="btnset"></MenuOutlined>
           </Space>
         </a>
       </Dropdown>

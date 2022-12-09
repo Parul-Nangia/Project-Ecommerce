@@ -238,6 +238,15 @@
   margin-bottom: 20px;
 }
 
+.profilephoto{
+
+  width: 40%;
+  margin: auto;
+  display: block;
+  margin-bottom: 20px;
+
+}
+
 /* .site-form-item-icon{
   width: 200px;
 } */

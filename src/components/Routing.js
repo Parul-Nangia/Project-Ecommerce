@@ -10,8 +10,9 @@ import LeaveForm from "../components/LeaveForm";
 import LeaveCalendar from "../components/LeaveCalendar";
 import Documentation from "../components/Documentation";
 import Profile from "../components/Profile";
-import EmployeeProfile from "../components/EmployeeProfile";
+
 import ChangePassword from "../components/ChangePassword";
+import ProfileEmployee from "./ProfileEmployee";
 
 const Routing = () => {
   return (
@@ -28,7 +29,7 @@ const Routing = () => {
         <Route path="/leavecalendar" element={<LeaveCalendar />} />
         <Route path="/profile/:id" element={<Profile />} />
 
-        <Route path="/employeeprofile" element={<EmployeeProfile />} />
+        <Route path="/profileemployee" element={<ProfileEmployee />} />
         <Route path="/changepassword" element={<ChangePassword />} />
 
         <Route path="/documentation/:id" element={<Documentation />} />
