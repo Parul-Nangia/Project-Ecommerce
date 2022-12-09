@@ -4,6 +4,7 @@ import { useState,useEffect } from "react";
 import { Modal, Input, Form, Select, Button } from "antd";
 import { UploadOutlined, CloudDownloadOutlined } from "@ant-design/icons";
 import { Upload } from "antd";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 const { Option } = Select;
@@ -12,6 +13,7 @@ const Documentation = () => {
   const [documentname, setDocumentName] = useState("");
   const [documenttype, setDocumentType] = useState("");
   const [documentfile, setDocumentFile] = useState("");
+  const [myprofilepic, setMyprofilepic] = useState("");
   const [empID, setEmpID] = useState("");
   const [dataSource, setDataSource] = useState([]); //[ { no: "", emp_id: "", documentname: "", documenttype: "",}, ]
   const columns = [
@@ -36,14 +38,31 @@ const Documentation = () => {
       render: (record) => {
         return (
           <>
-            <Button>
+            {/* <Button  >
               <CloudDownloadOutlined />
-            </Button>
+            </Button> */}
+            {/* <a href="https://www.w3schools.com"><CloudDownloadOutlined /></a> */}
+            <Link to="http://localhost:1999/images"><CloudDownloadOutlined /></Link>
           </>
         );
       },
     },
   ];
+  // const showFile = ()=>{
+  //   console.log("hello")
+  //   const token = localStorage.getItem("access_token1");
+  //   console.log("token from local storage:", token);
+  //   var decoded = jwt_decode(token);
+  //   console.log("Decoded token data", decoded);
+  //   console.log("Employee ID", decoded._id);
+  //   setEmpID(decoded._id);
+  //   const emp_id = decoded._id;
+  //   axios.get(`${process.env.REACT_APP_BASE_URL}/document/pic/${emp_id}`)
+  //   .then((res) => {
+  //     console.log(res, "picture response");
+  //     setMyprofilepic(res?.data?.profilepic);
+  //   });
+  // }
   useEffect(() => {
     showHandle();
   }, []);
@@ -52,7 +71,6 @@ const Documentation = () => {
       .get(`${process.env.REACT_APP_BASE_URL}/document`)
       .then((res) => {
         console.log("Response getttttttt", res);
-
         setDataSource(res?.data?.documentData);
         // console.log("Attendance All Data", dataSource);
         // console.log(setDataSource,"setDataSource")
@@ -172,8 +190,7 @@ const Documentation = () => {
         open={isModalOpen}
         onOk={handleOk}
         okText="Upload"
-        onCancel={handleCancel}
-      >
+        onCancel={handleCancel}>
         <Form
           labelCol={{ span: 10 }}
           wrapperCol={{ span: 14 }}

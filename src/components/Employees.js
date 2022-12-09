@@ -107,12 +107,12 @@ const Employees = ({ dataSource }) => {
     catch(error){
       message.open({
         type: 'error',
-        content: 'email already added',
+        content: 'email already existed',
         duration: 2,
-        style: {
-          marginTop: '11vh',
+        // style: {
+        //   marginTop: '11vh',
           
-        },
+        // },
       });
     }
   };
