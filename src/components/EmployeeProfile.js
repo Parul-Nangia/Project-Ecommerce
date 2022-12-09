@@ -98,6 +98,7 @@ const EmployeeProfile = () => {
       });
   };
 
+  
   const handleChange = (info) => {
     console.log("info", info);
     console.log("info.file", info.file);
