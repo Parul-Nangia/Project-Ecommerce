@@ -14,7 +14,6 @@ const getBase64 = (img, callback) => {
 
   reader.addEventListener("load", () => callback(reader.result));
   reader.readAsDataURL(img);
-  console.log("get64");
 };
 
 const EmployeeProfile = () => {
@@ -33,8 +32,6 @@ const EmployeeProfile = () => {
   // const [preview,setPreview] = useState(null)
 
   const beforeUpload = async (file) => {
-    console.log("beforeUpload");
-
     const token = localStorage.getItem("access_token1");
     var decoded = jwt_decode(token);
     const formData = new FormData();
@@ -71,7 +68,6 @@ const EmployeeProfile = () => {
         // }
       });
   };
-
   useEffect(() => {
     const getimage = async () => {
       await axios
@@ -103,10 +99,8 @@ const EmployeeProfile = () => {
   };
 
   const handleChange = (info) => {
-    console.log("handleChange");
-
-    // console.log("info", info);
-    // console.log("info.file", info.file);
+    console.log("info", info);
+    console.log("info.file", info.file);
     if (info.file.status === "uploading") {
       setLoading(true);
       return;
@@ -120,8 +114,8 @@ const EmployeeProfile = () => {
         setLoading(false);
         // console.log(url, "urlllll");
 
-        // setImageUrl(viewProfile);
-        // console.log("imageUrl", imageUrl);
+        setImageUrl(url);
+        console.log("imageUrl", imageUrl);
       });
     }
   };
@@ -168,12 +162,13 @@ const EmployeeProfile = () => {
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
+        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
         beforeUpload={beforeUpload}
         onChange={handleChange}
       >
         {imageUrl ? (
           <img
-            src={userprofiledata}
+            src={imageUrl}
             alt="avatar"
             style={{
               width: "100%",

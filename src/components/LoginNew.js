@@ -43,7 +43,16 @@ const LoginNew = () => {
       ] = `Bearer ${data["token"]}`;
       localStorage.setItem("access_token1", JSON.stringify(data.token));
       console.log(localStorage, "localStorage");
-      message.success("Login ");
+      // message.success("Login ");
+      message.open({
+        type: 'success',
+        content: 'Login Successfully!!',
+        duration: 2,
+        style: {
+          marginTop: '11vh',
+          
+        },
+      });
       window.location.reload();
       navigate("/");
     } catch (error) {
@@ -58,20 +67,65 @@ const LoginNew = () => {
 
       console.log(correctData);
       if (name === "" && password === "") {
-        message.error("Fill your username and password");
+        // message.error("Fill your username and password");
+        message.open({
+          type: 'error',
+          content: 'Fill your Username & Password',
+          duration: 2,
+          style: {
+            marginTop: '11vh',
+            
+          },
+        });
+       
       } else if (!Password.includes(password) && !UserName.includes(name)) {
-        message.error("InValid password & username!!");
+        // message.error("InValid password & username!!");
+        message.open({
+          type: 'error',
+          content: 'InValid password & username!!',
+          duration: 2,
+          style: {
+            marginTop: '11vh',
+            
+          },
+        });
       } else if (!UserName.includes(name)) {
         console.log("Incorrect username");
-        message.error("Incorrect Username!");
+        // message.error("Incorrect Username!");
+        message.open({
+          type: 'error',
+          content: 'Incorrect Username!',
+          duration: 2,
+          style: {
+            marginTop: '11vh',
+            
+          },
+        });
       } else if (!Password.includes(password)) {
         console.log("Incorrect Password");
-        message.error("Incorrect password!");
+        // message.error("Incorrect password!");
+        message.open({
+          type: 'error',
+          content: 'Incorrect password!',
+          duration: 2,
+          style: {
+            marginTop: '11vh',
+            
+          },
+        });
       } else {
-        message.warning("valid username and password here");
+        // message.warning("valid username and password here");
+        message.open({
+          type: 'error',
+          content: 'Invalid username and password here',
+          duration: 2,
+          style: {
+            marginTop: '11vh',
+            
+          },
+        });
+        
       }
-
-    
     }
   };
 

@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import React from "react";
 import { useState, useEffect } from "react";
-import { Table } from "antd";
+import { Table,message } from "antd";
 import { Button, Modal, Form, Input, Row, Select } from "antd";
 import {
   FileAddOutlined,
@@ -77,7 +77,8 @@ const Employees = ({ dataSource }) => {
   };
 
   const handleOk = async () => {
-    // console.log(handleOk,"hhhhh")
+    console.log(handleOk,"hhhhh")
+    try{
     const profilepicture = "";
     await axios
       .post(`${process.env.REACT_APP_BASE_URL}/user/signup`, {
@@ -92,11 +93,30 @@ const Employees = ({ dataSource }) => {
       })
       .then((res) => {
         console.log("response", res);
+        console.log(res?.data,"princeeeeee")
+        console.log(res?.data?.newuser,"kahollll")
+        
+        // const array=[]
+        // array.append(as)
+        // console.log(as,"ggggg")
       });
-
+    message.success("!Submit Successfully")
+    // window.location.reload();
     setIsModalOpen(false);
+    }
+    catch(error){
+      message.open({
+        type: 'error',
+        content: 'email already added',
+        duration: 2,
+        style: {
+          marginTop: '11vh',
+          
+        },
+      });
+    }
   };
-
+               
   const handleCancel = () => {
     setIsModalOpen(false);
   };
@@ -113,7 +133,7 @@ const Employees = ({ dataSource }) => {
   };
 
   //================================================= START employee delete ( API==================================================
-
+  
   //   fetch(`${process.env.REACT_APP_BASE_URL}/user/${_id}`, {
   //     method: "DELETE",
   //     headers: {
@@ -127,30 +147,34 @@ const Employees = ({ dataSource }) => {
   //   window.location.reload(false);
   // }
 
-  function deleteEmployee(_id) {
-    fetch(`${process.env.REACT_APP_BASE_URL}/user/empdel/${_id}`, {
-      method: "DELETE",
-    }).then((res) => {
-      console.log("result", res);
-      // window.alert("Employee Deleted successfully");
-      // window.location.reload(false);
-    });
-  }
+  // function deleteEmployee(_id) {
+  //   fetch(`${process.env.REACT_APP_BASE_URL}/user/empdel/${_id}`, {
+  //     method: "DELETE",
+  //   }).then((res) => {
+  //     console.log(_id,"IDDDDDDD")
+  //     console.log(" delete", res);
+  //     employeeData(res.data.map((row)=>{
+  //       _id:row._id
+  //     }))
+  //     // window.alert("Employee Deleted successfully");
+  //     // window.location.reload(false);
+  //   });
+  // }
+  const deleteEmployee = async (_id) => {
+    await axios
+      .delete(`${process.env.REACT_APP_BASE_URL}/user/empdel/${_id}`)
+      .then((res) => {
+        console.log(_id,"IDDDDDDD")
+      console.log(" delete", res);
+      // setEmployeeData(
+      //     res.data.map((row) => ({
+      //       _id: row._id,
+      //     }))
+      //   );
+      });
+  };
 
-  // ----------------------------------------axios delete method (delete api)
-  // const deleteData = async (_id)=> {
-  //   await axios.delete(`http://localhost:1999/employee/${_id}`)
-  //     .then((res) => {
-  //       console.log(_id, "resif")
-  //       setState(
-  //         res.data.map(row => ({
-  //           id: row.id
-  //         }))
-  //       );
-  //     }
-  //     );
-  // };
-
+ 
   // //================================================= START employee post (POST API)
   // function saveEmployee() {
   //   console.warn({ name, password, email, contact, gender, role, linkedinprofilelink
@@ -367,7 +391,6 @@ const Employees = ({ dataSource }) => {
       title: "Role",
       dataIndex: "role",
     },
-
     {
       title: "Actions",
       render: (record) => {
@@ -534,7 +557,6 @@ const Employees = ({ dataSource }) => {
                   }}
                 />
               </Form.Item>
-
               <Form.Item
               name="password"
               rules={[
@@ -606,8 +628,8 @@ const Employees = ({ dataSource }) => {
                   placeholder=" Select your Gender"
                   onChange={SelectGender}
                 >
-                  <Option value="Male">Male</Option>
-                  <Option value="Female">Female</Option>
+                  <Option value="male">male</Option>
+                  <Option value="female">female</Option>
                 </Select>
               </Form.Item>
               <Form.Item 
@@ -632,8 +654,8 @@ const Employees = ({ dataSource }) => {
                   placeholder="Select your Role"
                   onChange={SelectRole}
                 >
-                  <Option value="Employee">Employee</Option>
-                  <Option value="Supervisor">Supervisor</Option>
+                  <Option value="employee">employee</Option>
+                  <Option value="supervisor">supervisor</Option>
                 </Select>
               </Form.Item>
               <Form.Item 
