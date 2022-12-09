@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import jwt_decode from "jwt-decode";
 import { PlusOutlined } from "@ant-design/icons";
-import { Modal, Upload, Card } from "antd";
+import { Modal, Upload, Card, message } from "antd";
 import axios from "axios";
 import { useEffect } from "react";
 
@@ -77,8 +77,10 @@ const ProfileEmployee = () => {
             console.log("user profile pic Response", res);
           });
         console.log("image uploaded");
+        message.success("Profile Picture Uploaded !!");
         // }
       });
+    window.location.reload();
   };
 
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
@@ -97,13 +99,13 @@ const ProfileEmployee = () => {
         .then((res) => {
           console.warn("ttttttt", res);
           if (res?.data?.myData[0]?.profilepicture === "") {
-            setUserProfileData("nopic.png");
+            setUserProfileData("profileimage.png");
             console.warn("hiiiiii");
           } else {
             console.warn("ggggggggg");
 
             setUserProfileData(
-              "http://localhost:1999/images/" +
+              `${process.env.REACT_APP_BASE_URL}/images/` +
                 res?.data?.myData[0]?.profilepicture
             );
           }
@@ -130,15 +132,6 @@ const ProfileEmployee = () => {
       });
   };
 
-  const onError = () => {
-    if (!userprofiledata) {
-      setUserProfileData({
-        src: "noimage.webp",
-        errored: true,
-      });
-    }
-  };
-
   const uploadButton = (
     <div>
       <PlusOutlined />
@@ -155,39 +148,16 @@ const ProfileEmployee = () => {
 
   return (
     <>
-      {/* <div>
-        <img
-        //   src={userprofiledata}
-          alt=""
-          className="userprofileimg"
-          style={{ display: "flex", height: "60px", width: "60px" }}
-        />
-      </div> */}
       <Upload
-        // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
         listType="picture-card"
         fileList={fileList}
-        onPreview={handlePreview}
-        onChange={handleChange}
+        // onPreview={handlePreview}
+        // onChange={handleChange}
         beforeUpload={beforeUpload}
         status="done"
       >
         {fileList.length >= 1 ? null : uploadButton}
       </Upload>
-      <Modal
-        open={previewOpen}
-        title={previewTitle}
-        footer={null}
-        onCancel={handleCancel}
-      >
-        <img
-          alt="example"
-          style={{
-            width: "100%",
-          }}
-          src={userprofiledata}
-        />
-      </Modal>
 
       <div>
         <img

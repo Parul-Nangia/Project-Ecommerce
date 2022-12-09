@@ -47,7 +47,7 @@ const Drop = () => {
 
   const menu = (
     <Menu
-      style={{ marginTop: "-25px" }}
+      // style={{ marginTop: "-25px" }}
       items={[
         {
           key: "0",
@@ -85,14 +85,16 @@ const Drop = () => {
 
   return (
     <>
-      <h3 style={{ color: "white", fontStyle: "normal" }}>Hi {name.name}</h3>
-      <Dropdown overlay={menu} trigger={["click"]}>
-        <a onClick={(e) => e.preventDefault()}>
-          <Space>
-            <MenuOutlined className="btnset"></MenuOutlined>
-          </Space>
-        </a>
-      </Dropdown>
+      <div style={{ color: "white", fontStyle: "normal" }}>
+        Hi {name.name}
+        <Dropdown overlay={menu} trigger={["click"]}>
+          <a onClick={(e) => e.preventDefault()}>
+            <Space>
+              <MenuOutlined className="btnset"></MenuOutlined>
+            </Space>
+          </a>
+        </Dropdown>
+      </div>
     </>
   );
 };
