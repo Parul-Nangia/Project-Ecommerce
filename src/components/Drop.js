@@ -4,14 +4,16 @@ import {
   SettingOutlined,
   PoweroffOutlined,
 } from "@ant-design/icons";
-import { Dropdown, Menu, Space } from "antd";
+import { Avatar, Dropdown, Menu, Space, Image } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import axios from "axios";
 
 const Drop = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
+  const [userprofiledata, setUserProfileData] = useState("");
 
   const ProfileEmployee = (e) => {
     e.preventDefault();
@@ -44,6 +46,32 @@ const Drop = () => {
 
     setName(decoded);
   };
+
+  useEffect(() => {
+    const PicProfileData = async () => {
+      const token = localStorage.getItem("access_token1");
+      var decoded = jwt_decode(token);
+      await axios
+        .get(`${process.env.REACT_APP_BASE_URL}/user/${decoded._id}`)
+        .then((res) => {
+          console.warn("ttttttt", res);
+          if (res?.data?.myData[0]?.profilepicture === "") {
+            setUserProfileData("profileimage.png");
+            console.warn("hiiiiii");
+          } else {
+            console.warn("ggggggggg");
+
+            setUserProfileData(
+              `${process.env.REACT_APP_BASE_URL}/images/` +
+                res?.data?.myData[0]?.profilepicture
+            );
+          }
+          console.log("Picture is here", userprofiledata);
+          console.log("here ", res?.data?.myData[0]?.profilepicture);
+        });
+    };
+    PicProfileData();
+  }, []);
 
   const menu = (
     <Menu
@@ -94,6 +122,18 @@ const Drop = () => {
             </Space>
           </a>
         </Dropdown>
+      </div>
+      <div>
+        <Avatar
+          src={
+            <Image
+              src={userprofiledata}
+              style={{
+                width: 32,
+              }}
+            />
+          }
+        />
       </div>
     </>
   );
