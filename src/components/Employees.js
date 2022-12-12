@@ -621,7 +621,7 @@ const Employees = ({ dataSource }) => {
                   },
                 ]}
               >
-                <Select
+                {/* <Select
                   prefix={
                     <UserSwitchOutlined className="site-form-item-icon" />
                   }
@@ -630,7 +630,15 @@ const Employees = ({ dataSource }) => {
                 >
                   <Option value="male">male</Option>
                   <Option value="female">female</Option>
-                </Select>
+                </Select> */}
+                  <Select
+               placeholder=" Select your Gender"
+                onChange={SelectGender}
+                
+              >
+                <Select.Option value="male">male</Select.Option>
+                <Select.Option value="female">female</Select.Option>
+              </Select>
               </Form.Item>
               <Form.Item 
               name="role" rules={[{ required: true,  message: "Select your Role "}]}>
@@ -648,14 +656,16 @@ const Employees = ({ dataSource }) => {
                   }}
                 /> */}
                 <Select
-                  prefix={
-                    <UserSwitchOutlined className="site-form-item-icon" />
-                  }
+                  // prefix={
+                  //   <UserSwitchOutlined className="site-form-item-icon" />
+                  // }
                   placeholder="Select your Role"
                   onChange={SelectRole}
                 >
+                  {/* <Select.Option value="employee">employee</Select.Option>
+                  <Select.Option value="admin">admin</Select.Option> */}
                   <Option value="employee">employee</Option>
-                  <Option value="supervisor">supervisor</Option>
+                  <Option value="admin">admin</Option>
                 </Select>
               </Form.Item>
               <Form.Item 

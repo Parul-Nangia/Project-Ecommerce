@@ -4,16 +4,18 @@ import { useState,useEffect } from "react";
 import { Modal, Input, Form, Select, Button } from "antd";
 import { UploadOutlined, CloudDownloadOutlined } from "@ant-design/icons";
 import { Upload } from "antd";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+import { Anchor } from 'antd';
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+const { Link } = Anchor;
 const { Option } = Select;
 const Documentation = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [documentname, setDocumentName] = useState("");
   const [documenttype, setDocumentType] = useState("");
   const [documentfile, setDocumentFile] = useState("");
-  const [myprofilepic, setMyprofilepic] = useState("");
+  const [userprofiledata, setUserProfileData] = useState("");
   const [empID, setEmpID] = useState("");
   const [dataSource, setDataSource] = useState([]); //[ { no: "", emp_id: "", documentname: "", documenttype: "",}, ]
   const columns = [
@@ -36,33 +38,60 @@ const Documentation = () => {
     {
       title: "Actions",
       render: (record) => {
+        const show = record.image
+        console.log(show,"show")
+        setUserProfileData(show)
         return (
           <>
-            {/* <Button  >
+            {/* <Button  onClick={() => {
+                showFile(record);
+              }} >
               <CloudDownloadOutlined />
             </Button> */}
             {/* <a href="https://www.w3schools.com"><CloudDownloadOutlined /></a> */}
-            <Link to="http://localhost:1999/images"><CloudDownloadOutlined /></Link>
+            {/* <a href="http://localhost:1999/images/Screenshot(3).png"><CloudDownloadOutlined /></a> */}
+            {/* <Link to="http://localhost:1999/images/Screenshot (3).png"><CloudDownloadOutlined /></Link> */}
+            {/* <Anchor  affix={false} getCurrentAnchor={getCurrentAnchor}>
+            <Link href="http://localhost:1999/images/show"  title="View" />   
+            </Anchor> */}
+            <Anchor  affix={false} getCurrentAnchor={getCurrentAnchor}>
+            <Link href="http://localhost:1999/images/Screenshot (3).png"  title="View" />   
+            </Anchor>
+          
           </>
+          //Screenshot (3).png
         );
       },
     },
   ];
-  // const showFile = ()=>{
-  //   console.log("hello")
-  //   const token = localStorage.getItem("access_token1");
-  //   console.log("token from local storage:", token);
-  //   var decoded = jwt_decode(token);
-  //   console.log("Decoded token data", decoded);
-  //   console.log("Employee ID", decoded._id);
-  //   setEmpID(decoded._id);
-  //   const emp_id = decoded._id;
-  //   axios.get(`${process.env.REACT_APP_BASE_URL}/document/pic/${emp_id}`)
-  //   .then((res) => {
-  //     console.log(res, "picture response");
-  //     setMyprofilepic(res?.data?.profilepic);
-  //   });
-  // }
+ 
+  const getCurrentAnchor=()=>{
+    <Link href="http://localhost:1999/images/Screenshot (3).png" title="View" />   
+  }
+  const showFile = (record)=>{
+    // <Anchor>
+    //         <Link href="http://localhost:1999/images/Screenshot (3).png" title="View" />   
+    //         </Anchor>
+    // const token = localStorage.getItem("access_token1");
+    // var decoded = jwt_decode(token);
+    //  axios.get(`${process.env.REACT_APP_BASE_URL}/user/${decoded._id}`)
+    //   .then((res) => {
+    //     console.warn("ttttttt", res);
+    //     if (res?.data?.myData[0]?.profilepicture === "") {
+    //       setUserProfileData("nopic.png");
+    //       console.warn("hiiiiii");
+    //     } else {
+    //       console.warn("ggggggggg");
+
+    //       setUserProfileData(
+    //         "http://localhost:1999/images/" +
+    //           res?.data?.myData[0]?.profilepicture
+    //       );
+    //     }
+    //     console.log("Picture is here", userprofiledata);
+    //     console.log("here ", res?.data?.myData[0]?.profilepicture);
+    //   });
+  }
   useEffect(() => {
     showHandle();
   }, []);
