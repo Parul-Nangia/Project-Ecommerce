@@ -3,6 +3,7 @@ import {
   HomeOutlined,
   AuditOutlined,
   UserOutlined,
+  FolderOpenOutlined
 } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import {
@@ -22,7 +23,7 @@ const Sidebar = () => {
   var decoded = jwt_decode(token);
 
 
-  
+
   if (decoded.role === "admin") {
     return (
       <Sider trigger={null} collapsible collapsed={collapsed} width={200} className="site-layout-background">
@@ -56,6 +57,11 @@ const Sidebar = () => {
               key: "/leave",
               icon: <AuditOutlined />
             },
+            {
+              label: "PROJECTS",
+              key: "/projects",
+              icon: <FolderOpenOutlined />
+            },
 
           ]}
         />
@@ -83,7 +89,7 @@ const Sidebar = () => {
               label: "DASHBOARD",
               key: "/dashboard",
               icon: <HomeOutlined />
-              
+
             },
             {
               label: "ATTENDANCE",
@@ -94,6 +100,11 @@ const Sidebar = () => {
               label: "LEAVE",
               key: "/leave",
               icon: <AuditOutlined />
+            },
+            {
+              label: "PROJECTS",
+              key: "/projects",
+              icon: <FolderOpenOutlined />
             },
           ]}
         />
