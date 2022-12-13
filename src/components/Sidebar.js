@@ -3,12 +3,10 @@ import {
   HomeOutlined,
   AuditOutlined,
   UserOutlined,
+  TrophyOutlined,
 } from "@ant-design/icons";
 import { useState, useEffect } from "react";
-import {
-  DoubleRightOutlined,
-  DoubleLeftOutlined
-} from "@ant-design/icons";
+import { DoubleRightOutlined, DoubleLeftOutlined } from "@ant-design/icons";
 import React from "react";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
@@ -21,11 +19,15 @@ const Sidebar = () => {
   const token = localStorage.getItem("access_token1");
   var decoded = jwt_decode(token);
 
-
-  
   if (decoded.role === "admin") {
     return (
-      <Sider trigger={null} collapsible collapsed={collapsed} width={200} className="site-layout-background">
+      <Sider
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+        width={200}
+        className="site-layout-background"
+      >
         <Menu
           className="Sidemenubar"
           onClick={({ key }) => {
@@ -39,7 +41,7 @@ const Sidebar = () => {
             {
               label: "DASHBOARD",
               key: "/dashboard",
-              icon: <HomeOutlined />
+              icon: <HomeOutlined />,
             },
             {
               label: "ATTENDANCE",
@@ -54,21 +56,33 @@ const Sidebar = () => {
             {
               label: "LEAVE",
               key: "/leave",
-              icon: <AuditOutlined />
+              icon: <AuditOutlined />,
             },
-
+            {
+              label: "Skills",
+              key: "/skills",
+              icon: <TrophyOutlined />,
+            },
           ]}
         />
-        {React.createElement(collapsed ? DoubleRightOutlined : DoubleLeftOutlined, {
-          className: 'trigger',
-          onClick: () => setCollapsed(!collapsed),
-
-        })}
+        {React.createElement(
+          collapsed ? DoubleRightOutlined : DoubleLeftOutlined,
+          {
+            className: "trigger",
+            onClick: () => setCollapsed(!collapsed),
+          }
+        )}
       </Sider>
     );
   } else if (decoded.role === "employee") {
     return (
-      <Sider trigger={null} collapsible collapsed={collapsed} width={200} className="site-layout-background">
+      <Sider
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+        width={200}
+        className="site-layout-background"
+      >
         <Menu
           className="Sidemenubar"
           onClick={({ key }) => {
@@ -82,8 +96,7 @@ const Sidebar = () => {
             {
               label: "DASHBOARD",
               key: "/dashboard",
-              icon: <HomeOutlined />
-              
+              icon: <HomeOutlined />,
             },
             {
               label: "ATTENDANCE",
@@ -93,19 +106,26 @@ const Sidebar = () => {
             {
               label: "LEAVE",
               key: "/leave",
-              icon: <AuditOutlined />
+              icon: <AuditOutlined />,
+            },
+            {
+              label: "Skills",
+              key: "/skills",
+              icon: <TrophyOutlined />,
             },
           ]}
         />
-        {React.createElement(collapsed ? DoubleRightOutlined : DoubleLeftOutlined, {
-          className: 'trigger',
-          onClick: () => setCollapsed(!collapsed),
-
-        })}
+        {React.createElement(
+          collapsed ? DoubleRightOutlined : DoubleLeftOutlined,
+          {
+            className: "trigger",
+            onClick: () => setCollapsed(!collapsed),
+          }
+        )}
       </Sider>
     );
   } else {
-    console.log("Not admin/ Not employee")
+    console.log("Not admin/ Not employee");
   }
 };
 
