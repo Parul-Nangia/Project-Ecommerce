@@ -27,7 +27,7 @@ const Adminproject = () => {
     const [projectend, setProjectend] = useState("");
     const [dataSource, setDataSource] = useState([]);
     const [mydataSource, setmyDataSource] = useState([]);
-    const [fornamedataSource, setfornamedataSource] = useState([]);
+    const [forsingleproject, setforsingleproject] = useState([]);
 
     // const [employeename, setEmployeename] = useState("")
     // const [assignedprojectname, setAssignedprojectname] = useState("")
@@ -36,7 +36,7 @@ const Adminproject = () => {
     // const [assignedprojectstart, setAssignedprojectstart] = useState("")
     // const [assignedprojectend, setAssignedprojectend] = useState("")
     // const [assignedprojectstatus, setAssignedprojectstatus] = useState("")
-    const [rowproject, setRowProject] = useState([])
+    const [assignedemployees, setassignedEmployees] = useState([])
 
 
 
@@ -62,7 +62,7 @@ const Adminproject = () => {
                 .get(`${process.env.REACT_APP_BASE_URL}/user`)
                 .then((res) => {
                     setmyDataSource(res?.data?.userData)
-                    console.log("user", res?.data?.userData);
+                    // console.log("user", res?.data?.userData);
 
                 });
         }
@@ -71,22 +71,22 @@ const Adminproject = () => {
 
 
 
-    useEffect(() => {
-        const getAllassignedProjects = async () => {
-            await axios
-                .get(`${process.env.REACT_APP_BASE_URL}/assignproject`)
-                .then((res) => {
-                    console.log("assigned", res?.data?.assignedprojectData)
-                    for (let g = 0; g < res?.data?.assignedprojectData.length; g++) {
-                        setfornamedataSource(res?.data?.assignedprojectData[g].employeename)
-                        console.log("assignedproject", res?.data?.assignedprojectData);
-                        console.log("assignedproject", res?.data?.assignedprojectData[g].employeename);
-                    }
+    // useEffect(() => {
+    //     const getAllassignedProjects = async () => {
+    //         await axios
+    //             .get(`${process.env.REACT_APP_BASE_URL}/assignproject`)
+    //             .then((res) => {
+    //                 console.log("assigned", res?.data?.assignedprojectData)
+    //                 for (let g = 0; g < res?.data?.assignedprojectData.length; g++) {
+    //                     setfornamedataSource(res?.data?.assignedprojectData[g].employeename)
+    //                     console.log("assignedproject", res?.data?.assignedprojectData);
+    //                     console.log("assignedproject", res?.data?.assignedprojectData[g].employeename);
+    //                 }
 
-                });
-        }
-        getAllassignedProjects()
-    }, [])
+    //             });
+    //     }
+    //     getAllassignedProjects()
+    // }, [])
 
 
 
@@ -106,6 +106,21 @@ const Adminproject = () => {
             .then((res) => {
                 console.log("project", res);
                 message.success("New project added successfully!!!!");
+            });
+
+    };
+
+
+    const removefromproject = async (record) => {
+        
+
+        await axios
+            .delete(`${process.env.REACT_APP_BASE_URL}/project/${record.emp_id}`, {
+               
+            })
+            .then((res) => {
+                console.log("remove", res);
+                message.success("Employee removed successfully!");
             });
 
     };
@@ -133,18 +148,42 @@ const Adminproject = () => {
     const onmyFinishFailed = (errorInfo) => {
         console.log("Failed:", errorInfo);
     };
+    const assignedemployeelist = []
+    console.log("assignedemployeelist 1", assignedemployeelist)
 
     const myshowmodal = async (record) => {
-        console.log("rowprojectrecord", record);
+        // console.log("rowprojectrecord", record);
 
+        await axios
+            .get(`${process.env.REACT_APP_BASE_URL}/assignproject/assigned/${record._id}`)
+            .then((res) => {
+                console.warn("single",res?.data?.getAssignedProject)
+
+                if (res?.data?.getAssignedProject.length === 0) {
+                    // setassignedEmployees("")
+                    console.warn("not assigned yet")
+                } else {
+                    for (let h = 0; h < res?.data?.getAssignedProject.length; h++) {
+                        assignedemployeelist.push(res?.data?.getAssignedProject[h].employeename)
+                        console.log("assignedemployeelist 2", assignedemployeelist)
+
+                        // console.warn("assignedemployees", res?.data?.getAssignedProject[h].employeename);
+                        // console.log("assigned")
+                    }
+                }
+            });
         await axios
             .get(`${process.env.REACT_APP_BASE_URL}/project/singlepro/${record._id}`)
             .then((res) => {
-                setRowProject(res?.data?.singleProject[0])
-                console.log("rowproject", res?.data?.singleProject[0]);
+                // console.warn("res", res?.data?.singleProject[0].projectname)
+                setforsingleproject(res?.data?.singleProject[0])
+                // console.log("forsinglepro", res?.data?.singleProject[0]);
+
             });
+
         setmyOpenModal(true);
     };
+    console.log("assignedemployeelist 3", assignedemployeelist)
 
     const myhandleOk = async () => {
         setmyOpenModal(false);
@@ -185,7 +224,7 @@ const Adminproject = () => {
                 return (
                     <>
                         <Button
-                            className='calendarbtn'
+                            className='assignBtn'
                             onClick={() => { myshowmodal(record) }}
 
                         >
@@ -199,19 +238,37 @@ const Adminproject = () => {
     ];
 
 
+    // const onmyFinish = async () => {
+
+    //     await axios
+    //         .post(`${process.env.REACT_APP_BASE_URL}/assignproject`, {
+    //             projectname,
+    //             projectdescription,
+    //             projecttechnologies,
+    //             projectstart,
+    //             projectend
+    //         })
+    //         .then((res) => {
+    //             console.log("project", res);
+    //             message.success("New project added successfully!!!!");
+    //         });
+
+    // };
+
+
     const handleChange = async (value, mylabel) => {
         console.log(`employeesID ${value}`);
         const emp_id = value[value.length - 1]
-        const project_id = rowproject._id;
-        const assignedprojectname = rowproject.projectname;
-        const assignedprojectdescription = rowproject.projectdescription;
-        const assignedprojecttechnologies = rowproject.projecttechnologies;
-        const assignedprojectstart = rowproject.projectstart;
-        const assignedprojectend = rowproject.projectend;
+        const project_id = forsingleproject._id;
+        const assignedprojectname = forsingleproject.projectname;
+        const assignedprojectdescription = forsingleproject.projectdescription;
+        const assignedprojecttechnologies = forsingleproject.projecttechnologies;
+        const assignedprojectstart = forsingleproject.projectstart;
+        const assignedprojectend = forsingleproject.projectend;
         const assignedprojectstatus = "Assigned"
         const employeename = mylabel[mylabel.length - 1].label;
         // console.log("label", mylabel[mylabel.length - 1].label)
-    
+
         await axios
             .post(`${process.env.REACT_APP_BASE_URL}/assignproject`, {
                 employeename,
@@ -228,7 +285,6 @@ const Adminproject = () => {
                 console.log("project", res);
                 message.success("Project assigned successfully!");
             });
-
     };
 
 
@@ -240,7 +296,7 @@ const Adminproject = () => {
 
 
         });
-        console.log("options", options)
+        // console.log("options", options)
     }
 
 
@@ -379,7 +435,7 @@ const Adminproject = () => {
             <div>
                 <Button className='calendarbtn' onClick={showModal}><PlusOutlined />Add new project</Button>
                 <br />
-                <Table columns={columns} dataSource={dataSource} />
+                <Table rowKey="_id" columns={columns} dataSource={dataSource} />
             </div>
 
 
@@ -401,7 +457,7 @@ const Adminproject = () => {
                         span: 16,
                     }}
 
-
+                    // onFinish={onmyFinish}
                     onFinishFailed={onmyFinishFailed}
                     autoComplete="off"
                 >
@@ -414,7 +470,7 @@ const Adminproject = () => {
                                 width: '100%',
                             }}
                             placeholder="Select Employee"
-                            defaultValue={fornamedataSource}
+                            // value={assignedemployeelist}
                             onChange={handleChange}
                             style={{ position: 'absolute' }}
                             options={options}

@@ -16,34 +16,56 @@ const { Option } = Select;
 
 
 const Employeeproject = () => {
+    const [mydataSource, setDataSource] =useState([]);
+    const token = localStorage.getItem("access_token1");
+    var decoded = jwt_decode(token);
+
+
+    useEffect(() => {
+  
+    
+        const getmyProjects = async () => {
+
+            await axios
+                .get(`${process.env.REACT_APP_BASE_URL}/assignproject/allassignedprojects/${decoded._id}`)
+                .then((res) => {
+                    console.warn("res", res?.data)
+                    setDataSource(res?.data?.singleEmployeeAllProjects)
+console.warn("mydataSource", mydataSource)
+                });
+        };
+        getmyProjects()
+    }, [])
+
+
 
 
     const columns = [
         {
             title: "Project name",
-            dataIndex: "projectname",
+            dataIndex: "assignedprojectname",
             width: "160px",
         },
 
         {
             title: "Description",
-            dataIndex: "projectdescription",
+            dataIndex: "assignedprojectdescription"
         },
         {
             title: "Technology",
-            dataIndex: "projecttechnologies",
+            dataIndex: "assignedprojecttechnologies",
         },
         {
             title: "Start",
-            dataIndex: "projectstart",
+            dataIndex: "assignedprojectstart",
         },
         {
             title: "End",
-            dataIndex: "projectend",
+            dataIndex: "assignedprojectend",
         },
         {
             title: "Status",
-            dataIndex: "status",
+            dataIndex: "assignedprojectstatus",
         }
     ];
 
@@ -52,8 +74,8 @@ const Employeeproject = () => {
 
 
         <div>
-           
-            <Table columns={columns} />
+
+            <Table columns={columns}  dataSource={mydataSource}/>
         </div>
 
 
