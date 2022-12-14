@@ -3,7 +3,7 @@ import {
     PlusOutlined,
 
 } from "@ant-design/icons";
-import { Button, Card, Col, Form, Input, message, Modal, Space } from "antd";
+import { Button, Card, Col, Form, Input, message, Modal, Space, Tag } from "antd";
 import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
@@ -13,7 +13,7 @@ import { Select, Table } from "antd";
 import { FcHighPriority, FcApproval, FcCancel, FcInfo } from "react-icons/fc";
 import { EllipsisOutlined } from "@ant-design/icons";
 const { Option } = Select;
-
+const { Column, ColumnGroup } = Table;
 
 
 const Adminproject = () => {
@@ -36,7 +36,9 @@ const Adminproject = () => {
     // const [assignedprojectstart, setAssignedprojectstart] = useState("")
     // const [assignedprojectend, setAssignedprojectend] = useState("")
     // const [assignedprojectstatus, setAssignedprojectstatus] = useState("")
-    const [assignedemployees, setassignedEmployees] = useState([])
+    const [assignedemployeeslist, setassignedEmployees] = useState([])
+    console.warn("assignedemployees", assignedemployeeslist.length)
+
 
 
 
@@ -111,12 +113,12 @@ const Adminproject = () => {
     };
 
 
-    const removefromproject = async (record) => {
-        
+    const removefromproject = async (value) => {
+
 
         await axios
-            .delete(`${process.env.REACT_APP_BASE_URL}/project/${record.emp_id}`, {
-               
+            .delete(`${process.env.REACT_APP_BASE_URL}/project/${value}`, {
+
             })
             .then((res) => {
                 console.log("remove", res);
@@ -148,29 +150,27 @@ const Adminproject = () => {
     const onmyFinishFailed = (errorInfo) => {
         console.log("Failed:", errorInfo);
     };
-    const assignedemployeelist = []
-    console.log("assignedemployeelist 1", assignedemployeelist)
 
     const myshowmodal = async (record) => {
         // console.log("rowprojectrecord", record);
 
         await axios
-            .get(`${process.env.REACT_APP_BASE_URL}/assignproject/assigned/${record._id}`)
+            .get(`${process.env.REACT_APP_BASE_URL}/project/singlepro/${record._id}`)
             .then((res) => {
-                console.warn("single",res?.data?.getAssignedProject)
+                console.warn("single", res?.data?.singleProject)
 
-                if (res?.data?.getAssignedProject.length === 0) {
-                    // setassignedEmployees("")
-                    console.warn("not assigned yet")
-                } else {
-                    for (let h = 0; h < res?.data?.getAssignedProject.length; h++) {
-                        assignedemployeelist.push(res?.data?.getAssignedProject[h].employeename)
-                        console.log("assignedemployeelist 2", assignedemployeelist)
+                // if (res?.data?.getAssignedProject.length === 0) {
+                //     setassignedEmployees([])
+                //     console.warn("not assigned yet")
+                // } else {
+                // for (let h = 0; h < res?.data?.getAssignedProject.length; h++) {
+                setassignedEmployees(res?.data?.singleProject)
+                // console.log("assignedemployeelist", assignedemployees)
 
-                        // console.warn("assignedemployees", res?.data?.getAssignedProject[h].employeename);
-                        // console.log("assigned")
-                    }
-                }
+                // console.warn("assignedemployees", res?.data?.getAssignedProject[h].employeename);
+                // console.log("assigned")
+                // }
+                // }
             });
         await axios
             .get(`${process.env.REACT_APP_BASE_URL}/project/singlepro/${record._id}`)
@@ -183,7 +183,7 @@ const Adminproject = () => {
 
         setmyOpenModal(true);
     };
-    console.log("assignedemployeelist 3", assignedemployeelist)
+
 
     const myhandleOk = async () => {
         setmyOpenModal(false);
@@ -257,29 +257,22 @@ const Adminproject = () => {
 
 
     const handleChange = async (value, mylabel) => {
-        console.log(`employeesID ${value}`);
-        const emp_id = value[value.length - 1]
-        const project_id = forsingleproject._id;
-        const assignedprojectname = forsingleproject.projectname;
-        const assignedprojectdescription = forsingleproject.projectdescription;
-        const assignedprojecttechnologies = forsingleproject.projecttechnologies;
-        const assignedprojectstart = forsingleproject.projectstart;
-        const assignedprojectend = forsingleproject.projectend;
-        const assignedprojectstatus = "Assigned"
-        const employeename = mylabel[mylabel.length - 1].label;
+        console.log(`employeeslisting ${value}`);
+        const employees = []
+        // const emp_id = value[value.length - 1]
+        // const project_id = forsingleproject._id;
+        // const assignedprojectname = forsingleproject.projectname;
+        // const assignedprojectdescription = forsingleproject.projectdescription;
+        // const assignedprojecttechnologies = forsingleproject.projecttechnologies;
+        // const assignedprojectstart = forsingleproject.projectstart;
+        // const assignedprojectend = forsingleproject.projectend;
+        // const assignedprojectstatus = "Assigned"
+        // const employeename = mylabel[mylabel.length - 1].label;
         // console.log("label", mylabel[mylabel.length - 1].label)
 
         await axios
             .post(`${process.env.REACT_APP_BASE_URL}/assignproject`, {
-                employeename,
-                emp_id,
-                project_id,
-                assignedprojectname,
-                assignedprojectdescription,
-                assignedprojecttechnologies,
-                assignedprojectstart,
-                assignedprojectend,
-                assignedprojectstatus,
+                employees
             })
             .then((res) => {
                 console.log("project", res);
@@ -296,10 +289,24 @@ const Adminproject = () => {
 
 
         });
-        // console.log("options", options)
+        console.log("options", options)
     }
 
+    const mylist = [];
+    for (let l = 0; l < assignedemployeeslist.length; l++) {
+        if (assignedemployeeslist.length === 0) {
+            mylist.push("assign first")
+        } else {
+            mylist.push(assignedemployeeslist[l].employeename);
 
+        }
+
+    }
+    console.log("mylist", mylist)
+
+    const handleClear = () => {
+        setassignedEmployees([]);
+    };
 
     return (
         <>
@@ -461,20 +468,7 @@ const Adminproject = () => {
                     onFinishFailed={onmyFinishFailed}
                     autoComplete="off"
                 >
-                    <Form.Item>
-
-                        <Select
-                            mode="multiple"
-                            allowClear
-                            style={{
-                                width: '100%',
-                            }}
-                            placeholder="Select Employee"
-                            // value={assignedemployeelist}
-                            onChange={handleChange}
-                            style={{ position: 'absolute' }}
-                            options={options}
-                        />
+                    <Form.Item style={{ marginBottom: "100px" }}>
 
                         {/* <Option value="name" >{mydataSource.name}</Option> */}
 
@@ -482,28 +476,47 @@ const Adminproject = () => {
                             <Option value="Prince">Prince</Option>
                             <Option value="Baljeet">Baljeet</Option> */}
 
+                        <Select
+                            mode="multiple"
+                            allowClear
+                            style={{
+                                width: '700px',
+
+                            }}
+                            placeholder="Select Employee"
+                            value={mylist}
+                            onChange={handleChange}
+                            // style={{ position: 'absolute' }}
+                            options={options}
+
+                        // onClear={removefromproject}
+                        // onClear={() => { removefromproject(record) }}
+                        />
+                        {/* <Button onClick={() => { handleClear() }} className="breakBtn"></Button> */}
+                    </Form.Item>
+                    <Form.Item style={{ float: "right", marginLeft: "10px" }}>
+
+                        <Button
+                            style={{
+                                marginRight: "4px",
+                                backgroundColor: "#d22d2d",
+                                borderColor: "blanchedalmond",
+                            }}
+                            type="primary"
+                            htmlType="cancel"
+                            onClick={myhandleCancel}
+                        >
+                            Cancel
+                        </Button>
+                    </Form.Item>
+                    <Form.Item style={{ float: "right" }}>
+
+                        <Button type="primary" htmlType="Done" onClick={myhandleOk}>
+                            Add employees
+                        </Button>
 
                     </Form.Item>
 
-                    <Form.Item>
-                        <div style={{ display: "flex", marginLeft: "100%", marginTop: "200px" }}>
-                            <Button
-                                style={{
-                                    marginRight: "4px",
-                                    backgroundColor: "#d22d2d",
-                                    borderColor: "blanchedalmond",
-                                }}
-                                type="primary"
-                                htmlType="cancel"
-                                onClick={myhandleCancel}
-                            >
-                                Cancel
-                            </Button>
-                            <Button type="primary" htmlType="Done" onClick={myhandleOk}>
-                                Add employees in project
-                            </Button>
-                        </div>
-                    </Form.Item>
                 </Form>
             </Modal>
         </>
