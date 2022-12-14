@@ -3,8 +3,8 @@ import {
   HomeOutlined,
   AuditOutlined,
   UserOutlined,
-  FolderOpenOutlined
-  TrophyOutlined,
+  FolderOpenOutlined,
+  TrophyOutlined
 } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import { DoubleRightOutlined, DoubleLeftOutlined } from "@ant-design/icons";
