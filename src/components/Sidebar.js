@@ -3,6 +3,7 @@ import {
   HomeOutlined,
   AuditOutlined,
   UserOutlined,
+  FolderOpenOutlined,
   TrophyOutlined,
 } from "@ant-design/icons";
 import { useState, useEffect } from "react";
@@ -63,6 +64,11 @@ const Sidebar = () => {
               key: "/adminhandleskill",
               icon: <TrophyOutlined />,
             },
+            {
+              label: "PROJECTS",
+              key: "/projects",
+              icon: <FolderOpenOutlined />,
+            },
           ]}
         />
         {React.createElement(
@@ -112,6 +118,11 @@ const Sidebar = () => {
               label: "Skills",
               key: "/employeeskill",
               icon: <TrophyOutlined />,
+            },
+            {
+              label: "PROJECTS",
+              key: "/projects",
+              icon: <FolderOpenOutlined />,
             },
           ]}
         />

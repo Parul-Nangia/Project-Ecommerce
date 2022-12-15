@@ -9,6 +9,7 @@ import View from "../components/View";
 import LeaveForm from "../components/LeaveForm";
 import LeaveCalendar from "../components/LeaveCalendar";
 import Documentation from "../components/Documentation";
+import Projects from "../components/Projects";
 import Profile from "../components/Profile";
 
 import ChangePassword from "../components/ChangePassword";
@@ -23,6 +24,8 @@ const Routing = () => {
         <Route exact path="/" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/attendance" element={<Attendance />} />
+        <Route path="/projects" element={<Projects />} />
+        
         <Route path="/leave" element={<Leave />} />
         <Route path="/employees" element={<Employees />} />
         <Route path="/edit/:_id" element={<Edit />} />
