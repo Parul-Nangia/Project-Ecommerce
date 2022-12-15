@@ -67,7 +67,6 @@ const ProfileEmployee = () => {
 
         const profilepicture = res?.data?.documentRecord?.image;
         setProfilePicture(profilepicture);
-       
 
         axios
           .put(`${process.env.REACT_APP_BASE_URL}/user/${decoded._id}`, {
@@ -76,7 +75,7 @@ const ProfileEmployee = () => {
           .then((res) => {
             console.log("user profile pic Response", res);
           });
-        
+
         message.success("Profile Picture Uploaded !!");
         // }
       });
@@ -97,19 +96,14 @@ const ProfileEmployee = () => {
       await axios
         .get(`${process.env.REACT_APP_BASE_URL}/user/${decoded._id}`)
         .then((res) => {
-         
           if (res?.data?.myData[0]?.profilepicture === "") {
             setUserProfileData("profileimage.png");
-            
           } else {
-            console.warn("ggggggggg");
-
             setUserProfileData(
               `${process.env.REACT_APP_BASE_URL}/images/` +
                 res?.data?.myData[0]?.profilepicture
             );
           }
-       
         });
     };
     PicProfileData();

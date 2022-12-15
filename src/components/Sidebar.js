@@ -60,7 +60,7 @@ const Sidebar = () => {
             },
             {
               label: "Skills",
-              key: "/skills",
+              key: "/adminhandleskill",
               icon: <TrophyOutlined />,
             },
           ]}
@@ -110,7 +110,7 @@ const Sidebar = () => {
             },
             {
               label: "Skills",
-              key: "/skills",
+              key: "/employeeskill",
               icon: <TrophyOutlined />,
             },
           ]}

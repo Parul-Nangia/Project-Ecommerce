@@ -1,87 +1,96 @@
 import React, { useState, useEffect } from "react";
-import { Space, Table, Tag, Select, Button } from "antd";
+import { Space, Table, Tag, Select, Button, message } from "antd";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import { Form, Input, Rate, Modal } from "antd";
+import { StarOutlined } from "@mui/icons-material";
 
-const Skills = () => {
-  const [dataSource, setDataSource] = useState([]);
+const EmployeeSkill = () => {
   const { Option } = Select;
-  const [userskill, setSkillName] = useState("");
+  const [skillname, setSkillName] = useState("");
+  console.log("user skill data ", skillname);
   const [skillExperience, setSkillExperience] = useState("");
-  const [skillrating, setSkillRating] = useState("");
-  console.log("skill Rating", skillrating);
+
+  const [skillrating, setSkillRating] = useState(2);
+
   const [skilldata, setSkillData] = useState("");
   const [form] = Form.useForm();
   const desc = ["terrible", "bad", "normal", "good", "wonderful"];
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [addskill, setAddSkill] = useState("");
   console.log("new add Skills", addskill);
   const [skillList, setSkillList] = useState("");
+  console.log("New Skill ", skillList);
 
   // console.log(userskill, "skill Name");
 
-  const handleChange = (e) => {
-    setSkillName(e.target.value);
+  const DataSkill = async (value) => {
+    const token = localStorage.getItem("access_token1");
+    var decoded = jwt_decode(token);
+    const emp_id = decoded._id;
+    console.warn("emp_id", emp_id);
+
+    if (skillname === "" || skillExperience === "" || skillrating === "") {
+      message.error("Please Select All Fields Before Submission");
+    } else {
+      await axios
+        .post(`${process.env.REACT_APP_BASE_URL}/skill`, {
+          emp_id,
+          skillname,
+          skillExperience,
+          skillrating,
+        })
+        .then((res) => {
+          message.success("SuccessFully Submit !!");
+        });
+    }
+    // window.location.reload();
+  };
+
+  useEffect(() => {
+    GetSkillList();
+  }, []);
+
+  const handleempskill = (value) => {
+    setSkillName(value);
   };
 
   const handleRating = (e) => {
     setSkillRating(e.target.value);
   };
 
-  const handleExperience = (e) => {
-    setSkillExperience();
+  const handleExperience = (value) => {
+    setSkillExperience(value);
   };
   const handleSubmit = () => {
     DataSkill();
   };
 
-  const handleAddSkill = (value) => {
-    setAddSkill(value);
-  };
-
-  const AddSkillList = async (value) => {
+  const GetSkillList = async () => {
     const token = localStorage.getItem("access_token1");
     var decoded = jwt_decode(token);
-    const emp_id = decoded._id;
+
     await axios
-      .post(`${process.env.REACT_APP_BASE_URL}/skill/addfield`, {
-        emp_id,
-        skillList,
-      })
+      .get(`${process.env.REACT_APP_BASE_URL}/handleskill/newListSkill`)
       .then((res) => {
-        console.log("Skill Add data", res);
+        setAddSkill(res?.data?.skillListData);
+        console.log("get data list", res?.data?.skillListData);
       });
   };
 
-  const DataSkill = async (value) => {
-    // setSkillName(value);
-    const userskill = value;
-    console.warn("skillName", userskill);
-
-    const token = localStorage.getItem("access_token1");
-    var decoded = jwt_decode(token);
-    const emp_id = decoded._id;
-    console.warn("emp_id", emp_id);
-
-    await axios
-      .post(`${process.env.REACT_APP_BASE_URL}/skill`, {
-        emp_id,
-        userskill,
-        skillExperience,
-        skillrating,
-      })
-      .then((res) => {
-        console.log("post data", res);
-      });
-    // window.location.reload();
-  };
+  const options = [];
+  for (let i = 0; i < addskill.length; i++) {
+    options.push({
+      label: addskill[i].skillList,
+      value: addskill[i].skillList,
+    });
+  }
 
   const columns = [
     {
       title: "Skills",
       key: "skills",
-      dataIndex: "userskill",
+      dataIndex: "skillname",
     },
     {
       title: "Experience",
@@ -110,13 +119,6 @@ const Skills = () => {
       .then((res) => {
         setSkillData(res?.data?.SingleSkillAllData);
         console.log(res?.data?.SingleSkillAllData);
-        // for (let m = 0; m < res?.data?.SingleSkillAllData.length; m++) {
-        //   setSkillData(res?.data?.SingleSkillAllData[m]?.userskill);
-        //   console.log(
-        //     "user all skills data",
-        //     res?.data?.SingleSkillAllData[m]?.userskill
-        //   );
-        // }
       });
   };
 
@@ -143,16 +145,6 @@ const Skills = () => {
     },
   };
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <div className="skillsManagement">
       <div style={{ display: "flex" }}>
@@ -168,85 +160,28 @@ const Skills = () => {
         </div>
       </div>
 
-      <Button
-        type="primary"
-        onClick={showModal}
-        style={{ display: "flex", float: "right" }}
-      >
-        Add Skill Field
-      </Button>
-      <Modal
-        title="Add Skill"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        cancelButtonProps={{ style: { display: "none" } }}
-        okButtonProps={{ style: { display: "none" } }}
-      >
-        <Form
-          // style={{ display: "flex", float: "right" }}
-          {...layout}
-          form={form}
-          name="control-hooks"
-          onFinish={onFinish}
-        >
-          <Form.Item
-            name="Add Field"
-            style={{
-              marginTop: "30px",
-            }}
-            rules={[
-              {
-                required: false,
-              },
-            ]}
-          >
-            <Input
-              onChange={handleAddSkill}
-              placeholder="Add Skill"
-              style={{ width: "120%", marginLeft: "40px", height: "60px" }}
-            />
-          </Form.Item>
-          <Form.Item style={{ marginLeft: "35%" }}>
-            <Button type="primary" htmlType="submit" onClick={AddSkillList}>
-              Add
-            </Button>
-            <Button
-              style={{ marginLeft: "5px" }}
-              htmlType="button"
-              onClick={onReset}
-            >
-              Reset
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
-
       <h3>Add Your Skills</h3>
       <br />
 
       <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
         <Form.Item>
           <Select
+            name="skillname"
             style={{
               width: "50%",
               marginTop: "40px",
             }}
             placeholder="select your skills"
-            onChange={handleChange}
             optionLabelProp="label"
+            options={options}
+            onChange={handleempskill}
           ></Select>
         </Form.Item>
         <Form.Item
           name="skillExperience"
           style={{
-            width: "50%",
+            width: "100%",
           }}
-          rules={[
-            {
-              required: true,
-            },
-          ]}
         >
           <Select
             style={{
@@ -274,27 +209,19 @@ const Skills = () => {
           </Select>
         </Form.Item>
         <Form.Item>
-          <Select
-            style={{
-              width: "50%",
-            }}
-            placeholder="Give Rating Yourself"
-            onChange={handleRating}
-            optionLabelProp="label"
-          >
-            <span>
-              <Rate
-                tooltips={desc}
-                onChange={setSkillRating}
-                value={skillrating}
-              />
-              {skillrating ? (
-                <span className="ant-rate-text">{desc[skillrating - 1]}</span>
-              ) : (
-                ""
-              )}
-            </span>
-          </Select>
+          <span>
+            <Rate
+              allowHalf
+              tooltips={desc}
+              onChange={setSkillRating}
+              value={skillrating}
+            />
+            {skillrating ? (
+              <span className="ant-rate-text">{desc[skillrating - 1]}</span>
+            ) : (
+              ""
+            )}
+          </span>
         </Form.Item>
 
         <Form.Item>
@@ -318,4 +245,4 @@ const Skills = () => {
     </div>
   );
 };
-export default Skills;
+export default EmployeeSkill;
