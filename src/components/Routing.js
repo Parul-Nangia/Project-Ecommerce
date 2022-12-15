@@ -16,6 +16,7 @@ import ChangePassword from "../components/ChangePassword";
 import ProfileEmployee from "./ProfileEmployee";
 import Adminhandleskill from "./adminhandleskill";
 import EmployeeSkill from "./employeeskill";
+import SkillManagement from "./SkillManagement";
 
 const Routing = () => {
   return (
@@ -25,7 +26,7 @@ const Routing = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/attendance" element={<Attendance />} />
         <Route path="/projects" element={<Projects />} />
-        
+
         <Route path="/leave" element={<Leave />} />
         <Route path="/employees" element={<Employees />} />
         <Route path="/edit/:_id" element={<Edit />} />
@@ -38,6 +39,7 @@ const Routing = () => {
 
         <Route path="/profileemployee" element={<ProfileEmployee />} />
         <Route path="/changepassword" element={<ChangePassword />} />
+        <Route path="/skillmanagement" element={<SkillManagement />} />
 
         <Route path="/documentation/:id" element={<Documentation />} />
       </Routes>

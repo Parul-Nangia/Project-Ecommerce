@@ -5,6 +5,7 @@ import {
   UserOutlined,
   FolderOpenOutlined,
   TrophyOutlined,
+  SendOutlined,
 } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import { DoubleRightOutlined, DoubleLeftOutlined } from "@ant-design/icons";
@@ -60,7 +61,7 @@ const Sidebar = () => {
               icon: <AuditOutlined />,
             },
             {
-              label: "Skills",
+              label: "SKILLS",
               key: "/adminhandleskill",
               icon: <TrophyOutlined />,
             },
@@ -68,6 +69,11 @@ const Sidebar = () => {
               label: "PROJECTS",
               key: "/projects",
               icon: <FolderOpenOutlined />,
+            },
+            {
+              label: "SKILLMANAGEMENT",
+              key: "/skillmanagement",
+              icon: <SendOutlined />,
             },
           ]}
         />
@@ -115,7 +121,7 @@ const Sidebar = () => {
               icon: <AuditOutlined />,
             },
             {
-              label: "Skills",
+              label: "SKILLS",
               key: "/employeeskill",
               icon: <TrophyOutlined />,
             },
