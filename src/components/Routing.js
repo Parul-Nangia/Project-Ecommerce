@@ -11,10 +11,11 @@ import LeaveCalendar from "../components/LeaveCalendar";
 import Documentation from "../components/Documentation";
 import Projects from "../components/Projects";
 import Profile from "../components/Profile";
-import Skills from "../components/Skills";
 
 import ChangePassword from "../components/ChangePassword";
 import ProfileEmployee from "./ProfileEmployee";
+import Adminhandleskill from "./adminhandleskill";
+import EmployeeSkill from "./employeeskill";
 
 const Routing = () => {
   return (
@@ -32,7 +33,8 @@ const Routing = () => {
         <Route path="/leaveform" element={<LeaveForm />} />
         <Route path="/leavecalendar" element={<LeaveCalendar />} />
         <Route path="/profile/:id" element={<Profile />} />
-        <Route path="/skills" element={<Skills />} />
+        <Route path="/adminhandleskill" element={<Adminhandleskill />} />
+        <Route path="/employeeskill" element={<EmployeeSkill />} />
 
         <Route path="/profileemployee" element={<ProfileEmployee />} />
         <Route path="/changepassword" element={<ChangePassword />} />

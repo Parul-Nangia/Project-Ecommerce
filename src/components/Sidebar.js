@@ -4,7 +4,7 @@ import {
   AuditOutlined,
   UserOutlined,
   FolderOpenOutlined,
-  TrophyOutlined
+  TrophyOutlined,
 } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import { DoubleRightOutlined, DoubleLeftOutlined } from "@ant-design/icons";
@@ -19,8 +19,6 @@ const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
   const token = localStorage.getItem("access_token1");
   var decoded = jwt_decode(token);
-
-
 
   if (decoded.role === "admin") {
     return (
@@ -62,16 +60,15 @@ const Sidebar = () => {
               icon: <AuditOutlined />,
             },
             {
-              label: "SKILLS",
-              key: "/skills",
+              label: "Skills",
+              key: "/adminhandleskill",
               icon: <TrophyOutlined />,
             },
             {
               label: "PROJECTS",
               key: "/projects",
-              icon: <FolderOpenOutlined />
+              icon: <FolderOpenOutlined />,
             },
-
           ]}
         />
         {React.createElement(
@@ -118,14 +115,14 @@ const Sidebar = () => {
               icon: <AuditOutlined />,
             },
             {
-              label: "SKILLS",
-              key: "/skills",
+              label: "Skills",
+              key: "/employeeskill",
               icon: <TrophyOutlined />,
             },
             {
               label: "PROJECTS",
               key: "/projects",
-              icon: <FolderOpenOutlined />
+              icon: <FolderOpenOutlined />,
             },
           ]}
         />
