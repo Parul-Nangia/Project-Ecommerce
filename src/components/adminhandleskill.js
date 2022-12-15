@@ -336,7 +336,7 @@ const Adminhandleskill = () => {
       <div>
         <Table columns={columns} dataSource={addskill} pagination={false} />
       </div>
-      <br />
+      {/* <br />
       <div>
         <Table
           rowKey="key"
@@ -348,14 +348,14 @@ const Adminhandleskill = () => {
               return (
                 <Table
                   columns={nestedColumns}
-                  dataSource={record?.Breaks}
+                  dataSource={record?.employeeskills}
                   pagination={false}
                 />
               );
             },
           }}
-        />
-      </div>
+        /> */}
+      {/* </div> */}
     </div>
   );
 };

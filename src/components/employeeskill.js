@@ -11,7 +11,7 @@ const EmployeeSkill = () => {
   console.log("user skill data ", skillname);
   const [skillExperience, setSkillExperience] = useState("");
 
-  const [skillrating, setSkillRating] = useState(2);
+  const [skillrating, setSkillRating] = useState("");
 
   const [skilldata, setSkillData] = useState("");
   const [form] = Form.useForm();
@@ -44,7 +44,7 @@ const EmployeeSkill = () => {
           message.success("SuccessFully Submit !!");
         });
     }
-    // window.location.reload();
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -102,9 +102,29 @@ const EmployeeSkill = () => {
     {
       title: "Rating",
       key: "rating",
-      dataIndex: "skillrating",
+      render: (record) => {
+        return (
+          // dataIndex: "skillrating",
+          <>
+            <span>
+              <Rate value={record?.skillrating} />
+            </span>
+          </>
+        );
+      },
     },
   ];
+
+  var clicked = false;
+
+  function doClickedButton() {
+    if (!clicked) {
+      clicked = true;
+      message.error("You are already Select This Option");
+    } else {
+      clicked = false;
+    }
+  }
 
   useEffect(() => {
     userskillData();
@@ -211,7 +231,7 @@ const EmployeeSkill = () => {
         <Form.Item>
           <span>
             <Rate
-              allowHalf
+              allowClear={false}
               tooltips={desc}
               onChange={setSkillRating}
               value={skillrating}
