@@ -33,9 +33,9 @@ const Adminhandleskill = () => {
         skillList,
       })
       .then((res) => {
-        message.success("Skill Added Successfully !!")
+        message.success("Skill Added Successfully !!");
       });
-      window.location.reload();
+    window.location.reload();
   };
 
   const GetSkillList = async () => {
@@ -54,9 +54,9 @@ const Adminhandleskill = () => {
         skillList,
       })
       .then((res) => {
-        message.success("Skill Successfully Edited ")
+        message.success("Skill Successfully Edited ");
       });
-      window.location.reload();
+    window.location.reload();
   };
 
   const onFinish = (values) => {
@@ -122,6 +122,10 @@ const Adminhandleskill = () => {
       .then((res) => {
         message.success("Delete !!!");
       });
+  };
+
+  const handleModCancel = () => {
+    setIsMyModalOpen(false);
   };
 
   const column = [
@@ -293,7 +297,7 @@ const Adminhandleskill = () => {
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
         open={isMyModalOpen}
-        onCancel={handleCancel}
+        onCancel={handleModCancel}
       >
         <Form
           form={form}
