@@ -101,7 +101,7 @@ const ProfileEmployee = () => {
           } else {
             setUserProfileData(
               `${process.env.REACT_APP_BASE_URL}/images/` +
-                res?.data?.myData[0]?.profilepicture
+              res?.data?.myData[0]?.profilepicture
             );
           }
         });
@@ -141,29 +141,27 @@ const ProfileEmployee = () => {
 
   return (
     <>
-      <Upload
-        listType="picture-card"
-        fileList={fileList}
-        // onPreview={handlePreview}
-        // onChange={handleChange}
-        beforeUpload={beforeUpload}
-        status="done"
-      >
-        {fileList.length >= 1 ? null : uploadButton}
-      </Upload>
 
-      <div>
-        <img
-          src={userprofiledata}
-          alt=""
-          className="userprofileimg"
-          style={{
-            display: "flex",
-            height: "200px",
-            width: "200px",
-            marginTop: "40px",
-          }}
-        />
+
+      <div style={{ display: "flex" }}>
+        <Upload
+          listType="picture-card"
+          fileList={fileList}
+          // onPreview={handlePreview}
+          // onChange={handleChange}
+          beforeUpload={beforeUpload}
+          status="done"
+        >
+          {fileList.length >= 1 ? null : uploadButton}
+        </Upload>
+        <div>
+          <img
+            src={userprofiledata}
+            alt=""
+            className="userprofileimg"
+          />
+        </div>
+
       </div>
 
       <Card title="General Information" bordered={false} style={{ width: 300 }}>
