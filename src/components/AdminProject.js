@@ -76,9 +76,9 @@ const Adminproject = () => {
     useEffect(() => {
         const getAllUsers = async () => {
             await axios
-                .get(`${process.env.REACT_APP_BASE_URL}/user`)
+                .get(`${process.env.REACT_APP_BASE_URL}/user/foremployeerole`)
                 .then((res) => {
-                    setmyDataSource(res?.data?.userData)
+                    setmyDataSource(res?.data?.employeeData)
                     // console.log("user", res?.data?.userData);
 
                 });
@@ -89,20 +89,9 @@ const Adminproject = () => {
 
 
 
-    const onFinish = async () => {
-
-        await axios
-            .post(`${process.env.REACT_APP_BASE_URL}/project`, {
-                projectname,
-                projectdescription,
-                projecttechnologies,
-                projectstart,
-                projectend
-            })
-            .then((res) => {
-                console.log("project", res);
-                message.success("New project added successfully!!!!");
-            });
+    const onFinish = () => {
+        message.success("New project added successfully!!!!");
+        setIsOpenModal(false);
 
     };
 
@@ -132,7 +121,28 @@ const Adminproject = () => {
     };
 
     const handleOk = async () => {
-        setIsOpenModal(false);
+        try {
+            await axios
+                .post(`${process.env.REACT_APP_BASE_URL}/project`, {
+                    projectname,
+                    projectdescription,
+                    projecttechnologies,
+                    projectstart,
+                    projectend
+                })
+                .then((res) => {
+                    console.log("project", res);
+
+                });
+        } catch (error) {
+
+            if (projectname === "" && projectdescription === "" && projecttechnologies === "" && projectstart === "" && projectend === "") {
+                message.error("Please Fill Empty field !!!!!");
+            } else {
+                message.error("Submission Failed !!!");
+            }
+        }
+        // setIsOpenModal(false);
     };
 
     const handleCancel = () => {
@@ -152,6 +162,7 @@ const Adminproject = () => {
         console.warn("myrecord 1", record)
         const arr = []
         if (record?.employees?.length === 0) {
+            message.warning("Not assigned yet");
             console.warn("not assigned yet")
         } else if (record?.employees?.length !== 0) {
             for (let m = 0; m < record?.employees?.length; m++) {
@@ -165,79 +176,11 @@ const Adminproject = () => {
             console.warn("assigned")
         }
         setValue(arr)
-        // await axios
-        //     .get(`${process.env.REACT_APP_BASE_URL}/project/singlepro/${record._id}`)
-        //     .then((res) => {
-        //         if (res?.data?.singleProject[0].employees.length === 0) {
-        //             console.warn("not assigned yet")
-        //             setselectedemployees([])
-        //         }
-        //         else {
-        //             // for (let m = 0; m < res?.data?.singleProject[0].employees.length; m++) {
-        //             setselectedemployees(res?.data?.singleProject[0].employees)
-        //             // console.log("selectedemployees", res?.data?.singleProject);
-        //             // console.log("selectedemployees 2", res?.data?.singleProject[0].employees)
-
-        //             // }
-        //         }
-        //     });
         setmyOpenModal(true);
 
     };
 
 
-
-
-    const handleChange = (value, e, index) => {
-        // console.warn("event", event)
-        console.log(`selected employee ${value}`);
-        // setedituserlist({[e.target.name]:e.target.value})
-        setyouremployeeID(value)
-
-    };
-
-
-    // const deleteItem = (e, index, option) => {
-    //     console.warn("e", e)
-    //     console.warn("index", index)
-    //     console.warn("option", option)
-
-    //     e.stopPropagation();
-    //     e.preventDefault();
-    //     const updated = [...selectedemployees];
-    //     updated.splice(index, 1);
-    //     setselectedemployees(updated);
-    // };
-
-    // const myuserlist = [];
-    // if (myrecord?.employees?.length === 0) {
-    //     // console.warn("empty")
-    //     myuserlist.push();
-    //     console.warn("myuserlist empty", myuserlist)
-
-    // } else {
-    //     // console.warn("not empty")
-    //     for (let j = 0; j < myrecord?.employees?.length; j++) {
-    //         // form.setFieldsValue({
-    //         //     label: myrecord?.employees[j]?.name,
-    //         //     value: myrecord?.employees[j]?.email,
-
-
-    //         // });
-
-    //         // console.warn("myrecord 2", myrecord?.employees)
-    //         // myuserlist.push({
-    //         //     label: myrecord?.employees[j].name,
-    //         //     value: myrecord?.employees[j].emp_id,
-    //         // });
-
-    //     }
-
-    //     console.log("myuserlist", myuserlist)
-    // }
-
-
-    // console.log("youremployeeID", youremployeeID)
     const myhandleOk = async () => {
         const employees = myrecord?.employees
         const newassignedemployees = []
@@ -316,14 +259,13 @@ const Adminproject = () => {
 
 
 
+    const myhandleCancelbutton = () => {
+        message.error("Failed to assign");
+        setmyOpenModal(false);
+    };
+
+
     const myhandleCancel = () => {
-        // while (myuserlist.length) {
-
-        // Remove elements from array
-        // myuserlist.pop();
-        // }
-
-        // console.log("myuserlist here", myuserlist)
         setmyOpenModal(false);
     };
 
@@ -431,7 +373,7 @@ const Adminproject = () => {
                         rules={[
                             {
                                 required: true,
-                                message: "This field is required",
+                                message: "Please enter project name.",
                             },
                         ]}
                     >
@@ -449,7 +391,7 @@ const Adminproject = () => {
                         rules={[
                             {
                                 required: true,
-                                message: "This field is required",
+                                message: "Please enter project description.",
                             },
                         ]}
                     >
@@ -466,7 +408,7 @@ const Adminproject = () => {
                         rules={[
                             {
                                 required: true,
-                                message: "This field is required",
+                                message: "Please enter project technology.",
                             },
                         ]}
                     >
@@ -483,7 +425,7 @@ const Adminproject = () => {
                         rules={[
                             {
                                 required: true,
-                                message: "This field is required",
+                                message: "Please enter project start date.",
                             },
                         ]}
                     >
@@ -500,7 +442,7 @@ const Adminproject = () => {
                         rules={[
                             {
                                 required: true,
-                                message: "This field is required",
+                                message: "Please enter project end date.",
                             },
                         ]}
                     >
@@ -547,7 +489,7 @@ const Adminproject = () => {
                 open={myopenmodal}
                 onCancel={myhandleCancel}
                 width={900}
-            // height={1000}
+
             >
                 <Form
                     name="basic"
@@ -558,11 +500,10 @@ const Adminproject = () => {
                         span: 16,
                     }}
                     autoComplete="off"
-                // form={form}
+
                 >
 
                     <Form.Item style={{ marginBottom: "100px" }}  >
-
                         <Space
                             direction="vertical"
                             style={{
@@ -572,37 +513,6 @@ const Adminproject = () => {
                             <Select {...selectProps} />
 
                         </Space>
-
-
-
-                        {/* <Select
-                            mode="multiple"
-                            allowClear
-                            style={{ width: '700px' }}
-                            placeholder="Select Employee"
-                            value={selectedemployees}
-                            onChange={handleChange}
-                        // options={options}
-                        >
-                           
-                            {options.map((option, index) => (
-                                <Option value={option.value} >
-                                    <div
-                                        style={{
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                            alignItems: "center"
-                                        }}
-                                    >
-                                        <div>{option.label}</div>
-                                        <Button onClick={(e) => deleteItem(e, index, option)} danger size="small">
-                                            Delete
-                                        </Button>
-                                    </div>
-                                </Option>
-                            ))}
-
-                        </Select> */}
                     </Form.Item>
                     <Form.Item style={{ float: "right", marginLeft: "10px" }}>
 
@@ -614,15 +524,14 @@ const Adminproject = () => {
                             }}
                             type="primary"
                             htmlType="cancel"
-                            onClick={myhandleCancel}
+                            onClick={myhandleCancelbutton}
                         >
                             Cancel
                         </Button>
                     </Form.Item>
                     <Form.Item style={{ float: "right" }}>
 
-                        <Button type="primary" htmlType="Done" onClick={() => { myhandleOk() }}
-                        >
+                        <Button type="primary" htmlType="Done" onClick={() => { myhandleOk() }} >
                             Add employees
                         </Button>
 
