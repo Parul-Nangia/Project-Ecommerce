@@ -115,17 +115,6 @@ const EmployeeSkill = () => {
     },
   ];
 
-  var clicked = false;
-
-  function doClickedButton() {
-    if (!clicked) {
-      clicked = true;
-      message.error("You are already Select This Option");
-    } else {
-      clicked = false;
-    }
-  }
-
   useEffect(() => {
     userskillData();
   }, []);
@@ -137,6 +126,7 @@ const EmployeeSkill = () => {
     await axios
       .get(`${process.env.REACT_APP_BASE_URL}/skill/emp/${decoded._id}`)
       .then((res) => {
+        console.log("fhdfhdsjgfh", res);
         setSkillData(res?.data?.SingleSkillAllData);
         console.log(res?.data?.SingleSkillAllData);
       });
