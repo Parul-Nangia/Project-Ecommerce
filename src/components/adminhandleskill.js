@@ -32,7 +32,10 @@ const Adminhandleskill = () => {
         emp_id,
         skillList,
       })
-      .then((res) => {});
+      .then((res) => {
+        message.success("Skill Added Successfully !!")
+      });
+      window.location.reload();
   };
 
   const GetSkillList = async () => {
@@ -50,7 +53,10 @@ const Adminhandleskill = () => {
       .put(`${process.env.REACT_APP_BASE_URL}/handleskill/update/${_id}`, {
         skillList,
       })
-      .then((res) => {});
+      .then((res) => {
+        message.success("Skill Successfully Edited ")
+      });
+      window.location.reload();
   };
 
   const onFinish = (values) => {
@@ -302,7 +308,7 @@ const Adminhandleskill = () => {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <Form.Item label="Add Skill" name="skillList">
+          <Form.Item label="Edit Skill" name="skillList">
             <Input
               // value={record?.skillList}
               onChange={(e) => {
@@ -336,7 +342,7 @@ const Adminhandleskill = () => {
       <div>
         <Table columns={columns} dataSource={addskill} pagination={false} />
       </div>
-      <br />
+      {/* <br />
       <div>
         <Table
           rowKey="key"
@@ -348,14 +354,14 @@ const Adminhandleskill = () => {
               return (
                 <Table
                   columns={nestedColumns}
-                  dataSource={record?.Breaks}
+                  dataSource={record?.employeeskills}
                   pagination={false}
                 />
               );
             },
           }}
-        />
-      </div>
+        /> */}
+      {/* </div> */}
     </div>
   );
 };
