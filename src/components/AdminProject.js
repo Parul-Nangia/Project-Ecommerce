@@ -142,24 +142,30 @@ const Adminproject = () => {
     const myshowmodal = async (record) => {
         // console.warn("record", record)
         setmyrecord({ ...record })
-        console.warn("myrecord 1", myrecord)
+        console.warn("myrecord 1", record)
 
-        await axios
-            .get(`${process.env.REACT_APP_BASE_URL}/project/singlepro/${record._id}`)
-            .then((res) => {
-                if (res?.data?.singleProject[0].employees.length === 0) {
-                    console.warn("not assigned yet")
-                    setselectedemployees([])
-                }
-                else {
-                    // for (let m = 0; m < res?.data?.singleProject[0].employees.length; m++) {
-                    setselectedemployees(res?.data?.singleProject[0].employees)
-                    // console.log("selectedemployees", res?.data?.singleProject);
-                    // console.log("selectedemployees 2", res?.data?.singleProject[0].employees)
+        if (record?.employees?.length === 0) {
+            console.warn("not assigned yet")
+        } else if (record?.employees?.length !== 0) {
+            console.warn("assigned")
+        }
 
-                    // }
-                }
-            });
+        // await axios
+        //     .get(`${process.env.REACT_APP_BASE_URL}/project/singlepro/${record._id}`)
+        //     .then((res) => {
+        //         if (res?.data?.singleProject[0].employees.length === 0) {
+        //             console.warn("not assigned yet")
+        //             setselectedemployees([])
+        //         }
+        //         else {
+        //             // for (let m = 0; m < res?.data?.singleProject[0].employees.length; m++) {
+        //             setselectedemployees(res?.data?.singleProject[0].employees)
+        //             // console.log("selectedemployees", res?.data?.singleProject);
+        //             // console.log("selectedemployees 2", res?.data?.singleProject[0].employees)
+
+        //             // }
+        //         }
+        //     });
         setmyOpenModal(true);
 
     };
@@ -177,14 +183,14 @@ const Adminproject = () => {
 
     const myuserlist = [];
     if (myrecord?.employees?.length === 0) {
-        console.warn("empty")
+        // console.warn("empty")
         myuserlist.push();
-        console.log("myuserlist", myuserlist)
+        console.warn("myuserlist empty", myuserlist)
 
     } else {
-        console.warn("not empty")
+        // console.warn("not empty")
         for (let j = 0; j < myrecord?.employees?.length; j++) {
-            console.warn("myrecord 2", myrecord?.employees)
+            // console.warn("myrecord 2", myrecord?.employees)
 
             myuserlist.push({
                 label: myrecord?.employees[j].name,
@@ -199,6 +205,9 @@ const Adminproject = () => {
     // console.log("youremployeeID", youremployeeID)
     const myhandleOk = async () => {
         const employees = myrecord?.employees
+        const newassignedemployees = []
+        console.log("employees here 1", employees)
+
         console.log("youremployeeID", youremployeeID)
         if (youremployeeID.length === 0) {
             console.error("removed all ");
@@ -213,43 +222,54 @@ const Adminproject = () => {
                 });
 
 
-        } else {
+        } else if (youremployeeID.length !== 0) {
+            // Remove elements from array
             employees.pop();
+            console.log("employees here 2", employees)
 
-            console.warn("remaining");
+            // console.warn("remaining");
+            // console.log("youremployeeID here", youremployeeID)
+
             for (let g = 0; g < youremployeeID.length; g++) {
+
+                console.log("youremployeeID here 1", youremployeeID)
 
                 await axios.get(`${process.env.REACT_APP_BASE_URL}/user/${youremployeeID[g]}`, {
                 })
                     .then((res) => {
-                        // console.log("user ID", res?.data?.myData[0]._id);
-                        if (youremployeeID[g] !== res?.data?.myData[0]._id) {
+                        // console.log("res", res?.data?.myData);
+
+                        console.log("youremployeeID here 2", youremployeeID[g])
+
+                        // console.log("user ID", res?.data?.myData?._id);
+                        if (youremployeeID[g] !== res?.data?.myData?._id) {
+                            console.log("youremployeeID here 3", res?.data?.myData?._id)
                             console.warn("ID not matching");
 
-                        } else if (res?.data?.myData[0]._id === youremployeeID[g]) {
-                            employees.push({
-                                emp_id: res?.data?.myData[0]._id,
-                                name: res?.data?.myData[0].name,
-                                gender: res?.data?.myData[0].gender,
-                                password: res?.data?.myData[0].password,
-                                role: res?.data?.myData[0].role,
-                                email: res?.data?.myData[0].email,
-                                contact: res?.data?.myData[0].contact
-                            })
-                            axios.put(`${process.env.REACT_APP_BASE_URL}/project/${myrecord._id}`, {
-                                employees
-                            })
-                                .then((res) => {
-                                    console.log("user assigned", res);
-                                    // message.success("Project assigned successfully!");
-                                });
+                        } else if (youremployeeID[g] === res?.data?.myData?._id) {
+                            console.warn("matching", youremployeeID[g], res?.data?.myData?._id);
 
+                            newassignedemployees.push({
+                                emp_id: res?.data?.myData?._id,
+                                name: res?.data?.myData?.name,
+                                gender: res?.data?.myData?.gender,
+                                password: res?.data?.myData?.password,
+                                role: res?.data?.myData?.role,
+                                email: res?.data?.myData?.email,
+                                contact: res?.data?.myData?.contact
+                            })
                         }
-
                     });
-
-                setmyOpenModal(false);
+                // setmyOpenModal(false);
             }
+            axios.put(`${process.env.REACT_APP_BASE_URL}/project/${myrecord._id}`, {
+                employees: newassignedemployees
+            })
+                .then((res) => {
+                    console.warn("user assigned", res);
+                    // message.success("Project assigned successfully!");
+                });
+
         }
     };
 
@@ -269,6 +289,7 @@ const Adminproject = () => {
 
 
     const myhandleCancel = () => {
+        myuserlist.pop()
         setmyOpenModal(false);
     };
 
@@ -493,7 +514,7 @@ const Adminproject = () => {
                             style={{ width: '700px' }}
                             placeholder="Select Employee"
                             // name={myuserlist?.label}
-                            // defaultValue={myuserlist}
+                            defaultValue={myuserlist}
                             value={myuserlist}
                             onChange={handleChange}
                             options={options}
