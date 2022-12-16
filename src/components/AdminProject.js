@@ -17,6 +17,7 @@ const { Column, ColumnGroup } = Table;
 
 
 const Adminproject = () => {
+    const [form] = Form.useForm();
     const [isopenmodal, setIsOpenModal] = useState(false);
     const [myopenmodal, setmyOpenModal] = useState(false);
 
@@ -31,7 +32,11 @@ const Adminproject = () => {
 
     const [mydataSource, setmyDataSource] = useState([]);
     const [selectedemployees, setselectedemployees] = useState([]);
-    // console.log("selectedemployees 1", selectedemployees)
+
+    const [value, setValue] = useState([selectedemployees]);
+
+
+    // console.log("newValue", selectedemployees)
     const [showemployee, setshowemployee] = useState([]);
 
     // const [employeename, setEmployeename] = useState("")
@@ -43,6 +48,8 @@ const Adminproject = () => {
     // const [assignedprojectstatus, setAssignedprojectstatus] = useState("")
     const [assignedemployeeslist, setassignedEmployees] = useState([])
     const [myrecord, setmyrecord] = useState([])
+    const [newusers, setnewusers] = useState([])
+
     // console.warn("myrecord 2", myrecord)
 
     // console.warn("assignedemployees", assignedemployeeslist.length)
@@ -69,9 +76,9 @@ const Adminproject = () => {
     useEffect(() => {
         const getAllUsers = async () => {
             await axios
-                .get(`${process.env.REACT_APP_BASE_URL}/user`)
+                .get(`${process.env.REACT_APP_BASE_URL}/user/foremployeerole`)
                 .then((res) => {
-                    setmyDataSource(res?.data?.userData)
+                    setmyDataSource(res?.data?.employeeData)
                     // console.log("user", res?.data?.userData);
 
                 });
@@ -82,20 +89,9 @@ const Adminproject = () => {
 
 
 
-    const onFinish = async () => {
-
-        await axios
-            .post(`${process.env.REACT_APP_BASE_URL}/project`, {
-                projectname,
-                projectdescription,
-                projecttechnologies,
-                projectstart,
-                projectend
-            })
-            .then((res) => {
-                console.log("project", res);
-                message.success("New project added successfully!!!!");
-            });
+    const onFinish = () => {
+        message.success("New project added successfully!!!!");
+        setIsOpenModal(false);
 
     };
 
@@ -125,7 +121,28 @@ const Adminproject = () => {
     };
 
     const handleOk = async () => {
-        setIsOpenModal(false);
+        try {
+            await axios
+                .post(`${process.env.REACT_APP_BASE_URL}/project`, {
+                    projectname,
+                    projectdescription,
+                    projecttechnologies,
+                    projectstart,
+                    projectend
+                })
+                .then((res) => {
+                    console.log("project", res);
+
+                });
+        } catch (error) {
+
+            if (projectname === "" && projectdescription === "" && projecttechnologies === "" && projectstart === "" && projectend === "") {
+                message.error("Please Fill Empty field !!!!!");
+            } else {
+                message.error("Submission Failed !!!");
+            }
+        }
+        // setIsOpenModal(false);
     };
 
     const handleCancel = () => {
@@ -143,73 +160,34 @@ const Adminproject = () => {
         // console.warn("record", record)
         setmyrecord({ ...record })
         console.warn("myrecord 1", record)
-
+        const arr = []
         if (record?.employees?.length === 0) {
+            message.warning("Not assigned yet");
             console.warn("not assigned yet")
         } else if (record?.employees?.length !== 0) {
+            for (let m = 0; m < record?.employees?.length; m++) {
+
+                arr.push({
+                    label: record?.employees[m].name,
+                    value: record?.employees[m].emp_id
+                })
+            }
+
             console.warn("assigned")
         }
-
-        // await axios
-        //     .get(`${process.env.REACT_APP_BASE_URL}/project/singlepro/${record._id}`)
-        //     .then((res) => {
-        //         if (res?.data?.singleProject[0].employees.length === 0) {
-        //             console.warn("not assigned yet")
-        //             setselectedemployees([])
-        //         }
-        //         else {
-        //             // for (let m = 0; m < res?.data?.singleProject[0].employees.length; m++) {
-        //             setselectedemployees(res?.data?.singleProject[0].employees)
-        //             // console.log("selectedemployees", res?.data?.singleProject);
-        //             // console.log("selectedemployees 2", res?.data?.singleProject[0].employees)
-
-        //             // }
-        //         }
-        //     });
+        setValue(arr)
         setmyOpenModal(true);
 
     };
 
 
-
-
-    const handleChange = async (value, e) => {
-        console.log(`selected employee ${value}`);
-        // setedituserlist({[e.target.name]:e.target.value})
-        setyouremployeeID(value)
-
-    };
-
-
-    const myuserlist = [];
-    if (myrecord?.employees?.length === 0) {
-        // console.warn("empty")
-        myuserlist.push();
-        console.warn("myuserlist empty", myuserlist)
-
-    } else {
-        // console.warn("not empty")
-        for (let j = 0; j < myrecord?.employees?.length; j++) {
-            // console.warn("myrecord 2", myrecord?.employees)
-
-            myuserlist.push({
-                label: myrecord?.employees[j].name,
-                value: myrecord?.employees[j].emp_id,
-            });
-        }
-
-        console.log("myuserlist", myuserlist)
-    }
-
-
-    // console.log("youremployeeID", youremployeeID)
     const myhandleOk = async () => {
         const employees = myrecord?.employees
         const newassignedemployees = []
         console.log("employees here 1", employees)
 
-        console.log("youremployeeID", youremployeeID)
-        if (youremployeeID.length === 0) {
+        console.log("value", value)
+        if (value.length === 0) {
             console.error("removed all ");
             // Remove elements from array
             employees.pop();
@@ -222,32 +200,33 @@ const Adminproject = () => {
                 });
 
 
-        } else if (youremployeeID.length !== 0) {
+        } else if (value.length !== 0) {
+            message.warning("Please wait...");
             // Remove elements from array
             employees.pop();
             console.log("employees here 2", employees)
 
             // console.warn("remaining");
-            // console.log("youremployeeID here", youremployeeID)
+            // console.log("value here", value)
 
-            for (let g = 0; g < youremployeeID.length; g++) {
+            for (let g = 0; g < value.length; g++) {
 
-                console.log("youremployeeID here 1", youremployeeID)
+                console.log("value here 1", value)
 
-                await axios.get(`${process.env.REACT_APP_BASE_URL}/user/${youremployeeID[g]}`, {
+                await axios.get(`${process.env.REACT_APP_BASE_URL}/user/${value[g]}`, {
                 })
                     .then((res) => {
                         // console.log("res", res?.data?.myData);
 
-                        console.log("youremployeeID here 2", youremployeeID[g])
+                        console.log("value here 2", value[g])
 
                         // console.log("user ID", res?.data?.myData?._id);
-                        if (youremployeeID[g] !== res?.data?.myData?._id) {
-                            console.log("youremployeeID here 3", res?.data?.myData?._id)
+                        if (value[g] !== res?.data?.myData?._id) {
+                            console.log("value here 3", res?.data?.myData?._id)
                             console.warn("ID not matching");
 
-                        } else if (youremployeeID[g] === res?.data?.myData?._id) {
-                            console.warn("matching", youremployeeID[g], res?.data?.myData?._id);
+                        } else if (value[g] === res?.data?.myData?._id) {
+                            console.warn("matching", value[g], res?.data?.myData?._id);
 
                             newassignedemployees.push({
                                 emp_id: res?.data?.myData?._id,
@@ -260,36 +239,33 @@ const Adminproject = () => {
                             })
                         }
                     });
-                // setmyOpenModal(false);
+
             }
+
             axios.put(`${process.env.REACT_APP_BASE_URL}/project/${myrecord._id}`, {
                 employees: newassignedemployees
             })
                 .then((res) => {
                     console.warn("user assigned", res);
-                    // message.success("Project assigned successfully!");
+                    message.success("Project assigned successfully!");
                 });
-
         }
+        setmyOpenModal(false);
+        //  window.location.reload()
     };
 
 
 
-    const options = [];
-    for (let i = 0; i < mydataSource.length; i++) {
-        options.push({
-            label: mydataSource[i].name,
-            value: mydataSource[i]._id,
 
 
-        });
-        // console.log("options", options)
-    }
 
+    const myhandleCancelbutton = () => {
+        message.error("Failed to assign");
+        setmyOpenModal(false);
+    };
 
 
     const myhandleCancel = () => {
-        myuserlist.pop()
         setmyOpenModal(false);
     };
 
@@ -336,7 +312,35 @@ const Adminproject = () => {
         },
 
     ];
+    const options = [];
+    for (let i = 0; i < mydataSource.length; i++) {
+        options.push({
+            label: mydataSource[i].name,
+            value: mydataSource[i]._id,
 
+
+        });
+
+        // console.log("options", options)
+    }
+
+    // console.log("selectedemployees", selectedemployees)
+
+    const selectProps = {
+        mode: 'multiple',
+        style: {
+            width: '100%',
+        },
+        // selectedemployees,
+        options,
+        value,
+        onChange: (newValue) => {
+            setValue(newValue);
+        },
+        placeholder: 'Select Item...',
+        maxTagCount: 'responsive',
+    };
+    console.warn("selectProps", selectProps)
 
 
 
@@ -369,7 +373,7 @@ const Adminproject = () => {
                         rules={[
                             {
                                 required: true,
-                                message: "This field is required",
+                                message: "Please enter project name.",
                             },
                         ]}
                     >
@@ -387,7 +391,7 @@ const Adminproject = () => {
                         rules={[
                             {
                                 required: true,
-                                message: "This field is required",
+                                message: "Please enter project description.",
                             },
                         ]}
                     >
@@ -404,7 +408,7 @@ const Adminproject = () => {
                         rules={[
                             {
                                 required: true,
-                                message: "This field is required",
+                                message: "Please enter project technology.",
                             },
                         ]}
                     >
@@ -421,7 +425,7 @@ const Adminproject = () => {
                         rules={[
                             {
                                 required: true,
-                                message: "This field is required",
+                                message: "Please enter project start date.",
                             },
                         ]}
                     >
@@ -438,7 +442,7 @@ const Adminproject = () => {
                         rules={[
                             {
                                 required: true,
-                                message: "This field is required",
+                                message: "Please enter project end date.",
                             },
                         ]}
                     >
@@ -485,7 +489,7 @@ const Adminproject = () => {
                 open={myopenmodal}
                 onCancel={myhandleCancel}
                 width={900}
-            // height={1000}
+
             >
                 <Form
                     name="basic"
@@ -495,31 +499,20 @@ const Adminproject = () => {
                     wrapperCol={{
                         span: 16,
                     }}
-
-                    // onFinish={onmyFinish}
-                    onFinishFailed={onmyFinishFailed}
                     autoComplete="off"
+
                 >
-                    <Form.Item style={{ marginBottom: "100px" }}>
 
-                        {/* <Option value="name" >{mydataSource.name}</Option> */}
+                    <Form.Item style={{ marginBottom: "100px" }}  >
+                        <Space
+                            direction="vertical"
+                            style={{
+                                width: '100%',
+                            }}
+                        >
+                            <Select {...selectProps} />
 
-                        {/* <Option value="Parul">Parul</Option>
-                            <Option value="Prince">Prince</Option>
-                            <Option value="Baljeet">Baljeet</Option> */}
-
-                        <Select
-                            mode="multiple"
-                            allowClear
-                            style={{ width: '700px' }}
-                            placeholder="Select Employee"
-                            // name={myuserlist?.label}
-                            defaultValue={myuserlist}
-                            value={myuserlist}
-                            onChange={handleChange}
-                            options={options}
-
-                        />
+                        </Space>
                     </Form.Item>
                     <Form.Item style={{ float: "right", marginLeft: "10px" }}>
 
@@ -531,21 +524,20 @@ const Adminproject = () => {
                             }}
                             type="primary"
                             htmlType="cancel"
-                            onClick={myhandleCancel}
+                            onClick={myhandleCancelbutton}
                         >
                             Cancel
                         </Button>
                     </Form.Item>
                     <Form.Item style={{ float: "right" }}>
 
-                        <Button type="primary" htmlType="Done" onClick={() => { myhandleOk() }}
-                        >
+                        <Button type="primary" htmlType="Done" onClick={() => { myhandleOk() }} >
                             Add employees
                         </Button>
 
                     </Form.Item>
-
                 </Form>
+
             </Modal>
         </>
 

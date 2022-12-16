@@ -16,22 +16,22 @@ const { Option } = Select;
 
 
 const Employeeproject = () => {
-    const [mydataSource, setDataSource] =useState([]);
+    const [myprojectlist, setmyprojectlist] = useState([]);
     const token = localStorage.getItem("access_token1");
     var decoded = jwt_decode(token);
 
 
     useEffect(() => {
-  
-    
+
+
         const getmyProjects = async () => {
 
             await axios
-                .get(`${process.env.REACT_APP_BASE_URL}/assignproject/allassignedprojects/${decoded._id}`)
+                .get(`${process.env.REACT_APP_BASE_URL}/project/assignedtoyou/${decoded._id}`)
                 .then((res) => {
-                    console.warn("res", res?.data)
-                    setDataSource(res?.data?.singleEmployeeAllProjects)
-console.warn("mydataSource", mydataSource)
+                    console.warn("res", res?.data?.yourprojects[0])
+                    setmyprojectlist(res?.data?.yourprojects)
+                    // console.warn("mydataSource", mydataSource)
                 });
         };
         getmyProjects()
@@ -43,30 +43,30 @@ console.warn("mydataSource", mydataSource)
     const columns = [
         {
             title: "Project name",
-            dataIndex: "assignedprojectname",
+            dataIndex: "projectname",
             width: "160px",
         },
 
         {
             title: "Description",
-            dataIndex: "assignedprojectdescription"
+            dataIndex: "projectdescription"
         },
         {
             title: "Technology",
-            dataIndex: "assignedprojecttechnologies",
+            dataIndex: "projecttechnologies",
         },
         {
             title: "Start",
-            dataIndex: "assignedprojectstart",
+            dataIndex: "projectstart",
         },
         {
             title: "End",
-            dataIndex: "assignedprojectend",
+            dataIndex: "projectend",
         },
-        {
-            title: "Status",
-            dataIndex: "assignedprojectstatus",
-        }
+        // {
+        //     title: "Status",
+        //     dataIndex: "assignedprojectstatus",
+        // }
     ];
 
 
@@ -75,7 +75,7 @@ console.warn("mydataSource", mydataSource)
 
         <div>
 
-            <Table columns={columns}  dataSource={mydataSource}/>
+            <Table columns={columns} dataSource={myprojectlist} />
         </div>
 
 
