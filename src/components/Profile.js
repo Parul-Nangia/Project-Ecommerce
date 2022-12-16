@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 import moment from "moment";
 import {
   Form,
@@ -12,9 +13,18 @@ import {
   Button,
   Modal,
   message,
+  Rate,
+  Table,
 } from "antd";
 import axios from "axios";
 import TextArea from "antd/lib/input/TextArea";
+import { Collapse } from "antd";
+import { Tabs } from "antd";
+import { Badge, Descriptions } from "antd";
+
+const { TabPane } = Tabs;
+const { Panel } = Collapse;
+
 // import { max } from "date-fns";
 const { Option } = Select;
 // const { Content } = Layout;
@@ -45,6 +55,8 @@ const Profile = () => {
   const [resetpassword, setResetPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [newpassword, setNewPassword] = useState([]);
+  const [empskilldata, setEmpSkillData] = useState("");
+  console.log("empskilldata", empskilldata);
 
   const onMyFinish = async () => {
     try {
@@ -156,12 +168,367 @@ const Profile = () => {
   const handledate = (value) => {
     setJoiningDate(value.format("YYYY-MM-DD"));
   };
+  useEffect(() => {
+    userGetskillData(id);
+  }, []);
 
+  const userGetskillData = async (id) => {
+    const token = localStorage.getItem("access_token1");
+    var decoded = jwt_decode(token);
 
-  
+    await axios
+      .get(`${process.env.REACT_APP_BASE_URL}/skill/emp/${id}`)
+      .then((res) => {
+        console.log("get api res", res);
+        setEmpSkillData(res?.data?.SingleEmpAllData);
+        console.log(res?.data?.SingleEmpAllData);
+      });
+  };
+
+  const columns = [
+    {
+      title: "Skills",
+      key: "skills",
+      dataIndex: "skillname",
+    },
+    {
+      title: "Experience",
+      dataIndex: "skillExperience",
+      key: "experience",
+      // render: (text) => <a>{text}</a>,
+    },
+
+    {
+      title: "Rating",
+      key: "rating",
+      render: (record) => {
+        return (
+          // dataIndex: "skillrating",
+          <>
+            <span>
+              <Rate value={record?.skillrating} />
+            </span>
+          </>
+        );
+      },
+    },
+  ];
+
+  function callback(key) {}
+
+  const collapseValue = (
+    <Descriptions title="Employee Info" layout="Horizontal" bordered>
+      <Descriptions.Item label="Name">
+        {viewingEmployee?.name}
+      </Descriptions.Item>
+      <Descriptions.Item label="Email">
+        {viewingEmployee?.email}
+      </Descriptions.Item>
+      <Descriptions.Item label="Father's Name">
+        {viewingEmployee?.fatherName}
+      </Descriptions.Item>
+      <Descriptions.Item label="Contact">
+        {viewingEmployee?.contact}
+      </Descriptions.Item>
+      <Descriptions.Item label="Gender">
+        {viewingEmployee?.gender}
+      </Descriptions.Item>
+      <Descriptions.Item label="Role">
+        {viewingEmployee?.role}
+      </Descriptions.Item>
+      <Descriptions.Item label="Joining Date">
+        {viewingEmployee?.joiningDate}
+      </Descriptions.Item>
+    </Descriptions>
+  );
+
+  const skillCollapse = (
+    <div>
+      <Table columns={columns} dataSource={empskilldata} pagination={false} />
+    </div>
+  );
+
+  const EditProfileForm = (
+    <Form
+      form={form}
+      onFinish={Submithere}
+      onFinishFailed={onFinishFailed}
+      autoComplete="off"
+    >
+      <Row>
+        <Col span={12} style={{ padding: "10px 10px" }}>
+          <Form.Item
+            label="Father name"
+            name="fatherName"
+            rules={[
+              {
+                required: true,
+              },
+              {
+                pattern: new RegExp(
+                  /^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+\s*[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i
+                ),
+                // pattern: new RegExp(/^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i),
+                message: "please Input in alphabets only",
+              },
+            ]}
+          >
+            <Input
+              placeholder="father's name"
+              onChange={(e) => {
+                setFatherName(e.target.value);
+              }}
+            ></Input>
+          </Form.Item>
+
+          <Form.Item
+            label="Mother name"
+            name="motherName"
+            rules={[
+              {
+                required: true,
+                message: "Please type your  mother's name!",
+                whitespace: true,
+              },
+              {
+                pattern: new RegExp(
+                  /^[a-zA-Z@~`!@#$%^&*()_=+';:"/?>.<,-]+\s*[a-zA-Z@~`!@#$%^&*()_=+';:"/?>.<,-]+$/i
+                ),
+                // pattern: /^([A-Z][a-z]+\s)*[A-Z][a-z]+$/,
+                message: "please input alphabets only",
+              },
+            ]}
+          >
+            <Input
+              placeholder="mother's name"
+              onChange={(e) => {
+                setMotherName(e.target.value);
+              }}
+            ></Input>
+          </Form.Item>
+          <Form.Item
+            label="Blood Group"
+            name="bloodGroup"
+            rules={[
+              {
+                required: true,
+                message: "Select a option ",
+              },
+            ]}
+          >
+            <Select placeholder="Select" onChange={SelectOne}>
+              <Option value="A+">A+</Option>
+              <Option value="A-">A-</Option>
+              <Option value="B+">B+</Option>
+              <Option value="B-">B-</Option>
+              <Option value="AB+">AB+</Option>
+              <Option value="AB-">AB-</Option>
+              <Option value="O+">O+</Option>
+              <Option value="O-">O-</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            label="Emergency contact number"
+            name="contactNumber"
+            rules={[
+              {
+                required: true,
+                message: "Please input 10 digit contact number!",
+                max: 10,
+                min: 10,
+              },
+              {
+                pattern: /^-?(0|[0-9][0-9]*)(\.[0-9]*)?$/,
+                message: "please input your valid contact number",
+              },
+            ]}
+          >
+            <Input
+              placeholder="contact number"
+              onChange={(e) => {
+                setContactNumber(() => {
+                  console.log("Contact Number " + e.target.value);
+                  return e.target.value;
+                });
+              }}
+            ></Input>
+          </Form.Item>
+          <Form.Item
+            label="Date of Joining"
+            // name="joiningDate"
+            rules={[
+              {
+                required: true,
+                message: "Select your date!",
+              },
+            ]}
+          >
+            <DatePicker
+              dateFormat="dd/MM/yyyy"
+              onChange={(date) => {
+                const d = new Date(date).toLocaleDateString("fr-FR");
+
+                setJoiningDate(d);
+              }}
+            />
+          </Form.Item>
+        </Col>
+
+        <Col span={12} style={{ padding: "10px 10px" }}>
+          <Form.Item
+            label="Permanent Address"
+            name="permanentAddress"
+            rules={[
+              {
+                required: true,
+                message: "Please type Your Permanent Address!",
+              },
+            ]}
+          >
+            <TextArea
+              placeholder="Permanent Address"
+              onChange={(e) => {
+                setPermanentAddress(() => {
+                  console.log("Permanent Address " + e.target.value);
+                  return e.target.value;
+                });
+              }}
+            ></TextArea>
+          </Form.Item>
+          <Form.Item
+            label="Aadhar card Number"
+            name="adharNumber"
+            rules={[
+              {
+                required: true,
+                message: "please input your valid Aadhar card number",
+                whitespace: true,
+                max: 12,
+                min: 10,
+              },
+              {
+                pattern: /^-?(0|[0-9][0-9]*)(\.[0-9]*)?$/,
+                message: " Input only number!",
+              },
+            ]}
+          >
+            <Input
+              placeholder="Aadhar number"
+              onChange={(e) => {
+                setAdharNumber(() => {
+                  console.log("Aadhar Number " + e.target.value);
+                  return e.target.value;
+                });
+              }}
+            ></Input>
+          </Form.Item>
+          <Form.Item
+            label="PAN card number"
+            name="panNumber"
+            rules={[
+              {
+                required: true,
+                message: "Please input your PAN card number!",
+                whitespace: true,
+              },
+              {
+                pattern: new RegExp(/^[a-zA-Z0-9]*$/),
+
+                message: "Input only string & number",
+              },
+            ]}
+          >
+            <Input
+              placeholder="Type your pan card number"
+              onChange={(e) => {
+                setPanNumber(() => {
+                  console.log("Pan Number " + e.target.value);
+                  return e.target.value;
+                });
+              }}
+            ></Input>
+          </Form.Item>
+          <Form.Item
+            label="Current salary"
+            name="salary"
+            rules={[
+              {
+                required: true,
+                message: "Input only numbers!",
+                whitespace: true,
+              },
+              {
+                pattern: /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/,
+                message: "Input only numbers!]",
+              },
+            ]}
+          >
+            <Input
+              placeholder="Current Salary"
+              onChange={(e) => {
+                setSalary(() => {
+                  console.log("Salary" + e.target.value);
+                  return e.target.value;
+                });
+              }}
+            ></Input>
+          </Form.Item>
+
+          <Form.Item
+            label="Last Appraisal Date"
+            // name="appraisal"
+            rules={[
+              {
+                required: true,
+                message: "Select your date!",
+              },
+            ]}
+          >
+            <DatePicker
+              defaultValue={moment()}
+              dateFormat="dd/MM/yyyy"
+              onChange={(date) => {
+                const d = new Date(date).toLocaleDateString("fr-FR");
+                console.log(d);
+                setAppraisal(d);
+              }}
+            />
+          </Form.Item>
+        </Col>
+      </Row>
+      <Form.Item>
+        <Row justify="center">
+          <Button className="submitbtn" htmlType="submit">
+            submit
+          </Button>
+        </Row>
+      </Form.Item>
+    </Form>
+  );
 
   return (
     <>
+      <div style={{ display: "flex" }}>
+        <h1>DATE :</h1>
+
+        <div style={{ marginLeft: "5px" }}>
+          {new Date().toLocaleDateString()}
+        </div>
+
+        <h1 style={{ marginLeft: "15px" }}>TIME :</h1>
+        <div style={{ marginLeft: "5px" }}>
+          {new Date().toLocaleTimeString()}
+        </div>
+        <div>
+          <Button
+           className="changepasswordemp"
+            onClick={showModal}
+          >
+            Change Employee's Password
+          </Button>
+        </div>
+      </div>
+
       <Modal
         title="Password Reset"
         cancelButtonProps={{ style: { display: "none" } }}
@@ -233,283 +600,20 @@ const Profile = () => {
           </Form.Item>
         </Form>
       </Modal>
+      <Tabs defaultActiveKey="1" onChange={callback}>
+        <TabPane tab="DETAILS" key="1">
+          {collapseValue}
+        </TabPane>
+        <TabPane tab="SKILLS" key="2">
+          {skillCollapse}
+        </TabPane>
+        <TabPane tab="EDIT DETAILS" key="3">
+          {EditProfileForm}
+        </TabPane>
+      </Tabs>
 
-      <Card
-        title="General Information"
-        bordered={false}
-        style={{ width: 300, fontWeight: "bold" }}
-      >
-        <div className="employeeBio">
-          <p>Name: {viewingEmployee?.name}</p>{" "}
-          <p>Email: {viewingEmployee?.email}</p>{" "}
-          <p>Father Name: {viewingEmployee?.fatherName}</p>
-          <p>Contact: {viewingEmployee?.contact}</p>
-          <p>Gender: {viewingEmployee?.gender}</p>
-          <p>Role: {viewingEmployee?.role}</p>
-          <p>Date Of Joining: {viewingEmployee?.joiningDate}</p>
-          <Link
-            style={{ display: "flex", marginTop: "1px" }}
-            onClick={showModal}
-          >
-            Change Password
-          </Link>
-        </div>
-      </Card>
-      <Form
-        form={form}
-        onFinish={Submithere}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
-      >
-        <Row>
-          <Col span={12} style={{ padding: "10px 10px" }}>
-            <Form.Item
-              label="Father name"
-              name="fatherName"
-              rules={[
-                {
-                  required: true,
-                },
-                {
-                  pattern: new RegExp(
-                    /^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+\s*[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i
-                  ),
-                  // pattern: new RegExp(/^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i),
-                  message: "please Input in alphabets only",
-                },
-              ]}
-            >
-              <Input
-                placeholder="father's name"
-                onChange={(e) => {
-                  setFatherName(e.target.value);
-                }}
-              ></Input>
-            </Form.Item>
-
-            <Form.Item
-              label="Mother name"
-              name="motherName"
-              rules={[
-                {
-                  required: true,
-                  message: "Please type your  mother's name!",
-                  whitespace: true,
-                },
-                {
-                  pattern: new RegExp(
-                    /^[a-zA-Z@~`!@#$%^&*()_=+';:"/?>.<,-]+\s*[a-zA-Z@~`!@#$%^&*()_=+';:"/?>.<,-]+$/i
-                  ),
-                  // pattern: /^([A-Z][a-z]+\s)*[A-Z][a-z]+$/,
-                  message: "please input alphabets only",
-                },
-              ]}
-            >
-              <Input
-                placeholder="mother's name"
-                onChange={(e) => {
-                  setMotherName(e.target.value);
-                }}
-              ></Input>
-            </Form.Item>
-            <Form.Item
-              label="Blood Group"
-              name="bloodGroup"
-              rules={[
-                {
-                  required: true,
-                  message: "Select a option ",
-                },
-              ]}
-            >
-              <Select placeholder="Select" onChange={SelectOne}>
-                <Option value="A+">A+</Option>
-                <Option value="A-">A-</Option>
-                <Option value="B+">B+</Option>
-                <Option value="B-">B-</Option>
-                <Option value="AB+">AB+</Option>
-                <Option value="AB-">AB-</Option>
-                <Option value="O+">O+</Option>
-                <Option value="O-">O-</Option>
-              </Select>
-            </Form.Item>
-            <Form.Item
-              label="Emergency contact number"
-              name="contactNumber"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input 10 digit contact number!",
-                  max: 10,
-                  min: 10,
-                },
-                {
-                  pattern: /^-?(0|[0-9][0-9]*)(\.[0-9]*)?$/,
-                  message: "please input your valid contact number",
-                },
-              ]}
-            >
-              <Input
-                placeholder="contact number"
-                onChange={(e) => {
-                  setContactNumber(() => {
-                    console.log("Contact Number " + e.target.value);
-                    return e.target.value;
-                  });
-                }}
-              ></Input>
-            </Form.Item>
-            <Form.Item
-              label="Date of Joining"
-              // name="joiningDate"
-              rules={[
-                {
-                  required: true,
-                  message: "Select your date!",
-                },
-              ]}
-            >
-              <DatePicker
-                dateFormat="dd/MM/yyyy"
-                onChange={(date) => {
-                  const d = new Date(date).toLocaleDateString("fr-FR");
-
-                  setJoiningDate(d);
-                }}
-              />
-            </Form.Item>
-          </Col>
-
-          <Col span={12} style={{ padding: "10px 10px" }}>
-            <Form.Item
-              label="Permanent Address"
-              name="permanentAddress"
-              rules={[
-                {
-                  required: true,
-                  message: "Please type Your Permanent Address!",
-                },
-              ]}
-            >
-              <TextArea
-                placeholder="Permanent Address"
-                onChange={(e) => {
-                  setPermanentAddress(() => {
-                    console.log("Permanent Address " + e.target.value);
-                    return e.target.value;
-                  });
-                }}
-              ></TextArea>
-            </Form.Item>
-            <Form.Item
-              label="Aadhar card Number"
-              name="adharNumber"
-              rules={[
-                {
-                  required: true,
-                  message: "please input your valid Aadhar card number",
-                  whitespace: true,
-                  max: 12,
-                  min: 10,
-                },
-                {
-                  pattern: /^-?(0|[0-9][0-9]*)(\.[0-9]*)?$/,
-                  message: " Input only number!",
-                },
-              ]}
-            >
-              <Input
-                placeholder="Aadhar number"
-                onChange={(e) => {
-                  setAdharNumber(() => {
-                    console.log("Aadhar Number " + e.target.value);
-                    return e.target.value;
-                  });
-                }}
-              ></Input>
-            </Form.Item>
-            <Form.Item
-              label="PAN card number"
-              name="panNumber"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your PAN card number!",
-                  whitespace: true,
-                },
-                {
-                  pattern: new RegExp(/^[a-zA-Z0-9]*$/),
-
-                  message: "Input only string & number",
-                },
-              ]}
-            >
-              <Input
-                placeholder="Type your pan card number"
-                onChange={(e) => {
-                  setPanNumber(() => {
-                    console.log("Pan Number " + e.target.value);
-                    return e.target.value;
-                  });
-                }}
-              ></Input>
-            </Form.Item>
-            <Form.Item
-              label="Current salary"
-              name="salary"
-              rules={[
-                {
-                  required: true,
-                  message: "Input only numbers!",
-                  whitespace: true,
-                },
-                {
-                  pattern: /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/,
-                  message: "Input only numbers!]",
-                },
-              ]}
-            >
-              <Input
-                placeholder="Current Salary"
-                onChange={(e) => {
-                  setSalary(() => {
-                    console.log("Salary" + e.target.value);
-                    return e.target.value;
-                  });
-                }}
-              ></Input>
-            </Form.Item>
-
-            <Form.Item
-              label="Last Appraisal Date"
-              // name="appraisal"
-              rules={[
-                {
-                  required: true,
-                  message: "Select your date!",
-                },
-              ]}
-            >
-              <DatePicker
-                defaultValue={moment()}
-                dateFormat="dd/MM/yyyy"
-                onChange={(date) => {
-                  const d = new Date(date).toLocaleDateString("fr-FR");
-                  console.log(d);
-                  setAppraisal(d);
-                }}
-              />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Form.Item>
-          <Row justify="center">
-            <Button className="breakBtn" htmlType="submit">
-              submit
-            </Button>
-          </Row>
-        </Form.Item>
-      </Form>
+      <br />
+      <br />
     </>
   );
 };

@@ -128,33 +128,6 @@ const Adminhandleskill = () => {
     setIsMyModalOpen(false);
   };
 
-  const column = [
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      width: "150px",
-    },
-    {
-      title: "Skill",
-      dataIndex: "skillname",
-      key: "skillname",
-      width: "150px",
-    },
-    {
-      title: "Skill Experience",
-      dataIndex: "skillExperience",
-      key: "skillExperience",
-      width: "150px",
-    },
-    {
-      title: "Rating",
-      dataIndex: "skillrating",
-      key: "skillrating",
-      width: "150px",
-    },
-  ];
-
   const columns = [
     {
       title: "Skills",
@@ -193,33 +166,6 @@ const Adminhandleskill = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-
-  const nestedColumns = [
-    {
-      title: "No.",
-      key: "index",
-      render: (text, record, index) => index + 1,
-      width: "20px",
-    },
-    {
-      title: "Start",
-      dataIndex: "start",
-      key: "start",
-      width: "30px",
-    },
-    {
-      title: "End",
-      dataIndex: "end",
-      key: "end",
-      width: "30px",
-    },
-    {
-      title: "Time Consumed",
-      dataIndex: "timeconsume",
-      key: "timeconsume",
-      width: "30px",
-    },
-  ];
 
   return (
     <div className="skillsManagement">

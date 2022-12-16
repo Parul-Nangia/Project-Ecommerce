@@ -70,11 +70,6 @@ const Sidebar = () => {
               key: "/projects",
               icon: <FolderOpenOutlined />,
             },
-            {
-              label: "SKILLMANAGEMENT",
-              key: "/skillmanagement",
-              icon: <SendOutlined />,
-            },
           ]}
         />
         {React.createElement(

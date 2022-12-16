@@ -14,24 +14,20 @@ const EmployeeSkill = () => {
   const [skillrating, setSkillRating] = useState("");
 
   const [skilldata, setSkillData] = useState("");
+  console.log("Skill Data", skilldata);
   const [form] = Form.useForm();
   const desc = ["terrible", "bad", "normal", "good", "wonderful"];
 
   const [addskill, setAddSkill] = useState("");
   console.log("new add Skills", addskill);
-  const [skillList, setSkillList] = useState("");
-  console.log("New Skill ", skillList);
-
-  // console.log(userskill, "skill Name");
 
   const DataSkill = async (value) => {
     const token = localStorage.getItem("access_token1");
     var decoded = jwt_decode(token);
     const emp_id = decoded._id;
     console.warn("emp_id", emp_id);
-
     if (skillname === "" || skillExperience === "" || skillrating === "") {
-      message.error("Please Select All Fields Before Submission");
+      message.error("select all fields");
     } else {
       await axios
         .post(`${process.env.REACT_APP_BASE_URL}/skill`, {
@@ -41,6 +37,7 @@ const EmployeeSkill = () => {
           skillrating,
         })
         .then((res) => {
+          console.log("post data", res);
           message.success("SuccessFully Submit !!");
         });
     }
@@ -52,7 +49,11 @@ const EmployeeSkill = () => {
   }, []);
 
   const handleempskill = (value) => {
+    // value={
+    //   isvalue?.skillname
+    // }
     setSkillName(value);
+    console.log("skill set", value);
   };
 
   const handleRating = (e) => {
@@ -67,9 +68,6 @@ const EmployeeSkill = () => {
   };
 
   const GetSkillList = async () => {
-    const token = localStorage.getItem("access_token1");
-    var decoded = jwt_decode(token);
-
     await axios
       .get(`${process.env.REACT_APP_BASE_URL}/handleskill/newListSkill`)
       .then((res) => {
@@ -127,8 +125,8 @@ const EmployeeSkill = () => {
       .get(`${process.env.REACT_APP_BASE_URL}/skill/emp/${decoded._id}`)
       .then((res) => {
         console.log("fhdfhdsjgfh", res);
-        setSkillData(res?.data?.SingleSkillAllData);
-        console.log(res?.data?.SingleSkillAllData);
+        setSkillData(res?.data?.SingleEmpAllData);
+        console.log(res?.data?.SingleEmpAllData);
       });
   };
 

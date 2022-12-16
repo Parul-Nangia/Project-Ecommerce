@@ -56,7 +56,9 @@ const Drop = () => {
         .then((res) => {
           console.warn("ttttttt", res);
           if (res?.data?.myData[0]?.profilepicture === "") {
-            setUserProfileData("profileimage.png");
+            setUserProfileData(
+              "https://www.biiainsurance.com/wp-content/uploads/2015/05/no-image.jpg"
+            );
             console.warn("hiiiiii");
           } else {
             console.warn("ggggggggg");
