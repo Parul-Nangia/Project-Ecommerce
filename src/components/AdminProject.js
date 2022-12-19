@@ -38,7 +38,7 @@ const Adminproject = () => {
 
 
     // console.log("newValue", selectedemployees)
-    const [showemployee, setshowemployee] = useState([]);
+    const [skillisting, setskillisting] = useState([]);
 
     // const [employeename, setEmployeename] = useState("")
     // const [assignedprojectname, setAssignedprojectname] = useState("")
@@ -55,6 +55,7 @@ const Adminproject = () => {
 
     // console.warn("assignedemployees", assignedemployeeslist.length)
 
+    // console.log("skillisting",skillisting)
 
 
 
@@ -75,6 +76,33 @@ const Adminproject = () => {
 
 
     useEffect(() => {
+        const getAllskills = async () => {
+
+            await axios
+                .get(`${process.env.REACT_APP_BASE_URL}/handleskill/istechno`)
+                .then((res) => {
+                    setskillisting(res?.data?.skilltechnology)
+
+                    // console.log("res", res)
+                });
+        };
+        getAllskills()
+    }, [])
+
+    const technologyoptions = [];
+    for (let i = 0; i < skillisting.length; i++) {
+        technologyoptions.push({
+            label: skillisting[i].skillList,
+            value: skillisting[i].skillList,
+
+
+        });
+
+        console.log("technologyoptions", technologyoptions)
+    }
+
+
+    useEffect(() => {
         const getAllUsers = async () => {
             await axios
                 .get(`${process.env.REACT_APP_BASE_URL}/user/foremployeerole`)
@@ -89,7 +117,6 @@ const Adminproject = () => {
 
 
 
-
     const onFinish = () => {
         message.success("New project added successfully!");
         setIsOpenModal(false);
@@ -97,20 +124,10 @@ const Adminproject = () => {
     };
 
 
-    const removefromproject = async (value) => {
-
-
-        await axios
-            .delete(`${process.env.REACT_APP_BASE_URL}/project/${value}`, {
-
-            })
-            .then((res) => {
-                console.log("remove", res);
-                message.success("Employee removed successfully!");
-            });
-
-    };
-
+    const handletechnology = (value) => {
+        console.log(`selected ${value}`);
+        setProjecttechnologies(value);
+    }
 
     const handlestartdate = (value) => {
         setProjectstart(value.format("YYYY-MM-DD"));
@@ -424,11 +441,17 @@ const Adminproject = () => {
                             },
                         ]}
                     >
-                        <Input
-                            onChange={(e) => {
-                                setProjecttechnologies(e.target.value);
+                        <Select
+                            mode="multiple"
+                            allowClear
+                            style={{
+                                width: '100%',
                             }}
+                            placeholder="Please select"
+                            onChange={handletechnology}
+                            options={technologyoptions}
                         />
+
                     </Form.Item>
                     <Form.Item
                         // style={{ fontWeight: "bold" }}

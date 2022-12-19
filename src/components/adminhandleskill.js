@@ -4,12 +4,14 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 import { Form, Input, Rate, Modal } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-
+import { Checkbox } from 'antd'
 const Adminhandleskill = () => {
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addskill, setAddSkill] = useState("");
   const [skillList, setSkillList] = useState("");
+  const [istechnology, setistechnology] = useState("");
+
   const [isMyModalOpen, setIsMyModalOpen] = useState(false);
   const [editingskill, setEditingSkill] = useState("");
   const [isvalue, setIsValue] = useState([]);
@@ -25,19 +27,19 @@ const Adminhandleskill = () => {
   };
 
   const AddSkillList = async (value) => {
-    const token = localStorage.getItem("access_token1");
-    var decoded = jwt_decode(token);
-    const emp_id = decoded._id;
+ 
     if (skillList === "") {
       message.error("Please Add Skill");
     } else {
+      message.warning("Please wait...");
       await axios
         .post(`${process.env.REACT_APP_BASE_URL}/handleskill/addfield`, {
-          emp_id,
+          istechnology,
           skillList,
         })
         .then((res) => {
-          message.success("Skill Added Successfully !!");
+          console.warn("resskill", res)
+          message.success("Skill added Successfully!");
         });
       window.location.reload();
     }
@@ -51,12 +53,20 @@ const Adminhandleskill = () => {
       });
   };
 
+
+  const handlecheck = (e) => {
+    console.log(`checked = ${e.target.checked}`);
+    setistechnology(e.target.checked)
+  }
+
+
   const editSkill = async () => {
     const skillList = editingskill;
     const _id = isvalue?._id;
     await axios
       .put(`${process.env.REACT_APP_BASE_URL}/handleskill/update/${_id}`, {
         skillList,
+        istechnology
       })
       .then((res) => {
         message.success("Skill Successfully Edited ");
@@ -190,16 +200,17 @@ const Adminhandleskill = () => {
       </div>
 
       <Button
-        type="primary"
+        className="breakBtn"
         onClick={showModal}
         style={{ display: "flex", float: "right" }}
       >
-        Add Skill Field
+        Add skill
       </Button>
+
 
       {/* admin add field modal */}
       <Modal
-        title="Add Skill"
+        title="Please add a skill"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -226,12 +237,15 @@ const Adminhandleskill = () => {
           >
             <Input
               onChange={handleAddSkill}
-              placeholder="Add Skill"
+              placeholder="Add skill"
               style={{ width: "120%", marginLeft: "40px", height: "60px" }}
             />
           </Form.Item>
+          <Form.Item>
+            <Checkbox onClick={handlecheck} style={{ marginLeft: "40px" }}>is technology</Checkbox>
+          </Form.Item>
           <Form.Item style={{ marginLeft: "35%" }}>
-            <Button type="primary" htmlType="submit" onClick={AddSkillList}>
+            <Button className="breakBtn" htmlType="submit" onClick={AddSkillList}>
               Add
             </Button>
             <Button
@@ -242,11 +256,12 @@ const Adminhandleskill = () => {
               Reset
             </Button>
           </Form.Item>
+
         </Form>
       </Modal>
 
       <Modal
-        title="Edit Skill"
+        title="Edit skill"
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
         open={isMyModalOpen}
@@ -265,7 +280,7 @@ const Adminhandleskill = () => {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <Form.Item label="Edit Skill" name="skillList">
+          <Form.Item label="Edit skill" name="skillList">
             <Input
               // value={record?.skillList}
               onChange={(e) => {
@@ -296,6 +311,8 @@ const Adminhandleskill = () => {
       </Modal>
 
       <br />
+      <br />
+
       <div>
         <Table columns={columns} dataSource={addskill} pagination={false} />
       </div>
