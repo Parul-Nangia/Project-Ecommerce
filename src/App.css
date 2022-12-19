@@ -57,13 +57,18 @@
 
 .trigger {
   display: flex;
+  justify-content: center;
   /* align-items: center; */
-  margin-left: 1000px;
+ 
   font-weight: bold;
   font-size: large;
-  float: right;
+  /* float: right; */
   margin: 10px;
-  color: gray;
+  color:black;
+}
+
+.trigger:hover{
+ color:blue;
 }
 
 .dashboardcards {
@@ -210,10 +215,15 @@
 }
 
 .changepasswordemp {
-  /* font-weight: bold; */
-  background-color: #da3939;
+ 
   color: white;
-  margin-left: 280%;
+
+  border-color: lightgray;
+  
+  color: black;
+  /* float: right; */
+  margin: 10px;
+  margin-bottom: 10px;
 
  
 }
@@ -257,6 +267,15 @@
 
  
 }
+
+.emppro{
+  display:flex;
+  width: 100px;
+  height: 100px;
+
+}
+
+
 .deletebtn:hover {
 
   background: #f30202;
@@ -307,6 +326,22 @@
   -moz-transform: scale(1, 1.3);
 }
 
+.adminedit{
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.admindelete{
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+
+
+
+
 
 .userprofileimg{
   height: 100px;
@@ -316,9 +351,17 @@
 
 .editemp {
   /* font-weight: bold; */
-  background-color: #d34343;
+
+ 
   color: white;
-  margin-left: 180px;
+
+  border-color: lightgray;
+  
+  color: black;
+  /* float: right; */
+  margin: 10px;
+  margin-bottom: 10px;
+  /* margin-left: 180px; */
 }
 
 .editemp:hover {

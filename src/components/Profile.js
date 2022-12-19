@@ -227,29 +227,54 @@ const Profile = () => {
   function callback(key) {}
 
   const collapseValue = (
-    <Descriptions title="Employee Info" layout="Horizontal" bordered>
-      <Descriptions.Item label="Name">
-        {viewingEmployee?.name}
-      </Descriptions.Item>
-      <Descriptions.Item label="Email">
-        {viewingEmployee?.email}
-      </Descriptions.Item>
-      <Descriptions.Item label="Father's Name">
-        {viewingEmployee?.fatherName}
-      </Descriptions.Item>
-      <Descriptions.Item label="Contact">
-        {viewingEmployee?.contact}
-      </Descriptions.Item>
-      <Descriptions.Item label="Gender">
-        {viewingEmployee?.gender}
-      </Descriptions.Item>
-      <Descriptions.Item label="Role">
-        {viewingEmployee?.role}
-      </Descriptions.Item>
-      <Descriptions.Item label="Joining Date">
-        {viewingEmployee?.joiningDate}
-      </Descriptions.Item>
-    </Descriptions>
+    <>
+      <Card
+        title="Default size card"
+        extra={<a href="#">More</a>}
+        style={{
+          width: 300,
+        }}
+      >
+        <div>
+          <img className="emppro" src="ebs.png" />
+        </div>
+      </Card>
+      <Card
+        size="small"
+        title="Small size card"
+        extra={<a href="#">More</a>}
+        style={{
+          width: 300,
+        }}
+      >
+        <p>Card content</p>
+        <p>Card content</p>
+        <p>Card content</p>
+      </Card>
+    </>
+    // <Descriptions title="Employee Info" layout="Horizontal" bordered>
+    //   <Descriptions.Item label="Name">
+    //     {viewingEmployee?.name}
+    //   </Descriptions.Item>
+    //   <Descriptions.Item label="Email">
+    //     {viewingEmployee?.email}
+    //   </Descriptions.Item>
+    //   <Descriptions.Item label="Father's Name">
+    //     {viewingEmployee?.fatherName}
+    //   </Descriptions.Item>
+    //   <Descriptions.Item label="Contact">
+    //     {viewingEmployee?.contact}
+    //   </Descriptions.Item>
+    //   <Descriptions.Item label="Gender">
+    //     {viewingEmployee?.gender}
+    //   </Descriptions.Item>
+    //   <Descriptions.Item label="Role">
+    //     {viewingEmployee?.role}
+    //   </Descriptions.Item>
+    //   <Descriptions.Item label="Joining Date">
+    //     {viewingEmployee?.joiningDate}
+    //   </Descriptions.Item>
+    // </Descriptions>
   );
 
   const skillCollapse = (
@@ -529,14 +554,16 @@ const Profile = () => {
         <div style={{ marginLeft: "5px" }}>
           {new Date().toLocaleTimeString()}
         </div>
+      </div>
+
+      <div style={{ marginLeft: "70%" }}>
         <div>
           <Button className="changepasswordemp" onClick={showModal}>
-            Change Employee's Password
+            Change Password
           </Button>
-        </div>
-        <div>
+
           <Button className="editemp" onClick={showEditModal}>
-            Edit Employee's Details
+            Edit Details
           </Button>
         </div>
       </div>
@@ -623,20 +650,19 @@ const Profile = () => {
           </Form.Item>
         </Form>
       </Modal>
-      <Tabs defaultActiveKey="1" onChange={callback}>
-        <TabPane tab="DETAILS" key="1">
-          {collapseValue}
-        </TabPane>
-        <TabPane tab="SKILLS" key="2">
-          {skillCollapse}
-        </TabPane>
-        {/* <TabPane tab="EDIT DETAILS" key="3">
+      <div>
+        <Tabs defaultActiveKey="1" onChange={callback}>
+          <TabPane tab="DETAILS" key="1">
+            {collapseValue}
+          </TabPane>
+          <TabPane tab="SKILLS" key="2">
+            {skillCollapse}
+          </TabPane>
+          {/* <TabPane tab="EDIT DETAILS" key="3">
           {EditProfileForm}
         </TabPane> */}
-      </Tabs>
-
-      <br />
-      <br />
+        </Tabs>
+      </div>
     </>
   );
 };

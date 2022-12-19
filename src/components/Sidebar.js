@@ -6,6 +6,8 @@ import {
   FolderOpenOutlined,
   TrophyOutlined,
   SendOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
 } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import { DoubleRightOutlined, DoubleLeftOutlined } from "@ant-design/icons";
@@ -30,6 +32,13 @@ const Sidebar = () => {
         width={200}
         className="site-layout-background"
       >
+        {React.createElement(
+          collapsed ? MenuFoldOutlined : MenuUnfoldOutlined,
+          {
+            className: "trigger",
+            onClick: () => setCollapsed(!collapsed),
+          }
+        )}
         <Menu
           className="Sidemenubar"
           onClick={({ key }) => {
@@ -72,13 +81,6 @@ const Sidebar = () => {
             },
           ]}
         />
-        {React.createElement(
-          collapsed ? DoubleRightOutlined : DoubleLeftOutlined,
-          {
-            className: "trigger",
-            onClick: () => setCollapsed(!collapsed),
-          }
-        )}
       </Sider>
     );
   } else if (decoded.role === "employee") {
@@ -90,6 +92,13 @@ const Sidebar = () => {
         width={200}
         className="site-layout-background"
       >
+        {React.createElement(
+          collapsed ? MenuUnfoldOutlined : DoubleLeftOutlined,
+          {
+            className: "trigger",
+            onClick: () => setCollapsed(!collapsed),
+          }
+        )}
         <Menu
           className="Sidemenubar"
           onClick={({ key }) => {
@@ -127,13 +136,6 @@ const Sidebar = () => {
             },
           ]}
         />
-        {React.createElement(
-          collapsed ? DoubleRightOutlined : DoubleLeftOutlined,
-          {
-            className: "trigger",
-            onClick: () => setCollapsed(!collapsed),
-          }
-        )}
       </Sider>
     );
   } else {

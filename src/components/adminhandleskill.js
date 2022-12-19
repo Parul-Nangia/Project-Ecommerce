@@ -146,24 +146,24 @@ const Adminhandleskill = () => {
       render: (record) => {
         return (
           <>
-            <div style={{ display: "flex", marginLeft: "-650px" }}>
-              <Button
-                // className="editbtn"
-                onClick={() => {
-                  myshowmodal(record);
-                }}
-              >
-                <EditOutlined />
-              </Button>
-              <Button
-                // className="deletebtn"
-                onClick={() => {
-                  ondeleteskill(record);
-                }}
-              >
-                <DeleteOutlined />
-              </Button>
-            </div>
+            <Button
+              className="adminedit"
+              // className="editbtn"
+              onClick={() => {
+                myshowmodal(record);
+              }}
+            >
+              <EditOutlined />
+            </Button>
+            <Button
+              className="admindelete"
+              // className="deletebtn"
+              onClick={() => {
+                ondeleteskill(record);
+              }}
+            >
+              <DeleteOutlined />
+            </Button>
           </>
         );
       },
@@ -297,7 +297,19 @@ const Adminhandleskill = () => {
 
       <br />
       <div>
-        <Table columns={columns} dataSource={addskill} pagination={false} />
+        <Table
+          style={{
+            display: "flex",
+            float: "center",
+            // justifyContent: "center",
+
+            // width: "100%",
+            // width: "400px",
+          }}
+          columns={columns}
+          dataSource={addskill}
+          pagination={true}
+        />
       </div>
       {/* <br />
       <div>
