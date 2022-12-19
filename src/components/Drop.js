@@ -54,22 +54,24 @@ const Drop = () => {
       await axios
         .get(`${process.env.REACT_APP_BASE_URL}/user/${decoded._id}`)
         .then((res) => {
-          console.warn("ttttttt", res);
-          if (res?.data?.myData[0]?.profilepicture === "") {
+          // console.warn("ttttttt", res);
+          if (res?.data?.myData?.profilepicture === "") {
+            console.warn("no image");
+
             setUserProfileData(
-              "https://www.biiainsurance.com/wp-content/uploads/2015/05/no-image.jpg"
+              "https://cdn.vectorstock.com/i/preview-1x/66/14/default-avatar-photo-placeholder-profile-picture-vector-21806614.webp"
             );
-            console.warn("hiiiiii");
+           
           } else {
-            console.warn("ggggggggg");
+            console.warn("image uploaded");
 
             setUserProfileData(
               `${process.env.REACT_APP_BASE_URL}/images/` +
-                res?.data?.myData[0]?.profilepicture
+                res?.data?.myData?.profilepicture
             );
           }
           console.log("Picture is here", userprofiledata);
-          console.log("here ", res?.data?.myData[0]?.profilepicture);
+          console.log("here ", res?.data?.myData?.profilepicture);
         });
     };
     PicProfileData();
