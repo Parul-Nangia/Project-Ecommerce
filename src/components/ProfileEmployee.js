@@ -67,6 +67,7 @@ const ProfileEmployee = () => {
 
         const profilepicture = res?.data?.documentRecord?.image;
         setProfilePicture(profilepicture);
+        console.log("profilepicture", profilepicture);
 
         axios
           .put(`${process.env.REACT_APP_BASE_URL}/user/${decoded._id}`, {
@@ -75,11 +76,12 @@ const ProfileEmployee = () => {
           .then((res) => {
             console.log("user profile pic Response", res);
           });
+        console.log("image uploaded");
 
         message.success("Profile Picture Uploaded !!");
         // }
       });
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
@@ -96,14 +98,21 @@ const ProfileEmployee = () => {
       await axios
         .get(`${process.env.REACT_APP_BASE_URL}/user/${decoded._id}`)
         .then((res) => {
+          console.warn("ttttttt", res);
+
           if (res?.data?.myData[0]?.profilepicture === "") {
             setUserProfileData("profileimage.png");
+            console.warn("hiiiiii");
           } else {
+            console.warn("ggggggggg");
+
             setUserProfileData(
               `${process.env.REACT_APP_BASE_URL}/images/` +
-              res?.data?.myData[0]?.profilepicture
+                res?.data?.updated_employee?.profilepicture
             );
           }
+          console.log("Picture is here", userprofiledata);
+          console.log("here ", res?.data?.updated_employee?.profilepicture);
         });
     };
     PicProfileData();
@@ -120,8 +129,8 @@ const ProfileEmployee = () => {
     await axios
       .get(`${process.env.REACT_APP_BASE_URL}/user/${decoded._id}`)
       .then((res) => {
-        console.log(res, "api response");
-        setViewEmployeeProfile(res?.data?.myData[0]);
+        setViewEmployeeProfile(res?.data?.myData);
+        console.log(res?.data?.myData, "api response");
       });
   };
 
@@ -141,27 +150,29 @@ const ProfileEmployee = () => {
 
   return (
     <>
+      <Upload
+        listType="picture-card"
+        fileList={fileList}
+        // onPreview={handlePreview}
+        // onChange={handleChange}
+        beforeUpload={beforeUpload}
+        status="done"
+      >
+        {fileList.length >= 1 ? null : uploadButton}
+      </Upload>
 
-
-      <div style={{ display: "flex" }}>
-        <Upload
-          listType="picture-card"
-          fileList={fileList}
-          // onPreview={handlePreview}
-          // onChange={handleChange}
-          beforeUpload={beforeUpload}
-          status="done"
-        >
-          {fileList.length >= 1 ? null : uploadButton}
-        </Upload>
-        <div>
-          <img
-            src={userprofiledata}
-            alt=""
-            className="userprofileimg"
-          />
-        </div>
-
+      <div>
+        <img
+          src={userprofiledata}
+          alt=""
+          className="userprofileimg"
+          style={{
+            display: "flex",
+            height: "200px",
+            width: "200px",
+            marginTop: "40px",
+          }}
+        />
       </div>
 
       <Card title="General Information" bordered={false} style={{ width: 300 }}>
