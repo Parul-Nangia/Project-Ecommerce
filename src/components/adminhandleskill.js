@@ -3,6 +3,7 @@ import { Space, Table, Tag, Select, Button, message } from "antd";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import { Form, Input, Rate, Modal } from "antd";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const Adminhandleskill = () => {
   const [form] = Form.useForm();
@@ -27,15 +28,19 @@ const Adminhandleskill = () => {
     const token = localStorage.getItem("access_token1");
     var decoded = jwt_decode(token);
     const emp_id = decoded._id;
-    await axios
-      .post(`${process.env.REACT_APP_BASE_URL}/handleskill/addfield`, {
-        emp_id,
-        skillList,
-      })
-      .then((res) => {
-        message.success("Skill Added Successfully !!");
-      });
-    window.location.reload();
+    if (skillList === "") {
+      message.error("Please Add Skill");
+    } else {
+      await axios
+        .post(`${process.env.REACT_APP_BASE_URL}/handleskill/addfield`, {
+          emp_id,
+          skillList,
+        })
+        .then((res) => {
+          message.success("Skill Added Successfully !!");
+        });
+      window.location.reload();
+    }
   };
 
   const GetSkillList = async () => {
@@ -136,27 +141,29 @@ const Adminhandleskill = () => {
       dataIndex: "skillList",
     },
     {
-      title: "Action",
+      // title: "Action",
 
       render: (record) => {
         return (
           <>
-            <Button
-              className="editbtn"
-              onClick={() => {
-                myshowmodal(record);
-              }}
-            >
-              Edit
-            </Button>
-            <Button
-              className="deletebtn"
-              onClick={() => {
-                ondeleteskill(record);
-              }}
-            >
-              Delete
-            </Button>
+            <div style={{ display: "flex", marginLeft: "-650px" }}>
+              <Button
+                // className="editbtn"
+                onClick={() => {
+                  myshowmodal(record);
+                }}
+              >
+                <EditOutlined />
+              </Button>
+              <Button
+                // className="deletebtn"
+                onClick={() => {
+                  ondeleteskill(record);
+                }}
+              >
+                <DeleteOutlined />
+              </Button>
+            </div>
           </>
         );
       },

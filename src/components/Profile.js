@@ -52,6 +52,8 @@ const Profile = () => {
   // const[appraisal,setAppraisal]=useState()
 
   const [isopenmodal, setIsOpenModal] = useState(false);
+  const [iseditopenmodal, setIsEditOpenModal] = useState(false);
+
   const [resetpassword, setResetPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [newpassword, setNewPassword] = useState([]);
@@ -90,6 +92,10 @@ const Profile = () => {
     console.log("Failed:", errorInfo);
   };
 
+  const showEditModal = () => {
+    setIsEditOpenModal(true);
+  };
+
   const showModal = () => {
     setIsOpenModal(true);
   };
@@ -100,6 +106,10 @@ const Profile = () => {
 
   const handleCancel = () => {
     setIsOpenModal(false);
+  };
+
+  const handleEditCancel = () => {
+    setIsEditOpenModal(false);
   };
 
   useEffect(() => {
@@ -520,14 +530,27 @@ const Profile = () => {
           {new Date().toLocaleTimeString()}
         </div>
         <div>
-          <Button
-           className="changepasswordemp"
-            onClick={showModal}
-          >
+          <Button className="changepasswordemp" onClick={showModal}>
             Change Employee's Password
           </Button>
         </div>
+        <div>
+          <Button className="editemp" onClick={showEditModal}>
+            Edit Employee's Details
+          </Button>
+        </div>
       </div>
+
+      <Modal
+        width="70%"
+        title="Edit Details"
+        cancelButtonProps={{ style: { display: "none" } }}
+        okButtonProps={{ style: { display: "none" } }}
+        open={iseditopenmodal}
+        onCancel={handleEditCancel}
+      >
+        {EditProfileForm}
+      </Modal>
 
       <Modal
         title="Password Reset"
@@ -607,9 +630,9 @@ const Profile = () => {
         <TabPane tab="SKILLS" key="2">
           {skillCollapse}
         </TabPane>
-        <TabPane tab="EDIT DETAILS" key="3">
+        {/* <TabPane tab="EDIT DETAILS" key="3">
           {EditProfileForm}
-        </TabPane>
+        </TabPane> */}
       </Tabs>
 
       <br />
