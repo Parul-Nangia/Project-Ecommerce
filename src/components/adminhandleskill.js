@@ -107,7 +107,7 @@ const Adminhandleskill = () => {
 
   const ondeleteskill = (record) => {
     Modal.confirm({
-      title: "Are you Sure, you want to delete this skill record?",
+      title: "Are you Sure, you want to delete this skill?",
       okText: "Yes",
       okType: "danger",
       onOk: () => {
@@ -120,8 +120,9 @@ const Adminhandleskill = () => {
     await axios
       .delete(`${process.env.REACT_APP_BASE_URL}/handleskill/${_id}`)
       .then((res) => {
-        message.success("Delete !!!");
+        message.success("Delete");
       });
+    window.location.reload();
   };
 
   const handleModCancel = () => {
@@ -141,16 +142,15 @@ const Adminhandleskill = () => {
         return (
           <>
             <Button
-              className="recordopen"
+              className="editbtn"
               onClick={() => {
-                // onEditEmployeeskill(record);
                 myshowmodal(record);
               }}
             >
               Edit
             </Button>
             <Button
-              className="recordopen"
+              className="deletebtn"
               onClick={() => {
                 ondeleteskill(record);
               }}
