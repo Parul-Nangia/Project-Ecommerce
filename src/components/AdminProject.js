@@ -7,6 +7,7 @@ import { Button, Card, Col, Form, Input, message, Modal, Space, Tag } from "antd
 import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import { DatePicker } from 'antd';
 import { Avatar, Badge } from "antd";
 import { SettingOutlined, UserOutlined } from "@ant-design/icons";
 import { Select, Table } from "antd";
@@ -14,7 +15,7 @@ import { FcHighPriority, FcApproval, FcCancel, FcInfo } from "react-icons/fc";
 import { EllipsisOutlined } from "@ant-design/icons";
 const { Option } = Select;
 const { Column, ColumnGroup } = Table;
-
+const { TextArea } = Input;
 
 const Adminproject = () => {
     const [form] = Form.useForm();
@@ -90,7 +91,7 @@ const Adminproject = () => {
 
 
     const onFinish = () => {
-        message.success("New project added successfully!!!!");
+        message.success("New project added successfully!");
         setIsOpenModal(false);
 
     };
@@ -110,6 +111,18 @@ const Adminproject = () => {
 
     };
 
+
+    const handlestartdate = (value) => {
+        setProjectstart(value.format("YYYY-MM-DD"));
+        console.warn("start", value)
+
+    }
+
+    const handleenddate = (value) => {
+        setProjectend(value.format("YYYY-MM-DD"));
+        console.warn("end", value)
+
+    }
 
 
     const onFinishFailed = (errorInfo) => {
@@ -137,9 +150,9 @@ const Adminproject = () => {
         } catch (error) {
 
             if (projectname === "" && projectdescription === "" && projecttechnologies === "" && projectstart === "" && projectend === "") {
-                message.error("Please Fill Empty field !!!!!");
+                message.error("Please fill required fields!");
             } else {
-                message.error("Submission Failed !!!");
+                message.error("Submission failed!");
             }
         }
         // setIsOpenModal(false);
@@ -367,7 +380,7 @@ const Adminproject = () => {
                     autoComplete="off"
                 >
                     <Form.Item
-                        // style={{ fontWeight: "bold" }}
+                        // style={{ fontWeight: "bold",}}
                         label="Project name"
                         name="projectname"
                         rules={[
@@ -395,11 +408,10 @@ const Adminproject = () => {
                             },
                         ]}
                     >
-                        <Input
-                            onChange={(e) => {
-                                setProjectdescription(e.target.value);
-                            }}
-                        />
+                        <TextArea rows={4} onChange={(e) => {
+                            setProjectdescription(e.target.value);
+                        }} />
+
                     </Form.Item>
                     <Form.Item
                         // style={{ fontWeight: "bold" }}
@@ -429,11 +441,8 @@ const Adminproject = () => {
                             },
                         ]}
                     >
-                        <Input
-                            onChange={(e) => {
-                                setProjectstart(e.target.value);
-                            }}
-                        />
+                        <DatePicker onChange={handlestartdate} />
+
                     </Form.Item>
                     <Form.Item
                         // style={{ fontWeight: "bold" }}
@@ -446,11 +455,8 @@ const Adminproject = () => {
                             },
                         ]}
                     >
-                        <Input
-                            onChange={(e) => {
-                                setProjectend(e.target.value);
-                            }}
-                        />
+                        <DatePicker onChange={handleenddate} />
+
                     </Form.Item>
 
                     <Form.Item>

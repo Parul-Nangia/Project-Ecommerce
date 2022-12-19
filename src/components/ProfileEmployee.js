@@ -46,7 +46,7 @@ const ProfileEmployee = () => {
 
   const beforeUpload = async (file) => {
     console.log("beforeUpload");
-
+    message.warning("Please wait...");
     const token = localStorage.getItem("access_token1");
     var decoded = jwt_decode(token);
     const formData = new FormData();
@@ -77,10 +77,12 @@ const ProfileEmployee = () => {
             console.log("user profile pic Response", res);
           });
         console.log("image uploaded");
+        message.success("Profile picture uploaded!");
 
-        message.success("Profile Picture Uploaded !!");
+
         // }
       });
+
     // window.location.reload();
   };
 
@@ -98,21 +100,19 @@ const ProfileEmployee = () => {
       await axios
         .get(`${process.env.REACT_APP_BASE_URL}/user/${decoded._id}`)
         .then((res) => {
-          console.warn("ttttttt", res);
+          console.warn("myprofieres", res);
 
-          if (res?.data?.myData[0]?.profilepicture === "") {
-            setUserProfileData("profileimage.png");
-            console.warn("hiiiiii");
+          if (res?.data?.myData?.profilepicture === "") {
+            setUserProfileData("https://cdn.vectorstock.com/i/preview-1x/66/14/default-avatar-photo-placeholder-profile-picture-vector-21806614.webp");
+            console.warn("no image");
           } else {
-            console.warn("ggggggggg");
-
+            console.warn("uploaded");
             setUserProfileData(
               `${process.env.REACT_APP_BASE_URL}/images/` +
-                res?.data?.updated_employee?.profilepicture
+              res?.data?.myData?.profilepicture
             );
           }
-          console.log("Picture is here", userprofiledata);
-          console.log("here ", res?.data?.updated_employee?.profilepicture);
+
         });
     };
     PicProfileData();
@@ -130,7 +130,7 @@ const ProfileEmployee = () => {
       .get(`${process.env.REACT_APP_BASE_URL}/user/${decoded._id}`)
       .then((res) => {
         setViewEmployeeProfile(res?.data?.myData);
-        console.log(res?.data?.myData, "api response");
+        // console.log(res?.data?.myData, "api response");
       });
   };
 
