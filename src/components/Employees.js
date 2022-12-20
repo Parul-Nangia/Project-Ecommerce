@@ -100,7 +100,7 @@ const Employees = ({ dataSource }) => {
         // array.append(as)
         // console.log(as,"ggggg")
       });
-    message.success("!Submit Successfully")
+    message.success("Employee added successfully!")
     // window.location.reload();
     setIsModalOpen(false);
     }

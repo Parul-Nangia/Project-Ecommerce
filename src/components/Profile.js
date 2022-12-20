@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+
 import moment from "moment";
 import {
   Form,
@@ -16,14 +17,22 @@ import {
   Rate,
   Table,
 } from "antd";
+import { FcPhone } from "react-icons/fc";
 import axios from "axios";
+import { Space, Typography } from 'antd';
+import { Divider } from 'antd';
 import TextArea from "antd/lib/input/TextArea";
 import { Collapse } from "antd";
 import { Tabs } from "antd";
 import { Badge, Descriptions } from "antd";
+import { EditOutlined, EllipsisOutlined, SettingOutlined, MailOutlined } from '@ant-design/icons';
+import { Avatar } from 'antd';
+const { Meta } = Card;
 
+const { Text } = Typography;
 const { TabPane } = Tabs;
 const { Panel } = Collapse;
+
 
 // import { max } from "date-fns";
 const { Option } = Select;
@@ -58,7 +67,10 @@ const Profile = () => {
   const [confirmpassword, setConfirmPassword] = useState("");
   const [newpassword, setNewPassword] = useState([]);
   const [empskilldata, setEmpSkillData] = useState("");
-  console.log("empskilldata", empskilldata);
+  const [myprofilepic, setmyprofilepic] = useState("");
+  // console.warn("viewingEmployee", viewingEmployee)
+
+  // console.log("empskilldata", empskilldata);
 
   const onMyFinish = async () => {
     try {
@@ -123,7 +135,9 @@ const Profile = () => {
       .get(`${process.env.REACT_APP_BASE_URL}/user/${id}`)
       .then((res) => {
         console.log("employeeDetails", res?.data?.myData);
+        setmyprofilepic("https://leave-management-system.glitch.me/images/" + res?.data?.myData?.profilepicture)
         setViewingEmployee(res?.data?.myData);
+
         form.setFieldsValue({
           fatherName: res?.data?.myData?.fatherName,
           motherName: res?.data?.myData?.motherName,
@@ -160,13 +174,13 @@ const Profile = () => {
         })
         .then((res) => {
           console.log(res, "response");
-          message.success("Information Submit");
+          message.success("Information submitted!");
         });
     } catch (error) {
       if (fatherName === "" && motherName === "") {
-        message.error("Please Fill Empty field !!!!!");
+        message.error("Please fill empty fields!");
       } else {
-        message.error("Submission Failed !!!");
+        message.error("Submission failed!");
       }
     }
     // console.log("form values", form.getFieldsValue());
@@ -191,7 +205,7 @@ const Profile = () => {
       .then((res) => {
         console.log("get api res", res);
         setEmpSkillData(res?.data?.SingleEmpAllData);
-        console.log(res?.data?.SingleEmpAllData);
+        console.log("mydata", res?.data?.SingleEmpAllData);
       });
   };
 
@@ -224,58 +238,259 @@ const Profile = () => {
     },
   ];
 
-  function callback(key) {}
+  function callback(key) { }
 
   const collapseValue = (
     <>
       <Card
-        title="Default size card"
-        extra={<a href="#">More</a>}
+
+        // title=" details"
+        // extra={<a href="#">More</a>}
         style={{
-          width: 300,
+          width: 1000,
         }}
       >
-        <div>
-          <img className="emppro" src="ebs.png" />
+        <div style={{ display: "flex" }}>
+
+          <div style={{ marginRight: "30px" }}>
+            <p style={{ "color": "darkgray" }}>PAN no.</p>
+            <Divider />
+            <p style={{ "color": "darkgray" }}>Aadhar number</p>
+          </div>
+          <div>
+            <h1 style={{ "color": "black" }}>{viewingEmployee?.panNumber}</h1>
+            <Divider />
+            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.adharNumber}</h1>
+          </div>
+
         </div>
-      </Card>
-      <Card
-        size="small"
-        title="Small size card"
-        extra={<a href="#">More</a>}
-        style={{
-          width: 300,
-        }}
-      >
-        <p>Card content</p>
-        <p>Card content</p>
-        <p>Card content</p>
+
       </Card>
     </>
-    // <Descriptions title="Employee Info" layout="Horizontal" bordered>
-    //   <Descriptions.Item label="Name">
-    //     {viewingEmployee?.name}
-    //   </Descriptions.Item>
-    //   <Descriptions.Item label="Email">
-    //     {viewingEmployee?.email}
-    //   </Descriptions.Item>
-    //   <Descriptions.Item label="Father's Name">
-    //     {viewingEmployee?.fatherName}
-    //   </Descriptions.Item>
-    //   <Descriptions.Item label="Contact">
-    //     {viewingEmployee?.contact}
-    //   </Descriptions.Item>
-    //   <Descriptions.Item label="Gender">
-    //     {viewingEmployee?.gender}
-    //   </Descriptions.Item>
-    //   <Descriptions.Item label="Role">
-    //     {viewingEmployee?.role}
-    //   </Descriptions.Item>
-    //   <Descriptions.Item label="Joining Date">
-    //     {viewingEmployee?.joiningDate}
-    //   </Descriptions.Item>
-    // </Descriptions>
   );
+
+  const contactCollapse = (
+
+    <Card>
+      <div style={{ display: "flex"}}>
+
+        <div style={{ display: "flex" }}>
+          <div style={{ marginRight: "50px" }}>
+            <p style={{ "color": "darkgray", marginTop: "13px" }}>Email</p>
+            <Divider />
+            <p style={{ "color": "darkgray", marginTop: "13px" }}>Mobile no.</p>
+            <Divider />
+            <p style={{ "color": "darkgray", marginTop: "13px" }}>Emergency contact</p>
+            <Divider />
+            <p style={{ "color": "darkgray", marginTop: "13px" }}>Permanent address</p>
+            <Divider />
+            <p style={{ "color": "darkgray", marginTop: "13px" }}>Blood group</p>
+            <Divider />
+            <p style={{ "color": "darkgray", marginTop: "13px" }}>Father's name</p>
+            <Divider />
+          </div>
+          <div style={{marginRight:"90px"}}>
+            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.email}</h1>
+            <Divider />
+            <h1 style={{ "color": "black" }}>{viewingEmployee?.contact}</h1>
+            <Divider />
+            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.contactNumber}</h1>
+            <Divider />
+            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.permanentAddress}</h1>
+            <Divider />
+            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.bloodGroup}</h1>
+            <Divider />
+            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.fatherName}</h1>
+            <Divider />
+          </div>
+        </div>
+
+
+        <div style={{ display: "flex" }}>
+
+          <div style={{ marginRight: "50px" }}>
+            <p style={{ "color": "darkgray", marginTop: "13px" }}>Mother's name</p>
+            <Divider />
+            <p style={{ "color": "darkgray", marginTop: "13px" }}>Salary</p>
+            <Divider />
+            <p style={{ "color": "darkgray", marginTop: "13px" }}>Linkedin</p>
+            <Divider />
+            <p style={{ "color": "darkgray", marginTop: "13px" }}>Designation</p>
+            <Divider />
+            <p style={{ "color": "darkgray", marginTop: "13px" }}>Joining date</p>
+            <Divider />
+            <p style={{ "color": "darkgray", marginTop: "13px" }}>Appraisel date</p>
+          </div>
+          <div>
+            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.motherName}</h1>
+            <Divider />
+            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.salary}</h1>
+            <Divider />
+            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.linkedinprofilelink}</h1>
+            <Divider />
+            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.role}</h1>
+            <Divider />
+            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.joiningDate}</h1>
+            <Divider />
+            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.appraisal}</h1>
+          </div>
+
+        </div>
+      </div>
+      {/* <div style={{ display: "flex" }}>
+
+        <div style={{ marginRight: "30px" }}>
+
+
+          <div style={{ display: "flex" }}>
+            <div style={{ marginLeft: "30px", marginRight: "120px"}}> 
+              <p style={{ "color": "darkgray", marginRight: "120px" }}>Contact</p>
+            </div>
+            <div>
+              <h1 style={{ "color": "black" }}>{viewingEmployee?.contact}</h1>
+            </div>
+          </div>
+
+
+          <div style={{ display: "flex" }}>
+            <div style={{marginLeft: "30px", marginRight: "120px"}}>
+              <p style={{ "color": "darkgray", marginRight: "120px" }}>Email</p>
+            </div>
+
+            <div>
+              <h1 style={{ "color": "black" }}>{viewingEmployee?.contact}</h1>
+            </div>
+          </div>
+
+          <div style={{ display: "flex" }}>
+            <div style={{marginLeft: "30px", marginRight: "120px"}}>
+              <p style={{ "color": "darkgray", marginRight: "120px" }}>Emergency contact</p>
+            </div>
+
+            <div>
+              <h1 style={{ "color": "black" }}>{viewingEmployee?.contact}</h1>
+            </div>
+          </div>
+
+          <div style={{ display: "flex" }}>
+            <div style={{marginLeft: "30px", marginRight: "120px"}}>
+              <p style={{ "color": "darkgray", marginRight: "120px" }}>Mobile no.</p>
+            </div>
+
+            <div>
+              <h1 style={{ "color": "black" }}>{viewingEmployee?.contact}</h1>
+            </div>
+          </div>
+
+          <div style={{ display: "flex" }}>
+            <div style={{marginLeft: "30px", marginRight: "120px"}}>
+              <p style={{ "color": "darkgray", marginRight: "120px" }}>Permanent address</p>
+            </div>
+
+            <div>
+              <h1 style={{ "color": "black" }}>{viewingEmployee?.contact}</h1>
+            </div>
+          </div>
+
+          <div style={{ display: "flex" }}>
+            <div style={{marginLeft: "30px", marginRight: "120px"}}>
+              <p style={{ "color": "darkgray", marginRight: "120px" }}>Blood Group</p>
+            </div>
+            <div>
+              <h1 style={{ "color": "black" }}>{viewingEmployee?.contact}</h1>
+            </div>
+          </div>
+
+          <div style={{ display: "flex" }}>
+            <div style={{marginLeft: "30px", marginRight: "120px"}}>
+              <p style={{ "color": "darkgray", marginRight: "120px" }}>Contact</p>
+            </div>
+            <div>
+              <h1 style={{ "color": "black" }}>{viewingEmployee?.contact}</h1>
+            </div>
+          </div>
+
+
+          <div style={{ display: "flex" }}>
+            <div style={{marginLeft: "30px", marginRight: "120px"}}>
+              <p style={{ "color": "darkgray", marginRight: "120px" }}>Father's name</p>
+            </div>
+            <div>
+              <h1 style={{ "color": "black" }}>{viewingEmployee?.contact}</h1>
+            </div>
+          </div>
+
+
+          <div style={{ display: "flex" }}>
+            <div style={{marginLeft: "30px", marginRight: "120px"}}>
+              <p style={{ "color": "darkgray", marginRight: "120px" }}>Mother's name</p>
+            </div>
+            <div>
+              <h1 style={{ "color": "black" }}>{viewingEmployee?.contact}</h1>
+            </div>
+          </div>
+
+
+          <div style={{ display: "flex" }}>
+            <div style={{marginLeft: "30px", marginRight: "120px"}}>
+              <p style={{ "color": "darkgray", marginRight: "120px" }}>Salary</p>
+            </div>
+            <div>
+              <h1 style={{ "color": "black" }}>{viewingEmployee?.contact}</h1>
+            </div>
+          </div>
+
+          <div style={{ display: "flex" }}>
+            <div style={{marginLeft: "30px", marginRight: "120px"}}>
+              <p style={{ "color": "darkgray", marginRight: "120px" }}>Linkedin</p>
+            </div>
+            <div>
+              <h1 style={{ "color": "black" }}>{viewingEmployee?.contact}</h1>
+            </div>
+          </div>
+
+          <div style={{ display: "flex" }}>
+            <div style={{marginLeft: "30px", marginRight: "120px"}}>
+              <p style={{ "color": "darkgray", marginRight: "120px" }}>Salary</p>
+            </div>
+            <div>
+              <h1 style={{ "color": "black" }}>{viewingEmployee?.contact}</h1>
+            </div>
+          </div>
+
+          <div style={{ display: "flex" }}>
+            <div style={{marginLeft: "30px", marginRight: "120px"}}>
+              <p style={{ "color": "darkgray", marginRight: "120px" }}>Designation</p>
+            </div>
+            <div>
+              <h1 style={{ "color": "black" }}>{viewingEmployee?.contact}</h1>
+            </div>
+          </div>
+
+          <div style={{ display: "flex" }}>
+            <div style={{marginLeft: "30px", marginRight: "120px"}}>
+              <p style={{ "color": "darkgray", marginRight: "120px" }}>Joining date</p>
+            </div>
+            <div>
+              <h1 style={{ "color": "black" }}>{viewingEmployee?.contact}</h1>
+            </div>
+          </div>
+
+          <div style={{ display: "flex" }}>
+            <div style={{marginLeft: "30px", marginRight: "120px"}}>
+              <p style={{ "color": "darkgray", marginRight: "120px" }}>Appraisal date</p>
+            </div>
+            <div>
+              <h1 style={{ "color": "black" }}>{viewingEmployee?.contact}</h1>
+            </div>
+          </div>
+        </div>
+        
+
+      </div> */}
+
+    </Card>
+  )
 
   const skillCollapse = (
     <div>
@@ -543,6 +758,7 @@ const Profile = () => {
 
   return (
     <>
+
       <div style={{ display: "flex" }}>
         <h1>DATE :</h1>
 
@@ -650,19 +866,74 @@ const Profile = () => {
           </Form.Item>
         </Form>
       </Modal>
-      <div>
-        <Tabs defaultActiveKey="1" onChange={callback}>
-          <TabPane tab="DETAILS" key="1">
-            {collapseValue}
-          </TabPane>
-          <TabPane tab="SKILLS" key="2">
-            {skillCollapse}
-          </TabPane>
-          {/* <TabPane tab="EDIT DETAILS" key="3">
+
+
+
+      <div className="myprofile">
+        <Card
+          className="smallprofilecard"
+
+          cover={
+            <img
+              alt="example"
+              src={myprofilepic}
+            />
+          }
+          actions={[
+            <SettingOutlined key="setting" />,
+            <EditOutlined key="edit" />,
+            <EllipsisOutlined key="ellipsis" />,
+          ]}
+        >
+          <Meta
+            // avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+            // title="Card title"
+            description="Full name"
+          />
+          <p>Sudhir dadwal</p>
+
+          <Meta
+            // avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+            // title="Card title"
+            description="Designation"
+          />
+          <p>Admin</p>
+
+          <Meta
+            // avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+            // title="Card title"
+            description="Mobile no."
+          />
+          <p>2387246265</p>
+
+          <Meta
+            // avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+            // title="Card title"
+            description="Email"
+          />
+          <p>ebs.sudhir@gmail.com</p>
+        </Card>
+
+        {/* <div className="profiledeatils"> */}
+        <Card className="profilecard">
+          <Tabs defaultActiveKey="1" onChange={callback}>
+            <TabPane tab="PERSONAL INFO" key="1">
+              {contactCollapse}
+            </TabPane>
+            <TabPane tab="SKILLS" key="2">
+              {skillCollapse}
+            </TabPane>
+            <TabPane tab="DOCUMENT INFO" key="3">
+              {collapseValue}
+            </TabPane>
+            {/* <TabPane tab="EDIT DETAILS" key="3">
           {EditProfileForm}
         </TabPane> */}
-        </Tabs>
+          </Tabs>
+        </Card>
       </div>
+
+      {/* </div> */}
     </>
   );
 };

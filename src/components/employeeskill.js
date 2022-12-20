@@ -53,6 +53,7 @@ const EmployeeSkill = () => {
     //   isvalue?.skillname
     // }
     setSkillName(value);
+  
     console.log("skill set", value);
   };
 
@@ -183,6 +184,7 @@ const EmployeeSkill = () => {
             optionLabelProp="label"
             options={options}
             onChange={handleempskill}
+           
           ></Select>
         </Form.Item>
         <Form.Item

@@ -46,18 +46,18 @@ const LoginNew = () => {
       // message.success("Login ");
       message.open({
         type: 'success',
-        content: 'Login Successfully!!',
+        content: 'Login success!',
         duration: 2,
         style: {
           marginTop: '11vh',
-          
+
         },
       });
       window.location.reload();
       navigate("/");
     } catch (error) {
       console.log(correctData, "show data catch");
-    
+
       const UserName = correctData.map((text) => {
         return text.name;
       });
@@ -74,10 +74,10 @@ const LoginNew = () => {
           duration: 2,
           style: {
             marginTop: '11vh',
-            
+
           },
         });
-       
+
       } else if (!Password.includes(password) && !UserName.includes(name)) {
         // message.error("InValid password & username!!");
         message.open({
@@ -86,7 +86,7 @@ const LoginNew = () => {
           duration: 2,
           style: {
             marginTop: '11vh',
-            
+
           },
         });
       } else if (!UserName.includes(name)) {
@@ -98,7 +98,7 @@ const LoginNew = () => {
           duration: 2,
           style: {
             marginTop: '11vh',
-            
+
           },
         });
       } else if (!Password.includes(password)) {
@@ -110,7 +110,7 @@ const LoginNew = () => {
           duration: 2,
           style: {
             marginTop: '11vh',
-            
+
           },
         });
       } else {
@@ -121,10 +121,10 @@ const LoginNew = () => {
           duration: 2,
           style: {
             marginTop: '11vh',
-            
+
           },
         });
-        
+
       }
     }
   };

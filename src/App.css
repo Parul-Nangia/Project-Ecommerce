@@ -294,10 +294,34 @@
   background-color: #d34343;
   color: white;
 
-
- 
+}
+.myprofile{
+  display: flex;
+  margin-top: 40px;
 }
 
+.profiledeatils{
+margin-left: 30px;
+}
+
+.profilecard{
+  width: 1200px;
+  /* margin-right: 20px; */
+  margin-left: 15px;
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+}
+
+.smallprofilecard{
+  width: 300px;
+  height: 450px;
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+}
+
+.userprofileimg{
+  height: 100px;
+  width: 70px;
+  
+}
 
 .breakBtn:hover {
   /* font-weight: bold; */
