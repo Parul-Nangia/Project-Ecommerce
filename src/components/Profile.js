@@ -250,7 +250,7 @@ const Profile = () => {
           width: 1000,
         }}
       >
-        <div style={{ display: "flex" }}>
+        {/* <div style={{ display: "flex" }}>
 
           <div style={{ marginRight: "30px" }}>
             <p style={{ "color": "darkgray" }}>PAN no.</p>
@@ -263,9 +263,72 @@ const Profile = () => {
             <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.adharNumber}</h1>
           </div>
 
-        </div>
+        </div> */}
 
       </Card>
+      {/* <div>
+        <div>
+          <Row>
+            <Col span={8} style={{ padding: "10px 10px" }}>
+              <Card
+                title="Default size card"
+                style={{
+                  width: 300,
+                }}
+              >
+                <div>
+                  <img className="emppro" src="ebs.png" />
+                  <div
+                    style={{
+                      display: "flex",
+                      fontWeight: "bold",
+                      marginTop: "20px",
+                      float: "right",
+                    }}
+                  >
+                    {viewingEmployee?.name}
+                  </div>
+                </div>
+              </Card>
+            </Col>
+            <br />
+            <br />
+            <Col>
+              <Card
+                size="small"
+                title="Contact"
+                style={{
+                  width: 300,
+                }}
+              >
+                <div>
+                  <p style={{ float: "right" }}>{viewingEmployee?.email}</p>
+                </div>
+                <div>
+                  <p style={{ float: "right" }}>{viewingEmployee?.contact}</p>
+                </div>
+              </Card>
+            </Col>
+          </Row>
+        </div>
+
+        <div>
+          <Card
+            size="small"
+            title="Contact"
+            style={{
+              width: 300,
+            }}
+          >
+            <div>
+              <p style={{ float: "right" }}>{viewingEmployee?.email}</p>
+            </div>
+            <div>
+              <p style={{ float: "right" }}>{viewingEmployee?.contact}</p>
+            </div>
+          </Card>
+        </div>
+      </div> */}
     </>
   );
 

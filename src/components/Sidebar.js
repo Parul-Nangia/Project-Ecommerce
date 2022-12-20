@@ -33,7 +33,7 @@ const Sidebar = () => {
         className="site-layout-background"
       >
         {React.createElement(
-          collapsed ? MenuFoldOutlined : MenuUnfoldOutlined,
+          collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
           {
             className: "trigger",
             onClick: () => setCollapsed(!collapsed),
@@ -93,7 +93,7 @@ const Sidebar = () => {
         className="site-layout-background"
       >
         {React.createElement(
-          collapsed ? MenuUnfoldOutlined : DoubleLeftOutlined,
+          collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
           {
             className: "trigger",
             onClick: () => setCollapsed(!collapsed),
