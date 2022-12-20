@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import jwt_decode from "jwt-decode";
 import { PlusOutlined } from "@ant-design/icons";
-import { Modal, Upload, Card, message } from "antd";
+import { Modal, Upload, Card, message, Avatar, Image } from "antd";
 import axios from "axios";
 import { useEffect } from "react";
+import { PhoneOutlined } from "@mui/icons-material";
+import MailIcon from "@mui/icons-material/Mail";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import { HomeOutlined, CalendarOutlined } from "@ant-design/icons";
+import ManIcon from "@mui/icons-material/Man";
+import WomanIcon from "@mui/icons-material/Woman";
+import VerifiedIcon from "@mui/icons-material/Verified";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -29,6 +36,7 @@ const ProfileEmployee = () => {
   // const [fileeee, setFileeeee] = useState()
 
   const handleCancel = () => setPreviewOpen(false);
+  const { Meta } = Card;
 
   const handlePreview = async (file) => {
     console.log("file", file.name);
@@ -79,7 +87,6 @@ const ProfileEmployee = () => {
         console.log("image uploaded");
         message.success("Profile picture uploaded!");
 
-
         // }
       });
 
@@ -103,16 +110,17 @@ const ProfileEmployee = () => {
           console.warn("myprofieres", res);
 
           if (res?.data?.myData?.profilepicture === "") {
-            setUserProfileData("https://cdn.vectorstock.com/i/preview-1x/66/14/default-avatar-photo-placeholder-profile-picture-vector-21806614.webp");
+            setUserProfileData(
+              "https://cdn.vectorstock.com/i/preview-1x/66/14/default-avatar-photo-placeholder-profile-picture-vector-21806614.webp"
+            );
             console.warn("no image");
           } else {
             console.warn("uploaded");
             setUserProfileData(
               `${process.env.REACT_APP_BASE_URL}/images/` +
-              res?.data?.myData?.profilepicture
+                res?.data?.myData?.profilepicture
             );
           }
-
         });
     };
     PicProfileData();
@@ -161,7 +169,169 @@ const ProfileEmployee = () => {
         {fileList.length >= 1 ? null : uploadButton}
       </Upload>
 
-      <div>
+      <Card
+        hoverable
+        style={{
+          width: 1000,
+          height: 900,
+          display: "flex",
+          marginLeft: "3%",
+          marginTop: "30px",
+          // backgroundColor: "gray",
+        }}
+        // cover={<img alt="example" src={userprofiledata} />}
+      >
+        <div>
+          <img
+            alt=""
+            // style={{ display: "flex", height: "400x", width: "120px" }}
+            style={{
+              // marginTop: "-40%",
+              height: "200px",
+              width: "200px",
+              display: "flex",
+              marginLeft: "38%",
+              borderTopLeftRadius: "50% 50%",
+              borderTopRightRadius: "50% 50%",
+              borderBottomRightRadius: "50% 50%",
+              borderBottomLeftRadius: "50% 50% ",
+            }}
+            src={userprofiledata}
+          />
+          <br />
+
+          <div
+            style={{
+              justifyContent: "center",
+
+              marginLeft: "35%",
+            }}
+          >
+            <span
+              style={{
+                fontWight: "bold",
+                marginLeft: "14%",
+
+                fontSize: "30px",
+              }}
+            >
+              {viewEmployeeProfile?.name}
+              <VerifiedIcon style={{ color: "blue" }} />
+            </span>
+            <br />
+            <span
+              style={{
+                color: "gray",
+                marginLeft: "18%",
+              }}
+            >
+              {viewEmployeeProfile?.role}
+            </span>
+          </div>
+          <br />
+          <br />
+          <Card
+            hoverable
+            style={{
+              display: "flex",
+              marginLeft: "-15px",
+              width: 980,
+            }}
+          >
+            <div style={{ display: "flex", marginLeft: "80px" }}>
+              {/* <ManIcon />
+              <WomanIcon /> */}
+              <div>
+                <p style={{ fontWeight: "bold" }}>Father's Name</p>
+
+                <p>{viewEmployeeProfile?.fatherName}</p>
+              </div>
+
+              <div style={{ marginLeft: "100%" }}>
+                <p style={{ fontWeight: "bold" }}>Mother's Name</p>
+                <p style={{ marginLeft: "" }}>
+                  {viewEmployeeProfile?.motherName}
+                </p>
+              </div>
+              <div style={{ marginLeft: "100%" }}>
+                <p style={{ fontWeight: "bold" }}>Blood Group</p>
+                <p style={{ marginLeft: "25px" }}>
+                  {viewEmployeeProfile?.bloodGroup}
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          <br />
+          <Card
+            hoverable
+            style={{
+              display: "flex",
+              marginLeft: "-15px",
+              width: 980,
+            }}
+          >
+            <div style={{ display: "flex" }}>
+              <div style={{ marginLeft: "80px" }}>
+                <p style={{ fontWeight: "bold" }}>Address</p>
+                <p>{viewEmployeeProfile?.permanentAddress}</p>
+              </div>
+              <div style={{ marginLeft: "55%" }}>
+                <p style={{ fontWeight: "bold" }}>
+                  {/* <CalendarOutlined style={{ marginRight: "10px" }} /> */}
+                  Joining Date
+                </p>
+                <p>{viewEmployeeProfile?.joiningDate}</p>
+              </div>
+            </div>
+          </Card>
+
+          <br />
+          <Card
+            hoverable
+            style={{
+              display: "flex",
+              marginLeft: "-15px",
+              width: 980,
+              // marginTop: "-20px",
+            }}
+          >
+            <div style={{ display: "flex", marginLeft: "30%" }}>
+              <div>
+                <p style={{ fontWeight: "bold" }}>
+                  {/* <PhoneOutlined
+                    style={{ fontSize: "14px", marginRight: "8px" }}
+                  /> */}
+                  Contact
+                </p>
+                <p style={{ marginRight: "10px" }}>
+                  {viewEmployeeProfile?.contact}
+                </p>
+              </div>
+
+              <div style={{ marginLeft: "180%" }}>
+                <p style={{ fontWeight: "bold" }}>
+                  {/* <MailIcon
+                    style={{
+                      fontSize: "14px",
+                      marginRight: "5px",
+                    }}
+                  /> */}
+                  Email
+                </p>
+                <p>{viewEmployeeProfile?.email}</p>
+              </div>
+
+              <div style={{ marginLeft: "140%" }}>
+                <p style={{ fontWeight: "bold" }}>{/* <LinkedInIcon /> */}</p>
+                <p>{viewEmployeeProfile?.linkedinprofilelink}</p>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </Card>
+
+      {/* <div>
         <img
           src={userprofiledata}
           alt=""
@@ -182,7 +352,7 @@ const ProfileEmployee = () => {
         <p>Gender: {viewEmployeeProfile?.gender}</p>
         <p>Role: {viewEmployeeProfile?.role}</p>
         <p>Linkedin Profile: {viewEmployeeProfile?.linkedinprofilelink}</p>
-      </Card>
+      </Card> */}
     </>
   );
   // } else {

@@ -228,29 +228,69 @@ const Profile = () => {
 
   const collapseValue = (
     <>
-      <Card
-        title="Default size card"
-        extra={<a href="#">More</a>}
-        style={{
-          width: 300,
-        }}
-      >
+      <div>
         <div>
-          <img className="emppro" src="ebs.png" />
+          <Row>
+            <Col span={8} style={{ padding: "10px 10px" }}>
+              <Card
+                title="Default size card"
+                style={{
+                  width: 300,
+                }}
+              >
+                <div>
+                  <img className="emppro" src="ebs.png" />
+                  <div
+                    style={{
+                      display: "flex",
+                      fontWeight: "bold",
+                      marginTop: "20px",
+                      float: "right",
+                    }}
+                  >
+                    {viewingEmployee?.name}
+                  </div>
+                </div>
+              </Card>
+            </Col>
+            <br />
+            <br />
+            <Col>
+              <Card
+                size="small"
+                title="Contact"
+                style={{
+                  width: 300,
+                }}
+              >
+                <div>
+                  <p style={{ float: "right" }}>{viewingEmployee?.email}</p>
+                </div>
+                <div>
+                  <p style={{ float: "right" }}>{viewingEmployee?.contact}</p>
+                </div>
+              </Card>
+            </Col>
+          </Row>
         </div>
-      </Card>
-      <Card
-        size="small"
-        title="Small size card"
-        extra={<a href="#">More</a>}
-        style={{
-          width: 300,
-        }}
-      >
-        <p>Card content</p>
-        <p>Card content</p>
-        <p>Card content</p>
-      </Card>
+
+        <div>
+          <Card
+            size="small"
+            title="Contact"
+            style={{
+              width: 300,
+            }}
+          >
+            <div>
+              <p style={{ float: "right" }}>{viewingEmployee?.email}</p>
+            </div>
+            <div>
+              <p style={{ float: "right" }}>{viewingEmployee?.contact}</p>
+            </div>
+          </Card>
+        </div>
+      </div>
     </>
     // <Descriptions title="Employee Info" layout="Horizontal" bordered>
     //   <Descriptions.Item label="Name">
