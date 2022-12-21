@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import jwt_decode from "jwt-decode";
 import { PlusOutlined } from "@ant-design/icons";
-import { Modal, Upload, Card, message, Avatar, Image } from "antd";
+import { Modal, Upload, Card, message, Avatar, Image, Divider } from "antd";
 import axios from "axios";
 import { useEffect } from "react";
-import { PhoneOutlined } from "@mui/icons-material";
-import MailIcon from "@mui/icons-material/Mail";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import { HomeOutlined, CalendarOutlined } from "@ant-design/icons";
-import ManIcon from "@mui/icons-material/Man";
-import WomanIcon from "@mui/icons-material/Woman";
-import VerifiedIcon from "@mui/icons-material/Verified";
+
+import {
+  HomeOutlined,
+  CalendarOutlined,
+  EditOutlined,
+  EllipsisOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -24,6 +25,7 @@ const ProfileEmployee = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
+  const [myprofilepic, setmyprofilepic] = useState("");
 
   const [userprofiledata, setUserProfileData] = useState("");
   const [viewEmployeeProfile, setViewEmployeeProfile] = useState([]);
@@ -161,211 +163,140 @@ const ProfileEmployee = () => {
       <Upload
         listType="picture-card"
         fileList={fileList}
-        // onPreview={handlePreview}
-        // onChange={handleChange}
         beforeUpload={beforeUpload}
         status="done"
       >
         {fileList.length >= 1 ? null : uploadButton}
       </Upload>
-
-      <Card
-        hoverable
-        style={{
-          width: 1000,
-          height: 900,
-          display: "flex",
-          marginLeft: "3%",
-          marginTop: "30px",
-          // backgroundColor: "gray",
-        }}
-        // cover={<img alt="example" src={userprofiledata} />}
-      >
-        <div>
-          <img
-            alt=""
-            // style={{ display: "flex", height: "400x", width: "120px" }}
-            style={{
-              // marginTop: "-40%",
-              height: "200px",
-              width: "200px",
-              display: "flex",
-              marginLeft: "38%",
-              borderTopLeftRadius: "50% 50%",
-              borderTopRightRadius: "50% 50%",
-              borderBottomRightRadius: "50% 50%",
-              borderBottomLeftRadius: "50% 50% ",
-            }}
-            src={userprofiledata}
-          />
-          <br />
-
-          <div
-            style={{
-              justifyContent: "center",
-
-              marginLeft: "35%",
-            }}
-          >
-            <span
-              style={{
-                fontWight: "bold",
-                marginLeft: "14%",
-
-                fontSize: "30px",
-              }}
-            >
-              {viewEmployeeProfile?.name}
-              <VerifiedIcon style={{ color: "blue" }} />
-            </span>
-            <br />
-            <span
-              style={{
-                color: "gray",
-                marginLeft: "18%",
-              }}
-            >
-              {viewEmployeeProfile?.role}
-            </span>
-          </div>
-          <br />
-          <br />
+      <div style={{ display: "flex" }}>
+        <div className="myprofile">
           <Card
-            hoverable
-            style={{
-              display: "flex",
-              marginLeft: "-15px",
-              width: 980,
-            }}
+            className="smallprofilecard"
+            cover={<img alt="example" src={userprofiledata} />}
           >
-            <div style={{ display: "flex", marginLeft: "80px" }}>
-              {/* <ManIcon />
-              <WomanIcon /> */}
-              <div>
-                <p style={{ fontWeight: "bold" }}>Father's Name</p>
+            <Meta
+              // avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+              // title="Card title"
+              description="Full name"
+            />
+            <p>{viewEmployeeProfile?.name}</p>
 
-                <p>{viewEmployeeProfile?.fatherName}</p>
-              </div>
-
-              <div style={{ marginLeft: "100%" }}>
-                <p style={{ fontWeight: "bold" }}>Mother's Name</p>
-                <p style={{ marginLeft: "" }}>
-                  {viewEmployeeProfile?.motherName}
-                </p>
-              </div>
-              <div style={{ marginLeft: "100%" }}>
-                <p style={{ fontWeight: "bold" }}>Blood Group</p>
-                <p style={{ marginLeft: "25px" }}>
-                  {viewEmployeeProfile?.bloodGroup}
-                </p>
-              </div>
-            </div>
-          </Card>
-
-          <br />
-          <Card
-            hoverable
-            style={{
-              display: "flex",
-              marginLeft: "-15px",
-              width: 980,
-            }}
-          >
-            <div style={{ display: "flex" }}>
-              <div style={{ marginLeft: "80px" }}>
-                <p style={{ fontWeight: "bold" }}>Address</p>
-                <p>{viewEmployeeProfile?.permanentAddress}</p>
-              </div>
-              <div style={{ marginLeft: "55%" }}>
-                <p style={{ fontWeight: "bold" }}>
-                  {/* <CalendarOutlined style={{ marginRight: "10px" }} /> */}
-                  Joining Date
-                </p>
-                <p>{viewEmployeeProfile?.joiningDate}</p>
-              </div>
-            </div>
-          </Card>
-
-          <br />
-          <Card
-            hoverable
-            style={{
-              display: "flex",
-              marginLeft: "-15px",
-              width: 980,
-              // marginTop: "-20px",
-            }}
-          >
-            <div style={{ display: "flex", marginLeft: "30%" }}>
-              <div>
-                <p style={{ fontWeight: "bold" }}>
-                  {/* <PhoneOutlined
-                    style={{ fontSize: "14px", marginRight: "8px" }}
-                  /> */}
-                  Contact
-                </p>
-                <p style={{ marginRight: "10px" }}>
-                  {viewEmployeeProfile?.contact}
-                </p>
-              </div>
-
-              <div style={{ marginLeft: "180%" }}>
-                <p style={{ fontWeight: "bold" }}>
-                  {/* <MailIcon
-                    style={{
-                      fontSize: "14px",
-                      marginRight: "5px",
-                    }}
-                  /> */}
-                  Email
-                </p>
-                <p>{viewEmployeeProfile?.email}</p>
-              </div>
-
-              <div style={{ marginLeft: "140%" }}>
-                <p style={{ fontWeight: "bold" }}>{/* <LinkedInIcon /> */}</p>
-                <p>{viewEmployeeProfile?.linkedinprofilelink}</p>
-              </div>
-            </div>
+            <Meta
+              // avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+              // title="Card title"
+              description="Email"
+            />
+            <p>{viewEmployeeProfile?.email}</p>
           </Card>
         </div>
-      </Card>
 
-      {/* <div>
-        <img
-          src={userprofiledata}
-          alt=""
-          className="userprofileimg"
-          style={{
-            display: "flex",
-            height: "200px",
-            width: "200px",
-            marginTop: "40px",
-          }}
-        />
+        <Card style={{ marginLeft: "20px", marginTop: "40px" }}>
+          <div style={{ display: "flex" }}>
+            <div style={{ display: "flex" }}>
+              <div style={{ marginRight: "50px" }}>
+                <p style={{ color: "darkgray", marginTop: "13px" }}>Email</p>
+                <Divider />
+                <p style={{ color: "darkgray", marginTop: "13px" }}>
+                  Mobile no.
+                </p>
+                <Divider />
+                <p style={{ color: "darkgray", marginTop: "13px" }}>
+                  Emergency contact
+                </p>
+                <Divider />
+                <p style={{ color: "darkgray", marginTop: "13px" }}>
+                  Permanent address
+                </p>
+                <Divider />
+                <p style={{ color: "darkgray", marginTop: "13px" }}>
+                  Blood group
+                </p>
+                <Divider />
+                <p style={{ color: "darkgray", marginTop: "13px" }}>
+                  Father's name
+                </p>
+                <Divider />
+              </div>
+              <div style={{ marginRight: "90px" }}>
+                <h1 style={{ color: "black", marginTop: "13px" }}>
+                  {viewEmployeeProfile?.email}
+                </h1>
+                <Divider />
+                <h1 style={{ color: "black" }}>
+                  {viewEmployeeProfile?.contact}
+                </h1>
+                <Divider />
+                <h1 style={{ color: "black", marginTop: "13px" }}>
+                  {viewEmployeeProfile?.contactNumber}
+                </h1>
+                <Divider />
+                <h1 style={{ color: "black", marginTop: "13px" }}>
+                  {viewEmployeeProfile?.permanentAddress}
+                </h1>
+                <Divider />
+                <h1 style={{ color: "black", marginTop: "13px" }}>
+                  {viewEmployeeProfile?.bloodGroup}
+                </h1>
+                <Divider />
+                <h1 style={{ color: "black", marginTop: "13px" }}>
+                  {viewEmployeeProfile?.fatherName}
+                </h1>
+                <Divider />
+              </div>
+            </div>
+
+            <div style={{ display: "flex" }}>
+              <div style={{ marginRight: "50px" }}>
+                <p style={{ color: "darkgray", marginTop: "13px" }}>
+                  Mother's name
+                </p>
+                <Divider />
+                <p style={{ color: "darkgray", marginTop: "13px" }}>Salary</p>
+                <Divider />
+                <p style={{ color: "darkgray", marginTop: "13px" }}>Linkedin</p>
+                <Divider />
+                <p style={{ color: "darkgray", marginTop: "13px" }}>
+                  Designation
+                </p>
+                <Divider />
+                <p style={{ color: "darkgray", marginTop: "13px" }}>
+                  Joining date
+                </p>
+                <Divider />
+                <p style={{ color: "darkgray", marginTop: "13px" }}>
+                  Appraisel date
+                </p>
+              </div>
+              <div>
+                <h1 style={{ color: "black", marginTop: "13px" }}>
+                  {viewEmployeeProfile?.motherName}
+                </h1>
+                <Divider />
+                <h1 style={{ color: "black", marginTop: "13px" }}>
+                  {viewEmployeeProfile?.salary}
+                </h1>
+                <Divider />
+                <h1 style={{ color: "black", marginTop: "13px" }}>
+                  {viewEmployeeProfile?.linkedinprofilelink}
+                </h1>
+                <Divider />
+                <h1 style={{ color: "black", marginTop: "13px" }}>
+                  {viewEmployeeProfile?.role}
+                </h1>
+                <Divider />
+                <h1 style={{ color: "black", marginTop: "13px" }}>
+                  {viewEmployeeProfile?.joiningDate}
+                </h1>
+                <Divider />
+                <h1 style={{ color: "black", marginTop: "13px" }}>
+                  {viewEmployeeProfile?.appraisal}
+                </h1>
+              </div>
+            </div>
+          </div>
+        </Card>
       </div>
-
-      <Card title="General Information" bordered={false} style={{ width: 300 }}>
-        <p>Name: {viewEmployeeProfile?.name}</p>
-        <p>Email: {viewEmployeeProfile?.email}</p>
-        <p>Contact: {viewEmployeeProfile?.contact}</p>
-        <p>Gender: {viewEmployeeProfile?.gender}</p>
-        <p>Role: {viewEmployeeProfile?.role}</p>
-        <p>Linkedin Profile: {viewEmployeeProfile?.linkedinprofilelink}</p>
-      </Card> */}
     </>
   );
-  // } else {
-  //   <div>
-
-  //     <div
-  //       style={{
-  //         marginTop: 8,
-  //       }}
-  //     >
-  //       <Button onClick={mypic}>Upload</Button>
-  //     </div>
-  //   </div>
-  // }
 };
 export default ProfileEmployee;

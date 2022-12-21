@@ -19,20 +19,24 @@ import {
 } from "antd";
 import { FcPhone } from "react-icons/fc";
 import axios from "axios";
-import { Space, Typography } from 'antd';
-import { Divider } from 'antd';
+import { Space, Typography } from "antd";
+import { Divider } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { Collapse } from "antd";
 import { Tabs } from "antd";
 import { Badge, Descriptions } from "antd";
-import { EditOutlined, EllipsisOutlined, SettingOutlined, MailOutlined } from '@ant-design/icons';
-import { Avatar } from 'antd';
+import {
+  EditOutlined,
+  EllipsisOutlined,
+  SettingOutlined,
+  MailOutlined,
+} from "@ant-design/icons";
+import { Avatar } from "antd";
 const { Meta } = Card;
 
 const { Text } = Typography;
 const { TabPane } = Tabs;
 const { Panel } = Collapse;
-
 
 // import { max } from "date-fns";
 const { Option } = Select;
@@ -68,6 +72,7 @@ const Profile = () => {
   const [newpassword, setNewPassword] = useState([]);
   const [empskilldata, setEmpSkillData] = useState("");
   const [myprofilepic, setmyprofilepic] = useState("");
+  console.log("profile picture", myprofilepic);
   // console.warn("viewingEmployee", viewingEmployee)
 
   // console.log("empskilldata", empskilldata);
@@ -135,7 +140,10 @@ const Profile = () => {
       .get(`${process.env.REACT_APP_BASE_URL}/user/${id}`)
       .then((res) => {
         console.log("employeeDetails", res?.data?.myData);
-        setmyprofilepic("https://leave-management-system.glitch.me/images/" + res?.data?.myData?.profilepicture)
+        setmyprofilepic(
+          "https://leave-management-system.glitch.me/images/" +
+            res?.data?.myData?.profilepicture
+        );
         setViewingEmployee(res?.data?.myData);
 
         form.setFieldsValue({
@@ -238,12 +246,11 @@ const Profile = () => {
     },
   ];
 
-  function callback(key) { }
+  function callback(key) {}
 
   const collapseValue = (
     <>
       <Card
-
         // title=" details"
         // extra={<a href="#">More</a>}
         style={{
@@ -264,7 +271,6 @@ const Profile = () => {
           </div>
 
         </div> */}
-
       </Card>
       {/* <div>
         <div>
@@ -333,71 +339,98 @@ const Profile = () => {
   );
 
   const contactCollapse = (
-
     <Card>
-      <div style={{ display: "flex"}}>
-
+      <div style={{ display: "flex" }}>
         <div style={{ display: "flex" }}>
           <div style={{ marginRight: "50px" }}>
-            <p style={{ "color": "darkgray", marginTop: "13px" }}>Email</p>
+            <p style={{ color: "darkgray", marginTop: "13px" }}>Email</p>
             <Divider />
-            <p style={{ "color": "darkgray", marginTop: "13px" }}>Mobile no.</p>
+            <p style={{ color: "darkgray", marginTop: "13px" }}>Mobile no.</p>
             <Divider />
-            <p style={{ "color": "darkgray", marginTop: "13px" }}>Emergency contact</p>
+            <p style={{ color: "darkgray", marginTop: "13px" }}>
+              Emergency contact
+            </p>
             <Divider />
-            <p style={{ "color": "darkgray", marginTop: "13px" }}>Permanent address</p>
+            <p style={{ color: "darkgray", marginTop: "13px" }}>
+              Permanent address
+            </p>
             <Divider />
-            <p style={{ "color": "darkgray", marginTop: "13px" }}>Blood group</p>
+            <p style={{ color: "darkgray", marginTop: "13px" }}>Blood group</p>
             <Divider />
-            <p style={{ "color": "darkgray", marginTop: "13px" }}>Father's name</p>
+            <p style={{ color: "darkgray", marginTop: "13px" }}>
+              Father's name
+            </p>
             <Divider />
           </div>
-          <div style={{marginRight:"90px"}}>
-            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.email}</h1>
+          <div style={{ marginRight: "90px" }}>
+            <h1 style={{ color: "black", marginTop: "13px" }}>
+              {viewingEmployee?.email}
+            </h1>
             <Divider />
-            <h1 style={{ "color": "black" }}>{viewingEmployee?.contact}</h1>
+            <h1 style={{ color: "black" }}>{viewingEmployee?.contact}</h1>
             <Divider />
-            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.contactNumber}</h1>
+            <h1 style={{ color: "black", marginTop: "13px" }}>
+              {viewingEmployee?.contactNumber}
+            </h1>
             <Divider />
-            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.permanentAddress}</h1>
+            <h1 style={{ color: "black", marginTop: "13px" }}>
+              {viewingEmployee?.permanentAddress}
+            </h1>
             <Divider />
-            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.bloodGroup}</h1>
+            <h1 style={{ color: "black", marginTop: "13px" }}>
+              {viewingEmployee?.bloodGroup}
+            </h1>
             <Divider />
-            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.fatherName}</h1>
+            <h1 style={{ color: "black", marginTop: "13px" }}>
+              {viewingEmployee?.fatherName}
+            </h1>
             <Divider />
           </div>
         </div>
 
-
         <div style={{ display: "flex" }}>
-
           <div style={{ marginRight: "50px" }}>
-            <p style={{ "color": "darkgray", marginTop: "13px" }}>Mother's name</p>
+            <p style={{ color: "darkgray", marginTop: "13px" }}>
+              Mother's name
+            </p>
             <Divider />
-            <p style={{ "color": "darkgray", marginTop: "13px" }}>Salary</p>
+            <p style={{ color: "darkgray", marginTop: "13px" }}>Salary</p>
             <Divider />
-            <p style={{ "color": "darkgray", marginTop: "13px" }}>Linkedin</p>
+            <p style={{ color: "darkgray", marginTop: "13px" }}>Linkedin</p>
             <Divider />
-            <p style={{ "color": "darkgray", marginTop: "13px" }}>Designation</p>
+            <p style={{ color: "darkgray", marginTop: "13px" }}>Designation</p>
             <Divider />
-            <p style={{ "color": "darkgray", marginTop: "13px" }}>Joining date</p>
+            <p style={{ color: "darkgray", marginTop: "13px" }}>Joining date</p>
             <Divider />
-            <p style={{ "color": "darkgray", marginTop: "13px" }}>Appraisel date</p>
+            <p style={{ color: "darkgray", marginTop: "13px" }}>
+              Appraisel date
+            </p>
           </div>
           <div>
-            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.motherName}</h1>
+            <h1 style={{ color: "black", marginTop: "13px" }}>
+              {viewingEmployee?.motherName}
+            </h1>
             <Divider />
-            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.salary}</h1>
+            <h1 style={{ color: "black", marginTop: "13px" }}>
+              {viewingEmployee?.salary}
+            </h1>
             <Divider />
-            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.linkedinprofilelink}</h1>
+            <h1 style={{ color: "black", marginTop: "13px" }}>
+              {viewingEmployee?.linkedinprofilelink}
+            </h1>
             <Divider />
-            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.role}</h1>
+            <h1 style={{ color: "black", marginTop: "13px" }}>
+              {viewingEmployee?.role}
+            </h1>
             <Divider />
-            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.joiningDate}</h1>
+            <h1 style={{ color: "black", marginTop: "13px" }}>
+              {viewingEmployee?.joiningDate}
+            </h1>
             <Divider />
-            <h1 style={{ "color": "black", marginTop: "13px" }}>{viewingEmployee?.appraisal}</h1>
+            <h1 style={{ color: "black", marginTop: "13px" }}>
+              {viewingEmployee?.appraisal}
+            </h1>
           </div>
-
         </div>
       </div>
       {/* <div style={{ display: "flex" }}>
@@ -551,9 +584,8 @@ const Profile = () => {
         
 
       </div> */}
-
     </Card>
-  )
+  );
 
   const skillCollapse = (
     <div>
@@ -821,7 +853,6 @@ const Profile = () => {
 
   return (
     <>
-
       <div style={{ display: "flex" }}>
         <h1>DATE :</h1>
 
@@ -930,18 +961,10 @@ const Profile = () => {
         </Form>
       </Modal>
 
-
-
       <div className="myprofile">
         <Card
           className="smallprofilecard"
-
-          cover={
-            <img
-              alt="example"
-              src={myprofilepic}
-            />
-          }
+          cover={<img alt="" src={myprofilepic} />}
           actions={[
             <SettingOutlined key="setting" />,
             <EditOutlined key="edit" />,
@@ -953,28 +976,28 @@ const Profile = () => {
             // title="Card title"
             description="Full name"
           />
-          <p>Sudhir dadwal</p>
+          <p>{viewingEmployee?.name}</p>
 
           <Meta
             // avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
             // title="Card title"
             description="Designation"
           />
-          <p>Admin</p>
+          <p>{viewingEmployee?.role}</p>
 
           <Meta
             // avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
             // title="Card title"
             description="Mobile no."
           />
-          <p>2387246265</p>
+          <p>{viewingEmployee?.contact}</p>
 
           <Meta
             // avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
             // title="Card title"
             description="Email"
           />
-          <p>ebs.sudhir@gmail.com</p>
+          <p>{viewingEmployee?.email}</p>
         </Card>
 
         {/* <div className="profiledeatils"> */}
