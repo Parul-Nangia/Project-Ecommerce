@@ -45,12 +45,11 @@ const LoginNew = () => {
       console.log(localStorage, "localStorage");
       // message.success("Login ");
       message.open({
-        type: 'success',
-        content: 'Login success!',
+        type: "success",
+        content: "Login",
         duration: 2,
         style: {
-          marginTop: '11vh',
-
+          marginTop: "11vh",
         },
       });
       window.location.reload();
@@ -69,62 +68,55 @@ const LoginNew = () => {
       if (name === "" && password === "") {
         // message.error("Fill your username and password");
         message.open({
-          type: 'error',
-          content: 'Fill your Username & Password',
+          type: "error",
+          content: "Fill your Username & Password",
           duration: 2,
           style: {
-            marginTop: '11vh',
-
+            marginTop: "11vh",
           },
         });
-
       } else if (!Password.includes(password) && !UserName.includes(name)) {
         // message.error("InValid password & username!!");
         message.open({
-          type: 'error',
-          content: 'InValid password & username!!',
+          type: "error",
+          content: "InValid password & username!!",
           duration: 2,
           style: {
-            marginTop: '11vh',
-
+            marginTop: "11vh",
           },
         });
       } else if (!UserName.includes(name)) {
         console.log("Incorrect username");
         // message.error("Incorrect Username!");
         message.open({
-          type: 'error',
-          content: 'Incorrect Username!',
+          type: "error",
+          content: "Incorrect Username!",
           duration: 2,
           style: {
-            marginTop: '11vh',
-
+            marginTop: "11vh",
           },
         });
       } else if (!Password.includes(password)) {
         console.log("Incorrect Password");
         // message.error("Incorrect password!");
         message.open({
-          type: 'error',
-          content: 'Incorrect password!',
+          type: "error",
+          content: "Incorrect password!",
           duration: 2,
           style: {
-            marginTop: '11vh',
-
+            marginTop: "11vh",
           },
         });
       } else {
         // message.warning("valid username and password here");
         message.open({
-          type: 'error',
-          content: 'Invalid username and password here',
+          type: "error",
+          content: "Invalid username and password here",
           duration: 2,
           style: {
-            marginTop: '11vh',
-
+            marginTop: "11vh",
           },
         });
-
       }
     }
   };
@@ -137,7 +129,7 @@ const LoginNew = () => {
 
           <Form.Item
             name="Name"
-            rules={[{ required: true, message: "Please input your Username!" }]}
+            rules={[{ required: true, message: "Please input Username!" }]}
           >
             <Input
               prefix={<UserOutlined />}

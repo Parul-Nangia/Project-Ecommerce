@@ -61,7 +61,6 @@ const Drop = () => {
             setUserProfileData(
               "https://cdn.vectorstock.com/i/preview-1x/66/14/default-avatar-photo-placeholder-profile-picture-vector-21806614.webp"
             );
-           
           } else {
             console.warn("image uploaded");
 
@@ -79,7 +78,7 @@ const Drop = () => {
 
   const menu = (
     <Menu
-      // style={{ marginTop: "-25px" }}
+      style={{ marginRight: "8px" }}
       items={[
         {
           key: "0",
@@ -87,7 +86,7 @@ const Drop = () => {
           label: (
             <Link className="drop-down" onClick={ProfileEmployee}>
               {" "}
-              Upload Profile Picture
+              My Profile
             </Link>
           ),
         },
