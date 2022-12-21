@@ -107,7 +107,7 @@ const ProfileEmployee = () => {
       await axios
         .get(`${process.env.REACT_APP_BASE_URL}/user/${decoded._id}`)
         .then((res) => {
-          console.warn("myprofieres", res);
+          console.warn("myprofieres", res?.data);
 
           if (res?.data?.myData?.profilepicture === "") {
             setUserProfileData(

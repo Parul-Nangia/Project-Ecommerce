@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import React from "react";
 import { useState, useEffect } from "react";
-import { Table,message } from "antd";
+import { Table, message } from "antd";
 import { Button, Modal, Form, Input, Row, Select } from "antd";
 import {
   FileAddOutlined,
@@ -37,7 +37,7 @@ const Employees = ({ dataSource }) => {
   const [contact, setContact] = useState("");
   const [gender, setGender] = useState("");
   const [role, setRole] = useState("");
-  const [linkedinprofilelink, setLinkedinProfileLink] = useState("");
+  const [linkedinprofilelink, setLinkedinProfileLink] = useState("Null");
   const navigate = useNavigate();
   const [name, setName] = useState("");
   // console.log("emp name", name);
@@ -77,46 +77,46 @@ const Employees = ({ dataSource }) => {
   };
 
   const handleOk = async () => {
-    console.log(handleOk,"hhhhh")
-    try{
-    const profilepicture = "";
-    await axios
-      .post(`${process.env.REACT_APP_BASE_URL}/user/signup`, {
-        name,
-        password,
-        email,
-        contact,
-        gender,
-        role,
-        linkedinprofilelink,
-        profilepicture,
-      })
-      .then((res) => {
-        console.log("response", res);
-        console.log(res?.data,"princeeeeee")
-        console.log(res?.data?.newuser,"kahollll")
-        
-        // const array=[]
-        // array.append(as)
-        // console.log(as,"ggggg")
-      });
-    message.success("Employee added successfully!")
-    // window.location.reload();
-    setIsModalOpen(false);
+    console.log(handleOk, "hhhhh")
+    try {
+      const profilepicture = "";
+      await axios
+        .post(`${process.env.REACT_APP_BASE_URL}/user/signup`, {
+          name,
+          password,
+          email,
+          contact,
+          gender,
+          role,
+          linkedinprofilelink,
+          profilepicture,
+        })
+        .then((res) => {
+          console.log("response", res);
+          console.log(res?.data, "princeeeeee")
+          console.log(res?.data?.newuser, "kahollll")
+
+          // const array=[]
+          // array.append(as)
+          // console.log(as,"ggggg")
+        });
+      message.success("Employee added successfully!")
+      // window.location.reload();
+      setIsModalOpen(false);
     }
-    catch(error){
+    catch (error) {
       message.open({
         type: 'error',
         content: 'email already existed',
         duration: 2,
         // style: {
         //   marginTop: '11vh',
-          
+
         // },
       });
     }
   };
-               
+
   const handleCancel = () => {
     setIsModalOpen(false);
   };
@@ -133,7 +133,7 @@ const Employees = ({ dataSource }) => {
   };
 
   //================================================= START employee delete ( API==================================================
-  
+
   //   fetch(`${process.env.REACT_APP_BASE_URL}/user/${_id}`, {
   //     method: "DELETE",
   //     headers: {
@@ -164,17 +164,17 @@ const Employees = ({ dataSource }) => {
     await axios
       .delete(`${process.env.REACT_APP_BASE_URL}/user/empdel/${_id}`)
       .then((res) => {
-        console.log(_id,"IDDDDDDD")
-      console.log(" delete", res);
-      // setEmployeeData(
-      //     res.data.map((row) => ({
-      //       _id: row._id,
-      //     }))
-      //   );
+        console.log(_id, "IDDDDDDD")
+        console.log(" delete", res);
+        // setEmployeeData(
+        //     res.data.map((row) => ({
+        //       _id: row._id,
+        //     }))
+        //   );
       });
   };
 
- 
+
   // //================================================= START employee post (POST API)
   // function saveEmployee() {
   //   console.warn({ name, password, email, contact, gender, role, linkedinprofilelink
@@ -230,7 +230,7 @@ const Employees = ({ dataSource }) => {
         contact,
         role,
       })
-      .then((res) => {});
+      .then((res) => { });
     setIsEditing(false);
   };
   // ----------------------------------------fetch method (PUT api)
@@ -536,10 +536,10 @@ const Employees = ({ dataSource }) => {
         >
           <Row justify="center" style={{ padding: "10%" }}>
             <Form style={{ width: "300px" }} autoComplete="off">
-              <Form.Item 
-              name="name"
-              rules={
-                [{ required: true },
+              <Form.Item
+                name="name"
+                rules={
+                  [{ required: true },
                   {
                     pattern: new RegExp(
                       /^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+\s*[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i
@@ -547,7 +547,7 @@ const Employees = ({ dataSource }) => {
                     // pattern: new RegExp(/^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i),
                     message: "please Input in alphabets only",
                   },
-                ]
+                  ]
                 }>
                 <Input
                   prefix={<UserOutlined className="site-form-item-icon" />}
@@ -558,9 +558,9 @@ const Employees = ({ dataSource }) => {
                 />
               </Form.Item>
               <Form.Item
-              name="password"
-              rules={[
-                { required: true }
+                name="password"
+                rules={[
+                  { required: true }
                 ]}>
                 <Input.Password
                   type="password"
@@ -573,10 +573,11 @@ const Employees = ({ dataSource }) => {
               </Form.Item>
 
               <Form.Item
-              name="email"
-               rules={[{ required: true,
-                message:"Please enter your email"
-                },{type:'email'}]}>
+                name="email"
+                rules={[{
+                  required: true,
+                  message: "Please enter your email"
+                }, { type: 'email' }]}>
                 <Input
                   prefix={<MailOutlined className="site-form-item-icon" />}
                   placeholder="Email Address"
@@ -586,10 +587,12 @@ const Employees = ({ dataSource }) => {
                 />
               </Form.Item>
 
-              <Form.Item 
-              name="contact"
-              rules={[{ required: true , message:"Please enter your valid contact number",max: 10,
-              min: 10,}]}>
+              <Form.Item
+                name="contact"
+                rules={[{
+                  required: true, message: "Please enter your valid contact number", max: 10,
+                  min: 10,
+                }]}>
                 <Input
                   type="number"
                   prefix={<PhoneOutlined className="site-form-item-icon" />}
@@ -631,17 +634,17 @@ const Employees = ({ dataSource }) => {
                   <Option value="male">male</Option>
                   <Option value="female">female</Option>
                 </Select> */}
-                  <Select
-               placeholder=" Select your Gender"
-                onChange={SelectGender}
-                
-              >
-                <Select.Option value="male">male</Select.Option>
-                <Select.Option value="female">female</Select.Option>
-              </Select>
+                <Select
+                  placeholder=" Select your Gender"
+                  onChange={SelectGender}
+
+                >
+                  <Select.Option value="male">male</Select.Option>
+                  <Select.Option value="female">female</Select.Option>
+                </Select>
               </Form.Item>
-              <Form.Item 
-              name="role" rules={[{ required: true,  message: "Select your Role "}]}>
+              <Form.Item
+                name="role" rules={[{ required: true, message: "Select your Role " }]}>
                 {/* <Input
                   // defaultValue="Employee"
                   // disabled="true"
@@ -668,9 +671,9 @@ const Employees = ({ dataSource }) => {
                   <Option value="admin">admin</Option>
                 </Select>
               </Form.Item>
-              <Form.Item 
-              label="Id"
-              requiredMark="optional"
+              <Form.Item
+                label="Id"
+                requiredMark="optional"
               >
                 <Input
                   prefix={
