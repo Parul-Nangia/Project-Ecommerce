@@ -1,4 +1,4 @@
-import { Button, Form, Input, Row, message } from "antd";
+import { Button, Form, Input, Row, message, Spin } from "antd";
 import React, { useState, useEffect } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import axios from "axios";
@@ -33,25 +33,15 @@ const LoginNew = () => {
         `${process.env.REACT_APP_BASE_URL}/user/login`,
         { name, password }
       );
-      //     .then(()=>{
-      // message.success("Authorized ")
 
-      //     });
-      console.log(data, "dataaaa");
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${data["token"]}`;
       localStorage.setItem("access_token1", JSON.stringify(data.token));
       console.log(localStorage, "localStorage");
       // message.success("Login ");
-      message.open({
-        type: "success",
-        content: "Login",
-        duration: 2,
-        style: {
-          marginTop: "11vh",
-        },
-      });
+      message.success("Login");
+
       window.location.reload();
       navigate("/");
     } catch (error) {

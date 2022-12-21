@@ -92,7 +92,7 @@ const ProfileEmployee = () => {
         // }
       });
 
-    // window.location.reload();
+    window.location.reload();
   };
 
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);

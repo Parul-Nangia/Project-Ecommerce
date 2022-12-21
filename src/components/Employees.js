@@ -1,4 +1,3 @@
-import { makeStyles } from "@material-ui/core";
 import React from "react";
 import { useState, useEffect } from "react";
 import { Table, message } from "antd";
@@ -21,15 +20,11 @@ import jwt_decode from "jwt-decode";
 import Profile from "./Profile";
 
 const Employees = ({ dataSource }) => {
-  // const [ignored, forceUpdate] = useReducer(x=>x+1, 0);
-
-  // const [profile, setProfile] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
 
   const [state, setState] = useState([]);
-  // const [view, setView] = useState([]);
   const [employeeData, setEmployeeData] = useState([]);
 
   const [password, setPassword] = useState("");
@@ -57,18 +52,8 @@ const Employees = ({ dataSource }) => {
     setEmployeeName(decoded);
   };
 
-  // if(employeename.role==="employee"){
-  //   return(
-
-  //   )
-
-  // }
-  // const data = "Hello Everyone";
   const profile = (record) => {
-    // navigate("/profile/" + record._id ,data={data});
     navigate("/profile/" + record._id);
-    // navigate("/profile/" + record._id, {queryParams: record});
-    // navigate("/profile/",<Profile />)
     console.log(record, "User_iddddd");
   };
 
@@ -91,11 +76,7 @@ const Employees = ({ dataSource }) => {
           linkedinprofilelink,
           profilepicture,
         })
-        .then((res) => {
-          // const array=[]
-          // array.append(as)
-          // console.log(as,"ggggg")
-        });
+        .then((res) => {});
       message.success("Employee added successfully!");
       // window.location.reload();
       setIsModalOpen(false);
@@ -104,10 +85,6 @@ const Employees = ({ dataSource }) => {
         type: "error",
         content: "Please fill all fields",
         duration: 2,
-        // style: {
-        //   marginTop: '11vh',
-
-        // },
       });
     }
   };
@@ -127,81 +104,12 @@ const Employees = ({ dataSource }) => {
     });
   };
 
-  //================================================= START employee delete ( API==================================================
-
-  //   fetch(`${process.env.REACT_APP_BASE_URL}/user/${_id}`, {
-  //     method: "DELETE",
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-
-  //   console.log("Employee Deleted", _id);
-  //   // forceUpdate();
-  //   window.location.reload(false);
-  // }
-
-  // function deleteEmployee(_id) {
-  //   fetch(`${process.env.REACT_APP_BASE_URL}/user/empdel/${_id}`, {
-  //     method: "DELETE",
-  //   }).then((res) => {
-  //     console.log(_id,"IDDDDDDD")
-  //     console.log(" delete", res);
-  //     employeeData(res.data.map((row)=>{
-  //       _id:row._id
-  //     }))
-  //     // window.alert("Employee Deleted successfully");
-  //     // window.location.reload(false);
-  //   });
-  // }
   const deleteEmployee = async (_id) => {
     await axios
       .delete(`${process.env.REACT_APP_BASE_URL}/user/empdel/${_id}`)
-      .then((res) => {
-        console.log(_id, "IDDDDDDD");
-        console.log(" delete", res);
-        // setEmployeeData(
-        //     res.data.map((row) => ({
-        //       _id: row._id,
-        //     }))
-        //   );
-      });
+      .then((res) => {});
+    window.location.reload();
   };
-
-  // //================================================= START employee post (POST API)
-  // function saveEmployee() {
-  //   console.warn({ name, password, email, contact, gender, role, linkedinprofilelink
-  //    });
-  //   let data = { name, password, email, contact, gender, role, linkedinprofilelink };
-
-  //   fetch(`${process.env.REACT_APP_BASE_URL}/user/signup`, {
-  //     method: "POST",
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(data),
-  //   }).then((Employee) => {
-  //     console.log("result", Employee);
-  //     window.alert("New Employee added successfully");
-  //   });
-  // }
-  // const saveEmployee =async () =>{
-
-  //   await axios
-  //   .post(`${process.env.REACT_APP_BASE_URL}/user/signup`, {
-  //     name, password, email, contact, gender, role, linkedinprofilelink
-
-  //   })
-  //   .then((result) => {
-
-  //     console.log("user data", result);
-
-  //   });
-  // }
-
-  // //================================================= END employee post (POST API)
 
   // //================================================= START employee put (PUT API)
   // ----------------------------------------axios method (PUT api)
@@ -227,29 +135,6 @@ const Employees = ({ dataSource }) => {
       .then((res) => {});
     setIsEditing(false);
   };
-  // ----------------------------------------fetch method (PUT api)
-  //  function editEmployee(_id) {
-  //   console.warn({ name, email, contact, gender });
-  //   let data = { name, email, contact, gender }
-  //   fetch(`http://localhost:1999/employee/${_id}`, {
-  //     method: 'PUT',
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(data)
-  //   }).then((Employee) => {
-  //     console.warn("result", Employee);
-  //     // setState((pre)=>{
-  //     //   return[...pre,editEmployee]
-  //     // })
-
-  //   })
-  //   setIsEditing(false);
-  // }
-  // const viewEmployee =()=>{
-
-  // }
 
   const SelectGender = (value) => {
     setGender(value);
@@ -286,33 +171,6 @@ const Employees = ({ dataSource }) => {
         console.log("list response", emp);
       });
   };
-
-  // //================================================= END employee GET (GET API)
-
-  // //=================================================START View employee GET (GET API)
-  // useEffect((_id) => {
-  //   viewEmployee(_id);
-
-  // }, [])
-
-  // const viewEmployee = (_id) => {
-  //   fetch(`http://localhost:1999/employee/${_id}`).then((response) => {
-  //     return response.json();
-  //   }).then((data) => {
-  //     let ab = data.viewData;
-  //     setView(ab)
-
-  //     console.log("response", ab);
-
-  //   })
-
-  // }
-  // console.log(view, "qq")
-  // //=================================================END  View employee GET (GET API)
-  // const onViewEmployee = (record) => {
-  //   viewEmployee = (record._id)
-
-  // }
 
   // const navigate=useNavigate()
   const documentation = (user_id) => {
@@ -599,17 +457,6 @@ const Employees = ({ dataSource }) => {
                 />
               </Form.Item>
 
-              {/* <Form.Item rules={[{ required: true }]}> */}
-              {/* <Input
-                  prefix={
-                    <UserSwitchOutlined className="site-form-item-icon" />
-                  }
-                  placeholder="Gender"
-                  onChange={(e) => {
-                    setGender(e.target.value);
-                  }}
-                /> */}
-              {/* </Form.Item> */}
               <Form.Item
                 name="gender"
                 // defaultValue="Employee"
@@ -620,16 +467,6 @@ const Employees = ({ dataSource }) => {
                   },
                 ]}
               >
-                {/* <Select
-                  prefix={
-                    <UserSwitchOutlined className="site-form-item-icon" />
-                  }
-                  placeholder=" Select your Gender"
-                  onChange={SelectGender}
-                >
-                  <Option value="male">male</Option>
-                  <Option value="female">female</Option>
-                </Select> */}
                 <Select
                   placeholder=" Select your Gender"
                   onChange={SelectGender}
@@ -642,28 +479,7 @@ const Employees = ({ dataSource }) => {
                 name="role"
                 rules={[{ required: true, message: "Select your Role " }]}
               >
-                {/* <Input
-                  // defaultValue="Employee"
-                  // disabled="true"
-                  prefix={
-                    <UserSwitchOutlined className="site-form-item-icon" />
-                  }
-                  // placeholder="Employee"
-                  // value="Employee"
-                  placeholder="Role"
-                  onChange={(e) => {
-                    setRole(e.target.value);
-                  }}
-                /> */}
-                <Select
-                  // prefix={
-                  //   <UserSwitchOutlined className="site-form-item-icon" />
-                  // }
-                  placeholder="Select your Role"
-                  onChange={SelectRole}
-                >
-                  {/* <Select.Option value="employee">employee</Select.Option>
-                  <Select.Option value="admin">admin</Select.Option> */}
+                <Select placeholder="Select your Role" onChange={SelectRole}>
                   <Option value="employee">employee</Option>
                   <Option value="admin">admin</Option>
                 </Select>

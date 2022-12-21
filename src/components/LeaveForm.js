@@ -64,11 +64,17 @@ const LeaveForm = () => {
         body: JSON.stringify(data),
       }).then((Leave) => {
         console.log("result", Leave);
-        // message.success("Leave Applied");
       });
     } catch (error) {
-      if (EmployeeName === "" && LeaveDate === "") {
-        message.error("Fill all the Fields");
+      if (
+        EmployeeName === "" ||
+        LeaveDate === "" ||
+        LeaveType === "" ||
+        Department === "" ||
+        ReturnDate === "" ||
+        TotalHoursRequested === ""
+      ) {
+        // message.error("Fill all the Fields");
       } else {
         message.error("Leave Not Apply");
       }
@@ -97,13 +103,16 @@ const LeaveForm = () => {
             response.status,
             response.text
           );
-          message.success("Leave Applied");
+          // message.success("Leave Applied");
+          navigate("/submissionsuccess");
         })
         .catch((err) => {
           console.log("Failed", err);
         });
     } else {
-      message.error("Please fill all the fields !!!!");
+      navigate("/submiterror");
+
+      // message.error("Please fill all the fields !!!!");
     }
   };
 

@@ -2,7 +2,7 @@ import {
   MinusCircleTwoTone,
   PlusCircleTwoTone,
   SearchOutlined,
-  CalendarOutlined
+  CalendarOutlined,
 } from "@ant-design/icons";
 import { Button, Input, Space, Table, DatePicker, Form, Modal } from "antd";
 import React, { useState, useEffect } from "react";
@@ -11,7 +11,7 @@ import axios from "axios";
 import moment from "moment";
 import { FcCalendar } from "react-icons/fc";
 import { Calendar, Badge } from "antd";
-import jwt_decode from 'jwt-decode';
+import jwt_decode from "jwt-decode";
 
 const AttendanceTable = () => {
   const [dataSource, setDataSource] = useState([]);
@@ -22,40 +22,17 @@ const AttendanceTable = () => {
   const [EmployeeCalendar, setEmployeeCalendar] = useState([]);
   const [singleAttendance, setSingleAttendance] = useState([]);
   const [state, setState] = useState([]);
-  console.log("state", state)
-  
-
-
-  // useEffect(() => {
-  //   const getSingleAttendance = async (record) => {
-  //     // console.log("record", record._id)
-  //     console.log("record???", record)
-
-  //     await axios
-  //       .get(`${process.env.REACT_APP_BASE_URL}/attendance/single/${record._id}`)
-  //       .then((res) => {
-  //         setSingleAttendance(res?.data?.SingleAttendance)
-  //         console.log("singleAttendance", res?.data?.SingleAttendance);
-  //       });
-  //   };
-  //   getSingleAttendance()
-  // }, [])
+  console.log("state", state);
 
   const getCalendarSingleRowData = async (record) => {
-    console.log("record", record._id)
-    setState(record.name.toUpperCase() + "'s" + " " + "ATTENDANCE RECORD")
-    console.log("record", record)
-    // setEmployeeCalendar({ ...record })
-    // console.log("EmployeeCalendar", EmployeeCalendar)
-    // console.log("dataSource", dataSource)
-    // console.log("i am in getCalendarSingleRowData")
+    console.log("record", record._id);
+    setState(record.name.toUpperCase() + "'s" + " " + "ATTENDANCE RECORD");
+    console.log("record", record);
 
     await axios
       .get(`${process.env.REACT_APP_BASE_URL}/attendance/single/${record._id}`)
       .then((res) => {
-        setEmployeeCalendar(res?.data?.SingleAttendance)
-        // setDataSource(res?.data?.SingleEmployeeAllAttendance);
-        console.log("EmployeeCalendar", EmployeeCalendar);
+        setEmployeeCalendar(res?.data?.SingleAttendance);
       });
 
     setIsOpenModal(true);
@@ -65,25 +42,16 @@ const AttendanceTable = () => {
     setIsOpenModal(false);
   };
 
-
-
   const dateCellRender = (value) => {
     // console.log("value", value)
     const stringValue = value.format("YYYY-MM-DD");
     var newArray = EmployeeCalendar?.filter(function (el) {
-
-      return el.TodayDate === stringValue
-
-      //  el.EmployeeName &&
-      //  el._id;
-
-    }
-    )
+      return el.TodayDate === stringValue;
+    });
     // console.warn("dataSource", dataSource)
 
     return (
       <>
-
         {/* <ul className="events"> */}
         {newArray.map((item) => (
           <li key={item._id}>
@@ -91,10 +59,8 @@ const AttendanceTable = () => {
           </li>
         ))}
         {/* </ul> */}
-
       </>
-    )
-
+    );
   };
 
   useEffect(() => {
@@ -103,7 +69,6 @@ const AttendanceTable = () => {
         .get(`${process.env.REACT_APP_BASE_URL}/attendance`)
         .then((res) => {
           setDataSource(res?.data?.attendanceData);
-          console.log("AttendanceAllData", res?.data?.attendanceData);
           for (let f = 0; f < res?.data?.attendanceData.length; f++) {
             if (res?.data?.attendanceData[f].Breaks.length === 0) {
               console.warn("any of the breaks are null");
@@ -118,7 +83,6 @@ const AttendanceTable = () => {
                 } else if (res?.data?.attendanceData[f].Breaks[i]?.end === "") {
                   console.warn("resume first");
                 } else {
-                  console.warn("success start/end not null");
                   const start = moment(
                     res?.data?.attendanceData[f].Breaks[i]?.start,
                     "HH:mm:ss a"
@@ -132,7 +96,9 @@ const AttendanceTable = () => {
                   const milliSeconds = moment.duration(end.diff(start));
                   const seconds = Math.floor((milliSeconds / 1000) % 60);
                   const minutes = Math.floor((milliSeconds / 1000 / 60) % 60);
-                  const hours = Math.floor((milliSeconds / 1000 / 60 / 60) % 24);
+                  const hours = Math.floor(
+                    (milliSeconds / 1000 / 60 / 60) % 24
+                  );
                   // console.log("mill", milliSeconds);
 
                   const formattedTime = [
@@ -244,9 +210,9 @@ const AttendanceTable = () => {
     onFilter: (value, record) =>
       record[dataIndex]
         ? record[dataIndex]
-          .toString()
-          .toLowerCase()
-          .includes(value.toLowerCase())
+            .toString()
+            .toLowerCase()
+            .includes(value.toLowerCase())
         : false,
     render: (text) =>
       searchedColumn === dataIndex ? (
@@ -344,9 +310,9 @@ const AttendanceTable = () => {
     onFilter: (value, record) =>
       record[dataIndex]
         ? moment(record[dataIndex]).isBetween(
-          moment(value[0]),
-          moment(value[1])
-        )
+            moment(value[0]),
+            moment(value[1])
+          )
         : "",
     render: (text) =>
       searchColumnDate === dataIndex ? (
@@ -395,17 +361,19 @@ const AttendanceTable = () => {
       title: "View",
       width: "100px",
       render: (record) => {
-
         return (
           <>
-            <Button style={{ color: "black", borderColor: 'white' }} >
-              <FcCalendar className="calendarviewattendancebtn"
-                onClick={() => { getCalendarSingleRowData(record) }}>
-              </FcCalendar>
+            <Button style={{ color: "black", borderColor: "white" }}>
+              <FcCalendar
+                className="calendarviewattendancebtn"
+                onClick={() => {
+                  getCalendarSingleRowData(record);
+                }}
+              ></FcCalendar>
             </Button>
           </>
-        )
-      }
+        );
+      },
     },
   ];
 
@@ -455,16 +423,15 @@ const AttendanceTable = () => {
         }}
       />
       <Modal
-        title = {state}
+        title={state}
         cancelButtonProps={{ style: { display: "none" } }}
         onCancel={handleCancel}
         open={isopenmodal}
         width={1000}
       >
         {/* <h>{EmployeeCalendar?.name}</h> */}
-        <br/>
+        <br />
         <Calendar dateCellRender={dateCellRender} />
-
       </Modal>
     </>
   );

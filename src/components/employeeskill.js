@@ -40,8 +40,8 @@ const EmployeeSkill = () => {
           console.log("post data", res);
           message.success("SuccessFully Submit !!");
         });
+      window.location.reload();
     }
-    window.location.reload();
   };
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const EmployeeSkill = () => {
     //   isvalue?.skillname
     // }
     setSkillName(value);
-  
+
     console.log("skill set", value);
   };
 
@@ -182,9 +182,9 @@ const EmployeeSkill = () => {
             }}
             placeholder="select your skills"
             optionLabelProp="label"
+            // value={addskill}
             options={options}
             onChange={handleempskill}
-           
           ></Select>
         </Form.Item>
         <Form.Item

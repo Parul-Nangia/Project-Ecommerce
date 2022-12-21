@@ -16,6 +16,8 @@ import ChangePassword from "../components/ChangePassword";
 import ProfileEmployee from "./ProfileEmployee";
 import Adminhandleskill from "./adminhandleskill";
 import EmployeeSkill from "./employeeskill";
+import SubmissionSuccess from "../components/SubmissionSuccess";
+import SubmitError from "./SubmitError";
 
 const Routing = () => {
   return (
@@ -27,6 +29,9 @@ const Routing = () => {
         <Route path="/projects" element={<Projects />} />
         <Route path="/leave" element={<Leave />} />
         <Route path="/employees" element={<Employees />} />
+        <Route path="/submissionsuccess" element={<SubmissionSuccess />} />
+        <Route path="/submiterror" element={<SubmitError />} />
+
         <Route path="/edit/:_id" element={<Edit />} />
         <Route path="/view/:_id" element={<View />} />
         <Route path="/leaveform" element={<LeaveForm />} />
