@@ -140,10 +140,13 @@ const Profile = () => {
       .get(`${process.env.REACT_APP_BASE_URL}/user/${id}`)
       .then((res) => {
         console.log("employeeDetails", res?.data?.myData);
-        setmyprofilepic(
-          "https://leave-management-system.glitch.me/images/" +
-            res?.data?.myData?.profilepicture
-        );
+        if(res?.data?.myData?.profilepicture === ""){
+
+          setmyprofilepic("https://cdn.vectorstock.com/i/preview-1x/66/14/default-avatar-photo-placeholder-profile-picture-vector-21806614.webp")
+        }else {
+
+          setmyprofilepic("https://leave-management-system.glitch.me/images/" + res?.data?.myData?.profilepicture)
+        }
         setViewingEmployee(res?.data?.myData);
 
         form.setFieldsValue({
